@@ -1,0 +1,4212 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Normalizar mensaje": {
+      "main": [
+        [
+          {
+            "node": "Leer Estado",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Upsert usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Pidiendo Origen",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Detectar origen",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Detectar intención",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Parsear fecha",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Preparar reenvío caso",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Detectar acción recurrente",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Detectar sí/no modificación cita",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Detectar cancelar/menu en modificar",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Detectar sí/no cancelación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pidiendo Origen": {
+      "main": [
+        [
+          {
+            "node": "Guardar estado pidiendo_origen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detectar origen": {
+      "main": [
+        [
+          {
+            "node": "Router Origen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Router Origen": {
+      "main": [
+        [
+          {
+            "node": "Preparar menú Madrid",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Preparar protocolo fuera",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fallback origen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar mensaje menú Madrid": {
+      "main": [
+        [
+          {
+            "node": "Guardar origen + estado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar origen + estado": {
+      "main": [
+        [
+          {
+            "node": "Guardar Origen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar mensaje protocolo de fuera": {
+      "main": [
+        [
+          {
+            "node": "Fijar Estado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detectar intención": {
+      "main": [
+        [
+          {
+            "node": "Router inten",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Router inten": {
+      "main": [
+        [
+          {
+            "node": "Preparar info",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Preparar mensaje CITA",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Preguntar caso",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Preparar menú madrid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Info": {
+      "main": [
+        [
+          {
+            "node": "Preparar registro INFO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cita": {
+      "main": [
+        [
+          {
+            "node": "Guardar estado cita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsear fecha": {
+      "main": [
+        [
+          {
+            "node": "¿Fecha Ok?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Fecha Ok?": {
+      "main": [
+        [
+          {
+            "node": "Preparar evento Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error fecha",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje Bienvenida": {
+      "main": [
+        [
+          {
+            "node": "Guardar Bienvenida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar bienvenida": {
+      "main": [
+        [
+          {
+            "node": "Mensaje Bienvenida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar menú Madrid": {
+      "main": [
+        [
+          {
+            "node": "Enviar mensaje menú Madrid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar protocolo fuera": {
+      "main": [
+        [
+          {
+            "node": "Enviar mensaje protocolo de fuera",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fijar Estado": {
+      "main": [
+        [
+          {
+            "node": "Guardar Estado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar info": {
+      "main": [
+        [
+          {
+            "node": "Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar mensaje CITA": {
+      "main": [
+        [
+          {
+            "node": "Get many events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar estado cita": {
+      "main": [
+        [
+          {
+            "node": "Guardar pide cita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar registro INFO": {
+      "main": [
+        [
+          {
+            "node": "Guardar info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer Estado": {
+      "main": [
+        [
+          {
+            "node": "Preparar Entrada Agente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar estado pidiendo_origen": {
+      "main": [
+        [
+          {
+            "node": "Preparar bienvenida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Entrada Agente": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar Respuesta": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Guardar Estado Conversación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Procesar Respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many events": {
+      "main": [
+        [
+          {
+            "node": "Calcular huecos disponibles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calcular huecos disponibles": {
+      "main": [
+        [
+          {
+            "node": "Cita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar evento Calendar": {
+      "main": [
+        [
+          {
+            "node": "Create an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an event": {
+      "main": [
+        [
+          {
+            "node": "Preparar Mensaje Confirmación Cita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirmar cita": {
+      "main": [
+        [
+          {
+            "node": "Check form_sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Mensaje Confirmación Cita": {
+      "main": [
+        [
+          {
+            "node": "Upsert appointment active",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Normalizar mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preguntar caso": {
+      "main": [
+        [
+          {
+            "node": "Guardar caso",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar reenvío caso": {
+      "main": [
+        [
+          {
+            "node": "Enviar caso a admin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar cita": {
+      "main": [
+        [
+          {
+            "node": "Confirmar cita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detectar acción recurrente": {
+      "main": [
+        [
+          {
+            "node": "Router acción recurrente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar menú recurrente": {
+      "main": [
+        [
+          {
+            "node": "Enviar menu recurrente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar cita activa próxima": {
+      "main": [
+        [
+          {
+            "node": "¿Tiene cita próxima?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Tiene cita próxima?": {
+      "main": [
+        [
+          {
+            "node": "Preguntar si desea modificar",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Flag sin cita para modificar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Router acción recurrente": {
+      "main": [
+        [
+          {
+            "node": "Buscar cita activa próxima",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Buscar cita activa próxima",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Preguntar caso",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Buscar cita activa para cancelar",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Preparar menú recurrente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preguntar si desea modificar": {
+      "main": [
+        [
+          {
+            "node": "Enviar pregunta modificar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar pregunta modificar": {
+      "main": [
+        [
+          {
+            "node": "Guardar estado confirmar_modificar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detectar sí/no modificación cita": {
+      "main": [
+        [
+          {
+            "node": "Router sí/no",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Router sí/no": {
+      "main": [
+        [
+          {
+            "node": "Preparar mensaje modificar",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mensaje mantener cita",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error intención",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje mantener cita": {
+      "main": [
+        [
+          {
+            "node": "Enviar mantener cita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar mensaje modificar": {
+      "main": [
+        [
+          {
+            "node": "Obtener eventos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener eventos": {
+      "main": [
+        [
+          {
+            "node": "Calcular huecos disponibles para modificar cita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calcular huecos disponibles para modificar cita": {
+      "main": [
+        [
+          {
+            "node": "Guardar estado modificar_esperando_fecha",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar menu recurrente": {
+      "main": [
+        [
+          {
+            "node": "Guardar estado menu_recurrente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar mantener cita": {
+      "main": [
+        [
+          {
+            "node": "Guardar estado menu_recurrente1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsear fecha1": {
+      "main": [
+        [
+          {
+            "node": "¿Fecha Ok?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Fecha Ok?1": {
+      "main": [
+        [
+          {
+            "node": "Preparar evento Calendar1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error fecha1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar evento Calendar1": {
+      "main": [
+        [
+          {
+            "node": "Create an event1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an event1": {
+      "main": [
+        [
+          {
+            "node": "Buscar cita activa para borrar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Mensaje Confirmación Cita1": {
+      "main": [
+        [
+          {
+            "node": "Upsert appointment active1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar cita1": {
+      "main": [
+        [
+          {
+            "node": "Confirmar cita1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete an event": {
+      "main": [
+        [
+          {
+            "node": "Preparar Mensaje Confirmación Cita1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar cita activa para borrar": {
+      "main": [
+        [
+          {
+            "node": "Delete an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert appointment active1": {
+      "main": [
+        [
+          {
+            "node": "Guardar cita1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert appointment active": {
+      "main": [
+        [
+          {
+            "node": "Guardar cita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Flag sin cita para modificar": {
+      "main": [
+        [
+          {
+            "node": "Preparar mensaje CITA1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar mensaje CITA1": {
+      "main": [
+        [
+          {
+            "node": "Get many events1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many events1": {
+      "main": [
+        [
+          {
+            "node": "Calcular huecos disponibles1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calcular huecos disponibles1": {
+      "main": [
+        [
+          {
+            "node": "Cita1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cita1": {
+      "main": [
+        [
+          {
+            "node": "Guardar estado cita1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar estado cita1": {
+      "main": [
+        [
+          {
+            "node": "Guardar pide cita1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar caso": {
+      "main": [
+        [
+          {
+            "node": "Enviar preguntar caso",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar caso a admin": {
+      "main": [
+        [
+          {
+            "node": "Confirmación al usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirmación al usuario": {
+      "main": [
+        [
+          {
+            "node": "Guardar caso en treatment_queries",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar menú madrid": {
+      "main": [
+        [
+          {
+            "node": "Enviar menu madrid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar estado modificar_esperando_fecha": {
+      "main": [
+        [
+          {
+            "node": "Enviar huecos modificar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Bienvenida": {
+      "main": [
+        [
+          {
+            "node": "Mensaje Reseñas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detectar cancelar/menu en modificar": {
+      "main": [
+        [
+          {
+            "node": "¿Quiere volver al menú?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Quiere volver al menú?": {
+      "main": [
+        [
+          {
+            "node": "Reset chat_state a return_menu",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Parsear fecha1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar menú recurrente1": {
+      "main": [
+        [
+          {
+            "node": "Enviar menu recurrente2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar menu recurrente2": {
+      "main": [
+        [
+          {
+            "node": "Guardar estado menu_recurrente2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reset chat_state a return_menu": {
+      "main": [
+        [
+          {
+            "node": "Preparar menú recurrente1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar caso en treatment_queries": {
+      "main": [
+        [
+          {
+            "node": "Reset estado al menu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check form_sent": {
+      "main": [
+        [
+          {
+            "node": "¿Envia formulario?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envío formulario": {
+      "main": [
+        [
+          {
+            "node": "Marcar form_sent = true",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Envia formulario?": {
+      "main": [
+        [
+          {
+            "node": "Envío formulario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Stats día",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stats día": {
+      "main": [
+        [
+          {
+            "node": "Citas mañana",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Citas mañana": {
+      "main": [
+        [
+          {
+            "node": "Consultas hoy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consultas hoy": {
+      "main": [
+        [
+          {
+            "node": "Construir informe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Construir informe": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar cita activa para cancelar": {
+      "main": [
+        [
+          {
+            "node": "¿Tiene cita activa para cancelar?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Tiene cita activa para cancelar?": {
+      "main": [
+        [
+          {
+            "node": "Preguntar confirmar cancelación",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No hay cita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preguntar confirmar cancelación": {
+      "main": [
+        [
+          {
+            "node": "Guardar estado confirmar_cancelar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detectar sí/no cancelación": {
+      "main": [
+        [
+          {
+            "node": "¿Si?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Si?": {
+      "main": [
+        [
+          {
+            "node": "Cancelar",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "¿No?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete an event1": {
+      "main": [
+        [
+          {
+            "node": "Cancelar en BD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cancelar en BD": {
+      "main": [
+        [
+          {
+            "node": "Estado tras cancelación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Estado tras cancelación": {
+      "main": [
+        [
+          {
+            "node": "Confirmación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cancelar": {
+      "main": [
+        [
+          {
+            "node": "Delete an event1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿No?": {
+      "main": [
+        [
+          {
+            "node": "Mensaje mantener cita (cancelación)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Pedir sí/no cancelar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje mantener cita (cancelación)": {
+      "main": [
+        [
+          {
+            "node": "menu_recurrente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pedir sí/no cancelar": {
+      "main": [
+        [
+          {
+            "node": "si/no",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "si/no": {
+      "main": [
+        [
+          {
+            "node": "confirmar_cancelar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar estado confirmar_cancelar": {
+      "main": [
+        [
+          {
+            "node": "Enviar confirmar cancelación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar menu madrid": {
+      "main": [
+        [
+          {
+            "node": "Guardar estado menu_madrid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "menu_recurrente": {
+      "main": [
+        [
+          {
+            "node": "No cancelar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-18T07:54:09.200Z",
+  "id": "cvqcDe9EMIE4avTJ",
+  "isArchived": false,
+  "meta": null,
+  "name": "Demo Quirocitas",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "const update = $json;\n\n// ✅ Teléfono fijo para Telegram (cámbialo por el que quieras)\nconst TELEGRAM_DEFAULT_PHONE = '689933328';\n\nlet channel = 'telegram';\nlet userId = null;\nlet phone = null;\nlet name = null;\nlet textOriginal = '';\nlet messageId = null;\nlet timestamp = null;\n\n// --- Telegram ---\nif (update?.message?.chat?.id) {\n  channel = 'telegram';\n\n  const msg = update.message;\n  const chat = msg.chat || {};\n  const from = msg.from || {};\n\n  userId = String(chat.id);\n\n  // ✅ aquí forzamos el teléfono fijo\n  phone = TELEGRAM_DEFAULT_PHONE;\n\n  name =\n    [from.first_name, from.last_name].filter(Boolean).join(' ') ||\n    from.username ||\n    chat.username ||\n    null;\n\n  textOriginal = msg.text || '';\n  messageId = msg.message_id || null;\n  timestamp = msg.date ? String(msg.date) : null;\n}\n\n// --- WhatsApp (payload crudo como el que pegaste) ---\nelse if (update?.entry?.[0]?.changes?.[0]?.value) {\n  channel = 'whatsapp';\n  const value = update.entry[0].changes[0].value;\n  const msg = value?.messages?.[0] || {};\n  const contact = value?.contacts?.[0] || {};\n\n  phone = contact?.wa_id || msg?.from || null;\n  userId = phone ? String(phone) : null;\n  name = contact?.profile?.name || null;\n\n  textOriginal = msg?.text?.body || '';\n  messageId = msg?.id || null;\n  timestamp = msg?.timestamp || null;\n}\n\n// Normalización texto\nconst textNormalizado = (textOriginal || '')\n  .toLowerCase()\n  .normalize('NFD')\n  .replace(/[\\u0300-\\u036f]/g, '')\n  .trim();\n\nreturn [{\n  json: {\n    ...update,\n    channel,\n    userId,\n    phone,\n    name,\n    textOriginal,\n    textNormalizado,\n    messageId,\n    timestamp,\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2192,
+        448
+      ],
+      "id": "659d8132-82f8-4d1d-813e-e127de414739",
+      "name": "Normalizar mensaje"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.state }}",
+                    "rightValue": "inicio",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "17210d97-698d-4916-b67d-be2dd2b877e5"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "inicio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "db73bb49-52fd-4ecf-b324-16bee7856b87",
+                    "leftValue": "={{ $json.state }}",
+                    "rightValue": "pidiendo_origen",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "pidiendo_origen"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "cc64fbc2-6fc0-4086-9980-9b7ef0147925",
+                    "leftValue": "={{ $json.state }}",
+                    "rightValue": "menu_madrid",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "menu_madrid"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "524a9719-44d3-448e-92b4-cc713ac4c483",
+                    "leftValue": "={{ $json.state }}",
+                    "rightValue": "agendar_esperando_fecha",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "agendar_esperando_fecha"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e48f28e8-d819-443d-a266-af0acc8bec52",
+                    "leftValue": "={{ $json.state }}",
+                    "rightValue": "pregunta_caso_esperando",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "pregunta_caso_esperando"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "509033f8-6b7a-4444-921e-609e6ac524c3",
+                    "leftValue": "={{ $json.state }}",
+                    "rightValue": "menu_recurrente",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "menu_recurrente"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2fe94fa2-2f11-4c3f-8c80-8354129d1bd0",
+                    "leftValue": "={{ $json.state }}",
+                    "rightValue": "confirmar_modificar",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "confirmar_modificar"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "551ffbb0-2717-4ceb-afae-9fff8b4ed141",
+                    "leftValue": "={{ $json.state }}",
+                    "rightValue": "modificar_esperando_fecha",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "modificar_esperando_fecha"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "4bfc4276-607d-4cff-a9de-cf40163c3401",
+                    "leftValue": "={{ $json.state }}",
+                    "rightValue": "confirmar_cancelar",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "confirmar_cancelar"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -464,
+        416
+      ],
+      "id": "483e858b-20ad-45ad-bfd6-5fa070f580c6",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "jsCode": "// NO usamos staticData aquí\nreturn [\n  {\n    json: {\n      ...$json,\n      state: 'pidiendo_origen',\n      // origen lo dejamos como esté (null al inicio)\n      origen: $json.origen ?? null,\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -32,
+        208
+      ],
+      "id": "1cda006f-db74-4f15-80e8-0c10de209b81",
+      "name": "Pidiendo Origen"
+    },
+    {
+      "parameters": {
+        "jsCode": "const txt = $json.textNormalizado || '';\nlet origenDetectado = null;\n\n// Si menciona madrid → lo consideramos de Madrid\nif (txt.includes('madrid')) {\n  origenDetectado = 'madrid';\n} else if (\n  txt.includes('fuera') ||\n  txt.includes('vivo en') ||\n  txt.includes('soy de') ||\n  txt.includes('vengo de')\n) {\n  origenDetectado = 'fuera';\n}\n\nreturn [\n  {\n    json: {\n      ...$json,\n      origenDetectado,\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        544,
+        416
+      ],
+      "id": "4cd83dbe-f644-48d7-bed9-69f4d5925782",
+      "name": "Detectar origen"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.origen }}",
+                    "rightValue": "madrid",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "287bba3e-9a85-4b71-93b7-4c6582bd2fd3"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "madrid"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d59348ff-b70d-45c7-a41b-d7e0ac2db1dd",
+                    "leftValue": "={{ $json.origen }}",
+                    "rightValue": "fuera",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "fuera"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        752,
+        400
+      ],
+      "id": "6a6a3fe2-e5d1-49e2-807c-93293d2fc72d",
+      "name": "Router Origen"
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.userId}}",
+        "text": "={{ $json.botMessage }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1376,
+        240
+      ],
+      "id": "dcc32f46-f163-4738-a5b7-fc778f1276df",
+      "name": "Enviar mensaje menú Madrid",
+      "webhookId": "557aaf79-09e4-416e-a304-5572d5a98b33"
+    },
+    {
+      "parameters": {
+        "jsCode": "const staticData = $getWorkflowStaticData('global');\nconst userId = $json.userId;\n\nif (!staticData.sessions) staticData.sessions = {};\nif (!staticData.sessions[userId]) staticData.sessions[userId] = {};\n\nstaticData.sessions[userId].state = 'menu_madrid';\nstaticData.sessions[userId].origen = 'madrid';\n\nreturn [\n  {\n    json: {\n      ...$json,\n      state: 'menu_madrid',\n      origen: 'madrid',\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1584,
+        240
+      ],
+      "id": "b45d5885-0538-412a-a565-7173a40ecd61",
+      "name": "Guardar origen + estado"
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.userId}}",
+        "text": "={{$json.botMessage}}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1728,
+        416
+      ],
+      "id": "eb0c7546-6c5a-4522-aef8-24fdb9cca4b8",
+      "name": "Enviar mensaje protocolo de fuera",
+      "webhookId": "e3f44db8-b1be-4024-82e5-9b973dacf13b"
+    },
+    {
+      "parameters": {
+        "jsCode": "const txt = ($json.textNormalizado || '').trim();\nlet intent = 'no_entendido';\n\n// Opción 1 (info)\nif (\n  /\\b1\\b/.test(txt) ||\n  txt.includes('opcion 1') ||\n  txt.includes('opcion uno') ||\n  txt.includes('más información') || // por si llega sin normalizar\n  txt.includes('mas informacion') ||\n  txt.includes('mas info') ||\n  txt.includes('informacion') ||\n  txt.includes('información')\n) {\n  intent = 'info';\n}\n\n// Opción 2 (cita)\nelse if (\n  /\\b2\\b/.test(txt) ||\n  txt.includes('opcion 2') ||\n  txt.includes('opcion dos') ||\n  txt.includes('cita') ||\n  txt.includes('agendar') ||\n  txt.includes('reservar') ||\n  txt.includes('primera visita') ||\n  txt.includes('pedir cita') ||\n  txt.includes('solicitar cita')\n) {\n  intent = 'cita';\n}\n\n// Opción 3 (caso)\nelse if (\n  /\\b3\\b/.test(txt) ||\n  txt.includes('opcion 3') ||\n  txt.includes('opcion tres') ||\n  txt.includes('preguntar sobre mi caso') ||\n  txt.includes('preguntar por mi caso') ||\n  txt.includes('consultar mi caso') ||\n  txt.includes('consultar sobre mi caso') ||\n  txt.includes('tengo una duda') ||\n  txt.includes('tengo una consulta') ||\n  txt.includes('hacer una consulta') ||\n  txt.includes('consulta') ||\n  txt.includes('pregunta') ||\n  txt.includes('duda') ||\n  txt.includes('mi caso') ||\n  txt.includes('mi situación') ||     // por si llega sin normalizar\n  txt.includes('mi situacion') ||\n  txt.includes('ayuda') ||\n  txt.includes('necesito ayuda')\n) {\n  intent = 'caso';\n}\n\nreturn [\n  {\n    json: {\n      ...$json,\n      intent,\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        832
+      ],
+      "id": "c99727b5-fff4-4fbd-9de1-061ba52d66f3",
+      "name": "Detectar intención"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{$json.intent}}",
+                    "rightValue": "info",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "aa6c419a-ca5f-4f12-bc99-f8612aeb9f16"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "info"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "9a7e34f5-2622-47ac-a42a-fef0d26a3a67",
+                    "leftValue": "={{$json.intent}}",
+                    "rightValue": "cita",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "cita"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2f55eec9-5a91-4b4f-a14c-875d3f52db20",
+                    "leftValue": "={{$json.intent}}",
+                    "rightValue": "caso",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "caso"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        768,
+        800
+      ],
+      "id": "d80e88e0-feec-4f94-96b9-655942bfdc22",
+      "name": "Router inten"
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.userId}}",
+        "text": "={{$json.botMessage}}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1536,
+        752
+      ],
+      "id": "019ae4c4-9836-4a2d-9eee-107bef0587d4",
+      "name": "Info",
+      "webhookId": "f6d4f1cc-b9dc-43c4-9f41-f725f41ac7d2"
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.userId}}",
+        "text": "={{ $json.botMessage }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2080,
+        976
+      ],
+      "id": "592448b9-39fa-4d79-83a6-2d7a8cdc86c6",
+      "name": "Cita",
+      "webhookId": "e0ad8c30-d094-4424-914e-68805cfd65fe"
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.userId}}",
+        "text": "=Antes de continuar necesitamos saber si eres de Madrid o si vienes de fuera 😊",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1408,
+        592
+      ],
+      "id": "c1bfcd98-f729-43b4-83d0-7a1b72819e20",
+      "name": "Fallback origen",
+      "webhookId": "189f880b-6018-451e-a5e4-2b4bfb0df7d7"
+    },
+    {
+      "parameters": {
+        "jsCode": "const txt = $json.textNormalizado || '';\n\n// patrón: dd/mm/aaaa hh:mm\nconst match = txt.match(/(\\d{1,2})[\\/\\-](\\d{1,2})[\\/\\-](\\d{4})\\s+(\\d{1,2}):(\\d{2})/);\n\nif (!match) {\n  return [\n    {\n      json: {\n        ...$json,\n        parseOk: false,\n      },\n    },\n  ];\n}\n\nconst [_, d, m, y, hh, mm] = match;\nconst dia = d.padStart(2, '0');\nconst mes = m.padStart(2, '0');\nconst hora = hh.padStart(2, '0');\nconst minuto = mm;\n\nconst fechaISO = `${y}-${mes}-${dia}T${hora}:${minuto}:00`;\n\nreturn [\n  {\n    json: {\n      ...$json,\n      parseOk: true,\n      fechaISO,\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        2368
+      ],
+      "id": "18357578-b699-4723-856a-1cf47723cbda",
+      "name": "Parsear fecha"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8b49fa2d-4cf6-4b05-b956-130c2f2ed4bd",
+              "leftValue": "={{ $json.parseOk }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        432,
+        2368
+      ],
+      "id": "7f5edab6-30ba-4f57-a256-19d8357ed2ab",
+      "name": "¿Fecha Ok?"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Pidiendo Origen').item.json.message.chat.id }}",
+        "text": "={{ $json.botMessage }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        544,
+        208
+      ],
+      "id": "9b7fd642-c732-4640-afb2-a107854fbbb2",
+      "name": "Mensaje Bienvenida",
+      "webhookId": "8d86fbcc-d225-4ac3-8f5c-1dc241c9b573"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      ...$json,\n      botMessage: \"¡Hola! Gracias por escribirnos a Quiróptimo\\nLa primera cita incluye una evaluación completa y 2 sesiones de Network Spinal (NSA).\\nDuración: unas 2 horas\\nPrecio: 140 €\\n\\nEste método es un entrenamiento energético, se recomienda sesiones semanales. ¿Podrías venir semanalmente a nuestro centro?\\n\\nSi vives fuera, tenemos un protocolo intensivo de 2 días pensado para ti.\\n\\nSolo cuéntanos si eres de Madrid o si vienes de fuera y te guiamos con el siguiente paso.\",\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        352,
+        208
+      ],
+      "id": "6bf4b5ae-804c-4b96-83c0-239fbd37babd",
+      "name": "Preparar bienvenida"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      ...$json,\n      botMessage: \"¡Hola!  \\nMi nombre es Laureana, encantada de saludarte  \\n¿Cómo te puedo ayudar?\\n\\n1️⃣ Me gustaría obtener más información sobre NSA  \\n2️⃣ Ya estoy informad@ y quiero agendar una primera visita  \\n3️⃣ Tengo dudas sobre mi tratamiento y quiero preguntar sobre mi caso.\",\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1168,
+        240
+      ],
+      "id": "cb886dea-e322-4b5b-83ab-cfe29921a669",
+      "name": "Preparar menú Madrid"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      ...$json,\n      botMessage: \"Valoramos tu interés en nuestros cuidados estando fuera de Madrid \\n\\nHemos preparado este protocolo intensivo para que tengas acceso a nuestros servicios de forma presencial:\\n\\nhttps://www.quiroptimo.com/vives-lejos-de-madrid/\\n\\nEsperamos que esta opción sea de tu interés. Si tienes cualquier duda o quieres concertar una cita, estaremos encantadas de ayudarte.\\n\\nQuedamos a tu disposición.\\n\\nUn cordial saludo 💜\",\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1488,
+        416
+      ],
+      "id": "7147e375-c22f-4129-a100-23f2d4b212f7",
+      "name": "Preparar protocolo fuera"
+    },
+    {
+      "parameters": {
+        "jsCode": "const staticData = $getWorkflowStaticData('global');\nconst userId = $json.userId;\n\nif (!staticData.sessions) staticData.sessions = {};\nif (!staticData.sessions[userId]) staticData.sessions[userId] = {};\n\nstaticData.sessions[userId].state = 'protocolo_fuera';\n\nreturn [\n  {\n    json: {\n      ...$json,\n      state: 'protocolo_fuera',\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1936,
+        416
+      ],
+      "id": "c35cfb18-2c36-4482-9090-c6ea1a501294",
+      "name": "Fijar Estado"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO chat_messages (user_id, state, origen, from_user, message_text)\nVALUES (\n  '{{ $json.result.chat.id }}',\n  '{{$node[\"Preparar bienvenida\"].json[\"state\"] || \"\"}}',\n  '{{$node[\"Preparar bienvenida\"].json[\"origen\"] || \"\"}}',\n  false,\n  '{{$node[\"Preparar bienvenida\"].json[\"botMessage\"]}}'\n);\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        752,
+        208
+      ],
+      "id": "6dc3dfde-6b8d-429f-a69e-c91309811bd1",
+      "name": "Guardar Bienvenida"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- 1) Guardar el mensaje en el histórico\nINSERT INTO chat_messages (user_id, state, origen, from_user, message_text)\nVALUES (\n  '{{ $json.result.chat.id }}',\n  '{{$json[\"state\"] || \"\"}}',\n  '{{$json[\"origen\"] || \"\"}}',\n  false,\n  '{{ $json.result.text }}'\n);\n\n-- 2) Actualizar el estado global del usuario\nINSERT INTO chat_state (user_id, state, origen)\nVALUES (\n  '{{ $json.result.chat.id }}',\n  '{{$json[\"state\"] || \"\"}}',\n  '{{$json[\"origen\"] || \"\"}}'\n)\nON CONFLICT (user_id)\nDO UPDATE SET\n  state  = EXCLUDED.state,\n  origen = EXCLUDED.origen,\n  updated_at = now();\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1792,
+        240
+      ],
+      "id": "54c20dbf-cb6b-4991-8f50-3cad5a8f12a6",
+      "name": "Guardar Origen"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- 1) Guardar el mensaje en el histórico\nINSERT INTO chat_messages (user_id, state, origen, from_user, message_text)\nVALUES (\n  '{{ $json.result.chat.id }}',\n  '{{$json[\"state\"] || \"\"}}',\n  '{{$json[\"origen\"] || \"\"}}',\n  false,\n  '{{ $json.result.text }}'\n);\n\n-- 2) Actualizar el estado global del usuario (incluye origen = \"fuera\")\nINSERT INTO chat_state (user_id, state, origen)\nVALUES (\n  '{{ $json.result.chat.id }}',\n  '{{$json[\"state\"] || \"\"}}',\n  '{{$json[\"origen\"] || \"\"}}'\n)\nON CONFLICT (user_id)\nDO UPDATE SET\n  state  = EXCLUDED.state,\n  origen = EXCLUDED.origen,\n  updated_at = now();\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2144,
+        416
+      ],
+      "id": "e229fcb6-97a2-4a4b-a7db-8671b17482db",
+      "name": "Guardar Estado"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      ...$json,\n      botMessage: \"¿Ya conoces la técnica quiropráctica NSA? 🪻🌊\\n\\nNSA es un entrenamiento neuroenergético. Para conseguir resultados sostenibles se requiere constancia.\\n\\n1️⃣ Video explicativo: https://www.youtube.com/watch?v=rY6VyLfZJ04  \\n2️⃣ Nuestra página web: https://www.quiroptimo.com/network-spinal-analysis-madrid/\\n\",\n    },\n  },\n];\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1360,
+        752
+      ],
+      "id": "be9647e5-fdae-4bf1-ba1e-0dd51eb4d03d",
+      "name": "Preparar info"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      ...$json,\n      botMessage: \"Nuestros horarios para agendar primera cita 📝  \\n\\nLunes:    16:00, 18:00  \\nMartes:   10:00, 12:00, 16:00, 18:00  \\nMiércoles: 16:00, 18:00  \\nJueves:   10:00, 12:00, 16:00, 18:00  \\nViernes:  10:00, 12:00  \\nSábado:   Cerrado  \\nDomingo:  Cerrado  \\n\\nEstos son los horarios generales que tenemos.\\n\\n👉 Escríbeme el día y la hora que te vienen bien en formato **DD/MM/AAAA HH:MM**  \\nEjemplo: `15/10/2025 16:00`\\n\",\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1472,
+        976
+      ],
+      "id": "94c37297-34de-41cf-a21d-1e118d4ee337",
+      "name": "Preparar mensaje CITA"
+    },
+    {
+      "parameters": {
+        "jsCode": "const staticData = $getWorkflowStaticData('global');\nconst userId = $json.userId;\n\nif (!staticData.sessions) staticData.sessions = {};\nif (!staticData.sessions[userId]) staticData.sessions[userId] = {};\n\nstaticData.sessions[userId].state = 'agendar_esperando_fecha';\n\nreturn [\n  {\n    json: {\n      ...$json,\n      state: 'agendar_esperando_fecha',\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2288,
+        976
+      ],
+      "id": "c9a1f5d6-af73-4218-a93f-7566b74fcb14",
+      "name": "Guardar estado cita"
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all();\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1744,
+        752
+      ],
+      "id": "394d3f67-710b-49c3-9137-fa10ca0474b8",
+      "name": "Preparar registro INFO"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- 1) Guardar el mensaje de info en el histórico\nINSERT INTO chat_messages (user_id, state, origen, from_user, message_text)\nVALUES (\n  '{{$json[\"userId\"]}}',\n  '{{$json[\"state\"] || \"\"}}',\n  '{{$json[\"origen\"] || \"\"}}',\n  false,\n  '{{$json[\"botMessage\"]}}'\n);\n\n-- 2) Actualizar el estado global del usuario (chat_state)\nINSERT INTO chat_state (user_id, state, origen)\nVALUES (\n  '{{$json[\"userId\"]}}',\n  '{{$json[\"state\"] || \"\"}}',\n  '{{$json[\"origen\"] || \"\"}}'\n)\nON CONFLICT (user_id)\nDO UPDATE SET\n  state  = EXCLUDED.state,\n  origen = EXCLUDED.origen,\n  updated_at = now();\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1952,
+        752
+      ],
+      "id": "d365de64-831a-4e9c-a57f-9f89f255888e",
+      "name": "Guardar info"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH last_state AS (\n  SELECT state, origen\n  FROM chat_state\n  WHERE user_id = $1\n  LIMIT 1\n)\nSELECT\n  COALESCE((SELECT state FROM last_state), 'inicio') AS state,\n  (SELECT origen FROM last_state) AS origen,\n  NOT EXISTS (SELECT 1 FROM last_state) AS is_first_time,\n  EXISTS (\n    SELECT 1\n    FROM appointments\n    WHERE user_id = $1\n    LIMIT 1\n  ) AS has_ever_appointment;",
+        "options": {
+          "queryReplacement": "={{ [ $('Normalizar mensaje').item.json.userId ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1872,
+        448
+      ],
+      "id": "8dd26830-b812-4c19-af86-33cc729fedf6",
+      "name": "Leer Estado",
+      "retryOnFail": false,
+      "executeOnce": false,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO chat_state (user_id, state, origen)\nVALUES (\n  '{{$json[\"userId\"]}}',\n  '{{$json[\"state\"]}}',\n  '{{$json[\"origen\"] || \"\"}}'\n)\nON CONFLICT (user_id)\nDO UPDATE SET\n  state = EXCLUDED.state,\n  origen = EXCLUDED.origen,\n  updated_at = now();",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        176,
+        208
+      ],
+      "id": "4bebd7f8-bde4-4f41-83ac-33ba317331ea",
+      "name": "Guardar estado pidiendo_origen"
+    },
+    {
+      "parameters": {
+        "jsCode": "// PREPARAR DATOS PARA AI AGENT (Quiróptimo)\n\n// 1) Datos del mensaje de Telegram (texto normalizado, userId, etc.)\n//    Vienen del nodo \"Normalizar mensaje\"\nlet entrada;\ntry {\n  entrada = $('Normalizar mensaje').first().json;\n} catch (e) {\n  entrada = {};\n}\n\n// 2) Estado actual desde Postgres\n//    ⚠️ Este nodo recibe como INPUT directo el resultado de \"Leer Estado\"\n//    Así que usamos $json tal cual.\nconst estadoBD = $json || {};\n\n// Si no hay nada en BD, asumimos que es la primera vez\nconst stateActual =\n  estadoBD.state !== undefined && estadoBD.state !== null\n    ? estadoBD.state\n    : 'inicio';\n\nconst origenActual =\n  estadoBD.origen !== undefined\n    ? estadoBD.origen\n    : null;\n\nconst hasEverAppointment = !!estadoBD.has_ever_appointment;\n\n// 3) Construimos el payload que verá el AI Agent\nconst datosAgente = {\n  // Texto del usuario\n  mensaje_usuario: entrada.textNormalizado || '',\n  mensaje_original: entrada.textOriginal || '',\n\n  // Identificación de usuario/chat (Telegram)\n  user_id: entrada.userId,\n  chat_id: entrada.userId,\n\n  // Contexto de la conversación\n  state: stateActual,   // p.ej: \"inicio\", \"pidiendo_origen\", \"menu_madrid\", etc.\n  origen: origenActual, // \"madrid\" | \"fuera\" | null\n\n  has_ever_appointment: hasEverAppointment,\n\n  // Por si quieres seguir ampliando luego\n  raw_update: entrada,  // todo el update original de Telegram\n};\n\nconsole.log('📥 Estado desde BD:', estadoBD);\nconsole.log('📤 Enviando al AI Agent:', JSON.stringify(datosAgente, null, 2));\n\nreturn [\n  {\n    json: datosAgente,\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1440,
+        448
+      ],
+      "id": "01a4ac71-b722-4dde-9b8c-bb5c3f34a8b1",
+      "name": "Preparar Entrada Agente"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {
+          "temperature": 0.3,
+          "topP": 0.9
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1168,
+        624
+      ],
+      "id": "562b73a5-50ff-49c9-afde-3572e177d385",
+      "name": "Google Gemini Chat Model"
+    },
+    {
+      "parameters": {
+        "jsCode": "// PROCESAR RESPUESTA DEL AI AGENT (Quiróptimo)\n\n// 1) Leer texto de salida del nodo AI Agent\nlet raw = '';\n\nif (typeof $json === 'string') {\n  raw = $json;\n} else {\n  raw =\n    $json.output ||\n    $json.response ||\n    $json.text ||\n    $json.message ||\n    $json.data ||\n    '';\n}\n\nlet parsed;\n\n// 2) Intentar extraer JSON de la respuesta del agente\ntry {\n  const jsonBlockMatch =\n    raw.match(/```json\\s*([\\s\\S]*?)```/i) ||\n    raw.match(/```([\\s\\S]*?)```/i) ||\n    null;\n\n  if (jsonBlockMatch) {\n    const inner = jsonBlockMatch[1] || jsonBlockMatch[0];\n    const cleaned = inner\n      .replace(/```json/i, '')\n      .replace(/```/g, '')\n      .trim();\n    parsed = JSON.parse(cleaned);\n  } else {\n    parsed = JSON.parse(raw);\n  }\n} catch (e) {\n  // Si no es JSON válido, cae a un valor por defecto\n  parsed = {\n    next_state: 'inicio',\n    origen: null,\n    intent: 'ninguna',\n  };\n}\n\n// 3) Normalizar los campos que esperamos del agente\nconst nextState =\n  parsed.next_state ||       // 👈 LO IMPORTANTE\n  parsed.state ||\n  parsed.nuevo_estado ||\n  parsed.estado ||\n  null;\n\nconst intent =\n  parsed.intent ||\n  parsed.intencion ||\n  parsed.intent_detected ||\n  'ninguna';\n\nlet nuevoOrigen = null;\nif (Object.prototype.hasOwnProperty.call(parsed, 'origen')) {\n  // puede venir como \"null\" (string)\n  if (parsed.origen === 'null' || parsed.origen === '' || parsed.origen == null) {\n    nuevoOrigen = null;\n  } else {\n    nuevoOrigen = parsed.origen;\n  }\n}\n\n// 4) Recuperar datos originales + estado previo desde BD\nlet original = {};\nlet estadoPrevio = {};\n\ntry {\n  original = $('Normalizar mensaje').first().json;\n} catch (e) {\n  original = {};\n}\n\ntry {\n  estadoPrevio = $('Leer Estado').first().json || {};\n} catch (e) {\n  estadoPrevio = {};\n}\n\n// 5) Decidir estado/origen finales\nconst hasEver = !!estadoPrevio.has_ever_appointment;\nlet stateFinal = nextState || estadoPrevio.state || 'inicio';\n\nconst origenFinal =\n  nuevoOrigen !== null && nuevoOrigen !== undefined\n    ? nuevoOrigen\n    : estadoPrevio.origen || null;\n\n// ✅ GUARDRAIL: si ya tuvo cita, nunca volver a menu_madrid/inicio/pidiendo_origen\nif (hasEver && ['menu_madrid', 'inicio', 'pidiendo_origen'].includes(stateFinal)) {\n  stateFinal = 'menu_recurrente';\n}\n\n// 6) Construir salida para el Switch\nconst salida = {\n  ...original,     // update_id, message, userId, textOriginal, textNormalizado...\n  state: stateFinal,\n  origen: origenFinal,\n  intent,\n  has_ever_appointment: hasEver,\n};\n\nconsole.log('🤖 RAW AGENT:', raw);\nconsole.log('🤖 PARSED AGENT:', parsed);\nconsole.log('➡️ STATE FINAL:', stateFinal, 'ORIGEN FINAL:', origenFinal, 'INTENT:', intent);\n\nreturn [{ json: salida }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -800,
+        448
+      ],
+      "id": "594e1a8f-c122-49da-b810-8dea5062d16e",
+      "name": "Procesar Respuesta"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Eres un ENRUTADOR DE ESTADOS para un bot de Telegram de la clínica quiropráctica Quiróptimo.\n\nNO hablas con el usuario. NO redactas textos de respuesta.\n\nTu única función es decidir:\n- el SIGUIENTE ESTADO de la conversación: `next_state`\n- el posible `origen` del usuario (`madrid`, `fuera` o `null`)\n- la `intent` cuando estemos en el menú de Madrid (`info`, `cita`, `caso` o `ninguna`)\n- la `accion` cunado estemos en el menú recurrente (`nueva`, `modificar`, `tratamiento`, `cancelar` o `ninguna`)\n\nSIEMPRE debes devolver SOLO un JSON válido con esta forma:\n\n{\n  \"next_state\": \"<estado>\",\n  \"origen\": \"<madrid|fuera|null>\",\n  \"intent\": \"<info|cita|caso|ninguna|null>\"\n}\n\n{\n  \"next_state\": \"<estado>\",\n  \"origen\": \"<madrid|fuera|null>\",\n  \"intent\": \"<nueva|modificar|tratamiento|cancelar|ninguna|null>\"\n}\n\n\n### ESTADOS POSIBLES (next_state)\n\n- \"inicio\"\n- \"pidiendo_origen\"\n- \"menu_madrid\"\n- \"pregunta_caso_esperando\"\n- \"agendar_esperando_fecha\"\n- \"menu_recurrente\"\n- \"confirmar_modificar\"\n- \"modificar_esperando_fecha\"\n- \"protocolo_fuera\"\n- \"confirmar_cancelar\"\n- \"fin\"\n\nTambién puede haber un estado previo especial: \"sin_estado\" (no hay memoria todavía). Ese nunca lo devuelves como next_state.\n\n### REGLAS CRÍTICAS (prioridad absoluta)\nA) Si current_state = \"modificar_esperando_fecha\":\n   SIEMPRE:\n   next_state = \"modificar_esperando_fecha\"\n   origen se mantiene\n   intent = \"ninguna\"\n   (NO puedes pasar a \"agendar_esperando_fecha\" desde aquí, aunque el mensaje sea una fecha.)\n\nB) Si current_state = \"agendar_esperando_fecha\":\n   SIEMPRE:\n   next_state = \"agendar_esperando_fecha\"\n   origen se mantiene\n   intent = \"ninguna\"\n\nC) Si current_state = \"pregunta_caso_esperando\":\n   SIEMPRE:\n   next_state = \"pregunta_caso_esperando\"\n   origen se mantiene\n   intent = \"ninguna\"\n\nD) Si current_state = \"menu_recurrente\":\n   - Si user_message es afirmación (\"si\",\"sí\",\"s\",\"vale\",\"ok\",\"de acuerdo\"):\n       next_state = \"confirmar_modifcar\"\n       origen se mantiene\n       intent = \"ninguna\"\n   - Si user_message es negación (\"no\",\"mejor no\",\"cancelar\"):\n       next_state = \"menu_recurrente\"\n       origen se mantiene\n       intent = \"ninguna\"\n   - Si no está claro:\n       next_state = \"confirmar_modificar\"\n       origen se mantiene\n       intent = \"ninguna\"\n\n\n### CAMPOS DE ENTRADA\n\nTe paso estos campos:\n- current_state: estado actual o \"sin_estado\" si es la primera vez\n- user_message: último mensaje del usuario (texto normalizado, en minúsculas y sin tildes)\n- origen: puede ser \"madrid\", \"fuera\" o null\n- has_ever_appointment: boolean (true si en BD consta que el usuario ya tuvo AL MENOS 1 cita alguna vez; false si no o si no viene informado)\n\nSi un campo no viene, asume valores razonables (has_ever_appointment=false, origen=null).\n\n### LÓGICA\n\n0) PRIORIDAD ABSOLUTA: ESTADOS QUE SE RESPETAN\nSi current_state es uno de estos, NO cambies a otros menús por saludos o frases genéricas:\n- \"pregunta_caso_esperando\"\n- \"agendar_esperando_fecha\"\n- \"confirmar_modificar\"\n- \"modificar_esperando_fecha\"\n- \"cita_confirmada\"\n- \"confirmar_cancelar\"\n\nEn esos estados, aplica sus reglas específicas (más abajo).\n\n0.5) VOLVER / CANCELAR (volver al menú correcto)\n\n    Si current_state = menu_recurrente, la palabra cancelar NO significa volver atrás; significa la     acción de cancelar cita (ver regla de menu_recurrente).\n\n     Si user_message indica volver atrás o cancelar (por ejemplo):\n\n   - \"menu\", \"menú\", \"volver\", \"volver al menu\", \"volver al menú\", \"atrás\", \"atras\"\n   - \"salir\", \"no\"\n   - y también \"no\" / \"mejor no\" SOLO cuando estemos en un estado de espera (pregunta, agendar,          confirmar, modificar)\n\n      Entonces calcula el menú de retorno:  \n      - si has_ever_appointment = true ⇒ last_menu = \"menu_recurrente\"   \n      - si has_ever_appointment = false ⇒ last_menu = \"menu_madrid\" (si origen=\"madrid\", si no, usa         \"inicio\")\n\n     Devuelve:\n\n     {\n      \"next_state\": \"<last_menu>\",\n      \"origen\": \"<mantener>\",\n      \"intent\": \"ninguna\"\n     }\n\n1) SALUDOS\nSi user_message contiene solo un saludo tipo:\n- \"hola\", \"buenas\", \"buenos dias\", \"buenas tardes\", \"buenas noches\", \"hey\"\nSolo considera saludo si el mensaje, tras limpiar espacios y puntuación, coincide exactamente con: hola|buenas|hey|buenos dias|buenas tardes|buenas noches|\n\nEntonces:\n- Si has_ever_appointment = true => next_state = \"menu_recurrente\", origen se mantiene, intent=\"ninguna\"\n- Si has_ever_appointment = false => next_state = \"inicio\", origen=null, intent=\"ninguna\"\n\n2) PRIMER CONTACTO (current_state = null, vacío o \"sin_estado\"):\n- next_state = \"inicio\"\n- origen = null\n- intent = \"ninguna\"\n\n3) SI YA TUVO CITA ALGUNA VEZ (has_ever_appointment = true)\nSolo si current_state es \"sin_estado\", \"inicio\", \"pidiendo_origen\" o \"fin\" (o viene vacío):\n- next_state = \"menu_recurrente\"\n- origen se mantiene\n- intent = \"ninguna\"\n\nSi current_state es \"menu_recurrente\" o \"menu_madrid\", NO apliques esta regla; usa la lógica de esos menús.\n\n4) ESTADOS 'inicio' o 'pidiendo_origen' (solo para usuarios SIN historial de cita)\nAquí el bot le está pidiendo que diga si es de Madrid o de fuera.\n\n- Si el mensaje contiene claramente \"madrid\":\n    origen = \"madrid\"\n    next_state = \"pidiendo_origen\"\n    intent = \"ninguna\"\n\n- Si el mensaje indica que viene de fuera:\n    ejemplos: \"soy de barcelona\", \"vivo en valencia\", \"soy de zaragoza\",\n    \"vengo de sevilla\", \"no soy de madrid\", \"estoy fuera de madrid\"...\n    (cualquier ciudad que NO sea madrid):\n    origen = \"fuera\"\n    next_state = \"pidiendo_origen\"\n    intent = \"ninguna\"\n\n- Si NO queda claro:\n    origen se queda igual\n    next_state = \"pidiendo_origen\"\n    intent = \"ninguna\"\n\n5) ESTADO 'menu_madrid':\n   Ya sabemos que es de Madrid y se le ha enviado un menú de opciones:\n\n   1️⃣ Más información sobre NSA  \n   2️⃣ Quiero agendar una primera visita\n   3️⃣ Quiero preguntar sobre mi caso\n\n   - Si el mensaje pide INFORMACIÓN:\n       Palabras clave: \"1\", \"opcion 1\", \"informacion\", \"información\", \n                       \"mas info\", \"saber mas\", \"explicacion\", \"que es nsa\"\n       entonces:\n       next_state = \"menu_madrid\"\n       intent = \"info\"\n       (seguimos en el menú pero enviamos el mensaje de info)\n\n   - Si el mensaje pide CITA:\n       Palabras clave: \"2\", \"opcion 2\", \"cita\", \"agendar\", \"reservar\", \n                       \"primera visita\", \"quiero cita\", \"quiero ir\"\n       entonces:\n       next_state = \"menu_madrid\"\n       intent = \"cita\"\n\n   - Si el mensaje pide PREGUNTAR SOBRE SU CASO:\n       Palabras clave: \"3\", \"opcion 3\", \"mi caso\", \"sobre mi caso\",\n                       \"tengo una consulta\", \"consulta\", \"tengo una duda\",\n                      \"preguntar\", \"pregunta\", \"ayuda\"\n       entonces:\n       next_state = \"menu_madrid\"\n       intent = \"caso\"\n       (en este estado otro nodo preguntará: \"¿sobre qué te podemos ayudar?\")\n\n   - Si no está claro:\n       next_state = \"menu_madrid\"\n       intent = \"ninguna\"\n\n5bis) SI current_state = \"menu_madrid\" Y el user_message parece una fecha en formato\n      \"dd/mm/aaaa hh:mm\" (por ejemplo: \"15/10/2025 16:00\", \"5/9/2025 9:30\", \"jueves 18 a las 10\"):\n\n   - next_state = \"agendar_esperando_fecha\"\n   - origen se mantiene igual\n   - intent = \"ninguna\"\n\n\n6) ESTADO 'pregunta_caso_esperando':\n   El bot ya pidió que el usuario describa su caso.\n\n   - Si el usuario escribe cualquier texto (no saludo):\n     next_state = \"pregunta_caso_esperando\"\n     origen se mantiene igual\n     intent = \"ninguna\"\n     (El reenvío por WhatsApp y el reset de estado lo hace otro nodo; tú NO cambias a \"menu_madrid\"       aquí.)\n\n\n7) ESTADO 'agendar_esperando_fecha'\nRegla:\n- Siempre:\n    next_state = \"agendar_esperando_fecha\"\n    origen se mantiene\n    intent = \"ninguna\"\n\n8) ESTADO 'menu_recurrente' (usuarios con historial)\nAquí el usuario puede pedir:\n\n   1️⃣ Agendar una nueva cita\n   2️⃣ Modifcar una cita existente\n   3️⃣ Preguntar sobre tu tratamiento\n   4️⃣ Cancelar cita\n\n- Si el mensaje pide NUEVA CITA:\n       Palabras clave: \"1\", \"opcion 1\", \"nueva\", \"cita nueva\", \n                       \"no tengo cita\", \"quiero una cita nueva\", \"primera visita\", \"quiero cita\",                          \"quiero ir\", \"reservar\" \n       entonces:\n       next_state = \"menu_recurrente\"\n       accion = \"nueva\"\n       (seguimos en el menú pero enviamos el mensaje de nueva cita)\n\n   - Si el mensaje pide MODIFICAR CITA:\n       Palabras clave: \"2\", \"opcion 2\", \"cita\", \"modificar\", \"cambiar cita\", \n                       \"segunda visita\", \"otra cita\", \"no es mi primera visita\"\n       entonces:\n       next_state = \"menu_recurrente\"\n       accion = \"modificar\"\n\n   - Si el mensaje pide PREGUNTAR SOBRE SU CASO:\n       Palabras clave: \"3\", \"opcion 3\", \"mi caso\", \"sobre mi caso\",\n                       \"tengo una consulta\", \"consulta\", \"tengo una duda\",\n                      \"preguntar\", \"pregunta\", \"ayuda\"\n       entonces:\n       next_state = \"menu_recurrente\"\n       accion = \"tratamiento\"\n       (en este estado otro nodo preguntará: \"¿sobre qué te podemos ayudar?\")\n\n   - Si el mensaje pide CANCELAR CITA:\n        Palabras clave: \"4\", \"opcion 4\", \"cancelar cita\", \"anular cita\", \"cancelar mi cita\",                                \"anular mi cita\", \"cancelar la cita\", \"anular la cita\", \"quiero cancelar\",                          \"quiero anular\"\n        entonces:\n        next_state = \"menu_recurrente\"\n        accion = \"cancelar\"\n\n\n   - Si no está claro:\n       next_state = \"menu_recurrente\"\n       intent = \"ninguna\"\n\n\n9) ESTADO 'confirmar_modificar'\nEn este estado el usuario responde sí/no.\n\n- Si user_message contiene afirmación: \"si\", \"sí\", \"s\", \"vale\", \"ok\", \"de acuerdo\":\n    next_state = \"confirmar_modificar\"\n    origen se mantiene\n    intent = \"ninguna\"\n\n- Si user_message contiene negación: \"no\", \"mejor no\", \"cancelar\", \"dejala igual\", \"dejala como esta\", \"deja la misma\", \"no quiero\", \"cancela\", \"vuelve al menu\":\n    next_state = \"confirmar_modificar\"\n    origen se mantiene\n    intent = \"ninguna\"\n\n- Si no está claro:\n    next_state = \"confirmar_modificar\"\n    origen se mantiene\n    intent = \"ninguna\"\n\n10) ESTADO 'modificar_esperando_fecha'\nAquí el usuario debe escribir una fecha \"dd/mm/aaaa hh:mm\" para reprogramar.\n\nRegla:\n- Siempre:\n    next_state = \"modificar_esperando_fecha\"\n    origen se mantiene\n    intent = \"ninguna\"\n\n\n12) ESTADO 'protocolo_fuera'\n- next_state = \"fin\"\n- origen normalmente \"fuera\"\n- intent = \"ninguna\"\n\n13) ESTADO 'confirmar_cancelar'\nEn este estado el usuario responde sí/no para cancelar.\n\n- Si user_message contiene afirmación: \"si\", \"sí\", \"s\", \"vale\", \"ok\", \"de acuerdo\":\n    next_state = \"confirmar_cancelar\"\n    origen se mantiene\n    intent = \"ninguna\"\n\n- Si user_message contiene negación: \"no\", \"mejor no\":\n    next_state = \"menu_recurrente\"\n    origen se mantiene\n    intent = \"ninguna\"\n\n- Si no está claro:\n    next_state = \"confirmar_cancelar\"\n    origen se mantiene\n    intent = \"ninguna\"\n\n14) ESTADO 'fin'\nSi vuelve a escribir:\n- Si has_ever_appointment = true => next_state = \"menu_recurrente\"  \n- Si has_ever_appointment = false => next_state = \"inicio\"  \n(origen se mantiene si existe, intent=\"ninguna\")\n\n### IMPORTANTE\n\n- No generes texto de respuesta para el usuario.\n- No inventes estados fuera de la lista.\n- Si dudas, mantén el estado actual (excepto \"sin_estado\", que siempre debe ir a \"inicio\").\n- Usa SIEMPRE valores en minúsculas en `next_state`, `origen` e `intent`.\n\nDevuelve SOLO el JSON, sin explicaciones.\n",
+        "options": {
+          "systemMessage": "=current_state: {{$json.state || \"sin_estado\"}}\norigen: {{$json.origen || \"null\"}}\nhas_ever_appointment: {{$json.has_ever_appointment || false}}\nuser_message: {{$json.mensaje_usuario}}",
+          "maxIterations": 1,
+          "returnIntermediateSteps": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -1168,
+        448
+      ],
+      "id": "3c339526-85b8-4d36-ae71-154a37edba42",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO chat_messages (\n  user_id,\n  state,\n  origen,\n  from_user,\n  message_text\n)\nVALUES (\n  '{{ $json.message.chat.id }}',\n  '{{ $json.state }}',\n  '{{ $json.origen }}',\n  false,\n  '[[STATE_UPDATE]]'\n);",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -640,
+        720
+      ],
+      "id": "e3fa92a3-7af7-43d0-9eb7-1aa168eedb03",
+      "name": "Guardar Estado Conversación"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "5cf4feec130e0e00310716611ab2599f1df46f3964fe6b800d399d2ca12c960d@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "pruebas "
+        },
+        "timeMax": "={{ $now.plus({ week: 2 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        1696,
+        976
+      ],
+      "id": "49046a6d-06de-4c4e-afb1-685b68e51d47",
+      "name": "Get many events",
+      "retryOnFail": false,
+      "executeOnce": false,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// CALCULAR HUECOS DISPONIBLES A PARTIR DE GOOGLE CALENDAR\n// Ahora: cada franja puede tener hasta CAPACIDAD_MAXIMA reservas\n\nconst CAPACIDAD_MAXIMA = 6;\n\n// 1) Leer eventos de Google Calendar desde la entrada\nconst eventos = $input.all().map(item => item.json || {});\n\n// 2) Leer mensaje base desde \"Preparar mensaje CITA\"\nlet base;\ntry {\n  base = $('Preparar mensaje CITA').first().json;\n} catch (e) {\n  base = $json;\n}\n\nconst mensajeBase = base.botMessage || '';\n\n// 3) Configuración de horarios fijos por día de la semana\n// JS getDay(): 0 = Dom, 1 = Lun, 2 = Mar, 3 = Mie, 4 = Jue, 5 = Vie, 6 = Sab\nconst HORARIOS = {\n  1: ['16:00', '18:00'],                       // Lunes\n  2: ['10:00', '12:00', '16:00', '18:00'],     // Martes\n  3: ['16:00', '18:00'],                       // Miércoles\n  4: ['10:00', '12:00', '16:00', '18:00'],     // Jueves\n  5: ['10:00', '12:00'],                       // Viernes\n  // 6, 0 => Sábado, Domingo -> cerrado\n};\n\n// 4) Utilidades de fechas\nfunction formatearFecha(d) {\n  const dia = String(d.getDate()).padStart(2, '0');\n  const mes = String(d.getMonth() + 1).padStart(2, '0');\n  const anyo = d.getFullYear();\n  return `${dia}/${mes}/${anyo}`;\n}\n\nfunction nombreDiaCorto(d) {\n  const nombres = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];\n  return nombres[d.getDay()];\n}\n\n// Extraer YYYY-MM-DD y HH:MM de start.dateTime / start.date\nfunction parseGoogleEventStart(ev) {\n  const start = ev.start || {};\n  let dt = start.dateTime || start.date || null;\n  if (!dt) return null;\n\n  // all-day: \"2025-10-15\"\n  if (dt.length === 10) {\n    return { date: dt, time: null };\n  }\n\n  // dateTime: \"2025-10-15T16:00:00+02:00\"\n  const date = dt.substring(0, 10);   // YYYY-MM-DD\n  const time = dt.substring(11, 16);  // HH:MM\n  return { date, time };\n}\n\n// 5) Construir mapa de CONTADOR de reservas por día y hora\n// Estructura: ocupadosPorDia[YYYY-MM-DD][HH:MM] = nº de citas\nconst ocupadosPorDia = {};\n\nfor (const ev of eventos) {\n  const parsed = parseGoogleEventStart(ev);\n  if (!parsed || !parsed.time) continue;\n\n  const { date, time } = parsed;\n\n  if (!ocupadosPorDia[date]) {\n    ocupadosPorDia[date] = {};\n  }\n\n  ocupadosPorDia[date][time] = (ocupadosPorDia[date][time] || 0) + 1;\n}\n\n// 6) Buscar huecos libres en los próximos N días\nconst NUM_DIAS = 7; // puedes ampliar si quieres\nconst hoy = new Date();\nhoy.setHours(0, 0, 0, 0);\n\nconst huecos = [];\n\nfor (let offset = 0; offset < NUM_DIAS; offset++) {\n  const d = new Date(hoy);\n  d.setDate(hoy.getDate() + offset);\n\n  const dow = d.getDay(); // 0..6\n  const slots = HORARIOS[dow];\n  if (!slots) continue; // fin de semana\n\n  const fechaTexto = formatearFecha(d);                // DD/MM/AAAA\n  const fechaClave = d.toISOString().substring(0, 10); // YYYY-MM-DD\n  const ocupados = ocupadosPorDia[fechaClave] || {};\n\n  for (const hora of slots) {\n    const count = ocupados[hora] || 0;\n\n    // 💡 Solo consideramos libre si hay menos de CAPACIDAD_MAXIMA reservas\n    if (count < CAPACIDAD_MAXIMA) {\n      huecos.push({\n        diaCorto: nombreDiaCorto(d),\n        fechaTexto,            // DD/MM/AAAA\n        hora,                  // HH:MM\n        reservas: count,       // solo por información interna\n        sugerencia: `${fechaTexto} ${hora}`, // para copiar/pegar\n      });\n    }\n  }\n}\n\n// 7) Construir el texto final\nlet texto = mensajeBase;\n\nif (huecos.length === 0) {\n  texto +=\n    '\\nDe momento no veo huecos libres en los próximos días. ' +\n    'Escríbeme igualmente el día y la hora que te vienen bien ' +\n    'en formato *DD/MM/AAAA HH:MM* y lo reviso manualmente 🙏';\n} else {\n  const maxOpciones = 8;\n  const seleccion = huecos.slice(0, maxOpciones);\n\n  texto += '\\n\\nAquí tienes algunas opciones libres en los próximos días:\\n';\n\n  for (const h of seleccion) {\n    texto += `\\n- ${h.diaCorto} ${h.fechaTexto} a las *${h.hora}*  ` +\n             `(${h.reservas}/${CAPACIDAD_MAXIMA} ocupadas) ` +\n             `→ \\`${h.sugerencia}\\``;\n  }\n\n  texto +=\n    '\\n\\n👉 Responde copiando y pegando una de las opciones ' +\n    'en formato `DD/MM/AAAA HH:MM` o proponiendo otra hora.';\n}\n\n// 8) Devolver un único item con botMessage actualizado\nreturn [\n  {\n    json: {\n      ...base,\n      botMessage: texto,\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1904,
+        976
+      ],
+      "id": "8ede7217-8c9b-4c1f-9967-d325a87ffe9c",
+      "name": "Calcular huecos disponibles"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Usamos fechaISO como inicio (viene de \"Parsear fecha\")\nconst inicio = new Date($json.fechaISO);\n\n// Duración 2 horas\nconst fin = new Date(inicio.getTime() + 2 * 60 * 60 * 1000);\n\nreturn [\n  {\n    json: {\n      ...$json,\n      startDateTime: inicio.toISOString(),  // para Google Calendar\n      endDateTime: fin.toISOString(),       // fin 2h después\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        2272
+      ],
+      "id": "f83f15b1-8cbe-4b2c-84ca-050786e46932",
+      "name": "Preparar evento Calendar"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "5cf4feec130e0e00310716611ab2599f1df46f3964fe6b800d399d2ca12c960d@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "pruebas "
+        },
+        "start": "={{ $json.startDateTime }}",
+        "end": "={{ $json.endDateTime }}",
+        "additionalFields": {
+          "attendees": [],
+          "description": "=Cita reservada por {{$node[\"Normalizar mensaje\"].json.name || \"\"}}.\nUsuario: {{$json.userId}}\nNombre: {{$node[\"Normalizar mensaje\"].json.name || \"\"}}\nTeléfono: {{$node[\"Normalizar mensaje\"].json.phone || \"689933328\"}}\n\nRESERVA PAGADA: NO",
+          "guestsCanModify": false,
+          "location": "Europe/Madrid",
+          "summary": "=Cita {{$node[\"Normalizar mensaje\"].json.name || \"\"}}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        848,
+        2272
+      ],
+      "id": "988ca4e6-db41-48e6-9b97-480a9b2b4295",
+      "name": "Create an event"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $node[\"Preparar Mensaje Confirmación Cita\"].json.userId }}",
+        "text": "={{ $node[\"Preparar Mensaje Confirmación Cita\"].json.botMessage }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1664,
+        2272
+      ],
+      "id": "61f0e751-f55a-45c8-b5c6-ca9ab90b3852",
+      "name": "Confirmar cita",
+      "webhookId": "09d98947-2e50-4a52-b0ee-43d07678cd1d"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.userId }}",
+        "text": "=Lo siento no he podido registrar la fecha. ¿Puedes volver a decirmelo?\n\nGracias 😊",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        704,
+        2512
+      ],
+      "id": "41a46094-bac7-4423-978f-9b48ef67e03a",
+      "name": "Error fecha",
+      "webhookId": "20f8ab7b-5a71-40c5-b139-61d2015c423a"
+    },
+    {
+      "parameters": {
+        "jsCode": "// PREPARAR MENSAJE DE CONFIRMACIÓN DE CITA\n\n// Evento recién creado en Google Calendar (entrada de este nodo)\nconst evento = $json;\n\n// Recuperamos los datos originales del usuario (fecha que escribió, userId…)\n// del nodo \"Parsear fecha\"\nlet datosUsuario;\ntry {\n  datosUsuario = $('Parsear fecha').first().json;\n} catch (e) {\n  datosUsuario = {};\n}\n\nconst userId = datosUsuario.userId;\nconst textoOriginal = datosUsuario.textOriginal || datosUsuario.mensaje_original || '';\nconst fechaISO = datosUsuario.fechaISO || '';\nconst fechaISOFin = datosUsuario.fechaISO_fin || '';\n\nconst link = evento.htmlLink || '';\n\nfunction formatearFechaHumana(iso) {\n  if (!iso) return textoOriginal || '';\n  // iso sin zona: \"2025-12-09T16:00:00\"\n  const d = new Date(iso);\n  if (isNaN(d.getTime())) return textoOriginal || '';\n\n  const dia = String(d.getDate()).padStart(2, '0');\n  const mes = String(d.getMonth() + 1).padStart(2, '0');\n  const anyo = d.getFullYear();\n  const hora = String(d.getHours()).padStart(2, '0');\n  const minuto = String(d.getMinutes()).padStart(2, '0');\n\n  return `${dia}/${mes}/${anyo} a las ${hora}:${minuto}`;\n}\n\nconst fechaHumana = formatearFechaHumana(fechaISO);\n\nconst botMessage =\n`💙 Gracias por reservar tu cita en Quiroptimo para el ${fechaHumana}.\\n\\n` +\n`Para finalizar tu reserva, solo necesitas realizar el depósito del 50% (70 €) en este enlace:\\n\\n` + \n`🔗 https://www.paypal.com/ncp/payment/XUS2QYT65R7TU \\n\\n`+\n`En cuanto lo recibamos, tu cita quedará confirmada. \\n\\n` + \n`Si necesitas cambiarla o cancelarla, respóndeme por aquí y lo vemos. 💙 \\n\\n` +\n `Si necesitas ponerte cn contacto con nsotrso puedes a llamarnos a este número de teléfono:   656 61 25 13 `;\n\n\nreturn [\n  {\n    json: {\n      ...datosUsuario,\n      calendarEventId: evento.id,\n      calendarLink: link,\n      botMessage,\n      state: 'cita_confirmada',     // 👈 nuevo estado\n      origen: datosUsuario.origen || null,\n      fechaISO,                     // fecha de inicio de la cita\n      fechaISOFin,                  // fin de la cita (opcional)\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1056,
+        2272
+      ],
+      "id": "5618a828-ed42-4eaf-b88d-79eba5fa43b2",
+      "name": "Preparar Mensaje Confirmación Cita"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into chat_state (user_id, state, origen)\nvalues (\n  '{{$node[\"Preparar Mensaje Confirmación Cita\"].json.userId}}',\n  'menu_recurrente',\n  '{{$node[\"Preparar Mensaje Confirmación Cita\"].json.origen || \"\"}}'\n)\non conflict (user_id)\ndo update set\n  state = excluded.state,\n  origen = excluded.origen,\n  updated_at = now();",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1472,
+        2272
+      ],
+      "id": "388d0039-cba9-48d6-86a6-ff1f540b4af5",
+      "name": "Guardar cita"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- 1) Guardar el mensaje que envía el bot cuando la persona pide cita\nINSERT INTO chat_messages (user_id, state, origen, from_user, message_text)\nVALUES (\n  '{{$json[\"userId\"]}}',\n  '{{$json[\"state\"] || \"\"}}',   -- aquí debería venir 'agendar_esperando_fecha'\n  '{{$json[\"origen\"] || \"\"}}', -- normalmente 'madrid'\n  false,\n  '{{$json[\"botMessage\"]}}'\n);\n\n-- 2) Actualizar el estado global del usuario en chat_state\nINSERT INTO chat_state (user_id, state, origen)\nVALUES (\n  '{{$json[\"userId\"]}}',\n  '{{$json[\"state\"] || \"\"}}',\n  '{{$json[\"origen\"] || \"\"}}'\n)\nON CONFLICT (user_id)\nDO UPDATE SET\n  state  = EXCLUDED.state,\n  origen = EXCLUDED.origen,\n  updated_at = now();\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2496,
+        976
+      ],
+      "id": "57b20e03-cee8-4a8f-8518-eec6ec5327b4",
+      "name": "Guardar pide cita"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -2448,
+        448
+      ],
+      "id": "462c2303-4583-48d9-82c0-aeaf181aa206",
+      "name": "Telegram Trigger",
+      "webhookId": "f49348cf-d757-45a6-aa4b-89e94669cca2"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into chat_users (user_id, channel, phone, name)\nvalues (\n  '{{$json.userId}}',\n  '{{$json.channel}}',\n  '{{$json.phone || \"\"}}',\n  '{{$json.name || \"\"}}'\n)\non conflict (user_id)\ndo update set\n  channel = excluded.channel,\n  phone = excluded.phone,\n  name = excluded.name,\n  updated_at = now();\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1968,
+        288
+      ],
+      "id": "b7bdcfc4-aaff-42e3-8e64-615ed6783360",
+      "name": "Upsert usuario"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      ...$json,\n      botMessage: \"Perfecto 🙂 ¿Sobre qué te podemos ayudar? Cuéntame tu caso.\",\n      state: \"pregunta_caso_esperando\",\n      // origen lo mantenemos tal cual venga\n      origen: $json.origen ?? null,\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1888,
+        1248
+      ],
+      "id": "ad02f9f4-0f11-4512-aed7-4c535ecff4e2",
+      "name": "Preguntar caso"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Preguntar caso').first().json.userId }}",
+        "text": "={{ $('Preguntar caso').first().json.botMessage }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2304,
+        1248
+      ],
+      "id": "1798ff06-b72d-4252-9cbc-4dd27a5fb016",
+      "name": "Enviar preguntar caso",
+      "webhookId": "e0ad8c30-d094-4424-914e-68805cfd65fe"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- 1) Guardar el mensaje del bot\nINSERT INTO chat_messages (user_id, state, origen, from_user, message_text)\nVALUES (\n  '{{$json.userId}}',\n  'pregunta_caso_esperando',\n  '{{$json.origen || \"\"}}',\n  false,\n  '{{$json.botMessage}}'\n);\n\n-- 2) Guardar/actualizar estado y DEVOLVER 1 FILA\nINSERT INTO chat_state (user_id, state, origen)\nVALUES (\n  '{{$json.userId}}',\n  'pregunta_caso_esperando',\n  '{{$json.origen || \"\"}}'\n)\nON CONFLICT (user_id)\nDO UPDATE SET\n  state = EXCLUDED.state,\n  origen = EXCLUDED.origen,\n  updated_at = now()\nRETURNING user_id, state, origen;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2096,
+        1248
+      ],
+      "id": "2a389bac-6bfa-405d-937a-9cd9a5121d03",
+      "name": "Guardar caso"
+    },
+    {
+      "parameters": {
+        "jsCode": "const nombre =\n  $json.message?.from?.first_name ||\n  $json.message?.from?.username ||\n  'Sin nombre';\n\nconst phone = $input.first().json.phone;\n\nconst texto = $json.textOriginal || '';\nconst userId = $json.userId;\n\nconst adminText =\n  `📩 *Nueva consulta (caso)*\\n` +\n  `👤 Nombre: ${nombre}\\n` +\n  `☎ Teléfono: ${phone} \\n` +\n  `🆔 Usuario: ${userId}\\n` +\n  `📍 Origen: ${$json.origen || ''}\\n\\n` +\n  `📝 Mensaje:\\n${texto}`;\n\nreturn [{ json: { ...$json, adminText, name: nombre } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        128,
+        2736
+      ],
+      "id": "b5001ce2-48d7-48a5-981a-a67667d4b373",
+      "name": "Preparar reenvío caso"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "with cancelled as (\n  update appointments\n  set status = 'cancelled', updated_at = now()\n  where user_id = '{{$json.userId}}'\n    and status = 'active'\n    and start_time >= now()\n  returning id\n),\ninserted as (\n  insert into appointments (\n    user_id, calendar_event_id, start_time, end_time, status, contact_name, contact_phone\n  )\n  values (\n    '{{$json.userId}}',\n    '{{$json.calendarEventId}}',\n    '{{$json.fechaISO}}'::timestamptz,\n    ('{{$json.fechaISO}}'::timestamptz + interval '2 hours'),\n    'active',\n    '{{$json.name || \"\"}}',\n    '{{$json.phone || \"\"}}'\n  )\n  returning *\n)\nselect * from inserted;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1248,
+        2272
+      ],
+      "id": "c4cd8086-2767-40b4-a843-62431e46a4b0",
+      "name": "Upsert appointment active"
+    },
+    {
+      "parameters": {
+        "jsCode": "const txt = ($json.textNormalizado || '').trim().toLowerCase();\n\n// Normaliza emojis/variantes típicas del menú\nconst t = txt\n  .replace(/[“”\"']/g, '')\n  .replace(/\\s+/g, ' ')\n  .trim();\n\nlet accion = 'no_entendido';\n\n// Helpers\nconst hasAny = (arr) => arr.some((k) => t.includes(k));\nconst isOption = (n) =>\n  new RegExp(`(^|\\\\b)(?:opcion\\\\s*)?${n}(?:\\\\b|\\\\s|️⃣|\\\\.)`, 'i').test(t) ||\n  t === `${n}` ||\n  t === `${n}️⃣`;\n\n// --- NUEVA CITA (1) ---\nconst keysNueva = [\n  '1', '1️⃣', 'opcion 1', 'opción 1', 'uno', 'opcion uno', 'opción uno',\n  'nueva', 'nueva cita', 'cita nueva', 'agendar', 'agenda', 'agendar cita',\n  'reservar', 'reserva', 'reservar cita', 'pedir cita', 'quiero cita',\n  'quiero una cita', 'solicitar cita', 'coger cita', 'concertar cita',\n  'sacar cita', 'programar cita', 'agendar una cita', 'hacer una cita',\n  'cita', 'cita con vosotros', 'cita con la clinica', 'cita con la clínica'\n];\n\n// --- MODIFICAR CITA (2) ---\nconst keysModificar = [\n  '2', '2️⃣', 'opcion 2', 'opción 2', 'dos', 'opcion dos', 'opción dos',\n  'modificar', 'cambiar', 'reprogramar', 'mover', 'posponer', 'aplazar',\n  'editar', 'ajustar', 'pasar', 'cambiar fecha', 'cambiar hora',\n  'modificar cita', 'cambiar cita', 'reprogramar cita', 'mover cita',\n  'aplazar cita', 'posponer cita', 'quiero cambiar la cita',\n  'quiero modificar la cita', 'quiero reprogramar', 'otra hora', 'otro dia',\n  'otro día', 'no puedo', 'no me viene bien', 'me viene mal', 'me surge',\n  'tengo que cambiar'\n];\n\n// --- TRATAMIENTO / CONSULTA (3) ---\nconst keysTratamiento = [\n  '3', '3️⃣', 'opcion 3', 'opción 3', 'tres', 'opcion tres', 'opción tres',\n  'tratamiento', 'mi tratamiento', 'sobre el tratamiento', 'seguimiento',\n  'mi caso', 'sobre mi caso', 'preguntar', 'pregunta', 'consulta', 'duda',\n  'tengo una duda', 'tengo una consulta', 'necesito ayuda', 'ayuda',\n  'me duele', 'dolor', 'sintomas', 'síntomas', 'me encuentro', 'tengo',\n  'recomendacion', 'recomendación', 'que hago', 'qué hago', 'que tal',\n  'qué tal', 'informe', 'resultado', 'evolucion', 'evolución'\n];\n\n// --- CANCELAR CITA (4) ---\nconst keysCancelar = [\n  '4', '4️⃣', 'opcion 4', 'opción 4', 'cuatro', 'opcion cuatro', 'opción cuatro',\n  'cancelar', 'cancelacion', 'cancelación', 'anular', 'anulacion', 'anulación',\n  'borrar', 'eliminar', 'cancelar cita', 'anular cita', 'borrar cita', 'eliminar cita',\n  'quiero cancelar', 'quiero anular', 'quiero borrar la cita', 'quiero eliminar la cita',\n  'cancela mi cita', 'anula mi cita', 'borra mi cita', 'elimina mi cita'\n];\n\n// 1) Prioridades por intención (cancelar antes que nueva porque \"cita\" aparece en keysNueva)\nif (isOption(4) || hasAny(keysCancelar)) {\n  accion = 'cancelar';\n} else if (isOption(1) || hasAny(keysNueva)) {\n  // OJO: si dice \"cambiar/modificar\" no debe caer en nueva\n  if (\n    hasAny(['modificar', 'cambiar', 'reprogramar', 'mover', 'aplazar', 'posponer']) ||\n    isOption(2)\n  ) {\n    accion = 'modificar';\n  } else {\n    accion = 'nueva';\n  }\n} else if (isOption(2) || hasAny(keysModificar)) {\n  accion = 'modificar';\n} else if (isOption(3) || hasAny(keysTratamiento)) {\n  accion = 'tratamiento';\n}\n\nreturn [{ json: { ...$json, accion } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        336,
+        1568
+      ],
+      "id": "e603e9ad-ec19-4be1-a179-544f094d5d90",
+      "name": "Detectar acción recurrente"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    ...$json,\n    botMessage:\n      \"¿Hola! 😄 ¿En qué te puedo ayudar?\\n\\n\" +\n      \"1️⃣ Agendar una cita nueva\\n\" +\n      \"2️⃣ Modificar una cita existente\\n\" +\n      \"3️⃣ Preguntar sobre tu tratamiento\\n\" +\n      \"4️⃣ Cancelar mi cita\",\n    state: \"menu_recurrente\",\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        784,
+        2032
+      ],
+      "id": "85f13a0b-9abc-498c-a35c-d1383c529d52",
+      "name": "Preparar menú recurrente"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into chat_state (user_id, state, origen)\nvalues ('{{$json.userId}}', 'menu_recurrente', '{{$json.origen || \"\"}}')\non conflict (user_id)\ndo update set state=excluded.state, origen=excluded.origen, updated_at=now();",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1184,
+        2032
+      ],
+      "id": "4eb4b50c-1b2e-4596-8cf2-015fa289e356",
+      "name": "Guardar estado menu_recurrente"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH appt AS (\n  SELECT\n    id,\n    calendar_event_id,\n    start_time\n  FROM appointments\n  WHERE user_id = '{{$json.userId}}'\n    AND status = 'active'\n    AND start_time >= now()\n    AND start_time <= now() + interval '7 days'\n  ORDER BY start_time ASC\n  LIMIT 1\n)\nSELECT\n  (SELECT id FROM appt)                AS id,\n  (SELECT calendar_event_id FROM appt) AS calendar_event_id,\n  (SELECT start_time FROM appt)        AS start_time,\n  EXISTS (SELECT 1 FROM appt)          AS has_appointment;",
+        "options": {
+          "queryReplacement": "={{ [ $json.userId ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1232,
+        1504
+      ],
+      "id": "542ecc7c-0e09-46dc-9f03-4597127fed5a",
+      "name": "Buscar cita activa próxima"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "6bc61395-49fa-4699-8340-781c74d43451",
+              "leftValue": "={{ $json.has_appointment }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1472,
+        1504
+      ],
+      "id": "37563832-1289-4080-a302-9f97c15a3cd0",
+      "name": "¿Tiene cita próxima?"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{$json.accion}}",
+                    "rightValue": "nueva",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "aeeedc4a-c817-4571-ab97-4e9c6af6bce1"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "nueva"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "210e8271-33bb-499b-b5ac-2b0419d2a70a",
+                    "leftValue": "={{$json.accion}}",
+                    "rightValue": "modificar",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "modificar"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "7539d24a-89af-4522-a770-6b32c148ab1d",
+                    "leftValue": "={{$json.accion}}",
+                    "rightValue": "tratamiento",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "tratamiento"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "64929aeb-e029-4aaf-82fa-b4598ebce08d",
+                    "leftValue": "={{$json.accion}}",
+                    "rightValue": "cancelar",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "cancelar"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        544,
+        1536
+      ],
+      "id": "b24cc91e-5892-453f-9886-d17055484044",
+      "name": "Router acción recurrente"
+    },
+    {
+      "parameters": {
+        "jsCode": "const row = $items(\"Buscar cita activa próxima\")[0].json;\nconst d = new Date(row.start_time);\n\nconst dd = String(d.getDate()).padStart(2,'0');\nconst mm = String(d.getMonth()+1).padStart(2,'0');\nconst yy = d.getFullYear();\nconst hh = String(d.getHours()).padStart(2,'0');\nconst mi = String(d.getMinutes()).padStart(2,'0');\n\nreturn [{\n  json: {\n    ...$json,\n    state: 'confirmar_modificar',\n    botMessage: `Veo que ya tienes una cita para el ${dd}/${mm}/${yy} a las ${hh}:${mi}.\\n\\n¿Deseas modificarla? (sí / no)`,\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1888,
+        1424
+      ],
+      "id": "57215a67-5975-4e6f-880e-62c0558a5158",
+      "name": "Preguntar si desea modificar"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- Guardar mensaje del bot\ninsert into chat_messages (user_id, state, origen, from_user, message_text)\nvalues (\n  '{{$json.userId}}',\n  'confirmar_modificar',\n  '{{$json.origen || \"\"}}',\n  false,\n  '{{$json.botMessage}}'\n);\n\n-- Guardar estado\ninsert into chat_state (user_id, state, origen)\nvalues (\n  '{{$json.userId}}',\n  'confirmar_modificar',\n  '{{$json.origen || \"\"}}'\n)\non conflict (user_id)\ndo update set state=excluded.state, origen=excluded.origen, updated_at=now();",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2304,
+        1424
+      ],
+      "id": "db1a1648-b603-4c83-9bbb-fd5184863423",
+      "name": "Guardar estado confirmar_modificar"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $node[\"Preguntar si desea modificar\"].json.userId || $node[\"Preguntar si desea modificar\"].json.user_id }}",
+        "text": "={{ $node[\"Preguntar si desea modificar\"].json.botMessage }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2096,
+        1424
+      ],
+      "id": "c35ab54e-04ad-4638-966f-ecdfcea619c5",
+      "name": "Enviar pregunta modificar",
+      "webhookId": "876f0404-8de9-44b8-9c63-76ad3a1f4146"
+    },
+    {
+      "parameters": {
+        "jsCode": "const txt = ($json.textNormalizado || '').trim();\nlet resp = 'no_entendido';\n\nif (/\\bsi\\b/.test(txt) || txt === 's' || txt.includes('vale') || txt.includes('ok')) resp = 'si';\nelse if (/\\bno\\b/.test(txt) || txt.includes('mejor no')) resp = 'no';\n\nreturn [{ json: { ...$json, resp } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        32,
+        3120
+      ],
+      "id": "5462d528-75b7-4540-9e29-df004eca535c",
+      "name": "Detectar sí/no modificación cita"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{$json.resp}}",
+                    "rightValue": "si",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "ab2d9f23-8f18-48c0-b208-9f5277662411"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "si"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "d79eb87b-8f5f-46ab-967c-64b7aa6f7f12",
+                    "leftValue": "={{$json.resp}}",
+                    "rightValue": "no",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "no"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        3104
+      ],
+      "id": "b868f596-ce0a-49de-9ca8-901b7dd988eb",
+      "name": "Router sí/no"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    ...$json,\n    botMessage: \"Perfecto 😊 Mantengo tu cita como está.\\nSi tienes cualquier otra consulta no dudes en contactarnos.\",\n    state: \"menu_recurrente\"  // o menu_madrid si aún no tienes menu_recurrente\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        656,
+        3136
+      ],
+      "id": "1df0ced1-a97e-4e54-abec-4fc7b0e93837",
+      "name": "Mensaje mantener cita"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into chat_state (user_id, state, origen)\nvalues ('{{$json.userId}}', '{{$json.state}}', '{{$json.origen || \"\"}}')\non conflict (user_id)\ndo update set state=excluded.state, origen=excluded.origen, updated_at=now();",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1056,
+        3136
+      ],
+      "id": "26cc0a80-b4d9-4574-9910-d438c9caa530",
+      "name": "Guardar estado menu_recurrente1"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    ...$json,\n    botMessage:\n      \"Perfecto 🙌 Te muestro huecos disponibles.\\n\\n\" +\n      \"👉 Responde con **DD/MM/AAAA HH:MM**\\n\" +\n      \"Ejemplo: `15/10/2025 16:00`\",\n    state: \"modificar_esperando_fecha\"\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        2928
+      ],
+      "id": "b542b1a0-bd71-4896-aa45-670ec1daf83c",
+      "name": "Preparar mensaje modificar"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "5cf4feec130e0e00310716611ab2599f1df46f3964fe6b800d399d2ca12c960d@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "pruebas "
+        },
+        "timeMax": "={{ $now.plus({ week: 2 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        912,
+        2928
+      ],
+      "id": "ffd29aa8-9abf-4e6d-8fb5-35206aa1d209",
+      "name": "Obtener eventos",
+      "retryOnFail": false,
+      "executeOnce": false,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// CALCULAR HUECOS DISPONIBLES A PARTIR DE GOOGLE CALENDAR\n// Ahora: cada franja puede tener hasta CAPACIDAD_MAXIMA reservas\n\nconst CAPACIDAD_MAXIMA = 6;\n\n// 1) Leer eventos de Google Calendar desde la entrada\nconst eventos = $input.all().map(item => item.json || {});\n\n// 2) Leer mensaje base desde \"Preparar mensaje modificar\"\nlet base;\ntry {\n  base = $('Preparar mensaje modificar').first().json;\n} catch (e) {\n  base = $json;\n}\n\nconst mensajeBase = base.botMessage || '';\n\n// 3) Configuración de horarios fijos por día de la semana\n// JS getDay(): 0 = Dom, 1 = Lun, 2 = Mar, 3 = Mie, 4 = Jue, 5 = Vie, 6 = Sab\nconst HORARIOS = {\n  1: ['16:00', '18:00'],                       // Lunes\n  2: ['10:00', '12:00', '16:00', '18:00'],     // Martes\n  3: ['16:00', '18:00'],                       // Miércoles\n  4: ['10:00', '12:00', '16:00', '18:00'],     // Jueves\n  5: ['10:00', '12:00'],                       // Viernes\n  // 6, 0 => Sábado, Domingo -> cerrado\n};\n\n// 4) Utilidades de fechas\nfunction formatearFecha(d) {\n  const dia = String(d.getDate()).padStart(2, '0');\n  const mes = String(d.getMonth() + 1).padStart(2, '0');\n  const anyo = d.getFullYear();\n  return `${dia}/${mes}/${anyo}`;\n}\n\nfunction nombreDiaCorto(d) {\n  const nombres = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];\n  return nombres[d.getDay()];\n}\n\n// Extraer YYYY-MM-DD y HH:MM de start.dateTime / start.date\nfunction parseGoogleEventStart(ev) {\n  const start = ev.start || {};\n  let dt = start.dateTime || start.date || null;\n  if (!dt) return null;\n\n  // all-day: \"2025-10-15\"\n  if (dt.length === 10) {\n    return { date: dt, time: null };\n  }\n\n  // dateTime: \"2025-10-15T16:00:00+02:00\"\n  const date = dt.substring(0, 10);   // YYYY-MM-DD\n  const time = dt.substring(11, 16);  // HH:MM\n  return { date, time };\n}\n\n// 5) Construir mapa de CONTADOR de reservas por día y hora\n// Estructura: ocupadosPorDia[YYYY-MM-DD][HH:MM] = nº de citas\nconst ocupadosPorDia = {};\n\nfor (const ev of eventos) {\n  const parsed = parseGoogleEventStart(ev);\n  if (!parsed || !parsed.time) continue;\n\n  const { date, time } = parsed;\n\n  if (!ocupadosPorDia[date]) {\n    ocupadosPorDia[date] = {};\n  }\n\n  ocupadosPorDia[date][time] = (ocupadosPorDia[date][time] || 0) + 1;\n}\n\n// 6) Buscar huecos libres en los próximos N días\nconst NUM_DIAS = 7; // puedes ampliar si quieres\nconst hoy = new Date();\nhoy.setHours(0, 0, 0, 0);\n\nconst huecos = [];\n\nfor (let offset = 0; offset < NUM_DIAS; offset++) {\n  const d = new Date(hoy);\n  d.setDate(hoy.getDate() + offset);\n\n  const dow = d.getDay(); // 0..6\n  const slots = HORARIOS[dow];\n  if (!slots) continue; // fin de semana\n\n  const fechaTexto = formatearFecha(d);                // DD/MM/AAAA\n  const fechaClave = d.toISOString().substring(0, 10); // YYYY-MM-DD\n  const ocupados = ocupadosPorDia[fechaClave] || {};\n\n  for (const hora of slots) {\n    const count = ocupados[hora] || 0;\n\n    // 💡 Solo consideramos libre si hay menos de CAPACIDAD_MAXIMA reservas\n    if (count < CAPACIDAD_MAXIMA) {\n      huecos.push({\n        diaCorto: nombreDiaCorto(d),\n        fechaTexto,            // DD/MM/AAAA\n        hora,                  // HH:MM\n        reservas: count,       // solo por información interna\n        sugerencia: `${fechaTexto} ${hora}`, // para copiar/pegar\n      });\n    }\n  }\n}\n\n// 7) Construir el texto final\nlet texto = mensajeBase;\n\nif (huecos.length === 0) {\n  texto +=\n    '\\nDe momento no veo huecos libres en los próximos días. ' +\n    'Escríbeme igualmente el día y la hora que te vienen bien ' +\n    'en formato *DD/MM/AAAA HH:MM* y lo reviso manualmente 🙏';\n} else {\n  const maxOpciones = 8;\n  const seleccion = huecos.slice(0, maxOpciones);\n\n  texto += '\\n\\nAquí tienes algunas opciones libres en los próximos días:\\n';\n\n  for (const h of seleccion) {\n    texto += `\\n- ${h.diaCorto} ${h.fechaTexto} a las *${h.hora}*  ` +\n             `(${h.reservas}/${CAPACIDAD_MAXIMA} ocupadas) ` +\n             `→ \\`${h.sugerencia}\\``;\n  }\n\n  texto +=\n    '\\n\\n👉 Responde copiando y pegando una de las opciones ' +\n    'en formato `DD/MM/AAAA HH:MM` o proponiendo otra hora.';\n}\n\n// 8) Devolver un único item con botMessage actualizado\nreturn [\n  {\n    json: {\n      ...base,\n      botMessage: texto,\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1104,
+        2928
+      ],
+      "id": "d5653615-c0ad-461f-9e4f-37513e38fdbb",
+      "name": "Calcular huecos disponibles para modificar cita"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into chat_state (user_id, state, origen)\nvalues (\n  '{{$node[\"Preparar mensaje modificar\"].json.userId}}',\n  'modificar_esperando_fecha',\n  '{{$node[\"Preparar mensaje modificar\"].json.origen || \"\"}}'\n)\non conflict (user_id)\ndo update set state=excluded.state, origen=excluded.origen, updated_at=now();",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1296,
+        2928
+      ],
+      "id": "f0d36b00-1925-4925-85a1-b045bb1c5299",
+      "name": "Guardar estado modificar_esperando_fecha"
+    },
+    {
+      "parameters": {
+        "content": "## SI EL USUARIO ES NUEVO \n\n\n- Mensaje de bienvenida\n- Pide origen\n- Que desea 3 opciones: info, cita, caso",
+        "height": 1312,
+        "width": 2160,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1c750bfd-c0e5-4a5f-be0f-b0fcdfb893b8",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.userId}}",
+        "text": "={{$json.botMessage}}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        992,
+        2032
+      ],
+      "id": "d2e7f44c-db7b-4646-9aad-03b0c0e29724",
+      "name": "Enviar menu recurrente",
+      "webhookId": "876f0404-8de9-44b8-9c63-76ad3a1f4146"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.userId }}",
+        "text": "={{ $json.botMessage }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        848,
+        3136
+      ],
+      "id": "55be70cf-21e6-488e-aa13-c8267b2f0be5",
+      "name": "Enviar mantener cita",
+      "webhookId": "70054476-21ee-4527-b095-ca8e896299a3"
+    },
+    {
+      "parameters": {
+        "chatId": "={{$node[\"Preparar mensaje modificar\"].json.userId}}",
+        "text": "={{ $node[\"Calcular huecos disponibles para modificar cita\"].json.botMessage }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1488,
+        2928
+      ],
+      "id": "1ea3478f-5e26-41b9-a06c-6d7c3f870df1",
+      "name": "Enviar huecos modificar",
+      "webhookId": "70054476-21ee-4527-b095-ca8e896299a3"
+    },
+    {
+      "parameters": {
+        "jsCode": "const txt = $json.textNormalizado || '';\n\n// patrón: dd/mm/aaaa hh:mm\nconst match = txt.match(/(\\d{1,2})[\\/\\-](\\d{1,2})[\\/\\-](\\d{4})\\s+(\\d{1,2}):(\\d{2})/);\n\nif (!match) {\n  return [\n    {\n      json: {\n        ...$json,\n        parseOk: false,\n      },\n    },\n  ];\n}\n\nconst [_, d, m, y, hh, mm] = match;\nconst dia = d.padStart(2, '0');\nconst mes = m.padStart(2, '0');\nconst hora = hh.padStart(2, '0');\nconst minuto = mm;\n\nconst fechaISO = `${y}-${mes}-${dia}T${hora}:${minuto}:00`;\n\nreturn [\n  {\n    json: {\n      ...$json,\n      parseOk: true,\n      fechaISO,\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        3504
+      ],
+      "id": "69d61812-7597-47b1-9816-e2f37011eab0",
+      "name": "Parsear fecha1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8b49fa2d-4cf6-4b05-b956-130c2f2ed4bd",
+              "leftValue": "={{ $json.parseOk }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        432,
+        3504
+      ],
+      "id": "d21f1ec3-9d8c-4f19-b07e-9c04df411e1a",
+      "name": "¿Fecha Ok?1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Usamos fechaISO como inicio (viene de \"Parsear fecha\")\nconst inicio = new Date($json.fechaISO);\n\n// Duración 2 horas\nconst fin = new Date(inicio.getTime() + 2 * 60 * 60 * 1000);\n\nreturn [\n  {\n    json: {\n      ...$json,\n      startDateTime: inicio.toISOString(),  // para Google Calendar\n      endDateTime: fin.toISOString(),       // fin 2h después\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        3408
+      ],
+      "id": "efe69dc6-42cc-4c97-a673-fbf1a680f4cd",
+      "name": "Preparar evento Calendar1"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "5cf4feec130e0e00310716611ab2599f1df46f3964fe6b800d399d2ca12c960d@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "pruebas "
+        },
+        "start": "={{ $json.startDateTime }}",
+        "end": "={{ $json.endDateTime }}",
+        "additionalFields": {
+          "attendees": [],
+          "description": "=Cita reservada por {{$node[\"Normalizar mensaje\"].json.name || \"\"}}.\nUsuario: {{$json.userId}}\nNombre: {{$node[\"Normalizar mensaje\"].json.name || \"\"}}\nTeléfono: {{$node[\"Normalizar mensaje\"].json.phone || \"689933328\"}}\n\nRESERVA PAGADA: NO",
+          "guestsCanModify": false,
+          "location": "Europe/Madrid",
+          "summary": "=Cita {{$node[\"Normalizar mensaje\"].json.name || \"\"}}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        848,
+        3408
+      ],
+      "id": "1aca3c49-0611-485e-8494-57fba2f2cf47",
+      "name": "Create an event1"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $node[\"Normalizar mensaje\"].json.userId }}",
+        "text": "={{ $node[\"Preparar Mensaje Confirmación Cita1\"].json.botMessage }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2000,
+        3408
+      ],
+      "id": "fc1234ae-9b0e-46da-a4bc-1a8bac83ae63",
+      "name": "Confirmar cita1",
+      "webhookId": "09d98947-2e50-4a52-b0ee-43d07678cd1d"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.userId }}",
+        "text": "=Lo siento no he podido registrar la fecha. ¿Puedes volver a decirmelo?\n\nGracias 😊",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        704,
+        3648
+      ],
+      "id": "a1707460-0ac9-47e3-bbfa-f29d45c547eb",
+      "name": "Error fecha1",
+      "webhookId": "20f8ab7b-5a71-40c5-b139-61d2015c423a"
+    },
+    {
+      "parameters": {
+        "jsCode": "// PREPARAR MENSAJE DE CONFIRMACIÓN DE CITA\n\n// Evento recién creado en Google Calendar (entrada de este nodo)\nconst evento = $json;\n\n// Recuperamos los datos originales del usuario (fecha que escribió, userId…)\n// del nodo \"Parsear fecha\"\nlet datosUsuario;\ntry {\n  datosUsuario = $('Parsear fecha1').first().json;\n} catch (e) {\n  datosUsuario = {};\n}\n\nconst userId = datosUsuario.userId;\nconst textoOriginal = datosUsuario.textOriginal || datosUsuario.mensaje_original || '';\nconst fechaISO = datosUsuario.fechaISO || '';\nconst fechaISOFin = datosUsuario.fechaISO_fin || '';\n\nconst link = evento.htmlLink || '';\n\nfunction formatearFechaHumana(iso) {\n  if (!iso) return textoOriginal || '';\n  // iso sin zona: \"2025-12-09T16:00:00\"\n  const d = new Date(iso);\n  if (isNaN(d.getTime())) return textoOriginal || '';\n\n  const dia = String(d.getDate()).padStart(2, '0');\n  const mes = String(d.getMonth() + 1).padStart(2, '0');\n  const anyo = d.getFullYear();\n  const hora = String(d.getHours()).padStart(2, '0');\n  const minuto = String(d.getMinutes()).padStart(2, '0');\n\n  return `${dia}/${mes}/${anyo} a las ${hora}:${minuto}`;\n}\n\nconst fechaHumana = formatearFechaHumana(fechaISO);\n\nconst botMessage =\n  `Genial 🙌 he modifcado tu cita para el ${fechaHumana}.\\n\\n` +\n  `Si necesitas cambiarla o cancelarla, respóndeme por aquí y lo vemos.\\n\\n`+\n  `Si necesitas ponerte en contacto con nosotros puedes llamarnos al siguiente número de   teléfono:  656   61 25 13`;\n\n\nreturn [\n  {\n    json: {\n      ...datosUsuario,\n      calendarEventId: evento.id,\n      calendarLink: link,\n      botMessage,\n      state: 'menu_recurrente',     // 👈 nuevo estado\n      origen: datosUsuario.origen || null,\n      fechaISO,                     // fecha de inicio de la cita\n      fechaISOFin,                  // fin de la cita (opcional)\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1456,
+        3408
+      ],
+      "id": "b8435999-a156-4d65-b495-c7c35cb62542",
+      "name": "Preparar Mensaje Confirmación Cita1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO chat_state (user_id, state, origen)\nVALUES (\n  '{{$node[\"Preparar Mensaje Confirmación Cita1\"].json.userId}}',\n  'menu_recurrente',\n  '{{$node[\"Preparar Mensaje Confirmación Cita1\"].json.origen || \"\"}}'\n)\nON CONFLICT (user_id)\nDO UPDATE SET\n  state = EXCLUDED.state,\n  origen = EXCLUDED.origen,\n  updated_at = now()\nRETURNING user_id, state, origen;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1808,
+        3408
+      ],
+      "id": "6f816bd3-a9b8-49ac-878e-9089489e25dc",
+      "name": "Guardar cita1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- 1) Cancelar en BD SOLO la cita antigua\nupdate appointments\nset status = 'cancelled', updated_at = now()\nwhere user_id = '{{$node[\"Preparar Mensaje Confirmación Cita1\"].json.userId}}'\n  and status = 'active'\n  and calendar_event_id = '{{$items(\"Buscar cita activa para borrar\")[0].json.calendar_event_id}}';\n\n-- 2) Insertar la nueva como activa (DEVOLVIENDO FILA para que n8n no se quede sin output)\ninsert into appointments (user_id, calendar_event_id, start_time, end_time, status, contact_name, contact_phone)\nvalues (\n  '{{$node[\"Preparar Mensaje Confirmación Cita1\"].json.userId}}',\n  '{{$node[\"Create an event1\"].json.id}}',\n  '{{$node[\"Preparar evento Calendar1\"].json.startDateTime}}'::timestamptz,\n  '{{$node[\"Preparar evento Calendar1\"].json.endDateTime}}'::timestamptz,\n  'active',\n  '{{$node[\"Normalizar mensaje\"].json.name || \"\"}}',\n  '{{$node[\"Normalizar mensaje\"].json.phone || \"\"}}'\n)\nreturning id, user_id, calendar_event_id, start_time, end_time, status;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1632,
+        3408
+      ],
+      "id": "7b4d3b0f-655d-47ca-8b3e-de6011e320c7",
+      "name": "Upsert appointment active1"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "5cf4feec130e0e00310716611ab2599f1df46f3964fe6b800d399d2ca12c960d@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "pruebas "
+        },
+        "eventId": "={{ $items(\"Buscar cita activa para borrar\")[0].json.calendar_event_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        1264,
+        3408
+      ],
+      "id": "12406bb1-6029-44d7-9fc3-957c165e3778",
+      "name": "Delete an event"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "select calendar_event_id\nfrom appointments\nwhere user_id = '{{$node[\"Normalizar mensaje\"].json.userId}}'\n  and status = 'active'\n  and start_time >= now()\norder by start_time asc\nlimit 1;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1056,
+        3408
+      ],
+      "id": "59b99813-9ae3-41a0-8182-0a06d5635df2",
+      "name": "Buscar cita activa para borrar"
+    },
+    {
+      "parameters": {
+        "jsCode": "const aviso = $json.flow_reason === 'modificar_sin_cita'\n  ? \"Ahora mismo no veo ninguna cita próxima para modificar.\\nSi quieres, podemos reservar una nueva 😊\\n\\n\"\n  : \"\";\n\nreturn [\n  {\n    json: {\n      ...$json,\n      botMessage:\n        aviso +\n        \"Nuestros horarios para agendar primera cita 📝  \\n\\n\" +\n        \"Lunes:    16:00, 18:00  \\n\" +\n        \"Martes:   10:00, 12:00, 16:00, 18:00  \\n\" +\n        \"Miércoles: 16:00, 18:00  \\n\" +\n        \"Jueves:   10:00, 12:00, 16:00, 18:00  \\n\" +\n        \"Viernes:  10:00, 12:00  \\n\" +\n        \"Sábado:   Cerrado  \\n\" +\n        \"Domingo:  Cerrado  \\n\\n\" +\n        \"Estos son los horarios generales que tenemos.\\n\\n\" +\n        \"👉 Escríbeme el día y la hora que te vienen bien en formato **DD/MM/AAAA HH:MM**  \\n\" +\n        \"Ejemplo: `15/10/2025 16:00`\\n\",\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1888,
+        1600
+      ],
+      "id": "7d0fa807-331e-4867-b7ed-daa4cf88cf0a",
+      "name": "Preparar mensaje CITA1"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    ...$json,\n    flow_reason: 'modificar_sin_cita',\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        1600
+      ],
+      "id": "339936ea-5145-4389-88bc-b1bbdefd4e8b",
+      "name": "Flag sin cita para modificar"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "5cf4feec130e0e00310716611ab2599f1df46f3964fe6b800d399d2ca12c960d@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "pruebas "
+        },
+        "timeMax": "={{ $now.plus({ week: 2 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        2080,
+        1600
+      ],
+      "id": "2f245e01-e710-40a6-b2b7-46df39deaf13",
+      "name": "Get many events1",
+      "retryOnFail": false,
+      "executeOnce": false,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// CALCULAR HUECOS DISPONIBLES A PARTIR DE GOOGLE CALENDAR\n// Ahora: cada franja puede tener hasta CAPACIDAD_MAXIMA reservas\n\nconst CAPACIDAD_MAXIMA = 6;\n\n// 1) Leer eventos de Google Calendar desde la entrada\nconst eventos = $input.all().map(item => item.json || {});\n\n// 2) Leer mensaje base desde \"Preparar mensaje CITA\"\nlet base;\ntry {\n  base = $('Preparar mensaje CITA').first().json;\n} catch (e) {\n  base = $json;\n}\n\nconst mensajeBase = base.botMessage || '';\n\n// 3) Configuración de horarios fijos por día de la semana\n// JS getDay(): 0 = Dom, 1 = Lun, 2 = Mar, 3 = Mie, 4 = Jue, 5 = Vie, 6 = Sab\nconst HORARIOS = {\n  1: ['16:00', '18:00'],                       // Lunes\n  2: ['10:00', '12:00', '16:00', '18:00'],     // Martes\n  3: ['16:00', '18:00'],                       // Miércoles\n  4: ['10:00', '12:00', '16:00', '18:00'],     // Jueves\n  5: ['10:00', '12:00'],                       // Viernes\n  // 6, 0 => Sábado, Domingo -> cerrado\n};\n\n// 4) Utilidades de fechas\nfunction formatearFecha(d) {\n  const dia = String(d.getDate()).padStart(2, '0');\n  const mes = String(d.getMonth() + 1).padStart(2, '0');\n  const anyo = d.getFullYear();\n  return `${dia}/${mes}/${anyo}`;\n}\n\nfunction nombreDiaCorto(d) {\n  const nombres = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];\n  return nombres[d.getDay()];\n}\n\n// Extraer YYYY-MM-DD y HH:MM de start.dateTime / start.date\nfunction parseGoogleEventStart(ev) {\n  const start = ev.start || {};\n  let dt = start.dateTime || start.date || null;\n  if (!dt) return null;\n\n  // all-day: \"2025-10-15\"\n  if (dt.length === 10) {\n    return { date: dt, time: null };\n  }\n\n  // dateTime: \"2025-10-15T16:00:00+02:00\"\n  const date = dt.substring(0, 10);   // YYYY-MM-DD\n  const time = dt.substring(11, 16);  // HH:MM\n  return { date, time };\n}\n\n// 5) Construir mapa de CONTADOR de reservas por día y hora\n// Estructura: ocupadosPorDia[YYYY-MM-DD][HH:MM] = nº de citas\nconst ocupadosPorDia = {};\n\nfor (const ev of eventos) {\n  const parsed = parseGoogleEventStart(ev);\n  if (!parsed || !parsed.time) continue;\n\n  const { date, time } = parsed;\n\n  if (!ocupadosPorDia[date]) {\n    ocupadosPorDia[date] = {};\n  }\n\n  ocupadosPorDia[date][time] = (ocupadosPorDia[date][time] || 0) + 1;\n}\n\n// 6) Buscar huecos libres en los próximos N días\nconst NUM_DIAS = 7; // puedes ampliar si quieres\nconst hoy = new Date();\nhoy.setHours(0, 0, 0, 0);\n\nconst huecos = [];\n\nfor (let offset = 0; offset < NUM_DIAS; offset++) {\n  const d = new Date(hoy);\n  d.setDate(hoy.getDate() + offset);\n\n  const dow = d.getDay(); // 0..6\n  const slots = HORARIOS[dow];\n  if (!slots) continue; // fin de semana\n\n  const fechaTexto = formatearFecha(d);                // DD/MM/AAAA\n  const fechaClave = d.toISOString().substring(0, 10); // YYYY-MM-DD\n  const ocupados = ocupadosPorDia[fechaClave] || {};\n\n  for (const hora of slots) {\n    const count = ocupados[hora] || 0;\n\n    // 💡 Solo consideramos libre si hay menos de CAPACIDAD_MAXIMA reservas\n    if (count < CAPACIDAD_MAXIMA) {\n      huecos.push({\n        diaCorto: nombreDiaCorto(d),\n        fechaTexto,            // DD/MM/AAAA\n        hora,                  // HH:MM\n        reservas: count,       // solo por información interna\n        sugerencia: `${fechaTexto} ${hora}`, // para copiar/pegar\n      });\n    }\n  }\n}\n\n// 7) Construir el texto final\nlet texto = mensajeBase;\n\nif (huecos.length === 0) {\n  texto +=\n    '\\nDe momento no veo huecos libres en los próximos días. ' +\n    'Escríbeme igualmente el día y la hora que te vienen bien ' +\n    'en formato *DD/MM/AAAA HH:MM* y lo reviso manualmente 🙏';\n} else {\n  const maxOpciones = 8;\n  const seleccion = huecos.slice(0, maxOpciones);\n\n  texto += '\\n\\nAquí tienes algunas opciones libres en los próximos días:\\n';\n\n  for (const h of seleccion) {\n    texto += `\\n- ${h.diaCorto} ${h.fechaTexto} a las *${h.hora}*  ` +\n             `(${h.reservas}/${CAPACIDAD_MAXIMA} ocupadas) ` +\n             `→ \\`${h.sugerencia}\\``;\n  }\n\n  texto +=\n    '\\n\\n👉 Responde copiando y pegando una de las opciones ' +\n    'en formato `DD/MM/AAAA HH:MM` o proponiendo otra hora.';\n}\n\n// 8) Devolver un único item con botMessage actualizado\nreturn [\n  {\n    json: {\n      ...base,\n      botMessage: texto,\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2272,
+        1600
+      ],
+      "id": "6bd9cd58-7ec0-44d9-a091-651568f4e767",
+      "name": "Calcular huecos disponibles1"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Detectar acción recurrente').item.json.message.chat.id }}",
+        "text": "={{ $json.botMessage }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2464,
+        1600
+      ],
+      "id": "dd8b2d3b-0fd4-4e7c-a1c8-8f369e7f158f",
+      "name": "Cita1",
+      "webhookId": "e0ad8c30-d094-4424-914e-68805cfd65fe"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    ...$json,\n    state: 'agendar_esperando_fecha',\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2656,
+        1600
+      ],
+      "id": "9b6c0892-fa12-4f62-a8b6-69d6de5d7362",
+      "name": "Guardar estado cita1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- 1) Guardar el mensaje que envía el bot cuando la persona pide cita\nINSERT INTO chat_messages (user_id, state, origen, from_user, message_text)\nVALUES (\n  '{{ $('Detectar acción recurrente').item.json.userId }}',\n  '{{$json[\"state\"] || \"\"}}',   -- aquí debería venir 'agendar_esperando_fecha'\n  '{{ $('Detectar acción recurrente').item.json.origen }}', -- normalmente 'madrid'\n  false,\n  '{{ $json.result.text }}'\n);\n\n-- 2) Actualizar el estado global del usuario en chat_state\nINSERT INTO chat_state (user_id, state, origen)\nVALUES (\n  '{{ $('Detectar acción recurrente').item.json.userId }}',\n  '{{$json[\"state\"] || \"\"}}',\n  '{{ $('Detectar acción recurrente').item.json.origen }}'\n)\nON CONFLICT (user_id)\nDO UPDATE SET\n  state  = EXCLUDED.state,\n  origen = EXCLUDED.origen,\n  updated_at = now();\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2832,
+        1600
+      ],
+      "id": "0734082a-77bc-42fc-8854-91a697bf7170",
+      "name": "Guardar pide cita1"
+    },
+    {
+      "parameters": {
+        "chatId": "=848110254",
+        "text": "={{$json.adminText}}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        336,
+        2736
+      ],
+      "id": "4e8f1362-09ef-494c-b614-3a3d0c63e933",
+      "name": "Enviar caso a admin",
+      "webhookId": "70054476-21ee-4527-b095-ca8e896299a3"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Preparar reenvío caso').item.json.userId }}",
+        "text": "=Gracias, hemos recibido tu consulta. En breve te respondemos por aquí.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        528,
+        2736
+      ],
+      "id": "d5c7ba15-7631-43b6-a74b-74d39e109018",
+      "name": "Confirmación al usuario",
+      "webhookId": "70054476-21ee-4527-b095-ca8e896299a3"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    ...$json,\n    botMessage:\n      \"¿Hola! 😄 ¿Qué quieres hacer?\\n\\n\" +\n      \"1️⃣ Me gustaría obtener más información sobre NSA\\n\" +\n      \"2️⃣ Ya estoy informad@ y quiero agendar una primera visita\\n\" +\n      \"3️⃣ Preguntar sobre tu tratamiento\",\n    state: \"menu_madrid\",\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        928,
+        1152
+      ],
+      "id": "df0bde32-d636-4e0e-9dee-309896201524",
+      "name": "Preparar menú madrid"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into chat_state (user_id, state, origen)\nvalues ('{{$json.userId}}', 'menu_madrid', '{{$json.origen || \"\"}}')\non conflict (user_id)\ndo update set state=excluded.state, origen=excluded.origen, updated_at=now();",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1328,
+        1152
+      ],
+      "id": "2cc2b256-f6b2-4886-bd18-541b7de2f387",
+      "name": "Guardar estado menu_madrid"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.userId }}",
+        "text": "=No te he entendido, por favor dime si quieres modificar la fecha o la dejamos como está. ",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        464,
+        3248
+      ],
+      "id": "99c28fa8-698f-400b-9f24-6e7ede379f7b",
+      "name": "Error intención",
+      "webhookId": "20f8ab7b-5a71-40c5-b139-61d2015c423a"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Pidiendo Origen').item.json.message.chat.id }}",
+        "text": "=Nuestras reseñas y pacientes hablan por nosotros...\nNuestra misión es la de ayudar al máximo de personas posibles con calidad y humanidad 🌎\nÉchale un vistazo a lo que más de 200 personas comentan sobre nuestros servicios 📝🧠♥️\nhttps://www.trustindex.io/reviews/www.quiroptimo.com",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        960,
+        208
+      ],
+      "id": "e1f87c4d-f473-4207-9d52-6d0efbb84c5e",
+      "name": "Mensaje Reseñas",
+      "webhookId": "8d86fbcc-d225-4ac3-8f5c-1dc241c9b573"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- 0) Guardar el caso en la tabla treatment_queries\ninsert into public.treatment_queries (\n  user_id,\n  contact_name,\n  contact_phone,\n  message_text\n)\nvalues (\n  '{{$node[\"Preparar reenvío caso\"].json.userId}}',\n  '{{$node[\"Preparar reenvío caso\"].json.name || \"\"}}',\n  '{{$node[\"Preparar reenvío caso\"].json.phone || \"\"}}',\n  '{{$node[\"Preparar reenvío caso\"].json.textOriginal || \"\"}}'\n);\n\n-- 1) Guardar confirmación en histórico (opcional)\ninsert into chat_messages (user_id, state, origen, from_user, message_text)\nvalues (\n  '{{$node[\"Preparar reenvío caso\"].json.userId}}',\n  case\n    when exists (\n      select 1 from public.appointments\n      where user_id = '{{$node[\"Preparar reenvío caso\"].json.userId}}'\n      limit 1\n    )\n    then 'menu_recurrente'\n    else 'menu_madrid'\n  end,\n  '{{$node[\"Preparar reenvío caso\"].json.origen || \"\"}}',\n  false,\n  'Gracias, hemos recibido tu consulta. En breve te respondemos por aquí.'\n);\n\n-- 2) Reset de estado al menú correcto\ninsert into chat_state (user_id, state, origen)\nvalues (\n  '{{$node[\"Preparar reenvío caso\"].json.userId}}',\n  case\n    when exists (\n      select 1 from public.appointments\n      where user_id = '{{$node[\"Preparar reenvío caso\"].json.userId}}'\n      limit 1\n    )\n    then 'menu_recurrente'\n    else 'menu_madrid'\n  end,\n  '{{$node[\"Preparar reenvío caso\"].json.origen || \"\"}}'\n)\non conflict (user_id)\ndo update set\n  state = excluded.state,\n  origen = excluded.origen,\n  updated_at = now();\n\n-- 3) Para que el nodo devuelva output y no se corte el flujo\nselect 'ok' as result;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        992,
+        2736
+      ],
+      "id": "4af9244d-0b3e-48e3-9ee9-9f70db9fe900",
+      "name": "Reset estado al menu"
+    },
+    {
+      "parameters": {
+        "jsCode": "const txt = ($json.textNormalizado || '').trim();\n\nconst wantsMenu =\n  /\\b(cancela|cancelar|volver|menu|menú|atras|atrás|salir|no)\\b/.test(txt) ||\n  txt === 'no' || txt === 'volver al menu';\n\n// ✅ fuente de verdad: BD\nlet hasEver = false;\ntry {\n  hasEver = $('Leer Estado').first().json.has_ever_appointment === true;\n} catch (e) {}\n\nreturn [{\n  json: {\n    ...$json,\n    wantsMenu,\n    return_menu: hasEver ? 'menu_recurrente' : 'menu_madrid',\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -304,
+        3712
+      ],
+      "id": "5cb6d5f1-4dec-4fd6-a4dc-33f7054f5905",
+      "name": "Detectar cancelar/menu en modificar"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "e06b7cf6-0aae-4dd5-9f3b-6e817d87da02",
+              "leftValue": "={{ $json.wantsMenu }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -96,
+        3712
+      ],
+      "id": "dc4cab02-8999-4ee2-9d31-e18cb8c99c6a",
+      "name": "¿Quiere volver al menú?"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    ...$json,\n    botMessage:\n      \"¿Hola! 😄 ¿Qué quieres hacer?\\n\\n\" +\n      \"1️⃣ Agendar una cita nueva\\n\" +\n      \"2️⃣ Modificar una cita existente\\n\" +\n      \"3️⃣ Preguntar sobre tu tratamiento\\n\" +\n      \"4️⃣ Cancelar mi cita\",\n    state: \"menu_recurrente\",\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        464,
+        3840
+      ],
+      "id": "d2ff0fe5-6138-44df-8294-019baa4feab4",
+      "name": "Preparar menú recurrente1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into chat_state (user_id, state, origen)\nvalues ('{{$json.userId}}', 'menu_recurrente', '{{$json.origen || \"\"}}')\non conflict (user_id)\ndo update set state=excluded.state, origen=excluded.origen, updated_at=now();",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        864,
+        3840
+      ],
+      "id": "1f005d6c-71b7-455a-9781-18b33b520151",
+      "name": "Guardar estado menu_recurrente2"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $items(\"Normalizar mensaje\")[0].json.userId }}",
+        "text": "={{$json.botMessage}}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        672,
+        3840
+      ],
+      "id": "18bb662c-d8a6-4e67-84fd-c305b64f6564",
+      "name": "Enviar menu recurrente2",
+      "webhookId": "876f0404-8de9-44b8-9c63-76ad3a1f4146"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into chat_state (user_id, state, origen)\nvalues ('{{$json.userId}}', '{{$json.return_menu}}', '{{$json.origen || \"\"}}')\non conflict (user_id)\ndo update set\n  state = excluded.state,\n  origen = excluded.origen,\n  updated_at = now();\n\nselect 'ok' as result;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        224,
+        3808
+      ],
+      "id": "b44c6651-03af-4d3c-930a-d9d2e1d693e6",
+      "name": "Reset chat_state a return_menu"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into public.treatment_queries (\n  user_id,\n  contact_name,\n  contact_phone,\n  message_text\n)\nvalues (\n  '{{$node[\"Preparar reenvío caso\"].json.userId}}',\n  '{{$node[\"Preparar reenvío caso\"].json.name || \"\"}}',\n  '{{$node[\"Preparar reenvío caso\"].json.phone || \"\"}}',\n  '{{$node[\"Preparar reenvío caso\"].json.textOriginal || \"\"}}'\n)\nreturning id;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        736,
+        2736
+      ],
+      "id": "0f77fbbe-6f50-4f09-983a-4870c79b931e",
+      "name": "Guardar caso en treatment_queries"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $node[\"Preparar Mensaje Confirmación Cita\"].json.userId }}",
+        "text": "=Antes de acudir a la cita necesitamos que rellenes este formulario, solo te llevará unos minutos. Gracias! 😄\n\nhttps://forms.gle/dc94h1DU2JtqB6jX8",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2304,
+        2112
+      ],
+      "id": "713bc7ed-c8af-4e8a-ad1d-7459312d2e33",
+      "name": "Envío formulario",
+      "webhookId": "20a7c3e3-20c9-46f5-85cb-6cadd4b445f6"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT COALESCE(form_sent, false) AS form_sent\nFROM public.chat_state\nWHERE user_id = '{{$node[\"Preparar Mensaje Confirmación Cita\"].json.userId}}'\nLIMIT 1;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1872,
+        2272
+      ],
+      "id": "a95699e2-0a0c-4fe8-a21b-28275dd191ad",
+      "name": "Check form_sent"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE public.chat_state\nSET form_sent = true,\n    updated_at = now()\nWHERE user_id = '{{$node[\"Preparar Mensaje Confirmación Cita\"].json.userId}}'\nRETURNING user_id, form_sent;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2512,
+        2112
+      ],
+      "id": "43d1d3cc-f2f3-4d20-955d-07bff0973524",
+      "name": "Marcar form_sent = true"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "38a85b3e-bbb1-4fc0-8176-f564e2a656a8",
+              "leftValue": "={{ $json.form_sent }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2080,
+        2272
+      ],
+      "id": "f21f7929-906d-4730-af98-e62c6c3a8797",
+      "name": "¿Envia formulario?"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 14 * * *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -2432,
+        992
+      ],
+      "id": "cd78e661-ea93-4203-b140-755e0b2d555f",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH bounds AS (\n  SELECT\n    (date_trunc('day', now() AT TIME ZONE 'Europe/Madrid') AT TIME ZONE 'Europe/Madrid') AS today_start,\n    ((date_trunc('day', now() AT TIME ZONE 'Europe/Madrid') + interval '1 day') AT TIME ZONE 'Europe/Madrid') AS tomorrow_start,\n    ((date_trunc('day', now() AT TIME ZONE 'Europe/Madrid') + interval '2 day') AT TIME ZONE 'Europe/Madrid') AS day_after_start\n)\nSELECT\n  (SELECT count(*)\n   FROM appointments a, bounds b\n   WHERE a.status <> 'cancelled'\n     AND a.start_time >= b.today_start\n     AND a.start_time <  b.tomorrow_start\n  ) AS citas_hoy,\n\n  (SELECT count(*)\n   FROM appointments a, bounds b\n   WHERE a.status = 'active'\n     AND a.start_time >= b.tomorrow_start\n     AND a.start_time <  b.day_after_start\n  ) AS citas_manana,\n\n  (SELECT count(*)\n   FROM treatment_queries t, bounds b\n   WHERE t.created_at >= b.today_start\n     AND t.created_at <  b.tomorrow_start\n  ) AS consultas_hoy;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -2224,
+        992
+      ],
+      "id": "56094278-b929-44de-86ac-562cedadfb8a",
+      "name": "Stats día"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH bounds AS (\n  SELECT\n    ((date_trunc('day', now() AT TIME ZONE 'Europe/Madrid') + interval '1 day') AT TIME ZONE 'Europe/Madrid') AS tomorrow_start,\n    ((date_trunc('day', now() AT TIME ZONE 'Europe/Madrid') + interval '2 day') AT TIME ZONE 'Europe/Madrid') AS day_after_start\n)\nSELECT\n  to_char(a.start_time AT TIME ZONE 'Europe/Madrid', 'DD/MM/YYYY') AS fecha,\n  to_char(a.start_time AT TIME ZONE 'Europe/Madrid', 'HH24:MI')     AS hora,\n  a.contact_name,\n  a.contact_phone,\n  a.user_id\nFROM appointments a, bounds b\nWHERE a.status = 'active'\n  AND a.start_time >= b.tomorrow_start\n  AND a.start_time <  b.day_after_start\nORDER BY a.start_time ASC;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -2016,
+        992
+      ],
+      "id": "b8aeba09-ffc0-4f81-a81a-04c5e4442c5b",
+      "name": "Citas mañana"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH bounds AS (\n  SELECT\n    (date_trunc('day', now() AT TIME ZONE 'Europe/Madrid') AT TIME ZONE 'Europe/Madrid') AS today_start,\n    ((date_trunc('day', now() AT TIME ZONE 'Europe/Madrid') + interval '1 day') AT TIME ZONE 'Europe/Madrid') AS tomorrow_start\n)\nSELECT\n  to_char(t.created_at AT TIME ZONE 'Europe/Madrid', 'HH24:MI') AS hora,\n  t.contact_name,\n  t.contact_phone,\n  t.user_id,\n  left(regexp_replace(t.message_text, '\\s+', ' ', 'g'), 180) AS resumen\nFROM treatment_queries t, bounds b\nWHERE t.created_at >= b.today_start\n  AND t.created_at <  b.tomorrow_start\nORDER BY t.created_at ASC;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1808,
+        992
+      ],
+      "id": "d957f87c-cb49-42ec-82c0-d13c5d7550fb",
+      "name": "Consultas hoy"
+    },
+    {
+      "parameters": {
+        "jsCode": "const ADMIN_CHAT_ID = 848110254; // <- pon aquí el chat id del admin\n\nconst stats = ($items(\"Stats día\")[0]?.json) || {};\nconst citasManana = $items(\"Citas mañana\").map(i => i.json);\nconst consultasHoy = $items(\"Consultas hoy\").map(i => i.json);\n\nfunction fechaES(date) {\n  return date.toLocaleDateString('es-ES', { timeZone: 'Europe/Madrid' });\n}\nfunction mananaES() {\n  const d = new Date();\n  d.setDate(d.getDate() + 1);\n  return fechaES(d);\n}\nfunction hoyES() {\n  return fechaES(new Date());\n}\n\nfunction numOrNull(v) {\n  return (typeof v === 'number' && Number.isFinite(v)) ? v : null;\n}\nfunction countLine(label, v) {\n  const n = numOrNull(v);\n  return `${label} ${n === null ? 'No hay datos' : n}`;\n}\n\nconst citasHoyN = numOrNull(stats.citas_hoy);\nconst citasMananaN = numOrNull(stats.citas_manana);\nconst consultasHoyN = numOrNull(stats.consultas_hoy);\n\nlet msg =\n`📊 *Informe diario Quiróptimo*\\n` +\n`📅 Fecha: *${hoyES()}*\\n\\n` +\n`✅ ${countLine('*Citas de hoy:*', citasHoyN)}\\n` +\n`📌 ${countLine(`*Citas para mañana (${mananaES()}):*`, citasMananaN)}\\n`;\n\nif (citasManana.length === 0) {\n  msg += `- No hay citas programadas para mañana.\\n`;\n} else {\n  for (const c of citasManana) {\n    const name = (c.contact_name && String(c.contact_name).trim()) ? c.contact_name : 'Sin nombre';\n    const phone = (c.contact_phone && String(c.contact_phone).trim()) ? ` (${c.contact_phone})` : '';\n    msg += `- ${c.hora || '--:--'} — ${name}${phone} [uid:${c.user_id || 'sin uid'}]\\n`;\n  }\n}\n\nmsg += `\\n💬 ${countLine('*Consultas (tratamientos/casos) hoy:*', consultasHoyN)}\\n`;\n\nif (consultasHoy.length === 0) {\n  msg += `- Hoy no se ha registrado ninguna consulta.\\n`;\n} else {\n  for (const q of consultasHoy) {\n    const name = (q.contact_name && String(q.contact_name).trim()) ? q.contact_name : 'Sin nombre';\n    const phone = (q.contact_phone && String(q.contact_phone).trim()) ? ` (${q.contact_phone})` : '';\n    const resumen = (q.resumen && String(q.resumen).trim()) ? q.resumen : 'Sin texto';\n    msg += `- ${q.hora || '--:--'} — ${name}${phone}: ${resumen}\\n`;\n  }\n}\n\n// Telegram limita el tamaño. Partimos en trozos.\nfunction chunk(text, max = 3500) {\n  const parts = [];\n  let cur = '';\n  for (const line of text.split('\\n')) {\n    if ((cur + '\\n' + line).length > max) {\n      parts.push(cur);\n      cur = line;\n    } else {\n      cur = cur ? (cur + '\\n' + line) : line;\n    }\n  }\n  if (cur) parts.push(cur);\n  return parts;\n}\n\nreturn chunk(msg).map(t => ({\n  json: { chatId: ADMIN_CHAT_ID, text: t }\n}));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1600,
+        992
+      ],
+      "id": "0529a4ea-210e-4d26-a62d-3e2101258fac",
+      "name": "Construir informe"
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.chatId}}",
+        "text": "={{$json.text}}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -1392,
+        992
+      ],
+      "id": "d1b90c47-3220-4e8e-a8c8-be549005b182",
+      "name": "Send a text message",
+      "webhookId": "f2a85ce7-e0cc-4810-aa69-19a8f58071ba"
+    },
+    {
+      "parameters": {
+        "content": "## Informe Diario\n",
+        "width": 1808
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2800,
+        976
+      ],
+      "id": "efb29e14-0f8f-4861-8b71-39bd5c458745",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH appt AS (\n  SELECT\n    id,\n    calendar_event_id,\n    start_time\n  FROM appointments\n  WHERE user_id = '{{ $json.userId }}'\n    AND status = 'active'\n    AND start_time >= now()\n    AND start_time <= now() + interval '7 days'\n  ORDER BY start_time ASC\n  LIMIT 1\n)\nSELECT\n  (SELECT id FROM appt)                AS id,\n  (SELECT calendar_event_id FROM appt) AS calendar_event_id,\n  (SELECT start_time FROM appt)        AS start_time,\n  EXISTS (SELECT 1 FROM appt)          AS has_appointment;",
+        "options": {
+          "queryReplacement": "={{ [ $json.userId ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1168,
+        1808
+      ],
+      "id": "12920c0d-4648-4832-9fb7-3923f5b74bba",
+      "name": "Buscar cita activa para cancelar"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "6bc61395-49fa-4699-8340-781c74d43451",
+              "leftValue": "={{ $json.has_appointment }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1376,
+        1808
+      ],
+      "id": "0c10df0d-cac1-4ecf-bb98-fb624921ab3d",
+      "name": "¿Tiene cita activa para cancelar?"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Detectar acción recurrente').item.json.message.chat.id }}",
+        "text": "=No veo ninguna cita activa para cancelar 😊\nSi quieres, puedo ayudarte a agendar una nueva.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1648,
+        1936
+      ],
+      "id": "be50b346-760a-4ccb-a086-c28af0142c29",
+      "name": "No hay cita",
+      "webhookId": "e0ad8c30-d094-4424-914e-68805cfd65fe"
+    },
+    {
+      "parameters": {
+        "jsCode": "const row = $items(\"Buscar cita activa para cancelar\")[0].json;\nconst d = new Date(row.start_time);\n\nconst dd = String(d.getDate()).padStart(2,'0');\nconst mm = String(d.getMonth()+1).padStart(2,'0');\nconst yy = d.getFullYear();\nconst hh = String(d.getHours()).padStart(2,'0');\nconst mi = String(d.getMinutes()).padStart(2,'0');\n\nreturn [{\n  json: {\n    ...$json,\n    state: 'confirmar_cancelar',\n    cancelarCalendarEventId: row.calendar_event_id,   // 👈 CLAVE\n    botMessage: `Veo que tienes una cita para el ${dd}/${mm}/${yy} a las ${hh}:${mi}.\\n\\n¿Quieres cancelarla? (sí / no)`\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1648,
+        1760
+      ],
+      "id": "c81ca217-d0f2-4896-a866-7aa4ff31467d",
+      "name": "Preguntar confirmar cancelación"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.user_id }}",
+        "text": "={{ $('Preguntar confirmar cancelación').first().json.botMessage }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2032,
+        1760
+      ],
+      "id": "325d5e79-f025-4b07-835c-da51db289a60",
+      "name": "Enviar confirmar cancelación",
+      "webhookId": "e0ad8c30-d094-4424-914e-68805cfd65fe"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- Guardar mensaje del bot\ninsert into chat_messages (user_id, state, origen, from_user, message_text)\nvalues (\n  '{{ $('Procesar Respuesta').item.json.userId }}',\n  'confirmar_cancelar',\n  '{{ $('Procesar Respuesta').item.json.origen }}',\n  false,\n  '{{$json.botMessage}}'\n);\n\n-- Guardar estado (DEVOLVER FILA para que n8n emita output)\ninsert into chat_state (user_id, state, origen)\nvalues (\n  '{{ $('Procesar Respuesta').item.json.userId }}',\n  'confirmar_cancelar',\n  '{{ $('Procesar Respuesta').item.json.origen }}'\n)\non conflict (user_id)\ndo update set state=excluded.state, origen=excluded.origen, updated_at=now()\nreturning user_id, state, origen, updated_at;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1840,
+        1760
+      ],
+      "id": "e5c13892-64a5-4063-b11b-3ad692d7b5b3",
+      "name": "Guardar estado confirmar_cancelar"
+    },
+    {
+      "parameters": {
+        "jsCode": "const t = ($json.textNormalizado || '').toLowerCase().trim();\n\n// sí\nconst yes = /\\b(si|sí|s|vale|ok|okay|de acuerdo|confirmo|confirmar|adelante)\\b/.test(t);\n// no\nconst no  = /\\b(no|n|mejor no|cancelalo no|no canceles)\\b/.test(t);\n\nlet resp = 'no_entendido';\nif (yes && !no) resp = 'si';\nelse if (no && !yes) resp = 'no';\n\nreturn [{ json: { ...$json, resp } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -432,
+        4192
+      ],
+      "id": "84a567cc-84fe-4417-8f1e-0b5a9c09127a",
+      "name": "Detectar sí/no cancelación"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5543d539-a839-4194-b38e-bdc02bcc868c",
+              "leftValue": "={{$json.resp}}",
+              "rightValue": "si",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -224,
+        4192
+      ],
+      "id": "1adc088e-8f39-4366-8278-ae9cb3b37453",
+      "name": "¿Si?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "9bffb812-df2b-41c7-ba90-7466c6830005",
+              "leftValue": "={{$json.resp}}",
+              "rightValue": "no",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        128,
+        4368
+      ],
+      "id": "00381801-9ded-4874-9edf-9fe570a37639",
+      "name": "¿No?"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "5cf4feec130e0e00310716611ab2599f1df46f3964fe6b800d399d2ca12c960d@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "pruebas "
+        },
+        "eventId": "={{ $json.calendar_event_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        192,
+        4096
+      ],
+      "id": "c41dc3cf-9483-4999-9853-4626ded70fdc",
+      "name": "Delete an event1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "update appointments\nset status='cancelled', updated_at=now()\nwhere id = '{{ $items(\"Cancelar\")[0].json.id }}';",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        384,
+        4096
+      ],
+      "id": "f7378d44-6eb4-4849-8efd-751cc4d8e4b1",
+      "name": "Cancelar en BD"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into chat_state (user_id, state, origen)\nvalues (\n  '{{ $(\"Detectar sí/no cancelación\").first().json.userId }}',\n  'menu_recurrente',\n  '{{ $(\"Detectar sí/no cancelación\").first().json.origen || \"\" }}'\n)\non conflict (user_id)\ndo update set\n  state = excluded.state,\n  origen = excluded.origen,\n  updated_at = now()\nreturning user_id, state, origen, updated_at;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        576,
+        4096
+      ],
+      "id": "869b9e6f-5aa6-4fb5-8220-732607139ee7",
+      "name": "Estado tras cancelación"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Detectar sí/no cancelación').item.json.userId }}",
+        "text": "=Listo  ✅  He cancelado tu cita.\nSi necesitas cualquier cosa, no dudes en consultarme.\n\nTambién puedes ponerte en contacto con nosotros a través de nuestro número de teléfono: 656 61 25 13",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        768,
+        4096
+      ],
+      "id": "0457760a-eda0-42ef-b2b7-3b623ce1ea1a",
+      "name": "Confirmación",
+      "webhookId": "876f0404-8de9-44b8-9c63-76ad3a1f4146"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "select id, calendar_event_id\nfrom appointments\nwhere user_id = '{{$json.userId}}'\n  and status = 'active'\n  and start_time >= now()\norder by start_time asc\nlimit 1;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -16,
+        4096
+      ],
+      "id": "10673767-9d49-4db9-8b43-c831114ad099",
+      "name": "Cancelar"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    ...$json,\n    botMessage: \"Perfecto 😊 Mantengo tu cita como está.\\nSi necesitas otra cosa, dime.\\n\\n\" +\n    \"También puedes ponerte en contacto con nosotros a través de nuestro número de teléfono: 656 61 25 13\",\n    state: \"menu_recurrente\"\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        4304
+      ],
+      "id": "3b56aa7d-5cf3-454a-80d7-85f4df3b4ea4",
+      "name": "Mensaje mantener cita (cancelación)"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.user_id }}",
+        "text": "={{ $items(\"Mensaje mantener cita (cancelación)\")[0].json.botMessage }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        832,
+        4304
+      ],
+      "id": "c38bcf9e-baaf-4954-ad06-65162372b1f2",
+      "name": "No cancelar",
+      "webhookId": "876f0404-8de9-44b8-9c63-76ad3a1f4146"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into chat_state (user_id, state, origen)\nvalues (\n  '{{$json.userId}}',\n  'menu_recurrente',\n  '{{$json.origen || \"\"}}'\n)\non conflict (user_id)\ndo update set\n  state = excluded.state,\n  origen = excluded.origen,\n  updated_at = now()\nreturning user_id, state, origen, updated_at;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        640,
+        4304
+      ],
+      "id": "45baab91-13b2-40a9-91ec-410a53a143ff",
+      "name": "menu_recurrente"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    ...$json,\n    botMessage: \"Respóndeme *sí* o *no*, por favor 🙂\",\n    state: \"confirmar_cancelar\"\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        352,
+        4496
+      ],
+      "id": "a73fad45-f6c2-46f0-a68f-9c6e1e218889",
+      "name": "Pedir sí/no cancelar"
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.userId}}",
+        "text": "={{ $json.botMessage }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        560,
+        4496
+      ],
+      "id": "0c4603cc-26ba-45c6-94ed-64482e360ec1",
+      "name": "si/no",
+      "webhookId": "876f0404-8de9-44b8-9c63-76ad3a1f4146"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into chat_state (user_id, state, origen)\nvalues (\n  '{{ $json.result.chat.id }}',\n  'confirmar_cancelar',\n  '{{ $('Pedir sí/no cancelar').item.json.origen }}'\n)\non conflict (user_id)\ndo update set\n  state = excluded.state,\n  origen = excluded.origen,\n  updated_at = now()\nreturning user_id, state, origen, updated_at;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        752,
+        4496
+      ],
+      "id": "2e11d38e-1fe2-49e7-95a3-4088a68eb36f",
+      "name": "confirmar_cancelar"
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.userId}}",
+        "text": "={{$json.botMessage}}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1136,
+        1152
+      ],
+      "id": "2a221d21-88fa-4cad-b5c7-d3cf7a3a2839",
+      "name": "Enviar menu madrid",
+      "webhookId": "876f0404-8de9-44b8-9c63-76ad3a1f4146"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-18T07:54:09.200Z",
+      "createdAt": "2026-02-18T07:54:09.200Z",
+      "role": "workflow:owner",
+      "workflowId": "cvqcDe9EMIE4avTJ",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-02-18T07:54:09.200Z",
+  "versionId": "0c1d382d-bdb2-4cb3-9e39-0c56572de886"
+}
