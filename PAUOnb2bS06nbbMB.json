@@ -1,0 +1,759 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-02-13T08:08:58.640Z",
+    "createdAt": "2026-02-13T08:08:56.672Z",
+    "versionId": "261940d2-46d1-4ea3-b157-c5df61c88ddf",
+    "workflowId": "PAUOnb2bS06nbbMB",
+    "nodes": [
+      {
+        "parameters": {
+          "updates": [
+            "message"
+          ],
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.telegramTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -192,
+          160
+        ],
+        "id": "a302d15b-8cc7-4542-9766-82187f12bb06",
+        "name": "Telegram Trigger",
+        "webhookId": "fd5e8156-a7db-496e-b839-362562484168",
+        "credentials": {
+          "telegramApi": {
+            "id": "da58WVFzyaUS2btp",
+            "name": "test"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Parsear versiones de Odoo desde el mensaje de Telegram\n// Formatos soportados (ejemplos):\n// - \"origen 13.0 destino 17.0\"\n// - \"12.0 -> 17.0\"\n// - \"12.0 17.0\"\n// Si solo se detecta una versión, se toma como version_origen y se usa 17.0 como destino por defecto.\n\nconst mensaje = ($json.message && $json.message.text) || '';\n\n// Buscar patrones tipo 12.0, 13.0, 17.0, etc.\nconst versiones = Array.from(mensaje.matchAll(/\\b(1[0-9]|[0-9])\\.0\\b/g)).map(m => m[1] + '.0');\n\nlet version_origen = versiones[0] || '12.0';\nlet version_objetivo = versiones[1] || '17.0';\n\n// También soportar palabras clave explícitas\nconst lower = mensaje.toLowerCase();\nconst matchOrigen = lower.match(/origen\\s*(1[0-9]|[0-9])\\.0/);\nif (matchOrigen) {\n  version_origen = matchOrigen[1] + '.0';\n}\nconst matchDestino = lower.match(/(destino|objetivo)\\s*(1[0-9]|[0-9])\\.0/);\nif (matchDestino) {\n  version_objetivo = matchDestino[2] + '.0';\n}\n\nreturn {\n  ...$json,\n  version_origen,\n  version_objetivo,\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -16,
+          160
+        ],
+        "id": "850ef650-44cf-4d55-bdb4-ffad13ce7a53",
+        "name": "Parsear Versiones"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Sácame en los módulos su origen. Dime si el módulo es de la OCA o es personalizado o es base",
+          "options": {
+            "systemMessage": "=Eres un asistente para un flujo de n8n que ayuda a hacer auditorías de módulos de Odoo a partir de informes de consultoría técnica en PDF.\n\nSáqueme para cada módulo su origen. Bien OCA, bien personalizado o bien Base de Odoo.",
+            "maxIterations": 1,
+            "returnIntermediateSteps": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3,
+        "position": [
+          864,
+          160
+        ],
+        "id": "17fb4a6c-1ad0-407b-8290-0b0d0d432576",
+        "name": "AI Agent"
+      },
+      {
+        "parameters": {
+          "operation": "pdf",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.extractFromFile",
+        "typeVersion": 1,
+        "position": [
+          496,
+          160
+        ],
+        "id": "788b867a-3d1f-45c3-baf6-0e6104bb81c1",
+        "name": "Extraer Texto PDF"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Detectar módulos de forma GENERAL a partir del texto del PDF.\n// Regla: cualquier token en snake_case (letras/números con '_')\n// se considera candidato a módulo.\n\n// 1) Construimos un texto bruto a partir de los campos más típicos\nlet bruto = '';\n\nif (typeof $json.text === 'string') {\n  bruto += $json.text;\n}\nif (typeof $json.texto_pdf === 'string') {\n  // Compatibilidad con versiones anteriores del flujo\n  bruto += '\\n' + $json.texto_pdf;\n}\n\n// Si no hay nada, devolvemos sin módulos\nif (!bruto) {\n  return {\n    version_origen: $json.version_origen,\n    version_objetivo: $json.version_objetivo,\n    modulos_pre: [],\n  };\n}\n\n// 2) Normalizar saltos de línea Windows\nbruto = bruto.replace(/\\r\\n/g, '\\n');\n\n// 3) Unir palabras partidas por guion + salto de línea\n//    (ej: \"account-\\nmove\" -> \"accountmove\")\nbruto = bruto.replace(/-\\s*\\n\\s*/g, '');\n\n// 4) Unir SOLO saltos de línea dentro de nombres en snake_case\n//    (ej: \"hr_timesheet_sheet_attend\\nance\" -> \"hr_timesheet_sheet_attendance\")\n//    Requiere que la parte izquierda tenga al menos un '_' para no unir\n//    palabras normales como \"Contabilidad\\ngst_solar_lot\".\nbruto = bruto.replace(/([a-z0-9]*_[a-z0-9]*)\\s*\\n\\s*([a-z0-9]+)/gi, '$1$2');\n\n// 5) Convertir el resto de saltos de línea y tabs en espacios\nlet texto = bruto.replace(/[\\n\\t]+/g, ' ');\n\n// 6) Colapsar espacios múltiples\ntexto = texto.replace(/\\s+/g, ' ').trim();\n\n// 7) Regex genérico para snake_case: al menos un '_', SOLO minúsculas y dígitos.\n//    Esto evita arrastrar colas como \"transferBankingaddonsAdd\".\nconst regex = /\\b[a-z0-9]+(?:_[a-z0-9]+)+\\b/g;\nconst encontrados = new Set();\nlet match;\n\nwhile ((match = regex.exec(texto)) !== null) {\n  encontrados.add(match[0]); // mantiene el caso tal como aparece\n}\n\n// 8) Convertimos a lista ordenada, con índice estable, y la envolvemos en objetos\nconst modulos_pre = Array.from(encontrados)\n  .sort((a, b) => a.localeCompare(b))\n  .map((nombre, index) => ({ index, modulo: nombre, origen: 'desconocido' }));\n\nreturn {\n  version_origen: $json.version_origen,\n  version_objetivo: $json.version_objetivo,\n  modulos_pre,\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          704,
+          160
+        ],
+        "id": "ba3fae95-c28f-48a4-a2c5-9b03388d9d58",
+        "name": "Detectar Candidatos Snake Case"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Construir matriz de versiones 12.0–19.0 para TODOS los módulos\n// recibidos en modulos_pre, sin depender de la IA.\n\nconst version_origen = $json.version_origen || '12.0';\nconst version_objetivo = $json.version_objetivo || '17.0';\n\nconst versiones = ['12.0', '13.0', '14.0', '15.0', '16.0', '17.0', '18.0', '19.0'];\nconst idxOrigen = versiones.indexOf(version_origen);\nconst idxObjetivo = versiones.indexOf(version_objetivo);\n\nconst modulos_pre = Array.isArray($json.modulos_pre) ? $json.modulos_pre : [];\n\nfunction rangoIncluye(idx, a, b) {\n  const min = Math.min(a, b);\n  const max = Math.max(a, b);\n  return idx >= min && idx <= max;\n}\n\nconst modulos = modulos_pre.map(orig => {\n  const nombre = orig.modulo || '';\n  const origen = (orig.origen || 'desconocido').toLowerCase();\n\n  const m = {\n    modulo: nombre,\n    origen,\n    repo_inicial: '',\n    version_odoo_origen: version_origen,\n    version_odoo_objetivo: version_objetivo,\n    nombre_detectado: nombre,\n    contexto: '',\n  };\n\n  versiones.forEach((v, idx) => {\n    const col = 'v' + v.split('.')[0];\n    let valor = 'NO';\n\n    if (origen === 'oca') {\n      // Heurística simple: SI desde origen hasta objetivo (incluidos)\n      if (idxOrigen !== -1 && idxObjetivo !== -1 && rangoIncluye(idx, idxOrigen, idxObjetivo)) {\n        valor = 'SI';\n      }\n    } else {\n      // Desconocido/custom: SI solo en la versión de origen\n      if (idxOrigen !== -1 && idx === idxOrigen) {\n        valor = 'SI';\n      }\n    }\n\n    m[col] = valor;\n  });\n\n  const colObjetivo = 'v' + version_objetivo.split('.')[0];\n  if (m[colObjetivo] === 'SI') {\n    m.motivo_si_no = 'Disponible en la versión objetivo.';\n  } else {\n    m.motivo_si_no = 'Sin información clara, revisar manualmente.';\n  }\n\n  return m;\n});\n\nreturn {\n  version_origen,\n  version_objetivo,\n  modulos,\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1200,
+          32
+        ],
+        "id": "5a3cb276-4cdf-4ac3-aefc-62c7f703f899",
+        "name": "Construir Matriz Versiones"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          864,
+          368
+        ],
+        "id": "d3c4acc7-ee14-4be5-bcef-5f5542a49b25",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "Bjrqezyf8XK8C0xF",
+            "name": "api gratis marcos"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "tiene version inicial\ntiene version final\ntiene documento\n"
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -96,
+          0
+        ],
+        "typeVersion": 1,
+        "id": "6e887381-03f8-4dc5-ba94-2151e5a1efab",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "fileId": "={{ $json.message.document.file_id }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          320,
+          160
+        ],
+        "id": "8784757f-85fc-4eb1-be59-c96bb5430c37",
+        "name": "Get a file",
+        "webhookId": "7884e6b5-2d49-4e39-a771-cfe800c2692e",
+        "credentials": {
+          "telegramApi": {
+            "id": "da58WVFzyaUS2btp",
+            "name": "test"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Transformar la salida del AI Agent en filas para CSV.\n// El agente suele devolver el JSON dentro de la propiedad `output`\n// como string. Ejemplo:\n//   { output: \"{ \\\"version_origen\\\":..., \\\"modulos\\\":[...] }\" }\n// Este código intenta primero usar $json directamente y, si no hay\n// `modulos`, intenta parsear $json.output.\n\nfunction parsearOutput(output) {\n  if (!output) return null;\n  if (typeof output === 'object') return output;\n  if (typeof output !== 'string') return null;\n\n  // El agente a veces antepone 'json' o espacios, o incluso ```json ... ```.\n  // Buscamos el primer '{' y el último '}' y parseamos ese trozo.\n  const inicio = output.indexOf('{');\n  const fin = output.lastIndexOf('}');\n  if (inicio === -1 || fin === -1 || fin <= inicio) return null;\n\n  const posibleJson = output.slice(inicio, fin + 1);\n  try {\n    return JSON.parse(posibleJson);\n  } catch (e) {\n    return null;\n  }\n}\n\nlet data = $json || {};\n\n// Si no vienen modulos directamente, intentamos sacarlos de `output`.\nif (!Array.isArray(data.modulos) || data.modulos.length === 0) {\n  const desdeOutput = parsearOutput(data.output || data.result || data.data);\n  if (desdeOutput && Array.isArray(desdeOutput.modulos)) {\n    data = desdeOutput;\n  }\n}\n\nconst version_origen = data.version_origen || '12.0';\nconst version_objetivo = data.version_objetivo || '17.0';\n\nconst modulos = Array.isArray(data.modulos) ? data.modulos : [];\n\nif (modulos.length === 0) {\n  return [\n    {\n      modulo: '',\n      origen: 'desconocido',\n      repo_inicial: '',\n      version_odoo_origen: version_origen,\n      version_odoo_objetivo: version_objetivo,\n      v12: 'NO',\n      v13: 'NO',\n      v14: 'NO',\n      v15: 'NO',\n      v16: 'NO',\n      v17: 'NO',\n      v18: 'NO',\n      v19: 'NO',\n      motivo_si_no: 'Sin módulos en la respuesta del agente (revisar salida de AI Agent)',\n      nombre_detectado: '',\n      contexto: '',\n    },\n  ];\n}\n\nconst filas = modulos.map(m => ({\n  modulo: m.modulo || m.nombre_tecnico || '',\n  origen: (m.origen || 'desconocido').toLowerCase(),\n  repo_inicial: m.repo_inicial || '',\n  version_odoo_origen: m.version_odoo_origen || version_origen,\n  version_odoo_objetivo: m.version_odoo_objetivo || version_objetivo,\n  v12: m.v12 || 'NO',\n  v13: m.v13 || 'NO',\n  v14: m.v14 || 'NO',\n  v15: m.v15 || 'NO',\n  v16: m.v16 || 'NO',\n  v17: m.v17 || 'NO',\n  v18: m.v18 || 'NO',\n  v19: m.v19 || 'NO',\n  motivo_si_no: m.motivo_si_no || '',\n  nombre_detectado: m.nombre_detectado || m.modulo || '',\n  contexto: m.contexto || '',\n}));\n\nreturn filas;"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1392,
+          32
+        ],
+        "id": "4c1a84d5-100b-49d0-9530-94a3e000e33c",
+        "name": "Generar Filas CSV"
+      },
+      {
+        "parameters": {
+          "options": {
+            "fileName": "modulos_odoo.csv",
+            "headerRow": true
+          }
+        },
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1,
+        "position": [
+          1568,
+          32
+        ],
+        "id": "5b09ae1a-31a3-4b5f-a964-ae200f042c3e",
+        "name": "Convertir a CSV"
+      },
+      {
+        "parameters": {
+          "operation": "sendDocument",
+          "chatId": "={{ $node[\"Telegram Trigger\"].json.message.chat.id }}",
+          "additionalFields": {
+            "caption": "Matrices de versiones de módulos Odoo"
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          1744,
+          32
+        ],
+        "id": "49e5f7b1-6a1f-422b-ac21-fe7f41979c1d",
+        "name": "Enviar CSV por Telegram",
+        "webhookId": "d2180a5b-36b3-49a0-83d0-0719c5282304",
+        "credentials": {
+          "telegramApi": {
+            "id": "da58WVFzyaUS2btp",
+            "name": "test"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Generar combinaciones módulo × versión para comprobaciones posteriores.\n// Toma la salida del nodo de clasificación (IA) y construye items\n// { modulo, version, es_oca, origen, repo_inicial, ... }.\n\nconst versiones = ['12.0','13.0','14.0','15.0','16.0','17.0','18.0','19.0'];\n\nconst version_origen = $json.version_origen || '12.0';\nconst version_objetivo = $json.version_objetivo || '17.0';\n\nconst iOrigen = versiones.indexOf(version_origen);\nconst iObjetivo = versiones.indexOf(version_objetivo);\n\n// Preferimos $json.modulos (salida de la IA). Si no existe, usamos modulos_pre.\nconst base = Array.isArray($json.modulos)\n  ? $json.modulos\n  : (Array.isArray($json.modulos_pre) ? $json.modulos_pre : []);\n\nconst salida = [];\n\nfor (const m of base) {\n  const modulo = m.modulo || m.nombre_detectado || '';\n  if (!modulo) continue;\n\n  const es_oca = !!m.es_oca || m.origen === 'oca';\n  const origen = es_oca ? 'oca' : 'desconocido';\n  const repo_inicial = m.repo_inicial || '';\n  const index = m.index ?? 0;\n\n  for (let i = 0; i < versiones.length; i++) {\n    const v = versiones[i];\n\n    if (iOrigen !== -1 && iObjetivo !== -1) {\n      const min = Math.min(iOrigen, iObjetivo);\n      const max = Math.max(iOrigen, iObjetivo);\n      if (i < min || i > max) continue;\n    }\n\n    salida.push({\n      index,\n      modulo,\n      es_oca,\n      origen,\n      repo_inicial,\n      version: v,\n      version_origen,\n      version_objetivo,\n    });\n  }\n}\n\nreturn salida;"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1120,
+          368
+        ],
+        "id": "dc9e4de7-9d7b-4829-a669-79472d32e117",
+        "name": "Preparar Modulo-Version"
+      },
+      {
+        "parameters": {
+          "amount": 10
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          160,
+          160
+        ],
+        "id": "c60ec8e0-95fd-4ddc-94d8-0c5d87e452d9",
+        "name": "Wait",
+        "webhookId": "d1d36ddf-3016-42fd-bf8b-743b844e19c2"
+      }
+    ],
+    "connections": {
+      "Telegram Trigger": {
+        "main": [
+          [
+            {
+              "node": "Parsear Versiones",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get a file": {
+        "main": [
+          [
+            {
+              "node": "Extraer Texto PDF",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Parsear Versiones": {
+        "main": [
+          [
+            {
+              "node": "Wait",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extraer Texto PDF": {
+        "main": [
+          [
+            {
+              "node": "Detectar Candidatos Snake Case",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Detectar Candidatos Snake Case": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Construir Matriz Versiones": {
+        "main": [
+          [
+            {
+              "node": "Generar Filas CSV",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generar Filas CSV": {
+        "main": [
+          [
+            {
+              "node": "Convertir a CSV",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Convertir a CSV": {
+        "main": [
+          [
+            {
+              "node": "Enviar CSV por Telegram",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent": {
+        "main": [
+          [
+            {
+              "node": "Construir Matriz Versiones",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Preparar Modulo-Version",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait": {
+        "main": [
+          [
+            {
+              "node": "Get a file",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jorge Huescar",
+    "name": "Version 261940d2",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "261940d2-46d1-4ea3-b157-c5df61c88ddf",
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Parsear Versiones",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a file": {
+      "main": [
+        [
+          {
+            "node": "Extraer Texto PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsear Versiones": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraer Texto PDF": {
+      "main": [
+        [
+          {
+            "node": "Detectar Candidatos Snake Case",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detectar Candidatos Snake Case": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Construir Matriz Versiones": {
+      "main": [
+        [
+          {
+            "node": "Generar Filas CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar Filas CSV": {
+      "main": [
+        [
+          {
+            "node": "Convertir a CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convertir a CSV": {
+      "main": [
+        [
+          {
+            "node": "Enviar CSV por Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Construir Matriz Versiones",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Preparar Modulo-Version",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-12T15:37:57.045Z",
+  "id": "PAUOnb2bS06nbbMB",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Busca Versiones Odoo Presupuestos",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -192,
+        160
+      ],
+      "id": "a302d15b-8cc7-4542-9766-82187f12bb06",
+      "name": "Telegram Trigger",
+      "webhookId": "fd5e8156-a7db-496e-b839-362562484168",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parsear versiones de Odoo desde el mensaje de Telegram\n// Formatos soportados (ejemplos):\n// - \"origen 13.0 destino 17.0\"\n// - \"12.0 -> 17.0\"\n// - \"12.0 17.0\"\n// Si solo se detecta una versión, se toma como version_origen y se usa 17.0 como destino por defecto.\n\nconst mensaje = ($json.message && $json.message.text) || '';\n\n// Buscar patrones tipo 12.0, 13.0, 17.0, etc.\nconst versiones = Array.from(mensaje.matchAll(/\\b(1[0-9]|[0-9])\\.0\\b/g)).map(m => m[1] + '.0');\n\nlet version_origen = versiones[0] || '12.0';\nlet version_objetivo = versiones[1] || '17.0';\n\n// También soportar palabras clave explícitas\nconst lower = mensaje.toLowerCase();\nconst matchOrigen = lower.match(/origen\\s*(1[0-9]|[0-9])\\.0/);\nif (matchOrigen) {\n  version_origen = matchOrigen[1] + '.0';\n}\nconst matchDestino = lower.match(/(destino|objetivo)\\s*(1[0-9]|[0-9])\\.0/);\nif (matchDestino) {\n  version_objetivo = matchDestino[2] + '.0';\n}\n\nreturn {\n  ...$json,\n  version_origen,\n  version_objetivo,\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16,
+        160
+      ],
+      "id": "850ef650-44cf-4d55-bdb4-ffad13ce7a53",
+      "name": "Parsear Versiones"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Sácame en los módulos su origen. Dime si el módulo es de la OCA o es personalizado o es base",
+        "options": {
+          "systemMessage": "=Eres un asistente para un flujo de n8n que ayuda a hacer auditorías de módulos de Odoo a partir de informes de consultoría técnica en PDF.\n\nSáqueme para cada módulo su origen. Bien OCA, bien personalizado o bien Base de Odoo.",
+          "maxIterations": 1,
+          "returnIntermediateSteps": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        864,
+        160
+      ],
+      "id": "17fb4a6c-1ad0-407b-8290-0b0d0d432576",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        496,
+        160
+      ],
+      "id": "788b867a-3d1f-45c3-baf6-0e6104bb81c1",
+      "name": "Extraer Texto PDF"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Detectar módulos de forma GENERAL a partir del texto del PDF.\n// Regla: cualquier token en snake_case (letras/números con '_')\n// se considera candidato a módulo.\n\n// 1) Construimos un texto bruto a partir de los campos más típicos\nlet bruto = '';\n\nif (typeof $json.text === 'string') {\n  bruto += $json.text;\n}\nif (typeof $json.texto_pdf === 'string') {\n  // Compatibilidad con versiones anteriores del flujo\n  bruto += '\\n' + $json.texto_pdf;\n}\n\n// Si no hay nada, devolvemos sin módulos\nif (!bruto) {\n  return {\n    version_origen: $json.version_origen,\n    version_objetivo: $json.version_objetivo,\n    modulos_pre: [],\n  };\n}\n\n// 2) Normalizar saltos de línea Windows\nbruto = bruto.replace(/\\r\\n/g, '\\n');\n\n// 3) Unir palabras partidas por guion + salto de línea\n//    (ej: \"account-\\nmove\" -> \"accountmove\")\nbruto = bruto.replace(/-\\s*\\n\\s*/g, '');\n\n// 4) Unir SOLO saltos de línea dentro de nombres en snake_case\n//    (ej: \"hr_timesheet_sheet_attend\\nance\" -> \"hr_timesheet_sheet_attendance\")\n//    Requiere que la parte izquierda tenga al menos un '_' para no unir\n//    palabras normales como \"Contabilidad\\ngst_solar_lot\".\nbruto = bruto.replace(/([a-z0-9]*_[a-z0-9]*)\\s*\\n\\s*([a-z0-9]+)/gi, '$1$2');\n\n// 5) Convertir el resto de saltos de línea y tabs en espacios\nlet texto = bruto.replace(/[\\n\\t]+/g, ' ');\n\n// 6) Colapsar espacios múltiples\ntexto = texto.replace(/\\s+/g, ' ').trim();\n\n// 7) Regex genérico para snake_case: al menos un '_', SOLO minúsculas y dígitos.\n//    Esto evita arrastrar colas como \"transferBankingaddonsAdd\".\nconst regex = /\\b[a-z0-9]+(?:_[a-z0-9]+)+\\b/g;\nconst encontrados = new Set();\nlet match;\n\nwhile ((match = regex.exec(texto)) !== null) {\n  encontrados.add(match[0]); // mantiene el caso tal como aparece\n}\n\n// 8) Convertimos a lista ordenada, con índice estable, y la envolvemos en objetos\nconst modulos_pre = Array.from(encontrados)\n  .sort((a, b) => a.localeCompare(b))\n  .map((nombre, index) => ({ index, modulo: nombre, origen: 'desconocido' }));\n\nreturn {\n  version_origen: $json.version_origen,\n  version_objetivo: $json.version_objetivo,\n  modulos_pre,\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        160
+      ],
+      "id": "ba3fae95-c28f-48a4-a2c5-9b03388d9d58",
+      "name": "Detectar Candidatos Snake Case"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Construir matriz de versiones 12.0–19.0 para TODOS los módulos\n// recibidos en modulos_pre, sin depender de la IA.\n\nconst version_origen = $json.version_origen || '12.0';\nconst version_objetivo = $json.version_objetivo || '17.0';\n\nconst versiones = ['12.0', '13.0', '14.0', '15.0', '16.0', '17.0', '18.0', '19.0'];\nconst idxOrigen = versiones.indexOf(version_origen);\nconst idxObjetivo = versiones.indexOf(version_objetivo);\n\nconst modulos_pre = Array.isArray($json.modulos_pre) ? $json.modulos_pre : [];\n\nfunction rangoIncluye(idx, a, b) {\n  const min = Math.min(a, b);\n  const max = Math.max(a, b);\n  return idx >= min && idx <= max;\n}\n\nconst modulos = modulos_pre.map(orig => {\n  const nombre = orig.modulo || '';\n  const origen = (orig.origen || 'desconocido').toLowerCase();\n\n  const m = {\n    modulo: nombre,\n    origen,\n    repo_inicial: '',\n    version_odoo_origen: version_origen,\n    version_odoo_objetivo: version_objetivo,\n    nombre_detectado: nombre,\n    contexto: '',\n  };\n\n  versiones.forEach((v, idx) => {\n    const col = 'v' + v.split('.')[0];\n    let valor = 'NO';\n\n    if (origen === 'oca') {\n      // Heurística simple: SI desde origen hasta objetivo (incluidos)\n      if (idxOrigen !== -1 && idxObjetivo !== -1 && rangoIncluye(idx, idxOrigen, idxObjetivo)) {\n        valor = 'SI';\n      }\n    } else {\n      // Desconocido/custom: SI solo en la versión de origen\n      if (idxOrigen !== -1 && idx === idxOrigen) {\n        valor = 'SI';\n      }\n    }\n\n    m[col] = valor;\n  });\n\n  const colObjetivo = 'v' + version_objetivo.split('.')[0];\n  if (m[colObjetivo] === 'SI') {\n    m.motivo_si_no = 'Disponible en la versión objetivo.';\n  } else {\n    m.motivo_si_no = 'Sin información clara, revisar manualmente.';\n  }\n\n  return m;\n});\n\nreturn {\n  version_origen,\n  version_objetivo,\n  modulos,\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        32
+      ],
+      "id": "5a3cb276-4cdf-4ac3-aefc-62c7f703f899",
+      "name": "Construir Matriz Versiones"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        864,
+        368
+      ],
+      "id": "d3c4acc7-ee14-4be5-bcef-5f5542a49b25",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Bjrqezyf8XK8C0xF",
+          "name": "api gratis marcos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "tiene version inicial\ntiene version final\ntiene documento\n"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -96,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "6e887381-03f8-4dc5-ba94-2151e5a1efab",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.document.file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        320,
+        160
+      ],
+      "id": "8784757f-85fc-4eb1-be59-c96bb5430c37",
+      "name": "Get a file",
+      "webhookId": "7884e6b5-2d49-4e39-a771-cfe800c2692e",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Transformar la salida del AI Agent en filas para CSV.\n// El agente suele devolver el JSON dentro de la propiedad `output`\n// como string. Ejemplo:\n//   { output: \"{ \\\"version_origen\\\":..., \\\"modulos\\\":[...] }\" }\n// Este código intenta primero usar $json directamente y, si no hay\n// `modulos`, intenta parsear $json.output.\n\nfunction parsearOutput(output) {\n  if (!output) return null;\n  if (typeof output === 'object') return output;\n  if (typeof output !== 'string') return null;\n\n  // El agente a veces antepone 'json' o espacios, o incluso ```json ... ```.\n  // Buscamos el primer '{' y el último '}' y parseamos ese trozo.\n  const inicio = output.indexOf('{');\n  const fin = output.lastIndexOf('}');\n  if (inicio === -1 || fin === -1 || fin <= inicio) return null;\n\n  const posibleJson = output.slice(inicio, fin + 1);\n  try {\n    return JSON.parse(posibleJson);\n  } catch (e) {\n    return null;\n  }\n}\n\nlet data = $json || {};\n\n// Si no vienen modulos directamente, intentamos sacarlos de `output`.\nif (!Array.isArray(data.modulos) || data.modulos.length === 0) {\n  const desdeOutput = parsearOutput(data.output || data.result || data.data);\n  if (desdeOutput && Array.isArray(desdeOutput.modulos)) {\n    data = desdeOutput;\n  }\n}\n\nconst version_origen = data.version_origen || '12.0';\nconst version_objetivo = data.version_objetivo || '17.0';\n\nconst modulos = Array.isArray(data.modulos) ? data.modulos : [];\n\nif (modulos.length === 0) {\n  return [\n    {\n      modulo: '',\n      origen: 'desconocido',\n      repo_inicial: '',\n      version_odoo_origen: version_origen,\n      version_odoo_objetivo: version_objetivo,\n      v12: 'NO',\n      v13: 'NO',\n      v14: 'NO',\n      v15: 'NO',\n      v16: 'NO',\n      v17: 'NO',\n      v18: 'NO',\n      v19: 'NO',\n      motivo_si_no: 'Sin módulos en la respuesta del agente (revisar salida de AI Agent)',\n      nombre_detectado: '',\n      contexto: '',\n    },\n  ];\n}\n\nconst filas = modulos.map(m => ({\n  modulo: m.modulo || m.nombre_tecnico || '',\n  origen: (m.origen || 'desconocido').toLowerCase(),\n  repo_inicial: m.repo_inicial || '',\n  version_odoo_origen: m.version_odoo_origen || version_origen,\n  version_odoo_objetivo: m.version_odoo_objetivo || version_objetivo,\n  v12: m.v12 || 'NO',\n  v13: m.v13 || 'NO',\n  v14: m.v14 || 'NO',\n  v15: m.v15 || 'NO',\n  v16: m.v16 || 'NO',\n  v17: m.v17 || 'NO',\n  v18: m.v18 || 'NO',\n  v19: m.v19 || 'NO',\n  motivo_si_no: m.motivo_si_no || '',\n  nombre_detectado: m.nombre_detectado || m.modulo || '',\n  contexto: m.contexto || '',\n}));\n\nreturn filas;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1392,
+        32
+      ],
+      "id": "4c1a84d5-100b-49d0-9530-94a3e000e33c",
+      "name": "Generar Filas CSV"
+    },
+    {
+      "parameters": {
+        "options": {
+          "fileName": "modulos_odoo.csv",
+          "headerRow": true
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1,
+      "position": [
+        1568,
+        32
+      ],
+      "id": "5b09ae1a-31a3-4b5f-a964-ae200f042c3e",
+      "name": "Convertir a CSV"
+    },
+    {
+      "parameters": {
+        "operation": "sendDocument",
+        "chatId": "={{ $node[\"Telegram Trigger\"].json.message.chat.id }}",
+        "additionalFields": {
+          "caption": "Matrices de versiones de módulos Odoo"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1744,
+        32
+      ],
+      "id": "49e5f7b1-6a1f-422b-ac21-fe7f41979c1d",
+      "name": "Enviar CSV por Telegram",
+      "webhookId": "d2180a5b-36b3-49a0-83d0-0719c5282304",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generar combinaciones módulo × versión para comprobaciones posteriores.\n// Toma la salida del nodo de clasificación (IA) y construye items\n// { modulo, version, es_oca, origen, repo_inicial, ... }.\n\nconst versiones = ['12.0','13.0','14.0','15.0','16.0','17.0','18.0','19.0'];\n\nconst version_origen = $json.version_origen || '12.0';\nconst version_objetivo = $json.version_objetivo || '17.0';\n\nconst iOrigen = versiones.indexOf(version_origen);\nconst iObjetivo = versiones.indexOf(version_objetivo);\n\n// Preferimos $json.modulos (salida de la IA). Si no existe, usamos modulos_pre.\nconst base = Array.isArray($json.modulos)\n  ? $json.modulos\n  : (Array.isArray($json.modulos_pre) ? $json.modulos_pre : []);\n\nconst salida = [];\n\nfor (const m of base) {\n  const modulo = m.modulo || m.nombre_detectado || '';\n  if (!modulo) continue;\n\n  const es_oca = !!m.es_oca || m.origen === 'oca';\n  const origen = es_oca ? 'oca' : 'desconocido';\n  const repo_inicial = m.repo_inicial || '';\n  const index = m.index ?? 0;\n\n  for (let i = 0; i < versiones.length; i++) {\n    const v = versiones[i];\n\n    if (iOrigen !== -1 && iObjetivo !== -1) {\n      const min = Math.min(iOrigen, iObjetivo);\n      const max = Math.max(iOrigen, iObjetivo);\n      if (i < min || i > max) continue;\n    }\n\n    salida.push({\n      index,\n      modulo,\n      es_oca,\n      origen,\n      repo_inicial,\n      version: v,\n      version_origen,\n      version_objetivo,\n    });\n  }\n}\n\nreturn salida;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        368
+      ],
+      "id": "dc9e4de7-9d7b-4829-a669-79472d32e117",
+      "name": "Preparar Modulo-Version"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        160,
+        160
+      ],
+      "id": "c60ec8e0-95fd-4ddc-94d8-0c5d87e452d9",
+      "name": "Wait",
+      "webhookId": "d1d36ddf-3016-42fd-bf8b-743b844e19c2"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-12T15:37:57.045Z",
+      "createdAt": "2026-02-12T15:37:57.045Z",
+      "role": "workflow:owner",
+      "workflowId": "PAUOnb2bS06nbbMB",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-02-13T08:08:56.671Z",
+  "versionId": "261940d2-46d1-4ea3-b157-c5df61c88ddf"
+}
