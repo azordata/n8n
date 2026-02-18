@@ -1,0 +1,1282 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Process Telegram Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Telegram Message": {
+      "main": [
+        [
+          {
+            "node": "Extraer Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Message to Channel": {
+      "main": [
+        [
+          {
+            "node": "Process Message ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Message ID": {
+      "main": [
+        [
+          {
+            "node": "Invoke AI Processing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Invoke AI Processing": {
+      "main": [
+        [
+          {
+            "node": "Wait for AI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for AI Response": {
+      "main": [
+        [
+          {
+            "node": "Get AI Response from Channel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get AI Response from Channel": {
+      "main": [
+        [
+          {
+            "node": "Process AI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process AI Response": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Autenticar Odoo": {
+      "main": [
+        [
+          {
+            "node": "Extract UID from Login",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract UID from Login": {
+      "main": [
+        [
+          {
+            "node": "Search AI Channel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search AI Channel": {
+      "main": [
+        [
+          {
+            "node": "Find AI Channel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find AI Channel": {
+      "main": [
+        [
+          {
+            "node": "Pass Channel Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pass Channel Data": {
+      "main": [
+        [
+          {
+            "node": "Get Ask AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Ask AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Combine Agent Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine Agent Data": {
+      "main": [
+        [
+          {
+            "node": "Get AI Agent Partner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get AI Agent Partner": {
+      "main": [
+        [
+          {
+            "node": "Combine Agent Partner Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine Agent Partner Data": {
+      "main": [
+        [
+          {
+            "node": "Prepare Admin Partner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Admin Partner": {
+      "main": [
+        [
+          {
+            "node": "Get Admin Partner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Admin Partner": {
+      "main": [
+        [
+          {
+            "node": "Prepare Create Channel Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Create Channel Data": {
+      "main": [
+        [
+          {
+            "node": "Build Create Channel JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Create Channel JSON": {
+      "main": [
+        [
+          {
+            "node": "Create AI Channel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create AI Channel": {
+      "main": [
+        [
+          {
+            "node": "Process Created Channel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Created Channel": {
+      "main": [
+        [
+          {
+            "node": "Prepare Channel Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Channel Data": {
+      "main": [
+        [
+          {
+            "node": "Post Message to Channel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirmar Transcripción": {
+      "main": [
+        [
+          {
+            "node": "Actualizar Datos Transcripción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar Transcripción": {
+      "main": [
+        [
+          {
+            "node": "Confirmar Transcripción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Descargar Audio": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Upload Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Descarga": {
+      "main": [
+        [
+          {
+            "node": "Descargar Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Archivo de Voz": {
+      "main": [
+        [
+          {
+            "node": "Preparar Descarga",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Es Audio?": {
+      "main": [
+        [
+          {
+            "node": "Obtener Archivo de Voz",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Autenticar Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request - Upload Audio": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Create Transcript (ES)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request - Create Transcript (ES)": {
+      "main": [
+        [
+          {
+            "node": "Esperar Transcripción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request - Get Transcript": {
+      "main": [
+        [
+          {
+            "node": "Procesar Transcripción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Esperar Transcripción": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Get Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualizar Datos Transcripción": {
+      "main": [
+        [
+          {
+            "node": "Autenticar Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraer Datos": {
+      "main": [
+        [
+          {
+            "node": "¿Es Audio?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Whatsapp Kairos": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Process Telegram Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send AI Response to WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send AI Response to Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-18T07:55:06.634Z",
+  "id": "xRcZa5ldmRIPDSzR",
+  "isArchived": false,
+  "meta": null,
+  "name": "odoo19",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "0bd162d2-0318-45cb-ad96-0c47893e3408",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1536,
+        880
+      ],
+      "webhookId": "telegram-odoo-ai-api-key"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Procesar mensaje de Telegram o WhatsApp\n// Detectar si viene del webhook de WhatsApp o del trigger de Telegram\nlet telegramMessage = null;\nlet messageSource = 'telegram'; // Por defecto Telegram\n\n// PRIMERO: Verificar si viene del Telegram Trigger (tiene update_id)\ntry {\n  const telegramData = items[0].json;\n  if (telegramData && telegramData.update_id !== undefined && telegramData.message) {\n    // Viene de Telegram Trigger\n    telegramMessage = telegramData.message;\n    messageSource = 'telegram';\n    console.log('📱 Mensaje detectado desde Telegram Trigger');\n  }\n} catch (e) {\n  console.log('⚠️ No se pudo leer de Telegram Trigger:', e.message);\n}\n\n// SEGUNDO: Si no viene de Telegram, intentar leer del nodo Code (WhatsApp)\nif (!telegramMessage) {\n  try {\n    const codeData = $node['Code']?.json;\n    if (codeData && codeData.message) {\n      telegramMessage = codeData.message;\n      messageSource = 'whatsapp';\n      console.log('📱 Mensaje detectado desde WhatsApp (nodo Code)');\n    }\n  } catch (e) {\n    console.log('⚠️ No se pudo leer de Code:', e.message);\n  }\n}\n\n// TERCERO: Intentar leer de items[0] si tiene formato de Telegram (viene de Code)\nif (!telegramMessage && items && items.length > 0 && items[0].json) {\n  const itemData = items[0].json;\n  \n  // Si tiene el formato de Telegram pero NO tiene update_id (viene de Code/WhatsApp)\n  if (itemData.message && itemData.update_id === undefined) {\n    telegramMessage = itemData.message;\n    messageSource = 'whatsapp';\n    console.log('📱 Mensaje detectado desde WhatsApp (formateado desde Code)');\n  }\n}\n\nif (!telegramMessage) {\n  console.error('❌ No se pudo obtener el mensaje de ninguna fuente');\n  console.error('📥 Items recibidos:', JSON.stringify(items, null, 2));\n  throw new Error('No se pudo obtener el mensaje de ninguna fuente');\n}\n\nconst chatId = telegramMessage.chat?.id || telegramMessage.chat_id;\nconst userId = telegramMessage.from?.id || telegramMessage.user_id;\nconst userName = telegramMessage.from?.first_name || telegramMessage.user_name || 'Usuario';\nconst userLastName = telegramMessage.from?.last_name || '';\nlet messageText = telegramMessage.text || '';\nconst messageId = telegramMessage.message_id;\n\n// DETECTAR UBICACIÓN GPS\nlet hasLocation = false;\nlet latitude = null;\nlet longitude = null;\n\nif (telegramMessage.location && telegramMessage.location.latitude && telegramMessage.location.longitude) {\n  hasLocation = true;\n  latitude = telegramMessage.location.latitude;\n  longitude = telegramMessage.location.longitude;\n  // Generar mensaje automático con las coordenadas para fichaje\n  messageText = `Fichar ubicacion: ${latitude}, ${longitude}`;\n  console.log('📍 UBICACIÓN DETECTADA:');\n  console.log('   Latitud:', latitude);\n  console.log('   Longitud:', longitude);\n  console.log('   Mensaje generado:', messageText);\n}\n\nconsole.log('📱 Mensaje recibido desde:', messageSource.toUpperCase());\nconsole.log('   Chat ID:', chatId);\nconsole.log('   Usuario:', userName, userLastName);\nconsole.log('   Mensaje:', messageText);\nconsole.log('   Tiene ubicación:', hasLocation);\n\n// Comandos especiales\nif (messageText.startsWith('/start')) {\n  return [{\n    json: {\n      chatId: chatId,\n      isCommand: true,\n      commandType: 'start',\n      directResponse: '👋 ¡Hola! Soy el asistente de IA de Odoo.\\n\\nPuedo ayudarte con:\\n\\n📋 Crear contactos, productos y oportunidades\\n💰 Gestionar pedidos de venta y compras\\n📦 Mover inventario entre almacenes\\n📧 Enviar recordatorios de pago\\n✅ Gestionar tareas y proyectos\\n📍 Fichar entrada/salida con ubicación\\n\\n¿En qué puedo ayudarte hoy?',\n      messageSource: messageSource\n    }\n  }];\n}\n\nif (messageText.startsWith('/help')) {\n  return [{\n    json: {\n      chatId: chatId,\n      isCommand: true,\n      commandType: 'help',\n      directResponse: '🆘 **Ayuda del Bot**\\n\\n**Comandos:**\\n/start - Iniciar bot\\n/help - Ver esta ayuda\\n\\n**Ejemplos de uso:**\\n\\n📋 \"Crea un contacto llamado Juan Pérez\"\\n💰 \"Crea un presupuesto para el cliente ABC\"\\n📦 \"Mueve 10 guantes de WH/Stock a AV/Stock\"\\n📧 \"Envía recordatorio de pago a todos\"\\n✅ \"Crea una tarea: Revisar facturas\"\\n🔄 \"Repite la última venta a Jorge\"\\n📍 Envía tu ubicación para fichar',\n      messageSource: messageSource\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    chatId: chatId,\n    userId: userId,\n    userName: userName + ' ' + userLastName,\n    messageText: messageText,\n    messageId: messageId,\n    timestamp: new Date().toISOString(),\n    isCommand: false,\n    messageSource: messageSource,\n    hasLocation: hasLocation,\n    latitude: latitude,\n    longitude: longitude\n  }\n}];"
+      },
+      "id": "146e7769-6d1e-4ce2-a591-6d10dae62d3e",
+      "name": "Process Telegram Message",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        -1328,
+        768
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://mchecagoshawk-testai2-main-25908815.dev.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ jsonrpc: '2.0', method: 'call', params: { service: 'object', method: 'execute_kw', args: [$node['Prepare Channel Data'].json.db, $node['Prepare Channel Data'].json.uid, 'admin', 'discuss.channel', 'message_post', [$node['Prepare Channel Data'].json.channelId], { body: $node['Prepare Channel Data'].json.messageText, message_type: 'comment', subtype_xmlid: 'mail.mt_comment', author_id: 3 }] }, id: 1 }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "bac7f9a5-cc5e-43d3-8431-a35dfcd1774f",
+      "name": "Post Message to Channel",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        3312,
+        784
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "functionCode": "// Procesar respuesta de creación de mensaje (JSON-RPC)\n// JSON-RPC devuelve { result: ID } o { error: ... }\nconst messageResponse = items[0].json;\nconst channelData = $node['Prepare Channel Data'].json;\n\nlet messageId = null;\n\nif (messageResponse && messageResponse.result) {\n  let result = messageResponse.result;\n  \n  // Si result es un array, tomar el primer elemento\n  if (Array.isArray(result)) {\n    messageId = result[0];\n    console.log('📦 Resultado es array, tomando primer elemento:', messageId);\n  } \n  // Si result es un objeto con 'id', extraerlo\n  else if (typeof result === 'object' && result.id) {\n    messageId = result.id;\n    console.log('📦 Resultado es objeto, extrayendo ID:', messageId);\n  }\n  // Si result es un número, usarlo directamente\n  else if (typeof result === 'number') {\n    messageId = result;\n    console.log('📦 Resultado es número:', messageId);\n  }\n  else {\n    messageId = result;\n    console.log('📦 Resultado sin procesar:', result);\n  }\n  \n  console.log('✅ Mensaje enviado al canal:', channelData.channelName);\n  console.log('   ID del mensaje:', messageId, '(tipo:', typeof messageId + ')');\n  console.log('⏳ Esperando respuesta de la IA de Odoo...');\n} else if (messageResponse && messageResponse.error) {\n  console.error('❌ Error al enviar mensaje:', messageResponse.error);\n  throw new Error('Error al enviar mensaje: ' + JSON.stringify(messageResponse.error));\n} else {\n  console.error('❌ Respuesta inesperada:', messageResponse);\n  throw new Error('Respuesta inesperada del servidor');\n}\n\n// Asegurarse de que messageId es un número entero\nmessageId = parseInt(messageId);\n\nif (isNaN(messageId)) {\n  throw new Error('No se pudo obtener un ID de mensaje válido');\n}\n\nreturn [{\n  json: {\n    mail_message_id: messageId,\n    channel_id: channelData.channelId,\n    channel_name: channelData.channelName,\n    messageText: channelData.messageText,\n    chatId: channelData.chatId,\n    uid: channelData.uid,\n    db: channelData.db,\n    timestamp_sent: new Date().toISOString(),\n    messageSource: channelData.messageSource || 'telegram'\n  }\n}];"
+      },
+      "id": "790547cf-dd7a-4de0-b5c8-de1c43477c07",
+      "name": "Process Message ID",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        3552,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://mchecagoshawk-testai2-main-25908815.dev.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ jsonrpc: '2.0', method: 'call', params: { service: 'object', method: 'execute_kw', args: [$node['Prepare Channel Data'].json.db, $node['Prepare Channel Data'].json.uid, 'admin', 'ir.actions.server', 'run', [869], { context: { mail_message_id: $node['Process Message ID'].json.mail_message_id, channel_id: $node['Process Message ID'].json.channel_id } }] }, id: 1 }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "c7964466-c38a-4cae-970d-ec0ede1dfeba",
+      "name": "Invoke AI Processing",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        3712,
+        784
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "amount": 8,
+        "unit": "seconds"
+      },
+      "id": "07527f5e-54bf-41d1-8dbd-8f83f6a05f4d",
+      "name": "Wait for AI Response",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        3936,
+        784
+      ],
+      "webhookId": "24f27840-8bee-4f49-878b-73bcb411293c"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://mchecagoshawk-testai2-main-25908815.dev.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ (() => { const msgId = parseInt($node['Process Message ID'].json.mail_message_id); return JSON.stringify({ jsonrpc: '2.0', method: 'call', params: { service: 'object', method: 'execute_kw', args: [$node['Process Message ID'].json.db, $node['Process Message ID'].json.uid, 'admin', 'mail.message', 'search_read', [[['model', '=', 'discuss.channel'], ['res_id', '=', $node['Process Message ID'].json.channel_id], ['author_id', '=', 7], ['id', '>', msgId]], ['id', 'body', 'author_id', 'create_date'], 0, 5, 'id desc'], {}] }, id: 1 }); })() }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "4b7f775a-e774-4767-9400-180d62d3e5c9",
+      "name": "Get AI Response from Channel",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        4160,
+        784
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "functionCode": "// Procesar respuesta del AI desde los mensajes del canal (JSON-RPC)\n// JSON-RPC devuelve { result: [...] } con los mensajes\nconst messagesResponse = items[0].json;\nconst messageData = $node['Process Message ID'].json;\n\nlet aiMessage = '';\nlet hasError = false;\n\nconsole.log('📥 Respuesta JSON-RPC:', JSON.stringify(messagesResponse, null, 2));\n\ntry {\n  if (messagesResponse && messagesResponse.error) {\n    hasError = true;\n    aiMessage = '❌ Error al obtener respuesta del AI: ' + JSON.stringify(messagesResponse.error);\n    console.error('Error en Get AI Response:', messagesResponse.error);\n  }\n  else if (messagesResponse && messagesResponse.result && Array.isArray(messagesResponse.result)) {\n    const messages = messagesResponse.result;\n    const userMessageId = messageData.mail_message_id;\n    \n    console.log('📊 Mensajes recibidos:', messages.length);\n    console.log('🔍 Buscando mensaje después del ID:', userMessageId);\n    \n    // Buscar el primer mensaje del AI (author_id = 7) que sea más reciente que el del usuario\n    for (const msg of messages) {\n      // Verificar que sea del AI (author_id = 7) y más reciente que el mensaje del usuario\n      if (msg.author_id && msg.author_id[0] === 7 && msg.id > userMessageId) {\n        // Extraer el texto del body (puede tener HTML)\n        let bodyText = msg.body || '';\n        // Limpiar HTML tags\n        bodyText = bodyText.replace(/<[^>]*>/g, '').trim();\n        \n        if (bodyText && bodyText.length > 0) {\n          aiMessage = bodyText;\n          console.log('✅ Respuesta del AI encontrada (ID: ' + msg.id + '):', aiMessage.substring(0, 100));\n          break;\n        }\n      }\n    }\n    \n    // Si no encontramos respuesta, usar el último mensaje del AI\n    if (!aiMessage && messages.length > 0) {\n      for (const msg of messages) {\n        if (msg.author_id && msg.author_id[0] === 7 && msg.body) {\n          aiMessage = msg.body.replace(/<[^>]*>/g, '').trim();\n          console.log('⚠️ Usando último mensaje del AI como respuesta (ID: ' + msg.id + '):', aiMessage.substring(0, 100));\n          break;\n        }\n      }\n    }\n  }\n  \n  if (!aiMessage) {\n    hasError = true;\n    aiMessage = '⏳ El AI aún está procesando tu mensaje. Por favor espera unos segundos y vuelve a intentar.';\n    console.warn('⚠️ No se encontró respuesta del AI');\n  }\n} catch (error) {\n  hasError = true;\n  aiMessage = '❌ Error al procesar respuesta: ' + error.message;\n  console.error('Error en Process AI Response:', error);\n}\n\n// Limpiar HTML tags adicionales\naiMessage = aiMessage.replace(/<[^>]*>/g, '').trim();\n\nconsole.log('📤 Respuesta del AI a enviar:', aiMessage.substring(0, 200));\n\n// Obtener el origen del mensaje desde Process Telegram Message\nlet messageSource = 'telegram';\ntry {\n  const processMessageData = $node['Process Telegram Message'].json;\n  messageSource = processMessageData.messageSource || 'telegram';\n  console.log('📱 Origen del mensaje detectado:', messageSource);\n} catch (e) {\n  console.warn('⚠️ No se pudo obtener messageSource, usando Telegram por defecto');\n}\n\nreturn [{\n  json: {\n    chatId: messageData.chatId,\n    aiMessage: aiMessage,\n    hasError: hasError,\n    timestamp: new Date().toISOString(),\n    messageSource: messageSource\n  }\n}];"
+      },
+      "id": "8fe293e6-470f-4f6c-be04-36d508a0582f",
+      "name": "Process AI Response",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        4384,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chatId }}",
+        "text": "={{ $json.aiMessage }}",
+        "additionalFields": {
+          "disable_web_page_preview": true,
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "09ae00a0-afe4-499f-80e1-3b65d07bc1aa",
+      "name": "Send AI Response to Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        4816,
+        880
+      ],
+      "webhookId": "52505368-467b-4d56-ae07-643a444dca15"
+    },
+    {
+      "parameters": {
+        "url": "https://mchecagoshawk-testai2-main-25908815.dev.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"call\",\n  \"params\": {\n    \"service\": \"common\",\n    \"method\": \"authenticate\",\n    \"args\": [\n      \"mchecagoshawk-testai2-main-25908815\",\n      \"admin\",\n      \"admin\",\n      {}\n    ]\n  },\n  \"id\": 1\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -640,
+        784
+      ],
+      "id": "c23bfd1b-56dd-4f85-a356-77e7d507c04a",
+      "name": "Autenticar Odoo"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Extraer UID del login\nconst authResponse = items[0].json;\n\nlet uid = null;\n\nif (authResponse && authResponse.result) {\n  uid = authResponse.result;\n  console.log('✅ Login exitoso, UID:', uid);\n} else if (authResponse && authResponse.error) {\n  console.error('❌ Error en login:', authResponse.error);\n  throw new Error('Error de autenticación: ' + JSON.stringify(authResponse.error));\n} else {\n  console.error('❌ Respuesta inesperada del login:', authResponse);\n  throw new Error('Respuesta inesperada del servidor');\n}\n\n// Verificar si hay datos de transcripción (cuando viene de audio)\nlet messageText = null;\nlet chatId = null;\nlet userId = null;\nlet userName = null;\nlet timestamp = null;\nlet esAudio = false;\n\n// Intentar leer datos de transcripción si existen (cuando viene de audio)\ntry {\n  const transcripcionData = $node['Actualizar Datos Transcripción']?.json;\n  if (transcripcionData && transcripcionData.audio_transcrito) {\n    // Usar el mensaje transcrito (sin tildes, normalizado para el agente)\n    messageText = transcripcionData.mensaje_usuario || transcripcionData.transcripcion_original;\n    chatId = transcripcionData.chat_id;\n    userId = transcripcionData.user_id;\n    userName = transcripcionData.user_name;\n    timestamp = transcripcionData.timestamp;\n    esAudio = true;\n    console.log('🎤 Usando datos de transcripción de audio:');\n    console.log('   Mensaje transcrito:', messageText);\n    console.log('   Chat ID:', chatId);\n  }\n} catch (e) {\n  console.log('⚠️ No se pudieron leer datos de transcripción:', e.message);\n}\n\n// Si no hay datos de transcripción, usar datos de Process Telegram Message\nlet messageSource = 'telegram';\nif (!messageText) {\n  try {\n    const messageData = $node['Process Telegram Message'].json;\n    messageText = messageData.messageText;\n    chatId = messageData.chatId;\n    userId = messageData.userId;\n    userName = messageData.userName;\n    timestamp = messageData.timestamp;\n    messageSource = messageData.messageSource || 'telegram';\n    console.log('📝 Usando mensaje de texto normal:', messageText);\n    console.log('📱 Origen del mensaje:', messageSource);\n  } catch (e) {\n    console.error('❌ No se pudieron leer datos de Process Telegram Message:', e.message);\n    throw new Error('No se pudieron obtener los datos del mensaje');\n  }\n}\n\nreturn [{\n  json: {\n    uid: uid,\n    messageText: messageText,\n    chatId: chatId,\n    userId: userId,\n    userName: userName,\n    timestamp: timestamp,\n    db: 'mchecagoshawk-testai2-main-25908815',\n    esAudio: esAudio,\n    messageSource: messageSource\n  }\n}];"
+      },
+      "id": "c8a92b0d-934a-4213-85ad-d4fd5d358499",
+      "name": "Extract UID from Login",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        -416,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://mchecagoshawk-testai2-main-25908815.dev.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ jsonrpc: '2.0', method: 'call', params: { service: 'object', method: 'execute_kw', args: [$node['Extract UID from Login'].json.db, $node['Extract UID from Login'].json.uid, 'admin', 'discuss.channel', 'search_read', [[['channel_type', '=', 'ai_chat']], ['id', 'name'], 0, 1], {}] }, id: 1 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -240,
+        784
+      ],
+      "id": "112b6de0-486b-42cc-9a1a-2d8781ea628a",
+      "name": "Search AI Channel"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Procesar resultado de búsqueda de canal AI\nconst searchResponse = items[0].json;\nconst userData = $node['Extract UID from Login'].json;\n\nconsole.log('🔍 Respuesta búsqueda canal:', JSON.stringify(searchResponse, null, 2));\nconsole.log('👤 UserData recibido:', JSON.stringify(userData, null, 2));\n\n// Verificar que userData tenga uid y db\nif (!userData || !userData.uid || !userData.db) {\n  console.error('❌ UserData incompleto:', userData);\n  throw new Error('Faltan datos de autenticación (uid o db)');\n}\n\nlet channelId = null;\nlet channelName = 'Ask AI';\nlet aiAgentName = 'Ask AI'; // Valor por defecto\nlet needsCreation = false;\n\n// Verificar si hay error en la respuesta\nif (searchResponse && searchResponse.error) {\n  console.error('❌ Error en búsqueda:', searchResponse.error);\n  throw new Error('Error al buscar canal AI: ' + JSON.stringify(searchResponse.error.data.message));\n}\n\n// Verificar resultado\nif (searchResponse && searchResponse.result && Array.isArray(searchResponse.result)) {\n  console.log('📊 Total canales ai_chat encontrados:', searchResponse.result.length);\n  \n  if (searchResponse.result.length > 0) {\n    const channel = searchResponse.result[0];\n    channelId = channel.id;\n    channelName = channel.name;\n    \n    // No intentamos leer ai_agent_id por permisos\n    // Usamos el nombre del canal como referencia\n    aiAgentName = channelName;\n    \n    console.log('✅ Canal AI encontrado:', channelName, '(ID:', channelId + ')');\n    console.log('🤖 Usando canal de tipo ai_chat');\n    needsCreation = false;\n  } else {\n    // No hay canales de tipo ai_chat - necesitamos crearlo\n    console.warn('⚠️ No se encontró ningún canal de tipo ai_chat');\n    console.log('🔧 Se creará automáticamente usando el AI Agent');\n    needsCreation = true;\n  }\n} else {\n  console.error('❌ Respuesta inesperada:', searchResponse);\n  throw new Error('Respuesta inesperada al buscar canal AI');\n}\n\n// Asegurar que todos los campos necesarios estén presentes\nconst resultData = {\n  uid: userData.uid,\n  db: userData.db,\n  messageText: userData.messageText,\n  chatId: userData.chatId,\n  userId: userData.userId,\n  userName: userData.userName,\n  timestamp: userData.timestamp,\n  channelId: channelId,\n  channelName: channelName,\n  aiAgentName: aiAgentName,\n  needsCreation: needsCreation\n};\n\nconsole.log('📦 ResultData preparado:', JSON.stringify(resultData, null, 2));\n\n// Devolver dos salidas: [0] para crear canal, [1] para usar canal existente\nif (needsCreation) {\n  return [[{ json: resultData }], []];\n} else {\n  return [[], [{ json: resultData }]];\n}"
+      },
+      "id": "c0d1b75b-1e74-4a37-bd35-49563957449e",
+      "name": "Find AI Channel",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Pasar datos de Find AI Channel explícitamente\n// Este nodo asegura que los datos se propaguen correctamente\nconsole.log('📥 Items recibidos:', JSON.stringify(items, null, 2));\nconsole.log('📥 Total items:', items ? items.length : 0);\n\nlet inputData = null;\n\n// Intentar leer de items[0] primero\nif (items && items.length > 0) {\n  const firstItem = items[0];\n  console.log('📦 Primer item completo:', JSON.stringify(firstItem, null, 2));\n  \n  if (firstItem && firstItem.json) {\n    inputData = firstItem.json;\n    console.log('✅ Datos obtenidos de items[0].json:', JSON.stringify(inputData, null, 2));\n  } else if (firstItem && typeof firstItem === 'object') {\n    // Si el item es directamente el objeto de datos\n    inputData = firstItem;\n    console.log('✅ Datos obtenidos directamente de items[0]:', JSON.stringify(inputData, null, 2));\n  }\n}\n\n// Si no funciona, intentar leer directamente de Find AI Channel\nif (!inputData || !inputData.uid || !inputData.db) {\n  console.warn('⚠️ Datos no disponibles en items, intentando leer de Find AI Channel...');\n  try {\n    const findChannelData = $node['Find AI Channel'].json;\n    console.log('📥 Datos de Find AI Channel:', JSON.stringify(findChannelData, null, 2));\n    if (findChannelData && findChannelData.uid && findChannelData.db) {\n      inputData = findChannelData;\n      console.log('✅ Datos obtenidos de Find AI Channel:', JSON.stringify(inputData, null, 2));\n    }\n  } catch (e) {\n    console.warn('⚠️ No se pudo leer de Find AI Channel:', e.message);\n  }\n}\n\n// Si aún no tenemos datos, intentar de Extract UID from Login\nif (!inputData || !inputData.uid || !inputData.db) {\n  console.warn('⚠️ Intentando leer de Extract UID from Login...');\n  try {\n    const extractData = $node['Extract UID from Login'].json;\n    console.log('📥 Datos de Extract UID from Login:', JSON.stringify(extractData, null, 2));\n    if (extractData && extractData.uid && extractData.db) {\n      inputData = {\n        ...extractData,\n        channelId: null,\n        channelName: 'Ask AI',\n        aiAgentName: 'Ask AI',\n        needsCreation: true\n      };\n      console.log('✅ Datos obtenidos de Extract UID from Login:', JSON.stringify(inputData, null, 2));\n    }\n  } catch (e) {\n    console.warn('⚠️ No se pudo leer de Extract UID from Login:', e.message);\n  }\n}\n\nconsole.log('📤 Datos finales a pasar:', JSON.stringify(inputData, null, 2));\n\n// Validar que tenemos los datos necesarios\nif (!inputData || !inputData.uid || !inputData.db) {\n  console.error('❌ Datos incompletos recibidos:', inputData);\n  console.error('❌ Items recibidos:', JSON.stringify(items, null, 2));\n  throw new Error('Faltan datos de autenticación (uid=' + (inputData?.uid || 'null') + ', db=' + (inputData?.db || 'null') + ')');\n}\n\n// Pasar los datos tal cual\nreturn [{ json: inputData }];"
+      },
+      "id": "00db264b-694a-4e84-a6db-d984029a915c",
+      "name": "Pass Channel Data",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        432,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://mchecagoshawk-testai2-main-25908815.dev.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ jsonrpc: '2.0', method: 'call', params: { service: 'object', method: 'execute_kw', args: [$json.db || 'mchecagoshawk-testai2-main-25908815', $json.uid, 'admin', 'ai.agent', 'search_read', [[['is_ask_ai_agent', '=', true]], ['id', 'name', 'partner_id'], 0, 1], {}] }, id: 1 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        656,
+        784
+      ],
+      "id": "3e5cca5b-0076-4a4e-afc7-656e912e68dd",
+      "name": "Get Ask AI Agent"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Combinar datos de Pass Channel Data con respuesta de Get Ask AI Agent\nconst agentResponse = items[0].json;\n\n// Leer datos de Pass Channel Data (que viene de Find AI Channel)\nconst inputData = $node['Pass Channel Data'].json;\n\nconsole.log('🤖 Respuesta Get Ask AI Agent:', JSON.stringify(agentResponse, null, 2));\nconsole.log('📥 Datos de entrada desde Pass Channel Data:', JSON.stringify(inputData, null, 2));\n\n// Validar que tenemos los datos necesarios\nif (!inputData || !inputData.uid || !inputData.db) {\n  console.error('❌ Datos incompletos:', inputData);\n  throw new Error('Faltan datos de autenticación (uid=' + (inputData?.uid || 'null') + ', db=' + (inputData?.db || 'null') + ')');\n}\n\n// search_read devuelve { result: [...] }\nlet agentId = null;\nlet agentName = null;\nlet agentPartnerId = null;\n\nif (agentResponse && agentResponse.result && Array.isArray(agentResponse.result) && agentResponse.result.length > 0) {\n  const agent = agentResponse.result[0];\n  agentId = agent.id;\n  agentName = agent.name;\n  agentPartnerId = agent.partner_id && agent.partner_id[0] ? agent.partner_id[0] : null;\n  console.log('✅ AI Agent encontrado:', agentName, '(ID:', agentId + ')');\n} else if (agentResponse && agentResponse.error) {\n  console.error('❌ Error al buscar AI Agent:', agentResponse.error);\n  throw new Error('Error al buscar AI Agent: ' + JSON.stringify(agentResponse.error.data.message));\n} else {\n  console.error('❌ No se encontró ningún AI Agent Ask AI');\n  throw new Error('No se encontró ningún AI Agent configurado como Ask AI');\n}\n\n// Combinar datos de entrada con respuesta\nreturn [{\n  json: {\n    ...inputData,\n    agent_id: agentId,\n    agent_name: agentName,\n    agent_partner_id: agentPartnerId,\n    agent_response: agentResponse\n  }\n}];"
+      },
+      "id": "f3674664-b1e2-4cc7-a083-4ed0cba3ac47",
+      "name": "Combine Agent Data",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        896,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://mchecagoshawk-testai2-main-25908815.dev.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ jsonrpc: '2.0', method: 'call', params: { service: 'object', method: 'execute_kw', args: [$json.db || 'mchecagoshawk-testai2-main-25908815', $json.uid, 'admin', 'ai.agent', 'read', [[$json.agent_id], ['partner_id', 'name']], {}] }, id: 1 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1088,
+        784
+      ],
+      "id": "1905c539-bdce-46d9-a32f-941906d6294f",
+      "name": "Get AI Agent Partner"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Combinar datos con respuesta de Get AI Agent Partner\nconst partnerResponse = items[0].json;\n\n// Leer datos de Combine Agent Data (que tiene agent_id, agent_name, etc.)\nlet inputData = $node['Combine Agent Data'].json;\n\nconsole.log('👤 Respuesta Get AI Agent Partner:', JSON.stringify(partnerResponse, null, 2));\nconsole.log('📥 Datos de entrada desde Combine Agent Data:', JSON.stringify(inputData, null, 2));\n\n// Validar que tenemos uid y db\nif (!inputData || !inputData.uid || !inputData.db) {\n  console.warn('⚠️ Datos incompletos en Combine Agent Data, intentando leer de Pass Channel Data...');\n  try {\n    const passData = $node['Pass Channel Data'].json;\n    if (passData && passData.uid && passData.db) {\n      inputData = { ...passData, ...inputData }; // Combinar manteniendo los datos nuevos\n      console.log('✅ Datos obtenidos de Pass Channel Data');\n    }\n  } catch (e) {\n    console.warn('⚠️ No se pudo leer de Pass Channel Data:', e.message);\n  }\n}\n\nif (!partnerResponse || !partnerResponse.result || !Array.isArray(partnerResponse.result) || partnerResponse.result.length === 0) {\n  throw new Error('No se pudo obtener el partner del AI Agent');\n}\n\n// Validar que tenemos los datos necesarios antes de continuar\nif (!inputData || !inputData.uid || !inputData.db) {\n  console.error('❌ Datos incompletos después de intentar fallbacks:', inputData);\n  throw new Error('Faltan datos de autenticación (uid=' + (inputData?.uid || 'null') + ', db=' + (inputData?.db || 'null') + ')');\n}\n\n// Validar que tenemos agent_id\nif (!inputData.agent_id) {\n  console.error('❌ agent_id no está disponible en Combine Agent Data:', JSON.stringify(inputData, null, 2));\n  throw new Error('agent_id no está disponible en los datos de Combine Agent Data');\n}\n\nconsole.log('✅ Agent ID preservado:', inputData.agent_id);\nconsole.log('✅ Agent Name preservado:', inputData.agent_name);\n\n// Combinar datos de entrada con respuesta, asegurando que agent_id y agent_name estén presentes\nreturn [{\n  json: {\n    ...inputData,\n    agent_id: inputData.agent_id,\n    agent_name: inputData.agent_name || 'Ask AI',\n    agent_partner_response: partnerResponse\n  }\n}];"
+      },
+      "id": "6ddf2eaa-a47a-4e17-b4ed-b4c7b0d5e66a",
+      "name": "Combine Agent Partner Data",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1296,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Validar y preparar datos para Get Admin Partner\nconst inputData = items[0].json;\n\nconsole.log('📥 Datos recibidos en Prepare Admin Partner:', JSON.stringify(inputData, null, 2));\n\n// Validar que tenemos uid y db\nif (!inputData || !inputData.uid || !inputData.db) {\n  console.error('❌ Datos incompletos:', inputData);\n  throw new Error('Faltan datos de autenticación (uid=' + (inputData?.uid || 'null') + ', db=' + (inputData?.db || 'null') + ')');\n}\n\n// Pasar los datos tal cual\nreturn [{ json: inputData }];"
+      },
+      "id": "c85e785f-fe46-4a46-8f6e-6e2f79a6e5e9",
+      "name": "Prepare Admin Partner",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://mchecagoshawk-testai2-main-25908815.dev.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ jsonrpc: '2.0', method: 'call', params: { service: 'object', method: 'execute_kw', args: [$json.db || 'mchecagoshawk-testai2-main-25908815', $json.uid, 'admin', 'res.users', 'read', [[$json.uid], ['partner_id']], {}] }, id: 1 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1776,
+        784
+      ],
+      "id": "e5abd11e-3dd2-4f68-99a3-dc3e12d5567c",
+      "name": "Get Admin Partner"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Preparar datos para crear el canal AI\nconst adminPartnerResponse = items[0].json; // Respuesta de Get Admin Partner\nconst combineData = $node['Combine Agent Partner Data'].json; // Datos de Combine Agent Partner Data\n\nconsole.log('👤 Respuesta Get Admin Partner:', JSON.stringify(adminPartnerResponse, null, 2));\nconsole.log('📥 Datos de Combine Agent Partner Data:', JSON.stringify(combineData, null, 2));\n\n// Validar respuesta del admin partner\nif (!adminPartnerResponse || !adminPartnerResponse.result || !Array.isArray(adminPartnerResponse.result) || adminPartnerResponse.result.length === 0) {\n  throw new Error('No se pudo obtener el partner del admin');\n}\n\n// Validar respuesta del agent partner\nif (!combineData || !combineData.agent_partner_response || !combineData.agent_partner_response.result || !Array.isArray(combineData.agent_partner_response.result) || combineData.agent_partner_response.result.length === 0) {\n  throw new Error('No se pudo obtener el partner del AI Agent');\n}\n\n// Extraer partner IDs\nconst adminPartnerId = adminPartnerResponse.result[0].partner_id && adminPartnerResponse.result[0].partner_id[0] ? adminPartnerResponse.result[0].partner_id[0] : null;\nconst agentPartnerId = combineData.agent_partner_response.result[0].partner_id && combineData.agent_partner_response.result[0].partner_id[0] ? combineData.agent_partner_response.result[0].partner_id[0] : null;\n\nif (!adminPartnerId) {\n  throw new Error('No se pudo obtener el partner_id del admin');\n}\n\nif (!agentPartnerId) {\n  throw new Error('No se pudo obtener el partner_id del AI Agent');\n}\n\n// Asegurar que tenemos agent_id y agent_name\nconst agentId = combineData.agent_id;\nconst agentName = combineData.agent_name || 'Ask AI';\n\nconsole.log('✅ Admin Partner ID:', adminPartnerId);\nconsole.log('✅ Agent Partner ID:', agentPartnerId);\nconsole.log('✅ Agent ID:', agentId);\nconsole.log('✅ Agent Name:', agentName);\n\nif (!agentId) {\n  console.error('❌ agent_id no está disponible en combineData:', JSON.stringify(combineData, null, 2));\n  throw new Error('agent_id no está disponible en los datos de Combine Agent Partner Data');\n}\n\n// Combinar todos los datos necesarios, asegurando que agent_id y agent_name estén presentes\nreturn [{\n  json: {\n    ...combineData,\n    agent_id: agentId,\n    agent_name: agentName,\n    admin_partner_id: adminPartnerId,\n    agent_partner_id: agentPartnerId\n  }\n}];"
+      },
+      "id": "d1978d82-83c7-41d9-a5bc-f6df69aeac2a",
+      "name": "Prepare Create Channel Data",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Construir JSON body para crear canal AI usando el método público create_ai_chat_channel_public\n// Este método usa sudo() internamente para escribir ai_agent_id correctamente\nconst inputData = items[0].json;\n\nconsole.log('📥 Input data completo:', JSON.stringify(inputData, null, 2));\n\nconst db = inputData.db || 'mchecagoshawk-testai2-main-25908815';\nconst uid = inputData.uid;\nconst agentId = inputData.agent_id;\nconst agentName = inputData.agent_name || 'Ask AI';\n\nconsole.log('🔍 Valores extraídos:');\nconsole.log('   db:', db);\nconsole.log('   uid:', uid);\nconsole.log('   agentId:', agentId, '(tipo:', typeof agentId + ')');\nconsole.log('   agentName:', agentName);\n\n// Validar que tenemos agentId\nif (!agentId || agentId === null || agentId === undefined) {\n  console.error('❌ agentId es null/undefined. InputData:', JSON.stringify(inputData, null, 2));\n  throw new Error('agent_id no está disponible en los datos de entrada');\n}\n\n// Llamar al método público create_ai_chat_channel_public del agente AI\n// Este método crea el canal con sudo() permitiendo escribir ai_agent_id\n// En execute_kw, para métodos @api.model: args[5]=[], args[6]={kwargs}\n// Los kwargs se pasan en el diccionario\nconst kwargs = {\n  agent_id: agentId,\n  channel_name: agentName\n};\n\nconsole.log('📦 Kwargs preparados:', JSON.stringify(kwargs, null, 2));\n\nconst payload = {\n  jsonrpc: '2.0',\n  method: 'call',\n  params: {\n    service: 'object',\n    method: 'execute_kw',\n    args: [\n      db,\n      uid,\n      'admin',\n      'ai.agent',\n      'create_ai_chat_channel_public',\n      [],\n      kwargs\n    ]\n  },\n  id: 1\n};\n\nconsole.log('📦 Payload completo:', JSON.stringify(payload, null, 2));\n\n// Devolver el payload y los datos originales\nreturn [{\n  json: {\n    ...payload,\n    _originalData: inputData\n  }\n}];"
+      },
+      "id": "4a9afd9d-deff-4ba5-b7f0-f020a5db77bb",
+      "name": "Build Create Channel JSON",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://mchecagoshawk-testai2-main-25908815.dev.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2464,
+        784
+      ],
+      "id": "437a990e-d7c3-4b9f-a33d-4a01f80ba7ba",
+      "name": "Create AI Channel"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Procesar canal creado usando create_ai_chat_channel_public\nconst createResponse = items[0].json;\nconst buildData = $node['Build Create Channel JSON'].json;\nconst agentPartnerResponse = $node['Combine Agent Partner Data'].json.agent_partner_response;\nconst prepareData = $node['Prepare Create Channel Data'].json; // Datos originales\n\nconsole.log('🔧 Respuesta create_ai_chat_channel_public:', JSON.stringify(createResponse, null, 2));\nconsole.log('📦 Datos de Build Create Channel JSON:', JSON.stringify(buildData, null, 2));\n\nlet channelId = null;\nlet channelName = 'Ask AI';\n\n// Verificar si hay error\nif (createResponse && createResponse.error) {\n  console.error('❌ Error al crear canal:', createResponse.error);\n  const errorMessage = createResponse.error.data ? createResponse.error.data.message : '';\n  throw new Error('Error al crear canal AI: ' + errorMessage);\n}\n\n// El método create_ai_chat_channel_public devuelve un diccionario con channel_id, channel_name, etc.\nif (createResponse && createResponse.result) {\n  const result = createResponse.result;\n  \n  // El resultado es un diccionario con channel_id, channel_name, agent_id, agent_name\n  if (typeof result === 'object') {\n    channelId = result.channel_id || result.id;\n    channelName = result.channel_name || result.name || 'Ask AI';\n  } else if (typeof result === 'number') {\n    // Fallback: si solo devuelve el ID\n    channelId = result;\n    channelName = agentPartnerResponse.result && agentPartnerResponse.result[0] ? agentPartnerResponse.result[0].name : 'Ask AI';\n  } else {\n    throw new Error('Respuesta inesperada del método create_ai_chat_channel_public: ' + JSON.stringify(result));\n  }\n  \n  console.log('✅ Canal AI creado exitosamente con ai_agent_id:', channelName, '(ID:', channelId + ')');\n} else {\n  console.error('❌ Respuesta inesperada al crear canal:', createResponse);\n  throw new Error('No se pudo crear el canal AI. Respuesta: ' + JSON.stringify(createResponse));\n}\n\n// Combinar datos originales con la respuesta\nreturn [{\n  json: {\n    ...prepareData,\n    channelId: channelId,\n    channelName: channelName,\n    aiAgentName: channelName\n  }\n}];"
+      },
+      "id": "222c4f2e-9349-44b1-aac4-19ed7a10f418",
+      "name": "Process Created Channel",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        2688,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Configurar canal con AI dinámicamente encontrado o creado\nconst userData = $node['Extract UID from Login'].json;\n// Intentar obtener datos del canal creado primero, luego del encontrado\nconst channelData = $node['Process Created Channel']?.json || $node['Find AI Channel'].json;\n\n// Usar el canal encontrado dinámicamente\nconst channelId = channelData.channelId;\nconst channelName = channelData.channelName;\n\n// Obtener el mensaje correcto: si es audio transcrito, usar el mensaje transcrito\nlet messageText = userData.messageText;\n\n// Verificar si hay datos de transcripción disponibles\nif (userData.esAudio) {\n  try {\n    const transcripcionData = $node['Actualizar Datos Transcripción']?.json;\n    if (transcripcionData && transcripcionData.mensaje_usuario) {\n      // Usar el mensaje transcrito normalizado (sin tildes)\n      messageText = transcripcionData.mensaje_usuario;\n      console.log('🎤 Usando mensaje transcrito de audio:', messageText);\n    } else if (transcripcionData && transcripcionData.transcripcion_original) {\n      // Fallback: usar transcripción original\n      messageText = transcripcionData.transcripcion_original;\n      console.log('🎤 Usando transcripción original:', messageText);\n    }\n  } catch (e) {\n    console.warn('⚠️ No se pudieron leer datos de transcripción, usando mensaje de userData:', e.message);\n  }\n}\n\nconsole.log('📺 Usando canal:', channelName, '(ID:', channelId + ')');\nconsole.log('🤖 AI Agent:', channelData.aiAgentName);\nconsole.log('📤 Mensaje a enviar al canal:', messageText);\nconsole.log('📤 Enviando mensaje al canal de IA...');\n\nreturn [{\n  json: {\n    uid: userData.uid,\n    channelId: channelId,\n    channelName: channelName,\n    messageText: messageText,\n    chatId: userData.chatId,\n    userId: userData.userId,\n    userName: userData.userName,\n    timestamp: userData.timestamp,\n    db: userData.db,\n    messageSource: userData.messageSource || 'telegram'\n  }\n}];"
+      },
+      "id": "5f6c56da-f1b8-4cb6-9db1-13e1e3c450e9",
+      "name": "Prepare Channel Data",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        2928,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Trasncriptor de audio a texto\n",
+        "width": 1900,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "7ac048c4-72a6-4773-9175-f74cc98e17b5",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Combinar datos de transcripción para que lleguen correctamente al AI Agent\nconst datosTranscripcion = $('Procesar Transcripción').item.json;\nconst datosOriginales = $('Extraer Datos').item.json;\n\nconsole.log('🔄 Combinando datos para AI Agent:');\nconsole.log('📄 Datos originales:', JSON.stringify(datosOriginales, null, 2));\nconsole.log('🎤 Datos transcripción:', JSON.stringify(datosTranscripcion, null, 2));\n\n// Usar los datos de transcripción que ya tienen el mensaje_usuario actualizado\nconst datosFinales = {\n  ...datosTranscripcion,\n  // Asegurar que tenemos todos los campos necesarios\n  chat_id: datosTranscripcion.chat_id || datosOriginales.chat_id,\n  user_id: datosTranscripcion.user_id || datosOriginales.user_id,\n  user_name: datosTranscripcion.user_name || datosOriginales.user_name,\n  timestamp: datosTranscripcion.timestamp || datosOriginales.timestamp,\n  es_audio: true,\n  audio_transcrito: true,\n  file_id: datosTranscripcion.file_id || datosOriginales.file_id\n};\n\nconsole.log('✅ Datos finales para AI Agent:', JSON.stringify(datosFinales, null, 2));\nconsole.log('💬 Mensaje que recibirá AI Agent:', datosFinales.mensaje_usuario);\n\nreturn datosFinales;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1808,
+        64
+      ],
+      "id": "52e47081-c2a7-4d63-b9ba-a49f6816180b",
+      "name": "Actualizar Datos Transcripción"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chat_id }}",
+        "text": "=🎤 **Audio transcrito exitosamente:**\n\n\"{{ $json.transcripcion_original }}\"\n\n✅ Procesando tu solicitud...",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1632,
+        64
+      ],
+      "id": "0fba9050-abf6-4aaa-ba7e-44b26b830728",
+      "name": "Confirmar Transcripción",
+      "webhookId": "237a0319-b9b0-4c5f-8561-1aef1c7c9116"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Procesar transcripción de AssemblyAI y combinar con datos originales\nconst datosOriginales = $('Extraer Datos').item.json;\n\nconsole.log('📄 Respuesta completa de AssemblyAI:', JSON.stringify($json, null, 2));\n\n// AssemblyAI devuelve la transcripción en el campo 'text'\nlet transcripcion = '';\n\n// Verificar si el proceso se completó exitosamente\nif ($json.status === 'completed' && $json.text) {\n  transcripcion = $json.text;\n} else if ($json.status === 'error') {\n  transcripcion = '[Error en transcripción: ' + ($json.error || 'Error desconocido') + ']';\n  console.error('❌ Error en AssemblyAI:', $json.error);\n} else if ($json.status === 'processing') {\n  transcripcion = '[Transcripción aún en proceso, espera un momento más]';\n  console.log('⏳ AssemblyAI aún está procesando');\n} else if ($json.status === 'queued') {\n  transcripcion = '[Transcripción en cola, espera un momento]';\n  console.log('⏳ AssemblyAI en cola');\n} else {\n  // Fallback: intentar obtener texto de otras posibles ubicaciones\n  transcripcion = $json.text || $json.transcript || '[Error: no se pudo obtener transcripción]';\n}\n\n// Limpiar la transcripción\ntranscripcion = String(transcripcion).trim();\n\nif (!transcripcion || transcripcion === '' || transcripcion === 'undefined') {\n  transcripcion = '[Error: transcripción vacía]';\n  console.error('❌ Error: No se pudo obtener transcripción válida');\n  console.error('📄 Estado:', $json.status);\n  console.error('📄 Datos recibidos:', JSON.stringify($json, null, 2));\n}\n\nconsole.log('🎤 Transcripción obtenida de AssemblyAI (ES):', transcripcion);\nconsole.log('📊 Estado AssemblyAI:', $json.status);\nconsole.log('🌍 Idioma detectado:', $json.language_code);\nconsole.log('🎯 Confianza:', $json.confidence);\n\n// 🔤 NUEVO: generar una versión normalizada SIN tildes para la lógica del agente\nconst transcripcionNormalizada = transcripcion\n  .normalize('NFD')                  // separa letra + tilde\n  .replace(/[\\u0300-\\u036f]/g, '')   // elimina marcas diacríticas\n  .replace(/´/g, '')                 // elimina acentos sueltos\n  .toLowerCase();                    // minúsculas para comparar mejor\n\nconsole.log('🎤 Transcripción normalizada (sin tildes):', transcripcionNormalizada);\n\n// Actualizar el mensaje usuario con la transcripción\nreturn {\n  ...datosOriginales,\n\n  // 👇 Lo que verá el AGENTE (sin tildes, minúsculas)\n  mensaje_usuario: transcripcionNormalizada,\n\n  // 👇 Lo que verás tú en Telegram (con tildes, intacto)\n  transcripcion_original: transcripcion,\n  mensaje_usuario_original: transcripcion,\n\n  es_audio: true,\n  audio_transcrito: true,\n  assemblyai_response: $json,\n  transcriptor: 'assemblyai',\n  estado_transcripcion: $json.status,\n  confidence: $json.confidence,\n  audio_duration: $json.audio_duration\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        64
+      ],
+      "id": "968d2bdc-e4f6-4438-a2e2-10379f711b6b",
+      "name": "Procesar Transcripción"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        480,
+        64
+      ],
+      "id": "c757ee9e-c6c8-43e6-8db5-5424bd72e904",
+      "name": "Descargar Audio",
+      "webhookId": "1f9d320a-2e58-48ab-bf94-f02ee44a09d2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Preparar datos del archivo de voz para descarga via Telegram\nconst datosArchivo = $json;\nconst datosOriginales = $('Extraer Datos').item.json;\n\nconsole.log('📄 Datos del archivo obtenidos:', JSON.stringify(datosArchivo, null, 2));\nconsole.log('📄 Datos originales:', JSON.stringify(datosOriginales, null, 2));\n\n// Obtener file_id desde los datos originales (es lo que necesita el nodo Telegram)\nlet fileId = datosOriginales.file_id;\n\n// También intentar obtener file_path si está disponible para referencia\nlet filePath = null;\nif (datosArchivo.file_path) {\n  filePath = datosArchivo.file_path;\n} else if (datosArchivo.result && datosArchivo.result.file_path) {\n  filePath = datosArchivo.result.file_path;\n} else if (datosArchivo.body && datosArchivo.body.result && datosArchivo.body.result.file_path) {\n  filePath = datosArchivo.body.result.file_path;\n}\n\nif (!fileId) {\n  console.error('❌ No se encontró file_id. Estructura completa:', JSON.stringify(datosArchivo, null, 2));\n  throw new Error('No se obtuvo file_id del archivo de voz. Revisa la estructura de datos en los logs.');\n}\n\nconsole.log('✅ file_id obtenido:', fileId);\nif (filePath) {\n  console.log('📁 file_path obtenido:', filePath);\n}\n\n// Usar file_id que es lo que requiere el nodo Telegram\nreturn {\n  ...datosArchivo,\n  ...datosOriginales,\n  file_id: fileId,\n  file_path: filePath,\n  voice_file_ready: true,\n  processing_method: 'telegram_file_id',\n  // Información para debug\n  download_info: {\n    file_id: fileId,\n    file_path: filePath,\n    method: 'telegram_get_file'\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        272,
+        64
+      ],
+      "id": "91c77e7d-d9c1-457a-abbc-02172486629e",
+      "name": "Preparar Descarga"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        32,
+        64
+      ],
+      "id": "151b969d-cb5e-4356-9128-84d3a06d94ac",
+      "name": "Obtener Archivo de Voz",
+      "webhookId": "7f3270c4-aed6-4c93-8195-10f4a570cb3b"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.es_audio }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -912,
+        768
+      ],
+      "id": "fcb2c3bc-ff81-444b-a821-4740c67a3418",
+      "name": "¿Es Audio?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.assemblyai.com/v2/upload",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authorization",
+              "value": "9180ed0422f64e0196e8bfe27baf019b"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        704,
+        64
+      ],
+      "id": "5714dea0-5a6a-4019-a17c-9e3fd20c822f",
+      "name": "HTTP Request - Upload Audio"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.assemblyai.com/v2/transcript",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authorization",
+              "value": "9180ed0422f64e0196e8bfe27baf019b"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({audio_url: $json.upload_url, language_code: 'es', punctuate: true}) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        944,
+        64
+      ],
+      "id": "ada97256-c1be-4c70-a19a-71ba31d167bd",
+      "name": "HTTP Request - Create Transcript (ES)"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.assemblyai.com/v2/transcript/{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authorization",
+              "value": "9180ed0422f64e0196e8bfe27baf019b"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1248,
+        64
+      ],
+      "id": "20ce7de1-fb58-4d74-a4ac-188812342b89",
+      "name": "HTTP Request - Get Transcript"
+    },
+    {
+      "parameters": {
+        "amount": 10,
+        "unit": "seconds"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        64
+      ],
+      "id": "dad62435-12f1-4994-b9fc-67951e8f4b87",
+      "name": "Esperar Transcripción",
+      "webhookId": "931d9a97-c65b-4acc-9c80-67d8efa0b7f4"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extraer información básica del mensaje de Telegram o WhatsApp\n// Este nodo recibe datos de Process Telegram Message\nlet datosEntrada = null;\nlet mensajeTelegram = null;\nlet messageSource = 'telegram';\n\n// Leer de los items actuales (viene de Process Telegram Message)\nif ($input.first() && $input.first().json) {\n  datosEntrada = $input.first().json;\n  console.log('📥 Datos recibidos de Process Telegram Message:', JSON.stringify(datosEntrada, null, 2));\n}\n\n// Si ya tiene los campos formateados (viene procesado)\nif (datosEntrada && datosEntrada.mensaje_usuario !== undefined && datosEntrada.chat_id !== undefined) {\n  console.log('📱 === DATOS YA FORMATEADOS ===');\n  console.log('📥 Devolviendo datos ya formateados');\n  return datosEntrada;\n}\n\n// VERIFICAR SI YA VIENE CON UBICACIÓN DESDE PROCESS TELEGRAM MESSAGE\nif (datosEntrada && datosEntrada.hasLocation === true && datosEntrada.latitude && datosEntrada.longitude) {\n  console.log('📍 === UBICACIÓN DETECTADA DESDE PROCESS TELEGRAM MESSAGE ===');\n  const locationData = {\n    latitude: datosEntrada.latitude,\n    longitude: datosEntrada.longitude,\n    timestamp: new Date().toISOString(),\n    from_chat_id: datosEntrada.chatId,\n    from_user_id: datosEntrada.userId\n  };\n  \n  const resultado = {\n    mensaje_usuario: datosEntrada.messageText,\n    chat_id: datosEntrada.chatId,\n    user_id: datosEntrada.userId,\n    user_name: datosEntrada.userName,\n    timestamp: new Date().toISOString(),\n    es_audio: false,\n    tiene_imagen: false,\n    tiene_ubicacion: true,\n    file_id: null,\n    imagen_file_id: null,\n    img_data: null,\n    location_data: locationData,\n    latitude: datosEntrada.latitude,\n    longitude: datosEntrada.longitude,\n    messageSource: datosEntrada.messageSource || 'telegram'\n  };\n  \n  console.log('📍 Latitud:', datosEntrada.latitude);\n  console.log('📍 Longitud:', datosEntrada.longitude);\n  console.log('📍 Mensaje generado:', datosEntrada.messageText);\n  console.log('✅ Datos de ubicación extraídos:', JSON.stringify(resultado, null, 2));\n  \n  return resultado;\n}\n\n// Si viene de Process Telegram Message, los datos están en el formato:\n// { chatId, userId, userName, messageText, messageId, timestamp, isCommand, messageSource }\n// Necesitamos leer el mensaje original desde Telegram Trigger o Code\n\n// PRIMERO: Intentar leer de Telegram Trigger (si viene de Telegram)\ntry {\n  const telegramData = $('Telegram Trigger').first().json;\n  if (telegramData && telegramData.update_id !== undefined && telegramData.message) {\n    mensajeTelegram = telegramData.message;\n    messageSource = 'telegram';\n    console.log('📱 === DATOS DE TELEGRAM TRIGGER ===');\n  }\n} catch (e) {\n  console.log('⚠️ No se pudo leer de Telegram Trigger (puede ser WhatsApp):', e.message);\n}\n\n// SEGUNDO: Si no viene de Telegram, intentar leer del nodo Code (WhatsApp)\nif (!mensajeTelegram) {\n  try {\n    const codeData = $node['Code']?.json;\n    if (codeData && codeData.message) {\n      mensajeTelegram = codeData.message;\n      messageSource = 'whatsapp';\n      console.log('📱 === DATOS DE CODE (WhatsApp) ===');\n    }\n  } catch (e) {\n    console.log('⚠️ No se pudo leer de Code:', e.message);\n  }\n}\n\n// TERCERO: Si tenemos datos de Process Telegram Message, construir el mensaje desde ahí\nif (!mensajeTelegram && datosEntrada) {\n  // Construir formato de mensaje desde los datos procesados\n  mensajeTelegram = {\n    message_id: datosEntrada.messageId || Date.now(),\n    from: {\n      id: datosEntrada.userId || 0,\n      first_name: datosEntrada.userName?.split(' ')[0] || 'Usuario',\n      last_name: datosEntrada.userName?.split(' ').slice(1).join(' ') || ''\n    },\n    chat: {\n      id: datosEntrada.chatId || 0,\n      first_name: datosEntrada.userName?.split(' ')[0] || 'Usuario',\n      type: 'private'\n    },\n    text: datosEntrada.messageText || '',\n    date: Math.floor(Date.now() / 1000)\n  };\n  messageSource = datosEntrada.messageSource || 'telegram';\n  console.log('📱 === CONSTRUYENDO DESDE PROCESS TELEGRAM MESSAGE ===');\n}\n\nif (!mensajeTelegram) {\n  console.error('❌ No se pudo obtener el mensaje de ninguna fuente');\n  console.error('📥 Datos entrada:', JSON.stringify(datosEntrada, null, 2));\n  throw new Error('No se pudo obtener el mensaje de ninguna fuente');\n}\n\nconsole.log('📱 === EXTRAER DATOS ===');\nconsole.log('📥 Mensaje completo:', JSON.stringify(mensajeTelegram, null, 2));\nconsole.log('🔍 Origen:', messageSource);\n\nlet mensaje = '';\nlet esAudio = false;\nlet tieneImagen = false;\nlet tieneUbicacion = false;\nlet fileId = null;\nlet imagenFileId = null;\nlet imgData = null;\nlet locationData = null;\nlet latitude = null;\nlet longitude = null;\nconst chatId = mensajeTelegram.chat?.id || mensajeTelegram.chat_id || datosEntrada?.chatId;\nconst userId = mensajeTelegram.from?.id || mensajeTelegram.user_id || datosEntrada?.userId;\nconst userName = mensajeTelegram.from?.first_name || mensajeTelegram.user_name || datosEntrada?.userName || 'Usuario';\n\n// Detectar si es un mensaje de texto\nif (mensajeTelegram.text) {\n  mensaje = mensajeTelegram.text;\n  console.log('📝 Mensaje de texto:', mensaje);\n} \n// Detectar si es un mensaje de voz\nelse if (mensajeTelegram.voice) {\n  esAudio = true;\n  fileId = mensajeTelegram.voice.file_id;\n  mensaje = '[Mensaje de voz recibido. Transcribiendo...]';\n  console.log('🎤 Mensaje de voz detectado');\n}\n// Detectar si es una ubicación\nelse if (mensajeTelegram.location) {\n  tieneUbicacion = true;\n  latitude = mensajeTelegram.location.latitude;\n  longitude = mensajeTelegram.location.longitude;\n  locationData = {\n    latitude: latitude,\n    longitude: longitude,\n    horizontal_accuracy: mensajeTelegram.location.horizontal_accuracy || null,\n    live_period: mensajeTelegram.location.live_period || null,\n    heading: mensajeTelegram.location.heading || null,\n    proximity_alert_radius: mensajeTelegram.location.proximity_alert_radius || null,\n    message_id: mensajeTelegram.message_id,\n    timestamp: new Date().toISOString(),\n    from_chat_id: chatId,\n    from_user_id: userId\n  };\n  mensaje = `Fichar ubicacion: ${latitude}, ${longitude}`;\n  console.log('📍 Ubicación detectada:', latitude, longitude);\n  console.log('📍 Datos completos de ubicación:', JSON.stringify(locationData, null, 2));\n}\n// Detectar si es una imagen con caption (texto)\nelse if (mensajeTelegram.photo && mensajeTelegram.caption) {\n  console.log('🔍 DEBUG - Detectado: imagen CON caption');\n  mensaje = mensajeTelegram.caption;\n  tieneImagen = true;\n  // Tomar la imagen de mayor resolución (última en el array)\n  const photoData = mensajeTelegram.photo[mensajeTelegram.photo.length - 1];\n  imagenFileId = photoData.file_id;\n  \n  // Crear objeto img_data completo con toda la info necesaria\n  imgData = {\n    file_id: photoData.file_id,\n    file_unique_id: photoData.file_unique_id,\n    file_size: photoData.file_size,\n    width: photoData.width,\n    height: photoData.height,\n    all_sizes: mensajeTelegram.photo,\n    caption: mensajeTelegram.caption,\n    message_id: mensajeTelegram.message_id,\n    timestamp: new Date().toISOString(),\n    from_chat_id: chatId,\n    from_user_id: userId\n  };\n  \n  console.log('📸 Imagen con texto detectada:', mensaje);\n  console.log('🖼️ File ID imagen:', imagenFileId);\n}\n// Solo imagen sin texto\nelse if (mensajeTelegram.photo) {\n  mensaje = '[Imagen recibida sin texto]';\n  tieneImagen = true;\n  const photoData = mensajeTelegram.photo[mensajeTelegram.photo.length - 1];\n  imagenFileId = photoData.file_id;\n  \n  imgData = {\n    file_id: photoData.file_id,\n    file_unique_id: photoData.file_unique_id,\n    file_size: photoData.file_size,\n    width: photoData.width,\n    height: photoData.height,\n    all_sizes: mensajeTelegram.photo,\n    caption: null,\n    message_id: mensajeTelegram.message_id,\n    timestamp: new Date().toISOString(),\n    from_chat_id: chatId,\n    from_user_id: userId\n  };\n  \n  console.log('📸 Solo imagen detectada');\n}\n// Mensaje vacío o no soportado\nelse {\n  mensaje = '[Mensaje no soportado]';\n  console.log('❌ Tipo de mensaje no soportado');\n}\n\nconst resultado = {\n  mensaje_usuario: mensaje,\n  chat_id: chatId,\n  user_id: userId,\n  user_name: userName,\n  timestamp: new Date().toISOString(),\n  es_audio: esAudio,\n  tiene_imagen: tieneImagen,\n  tiene_ubicacion: tieneUbicacion,\n  file_id: fileId,\n  imagen_file_id: imagenFileId,\n  img_data: imgData,\n  location_data: locationData,\n  latitude: latitude,\n  longitude: longitude,\n  messageSource: messageSource\n};\n\nconsole.log('✅ Datos extraídos:', JSON.stringify(resultado, null, 2));\nconsole.log('🔍 Campo img_data:', imgData ? 'PRESENTE' : 'NO HAY IMAGEN');\nconsole.log('📍 Campo location_data:', locationData ? 'PRESENTE' : 'NO HAY UBICACIÓN');\nif (latitude && longitude) {\n  console.log('📍 Coordenadas directas - Lat:', latitude, 'Lon:', longitude);\n}\n\nreturn resultado;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1152,
+        768
+      ],
+      "id": "851033a2-cba9-466d-96aa-723b5684b5b4",
+      "name": "Extraer Datos"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "azerionbot-kairos",
+        "options": {
+          "allowedOrigins": "*",
+          "rawBody": true
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1728,
+        608
+      ],
+      "id": "ee1178d7-dcbe-42b4-858a-e6bf4bb224db",
+      "name": "Whatsapp Kairos",
+      "webhookId": "9f60410b-cd16-4966-9022-a84d7f0fee2c"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Formatear mensaje de WhatsApp al formato de Telegram\nconst inputData = $input.first().json;\n\nconsole.log('📱 === FORMATEAR WHATSAPP A TELEGRAM ===');\nconsole.log('📥 Input completo:', JSON.stringify(inputData, null, 2));\n\n// El webhook puede venir en diferentes estructuras:\n// 1. body.item.json (webhook de n8n)\n// 2. Directamente en el JSON\nlet whatsappData = null;\n\n// Intentar leer de body.item.json primero (estructura de webhook n8n)\nif (inputData.body && inputData.body.item && inputData.body.item.json) {\n  whatsappData = inputData.body.item.json;\n  console.log('✅ Datos encontrados en body.item.json');\n} else if (inputData.body) {\n  // Si hay body pero no tiene item.json, usar body directamente\n  whatsappData = inputData.body;\n  console.log('✅ Datos encontrados en body');\n} else {\n  // Usar el input directamente\n  whatsappData = inputData;\n  console.log('✅ Usando input directamente');\n}\n\nconsole.log('📥 Datos WhatsApp procesados:', JSON.stringify(whatsappData, null, 2));\n\n// Extraer datos del webhook de WhatsApp\nlet messageText = '';\nlet chatId = null;\nlet userId = null;\nlet userName = 'Usuario WhatsApp';\nlet messageId = null;\nlet hasLocation = false;\nlet latitude = null;\nlet longitude = null;\n\n// Función para extraer datos de contacto\nfunction extractContactInfo(contacts) {\n  if (contacts && contacts[0]) {\n    const contact = contacts[0];\n    return {\n      userName: contact.profile?.name || contact.wa_id || 'Usuario WhatsApp',\n      wa_id: contact.wa_id\n    };\n  }\n  return null;\n}\n\n// Función para procesar un mensaje de WhatsApp\nfunction processMessage(message, contacts) {\n  let result = { messageText: '', hasLocation: false, latitude: null, longitude: null };\n  \n  // Extraer info de contacto\n  const contactInfo = extractContactInfo(contacts);\n  if (contactInfo) {\n    userName = contactInfo.userName;\n    userId = contactInfo.wa_id;\n    chatId = contactInfo.wa_id;\n  }\n  \n  // Extraer ID del mensaje\n  messageId = message.id || message.timestamp || Date.now();\n  \n  // Si el mensaje tiene from, usarlo\n  if (message.from) {\n    chatId = message.from;\n    userId = message.from;\n  }\n  \n  // DETECTAR TIPO DE MENSAJE\n  const messageType = message.type || 'text';\n  console.log('📨 Tipo de mensaje WhatsApp:', messageType);\n  \n  // UBICACIÓN\n  if (messageType === 'location' || message.location) {\n    result.hasLocation = true;\n    result.latitude = message.location?.latitude || message.location?.lat;\n    result.longitude = message.location?.longitude || message.location?.lon || message.location?.lng;\n    result.messageText = `Fichar ubicacion: ${result.latitude}, ${result.longitude}`;\n    console.log('📍 UBICACIÓN DETECTADA en WhatsApp:');\n    console.log('   Latitud:', result.latitude);\n    console.log('   Longitud:', result.longitude);\n    console.log('   Mensaje generado:', result.messageText);\n  }\n  // TEXTO\n  else if (message.text && message.text.body) {\n    result.messageText = message.text.body;\n  } else if (message.body) {\n    result.messageText = message.body;\n  } else if (messageType === 'text' && message.text?.body) {\n    result.messageText = message.text.body;\n  }\n  \n  return result;\n}\n\n// Estructura 1: WhatsApp webhook con entry/changes\nif (whatsappData.entry && whatsappData.entry[0] && whatsappData.entry[0].changes) {\n  const changes = whatsappData.entry[0].changes[0];\n  if (changes.value && changes.value.messages && changes.value.messages[0]) {\n    const result = processMessage(changes.value.messages[0], changes.value.contacts);\n    messageText = result.messageText;\n    hasLocation = result.hasLocation;\n    latitude = result.latitude;\n    longitude = result.longitude;\n  }\n}\n\n// Estructura 2: WhatsApp webhook directo con messages y contacts\nif (!messageText && whatsappData.messages && Array.isArray(whatsappData.messages) && whatsappData.messages[0]) {\n  const result = processMessage(whatsappData.messages[0], whatsappData.contacts);\n  messageText = result.messageText;\n  hasLocation = result.hasLocation;\n  latitude = result.latitude;\n  longitude = result.longitude;\n}\n\n// Estructura 3: Formato simplificado con contacts[0] y messages[0]\nif (!messageText && whatsappData.contacts && whatsappData.contacts[0] && whatsappData.messages && whatsappData.messages[0]) {\n  const result = processMessage(whatsappData.messages[0], whatsappData.contacts);\n  messageText = result.messageText;\n  hasLocation = result.hasLocation;\n  latitude = result.latitude;\n  longitude = result.longitude;\n}\n\n// Validar que tenemos los datos mínimos\nif (!messageText) {\n  console.error('❌ No se pudo extraer el texto del mensaje de WhatsApp');\n  console.error('📥 Estructura recibida:', JSON.stringify(whatsappData, null, 2));\n  throw new Error('No se pudo extraer el texto del mensaje de WhatsApp. Estructura: ' + JSON.stringify(whatsappData, null, 2));\n}\n\nif (!chatId || !userId) {\n  console.warn('⚠️ No se pudo obtener chatId/userId, usando valores por defecto');\n  chatId = chatId || '0';\n  userId = userId || '0';\n}\n\n// Formatear al formato de Telegram (para Process Telegram Message)\nconst telegramFormat = {\n  message: {\n    message_id: parseInt(messageId) || Date.now(),\n    from: {\n      id: parseInt(userId) || 0,\n      is_bot: false,\n      first_name: userName,\n      last_name: '',\n      username: String(userId)\n    },\n    chat: {\n      id: parseInt(chatId) || parseInt(userId) || 0,\n      first_name: userName,\n      type: 'private'\n    },\n    date: Math.floor(Date.now() / 1000),\n    text: hasLocation ? '' : messageText\n  }\n};\n\n// Si hay ubicación, agregar al formato Telegram\nif (hasLocation && latitude && longitude) {\n  telegramFormat.message.location = {\n    latitude: latitude,\n    longitude: longitude\n  };\n  console.log('📍 Ubicación añadida al formato Telegram');\n}\n\nconsole.log('✅ Formato Telegram generado:', JSON.stringify(telegramFormat, null, 2));\nconsole.log('📝 Mensaje:', messageText);\nconsole.log('👤 Usuario:', userName);\nconsole.log('💬 Chat ID:', chatId);\nconsole.log('🆔 User ID:', userId);\nconsole.log('📍 Tiene ubicación:', hasLocation);\n\n// Devolver en formato Telegram para que Process Telegram Message lo pueda leer\nreturn telegramFormat;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1520,
+        608
+      ],
+      "id": "b9daf107-d847-45b4-ba8a-873ad2ef0561",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "fbbf43f2-c8ec-4b35-abcc-203bfdfe6f7f",
+              "leftValue": "={{ $json.messageSource }}",
+              "rightValue": "whatsapp",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4592,
+        784
+      ],
+      "id": "34918f6f-b85f-4aa3-be59-4c8275e3247a",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.japisai.com/webhook/azerion-kairos",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ messaging_product: 'whatsapp', to: $json.chatId, type: 'text', text: { body: $json.aiMessage } }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4800,
+        688
+      ],
+      "id": "42698515-acc1-4ac1-bd94-46f9be5b8ad7",
+      "name": "Send AI Response to WhatsApp"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-18T07:55:06.634Z",
+      "createdAt": "2026-02-18T07:55:06.634Z",
+      "role": "workflow:owner",
+      "workflowId": "xRcZa5ldmRIPDSzR",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-02-18T07:51:58.811Z",
+      "createdAt": "2026-02-18T07:51:58.811Z",
+      "id": "OjAFHc7K3coRr5r2",
+      "name": "AI"
+    },
+    {
+      "updatedAt": "2026-02-18T07:51:58.847Z",
+      "createdAt": "2026-02-18T07:51:58.847Z",
+      "id": "SxhTm7lzQ3aT1O6t",
+      "name": "Telegram"
+    },
+    {
+      "updatedAt": "2026-02-18T07:51:58.857Z",
+      "createdAt": "2026-02-18T07:51:58.857Z",
+      "id": "nVN1JkldPm15tiB7",
+      "name": "Odoo"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-02-18T07:55:06.634Z",
+  "versionId": "c07da23b-6fbc-4744-8a2a-c070b66e0058"
+}
