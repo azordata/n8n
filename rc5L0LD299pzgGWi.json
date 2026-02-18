@@ -1,0 +1,1744 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "HTTP Web Negocio": {
+      "main": [
+        [
+          {
+            "node": "Extarer Emails de la Web1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Páginas Web": {
+      "main": [
+        [
+          {
+            "node": "Eliminar Emails Duplicados",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Web Negocio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Eliminar Emails Duplicados": {
+      "main": [
+        [
+          {
+            "node": "Filtrar Emails Malos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Guardar Registros",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar Emails Malos": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extarer Emails de la Web1": {
+      "main": [
+        [
+          {
+            "node": "Loop Páginas Web",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Hay Items?": {
+      "main": [
+        [
+          {
+            "node": "Loop contactos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Odoo Login",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "1. Filtros De Búsqueda",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Falta Website?": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Loop Páginas Web",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Filtros De Búsqueda": {
+      "main": [
+        [
+          {
+            "node": "2. Loop Búsquedas (10 por vez)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. Loop Búsquedas (10 por vez)": {
+      "main": [
+        [
+          {
+            "node": "¿Falta Website?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "3. HTTP Google Maps",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. HTTP Google Maps": {
+      "main": [
+        [
+          {
+            "node": "3b. Debug HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4. Extraer Websites": {
+      "main": [
+        [
+          {
+            "node": "5. Wait Rate Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5. Wait Rate Limit": {
+      "main": [
+        [
+          {
+            "node": "2. Loop Búsquedas (10 por vez)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Coger Emails No Enviados1": {
+      "main": [
+        [
+          {
+            "node": "¿Hay Items?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar Enviado": {
+      "main": [
+        [
+          {
+            "node": "Loop contactos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3b. Debug HTML": {
+      "main": [
+        [
+          {
+            "node": "4. Extraer Websites",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo Login": {
+      "main": [
+        [
+          {
+            "node": "Get Mailing List ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Mailing List ID": {
+      "main": [
+        [
+          {
+            "node": "Guardar list_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Contacto": {
+      "main": [
+        [
+          {
+            "node": "¿Existe contacto?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Existe contacto?": {
+      "main": [
+        [
+          {
+            "node": "contact_id existente",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "¿Hay giro?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear Contacto": {
+      "main": [
+        [
+          {
+            "node": "contact_id nuevo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "contact_id nuevo": {
+      "main": [
+        [
+          {
+            "node": "Suscribir a lista",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "contact_id existente": {
+      "main": [
+        [
+          {
+            "node": "Suscribir a lista",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Suscribir a lista": {
+      "main": [
+        [
+          {
+            "node": "Marcar Enviado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar list_id": {
+      "main": [
+        [
+          {
+            "node": "Coger Emails No Enviados1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop contactos": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Buscar Contacto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Tag ID (por giro)": {
+      "main": [
+        [
+          {
+            "node": "¿Existe tag giro?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear tag": {
+      "main": [
+        [
+          {
+            "node": "tag_id1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tag_id": {
+      "main": [
+        [
+          {
+            "node": "Get Tag ID (ciudad)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tag_id1": {
+      "main": [
+        [
+          {
+            "node": "Get Tag ID (ciudad)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Tag ID (ciudad)": {
+      "main": [
+        [
+          {
+            "node": "¿Existe tag ciudad?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Existe tag ciudad?": {
+      "main": [
+        [
+          {
+            "node": "tag_id ciudad",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Crear tag ciudad",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear tag ciudad": {
+      "main": [
+        [
+          {
+            "node": "tag_id ciudad1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tag_id ciudad1": {
+      "main": [
+        [
+          {
+            "node": "Build tag_ids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tag_id ciudad": {
+      "main": [
+        [
+          {
+            "node": "Build tag_ids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Existe tag giro?": {
+      "main": [
+        [
+          {
+            "node": "tag_id",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Crear tag",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Hay giro?": {
+      "main": [
+        [
+          {
+            "node": "Get Tag ID (por giro)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build tag_ids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build tag_ids": {
+      "main": [
+        [
+          {
+            "node": "Crear Contacto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Enviar Mensaje1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Hay Items?1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Coger Emails No Enviados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar Enviado1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar Mensaje1": {
+      "main": [
+        [
+          {
+            "node": "Marcar Enviado1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Coger Emails No Enviados": {
+      "main": [
+        [
+          {
+            "node": "¿Hay Items?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-18T07:50:51.007Z",
+  "id": "rc5L0LD299pzgGWi",
+  "isArchived": false,
+  "meta": null,
+  "name": "Scrapeo Emails Conectado Odoo",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "={{ $json }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "es-ES,es;q=0.9"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -144,
+        320
+      ],
+      "id": "1a918ac0-fc6d-4642-801c-f60b6e962e8b",
+      "name": "HTTP Web Negocio",
+      "retryOnFail": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -544,
+        192
+      ],
+      "id": "25e4bd1b-c4e8-435c-a85c-6460315979a7",
+      "name": "Loop Páginas Web"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "email",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "032a1832-4d61-4eb7-8c5a-3d3b17afefd0",
+      "name": "Eliminar Emails Duplicados"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "86a77e50-f800-4149-b431-f9664a3a48b0",
+              "name": "Emails a meter",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "e486f0ab-9bec-4ae5-8bea-8302f27e0776",
+              "name": "url",
+              "value": "={{ $json.web }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "ac0b3861-b9f1-4d7d-87d8-935daa71b389",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d484400d-e98f-4784-8915-b4d7f58ba7ad",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "(example|wixpress|sentry|png)",
+              "operator": {
+                "type": "string",
+                "operation": "notRegex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "1daae567-8de1-4935-b0f1-84ecb8fad8d7",
+      "name": "Filtrar Emails Malos"
+    },
+    {
+      "parameters": {
+        "jsCode": "function extraerEmailYWeb(html) {\n  if (typeof html !== 'string') html = '';\n\n  // EMAIL\n  const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}/g;\n  const emailsEncontrados = html.match(emailRegex) || [];\n  const emailsUnicos = [...new Set(emailsEncontrados)];\n  const email = emailsUnicos.length ? emailsUnicos[0] : null;\n\n  // WEB\n  let web = null;\n\n  // 1) canonical\n  const canonicalMatch = html.match(\n    /<link[^>]+rel=[\"']canonical[\"'][^>]*href=[\"']([^\"']+)[\"']/i\n  );\n  if (canonicalMatch) {\n    web = canonicalMatch[1];\n  }\n\n  // 2) og:url\n  if (!web) {\n    const ogUrlMatch = html.match(\n      /<meta[^>]+property=[\"']og:url[\"'][^>]*content=[\"']([^\"']+)[\"']/i\n    );\n    if (ogUrlMatch) {\n      web = ogUrlMatch[1];\n    }\n  }\n\n  // 3) primer href http(s) válido\n  if (!web) {\n    const hrefRegex = /href=[\"'](https?:\\/\\/[^\"']+)[\"']/gi;\n    const ignorar = ['facebook.com', 'instagram.com', 'linkedin.com', 'twitter.com', 'google.com', 'wa.me', 'youtube.com'];\n\n    let match;\n    while ((match = hrefRegex.exec(html)) !== null) {\n      const urlStr = match[1];\n      try {\n        const u = new URL(urlStr);\n        const host = u.hostname.toLowerCase();\n        const esExterno = ignorar.some((d) => host.includes(d));\n        if (!esExterno) {\n          web = u.origin;\n          break;\n        }\n      } catch (e) {\n        // ignorar URLs inválidas\n      }\n    }\n  }\n\n  return { email, web };\n}\n\n// ✅ CORREGIDO: Usar 'body' en lugar de 'data'\nreturn items.map((item) => {\n  const html = item.json.body || ''; // ← AQUÍ está el cambio\n  const { email, web } = extraerEmailYWeb(html);\n\n  return {\n    json: {\n      email: email || 'NO ENCONTRADO',\n      web: web || 'NO ENCONTRADO',\n      source: 'web_scrape'\n    },\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        80,
+        320
+      ],
+      "id": "60c10e0a-ef7e-4dd8-8e4d-5faabc5b3f24",
+      "name": "Extarer Emails de la Web1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f0219583-1937-482f-87ea-4aedee86fd96",
+              "leftValue": "={{ $items().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -480,
+        1136
+      ],
+      "id": "4a3a085c-f1a3-41a8-a00d-985c42320912",
+      "name": "¿Hay Items?"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1456,
+        1136
+      ],
+      "id": "9e991b8c-37f2-42dd-bce0-20b83ee5fbec",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE emails\nSET enviado = true\nWHERE id = '{{ $node[\"Loop contactos\"].json.id }}';",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        3328,
+        1360
+      ],
+      "id": "109f51f2-b496-4dc8-8f05-ca818fb1b19c",
+      "name": "Marcar Enviado"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO emails (email, mensaje, enviado, source_url)\nVALUES (\n  '{{ $json['Emails a meter'] }}',\n  'Email extraído automáticamente',\n  false,\n  '{{ $json[\"url\"] }}'\n)\nON CONFLICT (email_norm) DO NOTHING;\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        608,
+        0
+      ],
+      "id": "b0ea355d-14c7-4a3d-a342-f2adfaca3056",
+      "name": "Guardar Registros",
+      "retryOnFail": false,
+      "maxTries": 5,
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "15 minutos para revolucionar tus partes de trabajo",
+        "message": "<div>\n  <p><strong>Prepárate: lo que vas a ver aquí no es el típico webinar de automatización.</strong></p>\n\n  <p>\n    Jorge (CEO de Azor Data) y Marcos (dev de IA) te van a mostrar cómo gestionar tareas,\n    partes de horas e inventario desde una simple nota de voz, directamente desde Telegram o WhatsApp.\n  </p>\n\n  <p>\n    Así nació <strong>AzerionBot</strong>: un chatbot capaz de entender tu voz, registrar todo\n    y darte respuestas en segundos.\n  </p>\n\n  <p><strong>En menos de 20 minutos verás:</strong></p>\n  <ul>\n    <li>Cómo registrar partes de trabajo solo con audios.</li>\n    <li>Cómo actualizar inventario sin necesidad de salir del chat.</li>\n    <li>Todo desde Telegram o WhatsApp.</li>\n  </ul>\n\n  <p>\n    <strong>Te avisamos desde ya:</strong><br>\n    después de esto, no vas a querer volver a rellenar nada a mano. 🚀\n  </p>\n\n  <p>\n    Si quieres apuntarte te dejo el siguiente enlace:<br>\n    <a href=\"https://forms.gle/3DD48uWU5kbvua6t7\" target=\"_blank\" rel=\"noopener\">\n      https://forms.gle/3DD48uWU5kbvua6t7\n    </a>\n  </p>\n\n  <p>📅 <strong>Fecha:</strong> 3 de Diciembre 2025</p>\n  <p>🕓 <strong>Hora:</strong> 16:00 (Hora España)</p>\n  <p>📍 <strong>Acceso gratuito previa inscripción</strong></p>\n</div>\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1920,
+        768
+      ],
+      "id": "896deca3-7bd8-4952-be72-43d5767a5d38",
+      "name": "Enviar Mensaje",
+      "webhookId": "0a0bb80f-625e-4cbe-b46c-d24331d77313"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1568,
+        560
+      ],
+      "id": "cc573fda-fa8c-41bb-ae0b-ed1eb7053d00",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e880200d-9d8f-4792-89e4-dc1b22de89cc",
+              "leftValue": "={{ $json.websites[0] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -976,
+        176
+      ],
+      "id": "a255396b-c016-4a0d-a79a-f6d3c498da40",
+      "name": "¿Falta Website?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ✅ 1) CIUDADES A BUSCAR \nconst ciudadesActivas = [\n  \"Madrid\", \n];\n\n// ✅ 2) CÓDIGOS POSTALES POR CIUDAD\n// Puedes poner:\n// - Listas: [\"28023\", \"28021\", ...]\n// - Rangos: [\"28001-28080\"]  -> se expande automáticamente\nconst codigosPostalesPorCiudad = {\n  Madrid: [ \"28001-28007\" ],  \n  \n  \n};\n\n// ✅ 3) COORDENADAS (LL) POR CIUDAD\nconst llPorCiudad = {\n Madrid: \"@40.416775,-3.703790,11z\",\n \n};\n\nconst giros = [\n  \"Asociaciones empresariales\",\n  \n];\n\n// ✅ Expande rangos tipo \"28001-28080\" en lista de CPs\nfunction expandirCodigosPostales(listaCP) {\n  const set = new Set();\n\n  for (const item of listaCP) {\n    const cp = String(item).trim();\n\n    // Rango tipo \"28001-28080\"\n    if (/^\\d{5}-\\d{5}$/.test(cp)) {\n      const [inicio, fin] = cp.split(\"-\").map(n => parseInt(n, 10));\n      for (let n = inicio; n <= fin; n++) {\n        set.add(String(n).padStart(5, \"0\"));\n      }\n    } else {\n      // CP suelto \"28023\"\n      set.add(cp);\n    }\n  }\n\n  return [...set];\n}\n\nconst out = [];\n\nfor (const ciudad of ciudadesActivas) {\n  const ll = llPorCiudad[ciudad];\n  const listaCP = codigosPostalesPorCiudad[ciudad];\n\n  if (!ll) {\n    throw new Error(`Falta ll para la ciudad: ${ciudad}`);\n  }\n\n  if (!listaCP || !Array.isArray(listaCP) || listaCP.length === 0) {\n    throw new Error(`Faltan códigos postales para la ciudad: ${ciudad}`);\n  }\n\n  const codigosPostales = expandirCodigosPostales(listaCP);\n\n  for (const cp of codigosPostales) {\n    for (const g of giros) {\n      out.push({\n        json: {\n          query: `${g} ${cp} ${ciudad}`,\n          city: ciudad,\n          postalCode: cp,\n          giro: g,\n          ll: ll\n        }\n      });\n    }\n  }\n}\n\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1328,
+        560
+      ],
+      "id": "5bd08164-da1f-47aa-aef5-8d4304cc0060",
+      "name": "1. Filtros De Búsqueda"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -1120,
+        560
+      ],
+      "id": "c4ba7bfe-aeee-45f6-a37b-0be4793d6a50",
+      "name": "2. Loop Búsquedas (10 por vez)"
+    },
+    {
+      "parameters": {
+        "url": "=https://www.google.com/maps/search/{{ $json.query }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $json.query }}"
+            },
+            {
+              "name": "hl",
+              "value": "es"
+            },
+            {
+              "name": "gl",
+              "value": "us"
+            },
+            {
+              "name": "tbm",
+              "value": "=lcl"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "es-ES,es;q=0.9"
+            },
+            {
+              "name": "Referer",
+              "value": "https://www.google.com/"
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate, br"
+            },
+            {
+              "name": "Accept",
+              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+            },
+            {
+              "name": "DNT",
+              "value": "1"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -912,
+        624
+      ],
+      "id": "cd08f655-e7bd-493c-a4d7-1e062a8b0b83",
+      "name": "3. HTTP Google Maps",
+      "retryOnFail": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// En el nodo 4, en lugar de usar $json.body, usa:\nconst html = $json.fullResponse.data || '';\n\n// Luego aplica el parsing existente\nconst websites = new Set();\n\n// Método 1: Buscar URLs en href\nconst hrefMatches = html.match(/href=\"([^\"]*\\.[a-z]{2,}[^\"]*)\"/gi) || [];\nhrefMatches.forEach(href => {\n  const url = href.replace(/href=\"/i, '').replace(/\"$/, '');\n  if (url.includes('.') && !url.includes('google') && !url.includes('gstatic')) {\n    websites.add(url);\n  }\n});\n\nreturn [{\n  json: {\n    websites: Array.from(websites).slice(0, 20),\n    searchQuery: $json.query,\n    location: $json.location,\n    resultCount: websites.size\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -512,
+        624
+      ],
+      "id": "baaae81d-318b-46ed-af88-6a6a11daea18",
+      "name": "4. Extraer Websites"
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -272,
+        624
+      ],
+      "id": "073599c0-582f-4566-a58e-ebc91e48c431",
+      "name": "5. Wait Rate Limit",
+      "webhookId": "ccea7b71-9d2c-4a4c-9adc-c39497bccb31"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id, email, website, query, city, postal_code, giro\nFROM public.emails\nWHERE enviado = false\nORDER BY giro, email;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -672,
+        1136
+      ],
+      "id": "600b9066-6c06-4159-8b0c-9b0e33fce858",
+      "name": "Coger Emails No Enviados1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Ver qué está devolviendo HTTP\nconst response = $json;\n\nreturn [{\n  json: {\n    statusCode: response.statusCode || response.status,\n    statusMessage: response.statusMessage,\n    headers: response.headers,\n    bodySize: (response.body || '').length,\n    bodyPreview: (response.body || '').substring(0, 500),\n    fullResponse: response\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -704,
+        624
+      ],
+      "id": "3df159f9-e46f-4f4b-adaf-ea2b4a70d160",
+      "name": "3b. Debug HTML"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://odoo.azordata.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"call\",\n  \"params\": {\n    \"service\": \"common\",\n    \"method\": \"authenticate\",\n    \"args\": [\n      \"goshawk-analytics-sl\",\n      \"laura.sanchez@azordata.com\",\n      \"Laura1998\",\n      {}\n    ]\n  },\n  \"id\": 1\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1248,
+        1136
+      ],
+      "id": "0a88cabe-d2ac-4d45-85ee-45a7e443c8b7",
+      "name": "Odoo Login"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://odoo.azordata.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"call\",\n  \"params\": {\n    \"service\": \"object\",\n    \"method\": \"execute_kw\",\n    \"args\": [\n      \"goshawk-analytics-sl\",\n      {{ $json.result }},\n      \"Laura1998\",\n      \"mailing.list\",\n      \"search_read\",\n      [[[\"name\", \"=\", \"Webinar Febrero 2026\"]]],\n      {\"fields\": [\"id\", \"name\"], \"limit\": 1}\n    ]\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1056,
+        1136
+      ],
+      "id": "8c0399a0-166c-4d8e-b604-b4edda816ea7",
+      "name": "Get Mailing List ID"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://odoo.azordata.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "=application/json",
+        "body": "={{ JSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      \"goshawk-analytics-sl\",\n      $node[\"Odoo Login\"].json.result,\n      \"Laura1998\",\n      \"mailing.contact\",\n      \"search_read\",\n      [[[\"email\", \"=\", $json.email]]],\n      { fields: [\"id\",\"email\"], limit: 1 }\n    ]\n  },\n  id: 1\n}) }}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        32,
+        1104
+      ],
+      "id": "1233fb5b-3bcf-4cbf-bf03-30bec31ca57f",
+      "name": "Buscar Contacto"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "72c9517e-8b7d-485f-86c9-2e3027de4172",
+              "leftValue": "={{ $json.result.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        240,
+        1104
+      ],
+      "id": "daa67520-4627-4d6a-b87d-b38d1bc84ea3",
+      "name": "¿Existe contacto?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "25224108-49fe-4c34-9835-2a6bba24bea3",
+              "name": "contact_id",
+              "value": "={{ $json.result[0].id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        656,
+        976
+      ],
+      "id": "dbc716f7-cd06-4ef6-b86f-89a3d5a93fef",
+      "name": "contact_id existente"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://odoo.azordata.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{\nJSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      \"goshawk-analytics-sl\",\n      $node[\"Odoo Login\"].json.result,\n      \"Laura1998\",\n      \"mailing.contact\",\n      \"create\",\n      [{\n        email: $node[\"Loop contactos\"].json.email,\n        name: $node[\"Loop contactos\"].json.website || $node[\"Loop contactos\"].json.email,\n        country_id: $node[\"Loop contactos\"].json.country_id || false,\n\n        // tags (si no hay, será [])\n        tag_ids: $json.tag_ids || [],\n\n        // lista\n        list_ids: [[4, $node[\"Guardar list_id\"].json.list_id]]\n      }]\n    ]\n  },\n  id: 1\n})\n}}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2656,
+        1328
+      ],
+      "id": "eec44557-aaf2-44d1-859f-c5b9c716ff46",
+      "name": "Crear Contacto"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1faef426-a192-4fa1-a509-c035f3013ec1",
+              "name": "contact_id",
+              "value": "={{ $json.result }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2816,
+        1328
+      ],
+      "id": "cb365d2d-a104-4802-a069-7bec09a1df4a",
+      "name": "contact_id nuevo"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://odoo.azordata.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{\nJSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      \"goshawk-analytics-sl\",\n      $node[\"Odoo Login\"].json.result,\n      \"Laura1998\",\n      \"mailing.contact\",\n      \"write\",\n      [\n        [$json.contact_id],\n        {\n          name: $node[\"Loop contactos\"].json.website || $node[\"Loop contactos\"].json.email,\n\n          // tags (solo si existen, para que no falle)\n          tag_ids: [\n            ...( $json.tag_giro_id ? [[4, $json.tag_giro_id]] : [] ),\n            ...( $json.tag_city_id ? [[4, $json.tag_city_id]] : [] )\n          ],\n\n          // lista\n          list_ids: [[4, $node[\"Guardar list_id\"].json.list_id]]\n        }\n      ]\n    ]\n  },\n  id: 1\n})\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        3136,
+        992
+      ],
+      "id": "91daf4c5-3852-4d9e-9f01-4b93ef920da2",
+      "name": "Suscribir a lista",
+      "retryOnFail": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12c1978f-3510-4e19-8e4f-71cceeb916d6",
+              "name": "list_id",
+              "value": "={{ $json.result[0].id }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -864,
+        1136
+      ],
+      "id": "debe52f8-498f-40bb-a136-7bd2732f69f3",
+      "name": "Guardar list_id"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -224,
+        992
+      ],
+      "id": "2b887767-c32d-4c5c-935b-7cf0342b2fd0",
+      "name": "Loop contactos"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://odoo.azordata.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{\nJSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      \"goshawk-analytics-sl\",\n      $node[\"Odoo Login\"].json.result,\n      \"Laura1998\",\n      \"res.partner.category\",\n      \"search_read\",\n      [[[ \"name\", \"=\", $node[\"Loop contactos\"].json.query ]]],\n      { fields: [\"id\",\"name\"], limit: 1 }\n    ]\n  },\n  id: 1\n})\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        768,
+        1200
+      ],
+      "id": "fcb6c92a-eb2a-4aef-927a-a10b4479b9e6",
+      "name": "Get Tag ID (por giro)"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "90d45e50-41c5-4671-8a83-8825bcc2e2aa",
+              "name": "tag_giro_id",
+              "value": "={{$json.result[0].id}}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1344,
+        1184
+      ],
+      "id": "d577d930-28d0-442f-835f-5f16abfc4be4",
+      "name": "tag_id"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://odoo.azordata.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{\nJSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      \"goshawk-analytics-sl\",\n      $node[\"Odoo Login\"].json.result,\n      \"Laura1998\",\n      \"res.partner.category\",\n      \"create\",\n      [{ name: $node[\"Loop contactos\"].json.query }]\n    ]\n  },\n  id: 1\n})\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1312,
+        1392
+      ],
+      "id": "eb936c01-2f3a-4fc7-a47b-a04fd73bd726",
+      "name": "Crear tag"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "90d45e50-41c5-4671-8a83-8825bcc2e2aa",
+              "name": "tag_giro_id",
+              "value": "={{$json.result}}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1472,
+        1392
+      ],
+      "id": "7911e5a7-82a4-4516-81c3-2a5368656ca3",
+      "name": "tag_id1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://odoo.azordata.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{\nJSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      \"goshawk-analytics-sl\",\n      $node[\"Odoo Login\"].json.result,\n      \"Laura1998\",\n      \"res.partner.category\",\n      \"search_read\",\n      [[[ \"name\", \"=\", $node[\"Loop contactos\"].json.city ]]],\n      { fields: [\"id\",\"name\"], limit: 1 }\n    ]\n  },\n  id: 1\n})\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1616,
+        1184
+      ],
+      "id": "ba995bc9-9203-4c0d-a290-52de61a391e8",
+      "name": "Get Tag ID (ciudad)"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "65179946-dd22-49c7-8fa8-91f5f050974f",
+              "leftValue": "={{ $json.result.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1824,
+        1184
+      ],
+      "id": "412e338a-42b0-4726-81ed-60c02a60f280",
+      "name": "¿Existe tag ciudad?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "90d45e50-41c5-4671-8a83-8825bcc2e2aa",
+              "name": "tag_city_id",
+              "value": "={{$json.result[0].id}}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2032,
+        1072
+      ],
+      "id": "4342a404-ecab-42a7-928e-108eb0fea80c",
+      "name": "tag_id ciudad"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://odoo.azordata.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{\nJSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      \"goshawk-analytics-sl\",\n      $node[\"Odoo Login\"].json.result,\n      \"Laura1998\",\n      \"res.partner.category\",\n      \"create\",\n      [{ name: $node[\"Loop contactos\"].json.city }]\n    ]\n  },\n  id: 1\n})\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2032,
+        1248
+      ],
+      "id": "1900bfae-4126-4ca5-afe2-d7f2ec2b1984",
+      "name": "Crear tag ciudad"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "90d45e50-41c5-4671-8a83-8825bcc2e2aa",
+              "name": "tag_city_id",
+              "value": "={{ $json.result }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2224,
+        1248
+      ],
+      "id": "2c524027-6b0e-4716-a7d8-220afb5d2cad",
+      "name": "tag_id ciudad1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1d331242-04dd-443b-9c78-508ea8464e1e",
+              "leftValue": "={{ $json.result.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1136,
+        1280
+      ],
+      "id": "a006ae3e-17f0-4309-9c5d-cc1f52c57a7e",
+      "name": "¿Existe tag giro?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "362fd8cc-61f9-49f1-b431-6edd87dcaaa4",
+              "leftValue": "={{ $('Loop contactos').item.json.query }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        1312
+      ],
+      "id": "4196bd90-6f5a-41d6-8ab0-597f3209ec45",
+      "name": "¿Hay giro?"
+    },
+    {
+      "parameters": {
+        "jsCode": "function safeFirstJson(nodeName) {\n  try {\n    const arr = $items(nodeName);\n    if (!arr || !arr.length) return null;\n    return arr[0].json ?? null;\n  } catch (e) {\n    // nodo no existe o no se ejecutó -> no pasa nada\n    return null;\n  }\n}\n\nconst out = items.map((item) => {\n  const tags = [];\n\n  // ===== TAG \"QUERY\" (tu nodo tag_id o tag_id1) =====\n  const tagA = safeFirstJson(\"tag_id\")?.tag_giro_id;\n  const tagB = safeFirstJson(\"tag_id1\")?.tag_giro_id;\n\n  const queryTagId = tagA || tagB;\n  if (queryTagId) tags.push([4, queryTagId]);\n\n  // ===== TAG \"CITY\" (tu nodo tag_id ciudad o tag_id ciudad1) =====\n  const cityA = safeFirstJson(\"tag_id ciudad\")?.tag_city_id;\n  const cityB = safeFirstJson(\"tag_id ciudad1\")?.tag_city_id;\n\n  const cityTagId = cityA || cityB;\n  if (cityTagId) tags.push([4, cityTagId]);\n\n  // devolvemos el mismo item + tag_ids\n  return { json: { ...item.json, tag_ids: tags } };\n});\n\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2480,
+        1312
+      ],
+      "id": "709f30f4-22fe-4526-ba74-84ff7a8b5975",
+      "name": "Build tag_ids"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -384,
+        1952
+      ],
+      "id": "f16c8180-44b4-4a8f-8daf-bdade9495547",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -144,
+        2064
+      ],
+      "id": "9f969916-815c-46b0-b07f-8288506b6069",
+      "name": "Wait",
+      "webhookId": "62c7ef5c-b13f-4103-9fbf-a6f864d81dca"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f0219583-1937-482f-87ea-4aedee86fd96",
+              "leftValue": "={{ $items().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -704,
+        2048
+      ],
+      "id": "978411ea-e1a6-43d5-b2de-5a24d3fcc0bd",
+      "name": "¿Hay Items?1"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1120,
+        2048
+      ],
+      "id": "0418642b-1bc8-4ec1-aeb6-6b1ccd4a406b",
+      "name": "Schedule Trigger1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE emails\nSET enviado = true\nWHERE id = '{{$(\"Coger Emails No Enviados1\").item.json.id}}';\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        224,
+        2064
+      ],
+      "id": "d82bf17a-d3c0-4d84-acb3-3f95647833f3",
+      "name": "Marcar Enviado1"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "El error silencioso en tus partes de trabajo",
+        "message": "<!doctype html>\n<html lang=\"es\">\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <title>Mensaje</title>\n</head>\n<body>\n  <p>El próximo gran impacto en tu cuenta de resultados está en tus partes de trabajo.</p>\n\n  <p>Cada parte de trabajo mal rellenado cuesta tiempo y dinero:</p>\n\n  <ul>\n    <li>horas mal ajustadas</li>\n    <li>descuadres de stock</li>\n    <li>facturación incompleta</li>\n  </ul>\n\n  <p>\n    Te vengo a contar un sistema en el que el técnico termina la reparación,\n    manda un audio y pasa al siguiente aviso. Todo queda correctamente registrado.\n  </p>\n\n  <p>\n    No se para.<br />\n    No saca un papel.<br />\n    No interrumpe a nadie.\n  </p>\n\n  <p>\n    Mañana te explico <em>cómo cerrar partes de trabajo sin parar de hacer servicios, con precisión e impacto en la cuenta de resultados.</em>\n  </p>\n\n  <p>\n    Jorge Huéscar<br />\n    Azor Data<br />\n    <a href=\"tel:+34649326020\">649 326 020</a>\n  </p>\n</body>\n</html>\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        48,
+        2064
+      ],
+      "id": "731e2950-ea49-4451-8b0b-a4921ba13b91",
+      "name": "Enviar Mensaje1",
+      "webhookId": "0a0bb80f-625e-4cbe-b46c-d24331d77313"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id, email, source_url\nFROM public.emails\nWHERE enviado IS FALSE\nORDER BY id;\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -896,
+        2048
+      ],
+      "id": "79f09c10-690c-4d51-a957-9cf968731eee",
+      "name": "Coger Emails No Enviados"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-18T07:50:51.007Z",
+      "createdAt": "2026-02-18T07:50:51.007Z",
+      "role": "workflow:owner",
+      "workflowId": "rc5L0LD299pzgGWi",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-02-18T07:50:51.007Z",
+  "versionId": "555ab628-a65d-4a4d-97ae-46703a960c03"
+}
