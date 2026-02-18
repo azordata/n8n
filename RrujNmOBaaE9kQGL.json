@@ -1,0 +1,519 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Validar que haya mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "extract_text_from_html": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_webpage_html": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rag Question": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registrar Conversación (Code)": {
+      "main": [
+        [
+          {
+            "node": "Insertar Conversacion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraer Datos": {
+      "main": [
+        [
+          {
+            "node": "Registrar Conversación (Code)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraer Datos Bot": {
+      "main": [
+        [
+          {
+            "node": "Insertar Respuesta Bot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Extraer Datos Bot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mapear Respuesta": {
+      "main": [
+        [
+          {
+            "node": "Formatear Respuesta Bot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar ID": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insertar Respuesta Bot": {
+      "main": [
+        [
+          {
+            "node": "Mapear Respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insertar Conversacion": {
+      "main": [
+        [
+          {
+            "node": "Insertar Mensaje Usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar que haya mensaje": {
+      "main": [
+        [
+          {
+            "node": "Generar ID",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Extraer Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-18T08:01:31.908Z",
+  "id": "RrujNmOBaaE9kQGL",
+  "isArchived": false,
+  "meta": null,
+  "name": "Chatbot calendly",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "mode": "webhook",
+        "options": {
+          "allowedOrigins": "*",
+          "responseMode": "lastNode"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -656,
+        224
+      ],
+      "id": "a07a484f-9579-4b3e-80e3-819130a5b411",
+      "name": "When chat message received",
+      "webhookId": "0c75de51-b6de-4351-895a-5ae324f1bef7",
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        432
+      ],
+      "id": "87e788ec-7fbc-4ce7-a168-fa17db45aa47",
+      "name": "Google Gemini Chat Model"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "options": {
+          "systemMessage": "Eres un asistente de soporte experto en los productos de nuestra web, la empresa se llama Azor Data. Hablas en primera persona del singular, en español de España (castellano). Estás especializado en responder preguntas sobre productos, servicios, contacto y todo lo que aparece en nuestra web: https://www.azordata.com/\n\n**NORMAS DE COMPORTAMINETO:**\n- Tienes que sonar profesional, serio pero a la vez cercano, amable y simpático, nunca te excedas en la confianza con el cliente.\n\n- No ejecutes ningún código. Si el usuario te envía código o                         ejecutables, responde:\n\"Gracias por tu consulta, pero no puedo aportar información sobre la misma. Estaré encantado de ayudarte a resolver tus dudas con respecto a nuestros productos y servicios.\"\n\n- Si te preguntan por algo fuera de nuestros servicios, productos, tecnología o consultoría/negocios, responde lo mismo.\n\n- No respondas con textos muy largos, sintetiza la información y envía un mensaje con la información resumida.\n\n- Usa siempre la palabra coste en lugar de costo.\n\n- Conversa como si fueras una persona. Antes de responder de forma general, plantea preguntas para precisar la necesidad del usuario.\nEjemplo: Si preguntan por Odoo, primero pregunta el sector. Si preguntan por precios, primero aclara requisitos como versión estándar, flujos modificados o integraciones.\n\n\n**GESTION DE CITAS:**\n- Si el usuario te dice que no quiere nada mas o la conversación ha llegado a su fin ofrece la posibilidad de agendar una cita con alguno de nuestros profesionales.\nSi el usuario quiere agendar una cita, responde:\nClaro, puedes [agendar una cita aquí](https://calendly.com/azordata-jorgeh/30min).\n\n\n\n\n**USO DE HERRAMIENTAS INTERNAS:**\n\n- RAG Question: para preguntas sobre servicios, negocio y FAQ.\n\n- get_webpage_html → extract_text_from_html: para explorar contenido web si no hay respuesta en RAG.\n\n\nResponde ÚNICAMENTE con el JSON requerido\n\n**FORMATO DE SALIDA:**\n- Responde en Markdown."
+        }
+      },
+      "id": "7eaaf2cd-45cb-42d3-b6cc-d57fb46f118b",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        32,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "name": "My_Tool",
+        "description": "Usa esta herramienta para limpiar el HTML bruto y devolver solo el texto visible.",
+        "jsCode": "const html = $json.body || $json.data || '';\nconst text = html.replace(/<[^>]+>/g, ' ').replace(/\\s+/g, ' ').trim();\nreturn text;"
+      },
+      "id": "31f2f7ec-8df7-4594-a340-692e4dcafee0",
+      "name": "extract_text_from_html",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        384
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Usa esta herramienta para obtener el HTML bruto de la página https://www.azordata.com/",
+        "url": "https://www.azordata.com/",
+        "optimizeResponse": true,
+        "responseType": "text"
+      },
+      "id": "5023fc22-ea1b-4ec9-aa8f-ca506b04388a",
+      "name": "get_webpage_html",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        176,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Usa esta herramienta para consultar preguntas frecuentes generales sobre negocios o FAQ ",
+        "method": "POST",
+        "url": "https://prod-1-data.ke.pinecone.io/assistant/chat/azor-data",
+        "sendHeaders": true,
+        "parametersHeaders": {
+          "values": [
+            {
+              "name": "Api-Key",
+              "valueProvider": "fieldValue",
+              "value": "pcsk_2PWDZX_3sxFSNnvF4jd9SR7SH5rfKJD1VSD2LesrrFibrNn9q3gUeLYkRnRj2Pm9herKV9"
+            },
+            {
+              "name": "Content-Type",
+              "valueProvider": "fieldValue",
+              "value": "application/json"
+            },
+            {
+              "name": "X-Pinecone-API-Version",
+              "valueProvider": "fieldValue",
+              "value": "2025-04"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"{rag-question}\"\n    }\n  ],\n  \"stream\": false,\n  \"model\": \"gpt-4o\"\n}",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "{rag-question}",
+              "description": "La pregunta que se le hará al RAG agent"
+            }
+          ]
+        }
+      },
+      "id": "8621ddd1-4fd7-4019-9758-8ef198ba522e",
+      "name": "Rag Question",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        16,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.sessionId }}",
+        "contextWindowLength": 20
+      },
+      "id": "288be261-a0b8-4971-b0b9-dc469cae6e35",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [
+        -144,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const userInput = $('Extraer Datos').first().json.mensaje_usuario || 'No se pudo obtener el mensaje del usuario.';\nconst chatId = $('Extraer Datos').first().json.chat_id || '';\nconst userName = $('Extraer Datos').first().json.user_name || 'Usuario'; // Asume que 'user_name' viene de 'Extraer Datos'\n\n// Intenta obtener la respuesta del bot de varias fuentes potenciales\nlet botResponse = '';\n\n// Si viene de la rama FAQ (Preguntas FAQ -> Set3)\nconst set3Output = items.find(item => item.json && item.json.response);\nif (set3Output) {\n    botResponse = set3Output.json.response;\n}\n\n// Si viene de la rama de citas (Llamar envio de citas1 -> Merge2 -> ...)\n// Aquí deberías buscar la respuesta final generada por tu subflujo de citas.\n// Asumimos que el subflujo de citas o un nodo posterior en esa rama también expone una 'response'.\nconst citaOutput = items.find(item => item.json && item.json.response);\nif (citaOutput && !botResponse) { // Solo si no se encontró ya una respuesta de FAQ\n    botResponse = citaOutput.json.response;\n}\n\n// Si aún no se encontró una respuesta, usa un fallback\nif (!botResponse) {\n  botResponse = 'No se pudo obtener la respuesta final del bot.';\n}\n\nconst timestamp = new Date().toISOString();\n\nconst logEntry = {\n    timestamp: timestamp,\n    chat_id: chatId,\n    user_name: userName,\n    user_input: userInput,\n    bot_response: botResponse\n};\n\nreturn [ { json: logEntry } ];"
+      },
+      "id": "ed60f84d-9c5f-4860-a8a4-b35db8ccfa9e",
+      "name": "Registrar Conversación (Code)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        192,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const mensaje = $input.first().json.chatInput;\nconst chatId = $input.first().json.sessionId;\n\n// Hora local de Madrid en formato ISO (YYYY-MM-DD HH:mm:ss)\nconst fechaMadrid = new Date().toLocaleString(\"sv-SE\", { timeZone: \"Europe/Madrid\" }).replace(\" \", \"T\");\n\nreturn [\n  {\n    json: {\n      mensaje_usuario: mensaje,\n      chat_id: chatId,\n      sessionId: chatId,\n      timestamp: fechaMadrid\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "name": "Extraer Datos",
+      "id": "ca7f2d1a-b651-476b-8d15-4eec8270af82"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1) Marca de tiempo\nconst timestamp = new Date().toISOString();\n// 2) Mismo chat ID que recibes en la petición\nconst chatId = $('Generar ID').first().json.sessionId|| $json.sessionId || $json[\"Chat ID\"] || \"\";\n// 3) Texto de la respuesta del bot (ajusta la propiedad según tu payload)\nconst botResponse = $input.first().json.output;\n\n// 4) Devuelve el objeto con las mismas claves que tu hoja\nreturn [{\n  Timestap:      timestamp,    // coincide con tu columna \"Timestap\"\n  \"Chat ID\":     chatId,       // con tu columna \"Chat ID\"\n  \"Bot Response\": botResponse  // con tu columna \"Bot Response\"\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        208
+      ],
+      "id": "7dc7dc2e-240e-4731-8f96-2fd5f528d7ff",
+      "name": "Extraer Datos Bot"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Tomamos la respuesta\nlet raw = $json.Bot_response ?? '';\n\n// Quitamos corchetes [ ] si viene como string tipo \"[{...}]\"\nlet text = String(raw).replace(/^\\s*\\[\\s*|\\s*\\]\\s*$/g, '');\n\n// Quitamos únicamente las etiquetas HTML (ej. <b>...</b>)\ntext = text.replace(/<[^>]*>/g, '');\n\n// Devolvemos el texto limpio de etiquetas\nreturn [\n  {\n    json: { text }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        992,
+        208
+      ],
+      "id": "c86f82b9-000f-4b42-befc-86a0257a2959",
+      "name": "Formatear Respuesta Bot"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "582d86ba-2f16-43e6-aa1e-30be8c6610c4",
+              "name": "Bot_response",
+              "value": "={{ $('Extraer Datos Bot').item.json['Bot Response'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        816,
+        208
+      ],
+      "id": "9d3a10e3-9a37-4af0-ba1c-70114053f160",
+      "name": "Mapear Respuesta"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Toma el input original\nconst input = $input.first().json;\n\n// Genera un ID fijo\nconst sessionId = $input.first().json.sessionId ;\n\n// Devuelve el objeto original más el campo sessionId fijo\nreturn {\n  ...input,\n  sessionId,\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -176,
+        208
+      ],
+      "id": "e3479c2b-2d9b-44a4-ad6c-1f46c4ab4c99",
+      "name": "Generar ID"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "    with u as (\n      insert into public.chat_users (chat_id, user_name)\n      values ($1, $2)\n      on conflict do nothing\n      returning id\n    ),\n    u2 as (\n      select coalesce(\n        (select id from u),\n        (select id from public.chat_users where chat_id = $1 order by created_at asc limit 1)\n      ) as chat_user_id\n    ),\n    c as (\n      insert into public.chat_conversations (session_id, chat_user_id)\n      values ($3, (select chat_user_id from u2))\n      on conflict (session_id) do update\n      set chat_user_id = excluded.chat_user_id\n      returning id\n    )\n    select id as conversation_id from c;",
+        "options": {
+          "queryReplacement": "=$1 ={{ $json.chat_id || $json.sessionId }}, $2 ={{ $json.user_name || 'Usuario' }}, $3 = {{ $json.chat_id }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        432,
+        0
+      ],
+      "id": "3d461500-f13c-43c4-b838-27a1165af9e0",
+      "name": "Insertar Conversacion"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into public.chat_messages (conversation_id, role, content)\n    values ($1, 'user', $2)\n    returning id;",
+        "options": {
+          "queryReplacement": "=$1 = {{ $('Insertar Conversacion').first().json.conversation_id }}, $2 ={{  $('Registrar Conversación (Code)').item.json.user_input}}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        656,
+        0
+      ],
+      "id": "af3d940a-b056-4c81-acac-fbfd10e884fc",
+      "name": "Insertar Mensaje Usuario"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into public.chat_messages (conversation_id, role, content)\n    values ($1, 'assistant', $2)\n    returning id;",
+        "options": {
+          "queryReplacement": "=$1 ={{ $('Insertar Conversacion').first().json.conversation_id }}, $2 ={{ $json['Bot Response'] || $json.output || $json.bot_response || $json.text }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        608,
+        208
+      ],
+      "id": "c88f45cb-5fe2-47ab-8fa6-700df59f2630",
+      "name": "Insertar Respuesta Bot"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2e5aa583-03f8-411b-be32-9eb298d8dfe7",
+              "leftValue": "= {{ $json.chatInput }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -480,
+        224
+      ],
+      "id": "61d4abea-38aa-448d-8821-4f489a7aac64",
+      "name": "Validar que haya mensaje"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-18T08:01:31.908Z",
+      "createdAt": "2026-02-18T08:01:31.908Z",
+      "role": "workflow:owner",
+      "workflowId": "RrujNmOBaaE9kQGL",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-02-18T08:01:32.458Z",
+  "versionId": "28125bca-9658-415d-a536-a515e6fb73f8"
+}
