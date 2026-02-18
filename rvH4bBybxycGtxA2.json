@@ -1,0 +1,136 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get an event": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-18T07:39:53.822Z",
+  "id": "rvH4bBybxycGtxA2",
+  "isArchived": false,
+  "meta": null,
+  "name": "Envio Invitación Webinar",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1Urrg5kPknbyCZexOibQd-T_LcVOpBZ5rJNR1Q4htK3Y/edit?gid=1445398285#gid=1445398285",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1445398285,
+          "mode": "list",
+          "cachedResultName": "Respuestas de formulario 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Urrg5kPknbyCZexOibQd-T_LcVOpBZ5rJNR1Q4htK3Y/edit#gid=1445398285"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5722cf97-9c20-4f2d-b8be-6a5e49aa3b75",
+      "name": "Google Sheets Trigger"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Google Sheets Trigger').item.json['E-mail:'] }}",
+        "subject": "={{ $json.summary }}",
+        "message": "=¡Hola {{ $('Google Sheets Trigger').item.json['Nombre completo:'] }}!<br>\n<br> Gracias por registrarte en nuestro webinar gratuito sobre <b>Cómo gestionar tu negocio desde una nota de voz</b>.\n<p>En este webinar conocerás <strong>Azerion</strong>, el chatbot conectado a <strong>Odoo</strong> que automatiza tareas y te permite controlar tu empresa sin depender del ordenador.</p><p>Aprenderás a:<br>✅ Registrar horas, gastos y ausencias (con fotos).<br>✅ Controlar inventario y reponer productos.<br>✅ Consultar proyectos, tareas y eventos del calendario.<br>✅ Ver ventas por periodo con gráficos automáticos.<br>✅ Automatizar reportes y ahorrar horas de trabajo desde WhatsApp o Telegram.</p><p>📅 <strong>Fecha:</strong> Martes, 10 de febrero de 2026<br>🕓 <strong>Hora:</strong> 16:00 a 16:15 (España)<br>📍 <strong>Modalidad:</strong> Online – vía Google Meet<br></p><p>Nos vemos en directo 👋<br><strong> -Jorge Huéscar, CEO Azor Data<br></strong><br>Transformamos tu negocio con automatización e IA.</p>\n<br> Fecha: 10/02/2026 16:00<br> Enlace de la videollamada: https://meet.google.com/wjf-kium-ugs <br> O marca el: \t+34 955 25 62 73 PIN: ‪315 744 713‬# <br> Acceso fuera de España: https://tel.meet/wjf-kium-ugs?pin=6156847989897 <br> <p>¡Te esperamos!</p>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "1c5fcf14-9410-4a35-9670-492353d8af8e",
+      "name": "Send a message",
+      "webhookId": "0198af89-8f99-422b-baad-bd13fad44faf"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "calendar": {
+          "__rl": true,
+          "value": "info@azordata.com",
+          "mode": "list",
+          "cachedResultName": "info@azordata.com"
+        },
+        "eventId": "26nvflspnct8mn7r9himqdecoj",
+        "options": {
+          "timeZone": {
+            "__rl": true,
+            "value": "Europe/Madrid",
+            "mode": "list",
+            "cachedResultName": "Europe/Madrid"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        0
+      ],
+      "id": "88eef03a-ae88-4eea-87f5-48785ca97bb6",
+      "name": "Get an event"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-18T07:39:53.822Z",
+      "createdAt": "2026-02-18T07:39:53.822Z",
+      "role": "workflow:owner",
+      "workflowId": "rvH4bBybxycGtxA2",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-02-18T07:40:00.322Z",
+  "versionId": "12b37e0c-b891-48fc-b90d-b6d246095f7a"
+}
