@@ -1,0 +1,427 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Webhook - Recibir JSON": {
+      "main": [
+        [
+          {
+            "node": "Detectar Acci?n",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detectar Acci?n": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Datos - Crear": {
+      "main": [
+        [
+          {
+            "node": "Odoo - Crear Contacto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo - Crear Contacto": {
+      "main": [
+        [
+          {
+            "node": "Procesar Resultado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Datos - Actualizar": {
+      "main": [
+        [
+          {
+            "node": "Odoo - Actualizar Contacto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo - Actualizar Contacto": {
+      "main": [
+        [
+          {
+            "node": "Procesar Resultado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Datos - Eliminar": {
+      "main": [
+        [
+          {
+            "node": "Odoo - Eliminar Contacto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo - Eliminar Contacto": {
+      "main": [
+        [
+          {
+            "node": "Procesar Resultado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manejar Fallback": {
+      "main": [
+        [
+          {
+            "node": "Procesar Resultado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar Resultado": {
+      "main": [
+        [
+          {
+            "node": "Responder Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Preparar Datos - Crear",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Preparar Datos - Actualizar",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Preparar Datos - Eliminar",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Manejar Fallback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-18T07:52:56.095Z",
+  "id": "MmwSGL3UunEyaXnb",
+  "isArchived": false,
+  "meta": null,
+  "name": "Sincronizaci?n Contactos Odoo desde Vozipcenter",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "sync-contact",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "c835dba6-2bb0-44b9-89c4-d43213e81e8f",
+      "name": "Webhook - Recibir JSON",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -1056,
+        256
+      ],
+      "webhookId": "sync-contact-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Detectar y preparar la acci?n a realizar\nconst body = $input.item.json.body || $input.item.json || {};\nconst action = body.action || 'unknown';\nconst data = body.data || {};\n\n// Validar que la acci?n sea v?lida\nconst validActions = ['create', 'write', 'unlink'];\nconst detectedAction = validActions.includes(action) ? action : 'fallback';\n\n// Preparar datos seg?n el tipo de acci?n\nlet processedData = {};\nlet partnerId = null;\n\nif (detectedAction === 'create' || detectedAction === 'unlink') {\n  processedData = { ...data };\n  partnerId = data.id || null;\n} else if (detectedAction === 'write') {\n  processedData = { ...(data.new_values || {}) };\n  processedData.old_values = data.old_values || {};\n  partnerId = data.new_values?.id || data.old_values?.id || null;\n} else {\n  processedData = data;\n  partnerId = data.id || null;\n}\n\nreturn {\n  json: {\n    ...$input.item.json,\n    detectedAction,\n    originalAction: action,\n    processedData,\n    partnerId\n  }\n};"
+      },
+      "id": "c31a27b3-d10d-4664-bd26-147d1a588f21",
+      "name": "Detectar Acci?n",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -848,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Preparar datos para crear contacto en Odoo\nconst data = $input.item.json.processedData || {};\n\n// Preparar objeto con todos los campos\nconst contactData = {\n  name: data.name || ''\n};\n\n// Campos básicos\nif (data.email !== undefined && data.email !== '') contactData.email = data.email;\nif (data.phone !== undefined && data.phone !== '') contactData.phone = data.phone;\nif (data.mobile !== undefined && data.mobile !== '') contactData.mobile = data.mobile;\nif (data.vat !== undefined && data.vat !== '') contactData.vat = data.vat;\nif (data.is_company !== undefined) contactData.isCompany = data.is_company;\nif (data.active !== undefined) contactData.active = data.active;\n\n// Dirección\nif (data.street !== undefined && data.street !== '') contactData.street = data.street;\nif (data.street2 !== undefined && data.street2 !== '') contactData.street2 = data.street2;\nif (data.city !== undefined && data.city !== '') contactData.city = data.city;\nif (data.state !== undefined && data.state !== '') contactData.state = data.state;\nif (data.zip !== undefined && data.zip !== '') contactData.zip = data.zip;\nif (data.country !== undefined && data.country !== '') contactData.country = data.country;\n\n// Relaciones\nif (data.parent_id !== undefined && data.parent_id !== null) contactData.parentId = data.parent_id;\nif (data.parent_name !== undefined && data.parent_name !== '') contactData.parentName = data.parent_name;\n\n// Arrays (se procesarán después)\nif (data.banks && Array.isArray(data.banks)) contactData.banks = data.banks;\nif (data.categories && Array.isArray(data.categories)) contactData.categories = data.categories;\n\n// ID externo de Vozipcenter\nif (data.id) contactData.externalId = data.id;\n\nreturn {\n  json: {\n    ...$input.item.json,\n    ...contactData,\n    partnerId: data.id || $input.item.json.partnerId\n  }\n};"
+      },
+      "id": "77d43ed6-e34c-47c6-8ca4-92a18ce0e210",
+      "name": "Preparar Datos - Crear",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "contactName": "={{$json.name}}",
+        "additionalFields": {
+          "email": "={{ $json.email }}",
+          "mobile": "={{ $json.mobile }}",
+          "phone": "={{ $json.phone }}",
+          "vat": "={{ $json.vat }}"
+        }
+      },
+      "id": "3f1c6711-11d7-4bfa-9dfa-9f4e579426e7",
+      "name": "Odoo - Crear Contacto",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Preparar datos para actualizar contacto en Odoo\nconst data = $input.item.json.processedData || {};\nconst oldValues = data.old_values || {};\n\n// Preparar solo los campos que han cambiado\nconst updateData = {};\n\n// Campos básicos\nif (data.name !== undefined && data.name !== oldValues.name) updateData.name = data.name;\nif (data.email !== undefined && data.email !== oldValues.email) updateData.email = data.email || false;\nif (data.phone !== undefined && data.phone !== oldValues.phone) updateData.phone = data.phone || false;\nif (data.mobile !== undefined && data.mobile !== oldValues.mobile) updateData.mobile = data.mobile || false;\nif (data.vat !== undefined && data.vat !== oldValues.vat) updateData.vat = data.vat || false;\nif (data.is_company !== undefined && data.is_company !== oldValues.is_company) updateData.isCompany = data.is_company;\nif (data.active !== undefined && data.active !== oldValues.active) updateData.active = data.active;\n\n// Dirección\nif (data.street !== undefined && data.street !== oldValues.street) updateData.street = data.street || false;\nif (data.street2 !== undefined && data.street2 !== oldValues.street2) updateData.street2 = data.street2 || false;\nif (data.city !== undefined && data.city !== oldValues.city) updateData.city = data.city || false;\nif (data.state !== undefined && data.state !== oldValues.state) updateData.state = data.state || false;\nif (data.zip !== undefined && data.zip !== oldValues.zip) updateData.zip = data.zip || false;\nif (data.country !== undefined && data.country !== oldValues.country) updateData.country = data.country || false;\n\n// Relaciones\nif (data.parent_id !== undefined && data.parent_id !== oldValues.parent_id) updateData.parentId = data.parent_id || false;\nif (data.parent_name !== undefined && data.parent_name !== oldValues.parent_name) updateData.parentName = data.parent_name || false;\n\n// Arrays (comparar por JSON.stringify)\nif (JSON.stringify(data.banks || []) !== JSON.stringify(oldValues.banks || [])) updateData.banks = data.banks || [];\nif (JSON.stringify(data.categories || []) !== JSON.stringify(oldValues.categories || [])) updateData.categories = data.categories || [];\n\nreturn {\n  json: {\n    ...$input.item.json,\n    ...updateData,\n    partnerId: data.id || oldValues.id\n  }\n};"
+      },
+      "id": "46016792-24da-4113-8e29-93852deb8f74",
+      "name": "Preparar Datos - Actualizar",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "contactId": "={{$json.partnerId}}",
+        "updateFields": {
+          "email": "={{ $json.email }}",
+          "mobile": "={{ $json.mobile }}",
+          "name": "={{ $json.name }}",
+          "phone": "={{ $json.phone }}",
+          "vat": "={{ $json.vat }}"
+        }
+      },
+      "id": "85f55e46-5611-42f0-93b6-b232e42d7893",
+      "name": "Odoo - Actualizar Contacto",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        224,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Preparar datos para eliminar contacto\nconst data = $input.item.json.processedData || {};\n\nreturn {\n  json: {\n    ...$input.item.json,\n    partnerId: data.id || $input.item.json.partnerId\n  }\n};"
+      },
+      "id": "77a160f2-2c1f-4f85-b3fb-c6265760ae8d",
+      "name": "Preparar Datos - Eliminar",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "contactId": "={{$json.partnerId}}"
+      },
+      "id": "707a7c84-4087-4f6a-bdb3-d687172d08f1",
+      "name": "Odoo - Eliminar Contacto",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        224,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Manejar acci?n desconocida o inv?lida\nconst originalAction = $input.item.json.originalAction || 'unknown';\nconst partnerId = $input.item.json.partnerId || null;\n\nreturn {\n  json: {\n    ...$input.item.json,\n    success: false,\n    error: `Acci?n desconocida o inv?lida: ${originalAction}`,\n    message: `No se pudo procesar la acci?n '${originalAction}'. Acciones v?lidas: create, write, unlink`,\n    partnerId\n  }\n};"
+      },
+      "id": "0cb77660-d155-4474-a951-b524276320b9",
+      "name": "Manejar Fallback",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        224,
+        752
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Procesar resultado exitoso\nconst detectedAction = $input.item.json.detectedAction || 'unknown';\nconst odooId = $input.item.json.id || $input.item.json.partnerId || null;\nconst error = $input.item.json.error || null;\n\nlet success = !error;\nlet message = '';\n\nif (error) {\n  success = false;\n  message = `Error al procesar contacto: ${error.message || error}`;\n} else if (detectedAction === 'create') {\n  success = true;\n  message = `Contacto creado exitosamente en Odoo (ID: ${odooId})`;\n} else if (detectedAction === 'write') {\n  success = true;\n  message = `Contacto actualizado exitosamente en Odoo (ID: ${odooId})`;\n} else if (detectedAction === 'unlink') {\n  success = true;\n  message = `Contacto eliminado exitosamente de Odoo (ID: ${odooId})`;\n} else {\n  success = false;\n  message = 'Acci?n desconocida';\n}\n\nreturn {\n  json: {\n    ...$input.item.json,\n    success,\n    message,\n    error: error ? (error.message || error) : null,\n    odooId,\n    partnerId: odooId\n  }\n};"
+      },
+      "id": "f17ca72c-437b-40a9-bc12-c32cd711688f",
+      "name": "Procesar Resultado",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        464,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": $json.success !== false, \"message\": $json.message || \"Contacto procesado correctamente\", \"action\": $json.originalAction || $json.detectedAction, \"partner_id\": $json.partnerId || $json.odooId, \"error\": $json.error || null } }}",
+        "options": {}
+      },
+      "id": "47ce162b-6cad-4fb5-9424-8d8fe713ee25",
+      "name": "Responder Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        704,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.detectedAction }}",
+                    "rightValue": "create",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "34fe4fd4-51b2-47eb-8aea-d5db3e4a6af8"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "f245eb96-cc20-4580-a387-058eccfb5228",
+                    "leftValue": "={{ $json.detectedAction }}",
+                    "rightValue": "write",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "34da03a7-7815-46c1-92b0-3eedabcaef2d",
+                    "leftValue": "={{ $json.detectedAction }}",
+                    "rightValue": "unlink",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -560,
+        224
+      ],
+      "id": "4c49f8d7-f9d9-4b5b-98ac-c8f7800d7480",
+      "name": "Switch"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-18T07:52:56.095Z",
+      "createdAt": "2026-02-18T07:52:56.095Z",
+      "role": "workflow:owner",
+      "workflowId": "MmwSGL3UunEyaXnb",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-02-18T07:52:56.095Z",
+  "versionId": "e7958a9e-4c8f-422a-94bb-a3da582c4950"
+}
