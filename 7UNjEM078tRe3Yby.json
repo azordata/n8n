@@ -1,0 +1,565 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Preguntar Necesidades",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preguntar Necesidades": {
+      "main": [
+        [
+          {
+            "node": "Obtener Módulos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Módulos": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Procesar y Preparar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar y Preparar": {
+      "main": [
+        [
+          {
+            "node": "Confirmar Configuración",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirmar Configuración": {
+      "main": [
+        [
+          {
+            "node": "Obtener SHA Main",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener SHA Main": {
+      "main": [
+        [
+          {
+            "node": "Preparar Rama",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Rama": {
+      "main": [
+        [
+          {
+            "node": "Debug Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Debug Datos": {
+      "main": [
+        [
+          {
+            "node": "Crear Rama HTTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear Rama HTTP": {
+      "main": [
+        [
+          {
+            "node": "Verificar Rama",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificar Rama": {
+      "main": [
+        [
+          {
+            "node": "Añadir Archivo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Añadir Archivo": {
+      "main": [
+        [
+          {
+            "node": "Procesar Resultado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar Resultado": {
+      "main": [
+        [
+          {
+            "node": "Notificar Resultado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configurar Duplicación": {
+      "main": [
+        [
+          {
+            "node": "Obtener SHA Origen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener SHA Origen": {
+      "main": [
+        [
+          {
+            "node": "Duplicar Rama",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Duplicar Rama": {
+      "main": [
+        [
+          {
+            "node": "Añadir Archivo Control",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Añadir Archivo Control": {
+      "main": [
+        [
+          {
+            "node": "Notificar Duplicación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-18T08:02:08.567Z",
+  "id": "7UNjEM078tRe3Yby",
+  "isArchived": false,
+  "meta": null,
+  "name": "Workflow github jenkins Funcionando",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "name": "Telegram Trigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ec09774f-cc68-423f-8d4d-99380755beca",
+      "webhookId": "5c3e2f23-d7ef-45cd-b3db-62c1d93f37fe"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "¡Hola! ¿Qué necesitas en tu demo de Odoo? Describe los módulos o procesos que te interesan.",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "name": "Preguntar Necesidades",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "1123f343-c9c5-4c41-bdf1-4ec951707029",
+      "webhookId": "78f92ffa-ff91-493a-a21c-fc9e98f4ca6d"
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/mchecagoshawk/testn8n/main/modulos.txt",
+        "responseFormat": "string",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "Obtener Módulos",
+      "typeVersion": 1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "0fa1798e-04c6-4ded-ab05-a0958d97fc2b"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Eres un experto en Odoo. El usuario ha pedido una demo con estas necesidades:\n\n---\n{{ $node[\"Telegram Trigger\"].json.message.text }}\n---\n\nEstos son los módulos disponibles (nombre: descripción):\n\n---\n{{ $json.data }}\n---\n\nAnaliza las necesidades del usuario y selecciona solo los módulos que sean relevantes para su caso de uso. Devuelve únicamente la lista de nombres de módulos (uno por línea, sin descripciones ni explicaciones), y solo módulos que estén en la lista proporcionada.\n\nEjemplo de respuesta:\nproject\ncrm\naccount",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        608,
+        0
+      ],
+      "id": "cbb3961f-8e7b-47ce-9e77-c57014ebaba8",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-05-20",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        608,
+        208
+      ],
+      "id": "5d003349-d8f7-46ae-b7bb-888f0dc9f73c",
+      "name": "Google Gemini Chat Model"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Procesar respuesta de IA y preparar datos\nconst texto = $json.output || '';\nconst modulos = texto.split(/\\n|,/).map(m => m.trim()).filter(Boolean);\nconst chatId = $node['Telegram Trigger'].json.message.chat.id;\nconst necesidades = $node['Telegram Trigger'].json.message.text;\nconst timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);\nconst branchName = `demo-${chatId}-${timestamp}`;\n\nreturn {\n  modulos: modulos.join('\\n'),\n  chat_id: chatId,\n  necesidades: necesidades,\n  branchName: branchName,\n  contenido: `# Demo Odoo - Chat ID: ${chatId}\\n\\n## Necesidades del Usuario\\n${necesidades}\\n\\n## Módulos a Instalar\\n${modulos.join('\\n')}\\n\\n## Fecha de Creación\\n${new Date().toISOString()}\\n\\n## Estado\\nPendiente de instalación\\n`\n};"
+      },
+      "type": "n8n-nodes-base.function",
+      "name": "Procesar y Preparar",
+      "typeVersion": 1,
+      "position": [
+        816,
+        0
+      ],
+      "id": "81270b3a-6225-4a4a-856f-8e7089e2846c"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chat_id }}",
+        "text": "=✅ **Demo configurada**\\n\\nEstos son los módulos que se instalarán:\\n\\n{{ $json.modulos }}\\n\\n🚀 Creando rama: `{{ $json.branchName }}`",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "name": "Confirmar Configuración",
+      "typeVersion": 1.2,
+      "position": [
+        1008,
+        0
+      ],
+      "id": "eb9cda9f-980b-486e-8ba4-f67cf4d142e1",
+      "webhookId": "f7db92b3-23be-46f6-8901-53c943c72a35"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.github.com/repos/mchecagoshawk/testn8n/git/refs/heads/main",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "Obtener SHA Main",
+      "typeVersion": 4.2,
+      "position": [
+        1216,
+        0
+      ],
+      "id": "83b99d17-dc10-41f6-83de-dad92f74df1b"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Obtener SHA y preparar creación de rama\nconst datos = $('Procesar y Preparar').item.json;\nconst shaResponse = $json;\n\nconsole.log('📋 Datos recibidos:', JSON.stringify(datos, null, 2));\nconsole.log('🔑 SHA Response:', JSON.stringify(shaResponse, null, 2));\n\nlet mainSha = '';\nif (shaResponse && shaResponse.object && shaResponse.object.sha) {\n  mainSha = shaResponse.object.sha;\n  console.log('✅ SHA obtenido:', mainSha);\n} else {\n  console.log('❌ Error: No se pudo obtener SHA de main');\n  throw new Error('No se pudo obtener SHA de main');\n}\n\nconst payload = {\n  ref: `refs/heads/${datos.branchName}`,\n  sha: mainSha\n};\n\nconsole.log('📤 Payload para crear rama:', JSON.stringify(payload, null, 2));\nconsole.log('🎯 Branch name:', datos.branchName);\n\nreturn {\n  ...datos,\n  mainSha: mainSha,\n  payload: payload\n};"
+      },
+      "type": "n8n-nodes-base.function",
+      "name": "Preparar Rama",
+      "typeVersion": 1,
+      "position": [
+        1408,
+        0
+      ],
+      "id": "d5e4195e-6659-432e-a2d7-bff42e78874e"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Debug: Verificar qué datos llegan antes de crear rama\nconst datos = $json;\n\nconsole.log('🔍 DEBUG - Datos recibidos en nodo intermedio:');\nconsole.log('📋 Datos completos:', JSON.stringify(datos, null, 2));\nconsole.log('🎯 branchName:', datos.branchName);\nconsole.log('🔑 mainSha:', datos.mainSha);\nconsole.log('📄 contenido:', datos.contenido ? 'Presente' : 'Ausente');\nconsole.log('💬 chat_id:', datos.chat_id);\n\n// Verificar si tenemos los datos necesarios\nif (!datos.branchName) {\n  throw new Error('❌ branchName no está disponible');\n}\n\nif (!datos.mainSha) {\n  throw new Error('❌ mainSha no está disponible');\n}\n\n// Construir el payload manualmente y verificarlo\nconst payload = {\n  ref: `refs/heads/${datos.branchName}`,\n  sha: datos.mainSha\n};\n\nconsole.log('📤 Payload construido:', JSON.stringify(payload, null, 2));\n\n// Añadir el payload a los datos para el siguiente nodo\nreturn {\n  ...datos,\n  payload_manual: payload,\n  ref: `refs/heads/${datos.branchName}`,\n  sha: datos.mainSha\n};"
+      },
+      "type": "n8n-nodes-base.function",
+      "name": "Debug Datos",
+      "typeVersion": 1,
+      "position": [
+        1616,
+        0
+      ],
+      "id": "f8355083-f4da-457c-96aa-5e6d685480ff"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.github.com/repos/mchecagoshawk/testn8n/git/refs",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {\n  \"ref\": $json.ref,\n  \"sha\": $json.sha\n} }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "Crear Rama HTTP",
+      "typeVersion": 4.2,
+      "position": [
+        1808,
+        0
+      ],
+      "id": "49eb2f1b-e64e-4937-aad9-2bf059ffcbfa"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Combinar datos de Preparar Rama con resultado de Crear Rama GitHub\nconst datosPreparar = $('Preparar Rama').item.json;\nconst resultadoGitHub = $json;\n\nconsole.log('🔍 Datos de Preparar Rama:', JSON.stringify(datosPreparar, null, 2));\nconsole.log('🔍 Resultado GitHub:', JSON.stringify(resultadoGitHub, null, 2));\n\n// Verificar si la rama se creó exitosamente\nlet ramaCreada = false;\nif (resultadoGitHub && (resultadoGitHub.ref || resultadoGitHub.name)) {\n  ramaCreada = true;\n  console.log('✅ Rama creada exitosamente en GitHub');\n} else {\n  console.log('❌ No se pudo confirmar la creación de la rama');\n}\n\n// Combinar todos los datos necesarios\nreturn {\n  ...datosPreparar,\n  ramaCreada: ramaCreada,\n  githubResponse: resultadoGitHub\n};"
+      },
+      "type": "n8n-nodes-base.function",
+      "name": "Verificar Rama",
+      "typeVersion": 1,
+      "position": [
+        2016,
+        0
+      ],
+      "id": "fdec7236-1dba-4f6e-8381-6184ab700046"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "owner": "mchecagoshawk",
+        "repository": "testn8n",
+        "filePath": "={{ `demo-${$('Verificar Rama').item.json.chat_id}-modulos.txt` }}",
+        "fileContent": "={{ $('Verificar Rama').item.json.contenido }}",
+        "commitMessage": "=Crear demo para chat {{ $('Verificar Rama').item.json.chat_id }}",
+        "additionalParameters": {
+          "branch": {
+            "branch": "={{ $('Verificar Rama').item.json.branchName }}"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.github",
+      "name": "Añadir Archivo",
+      "typeVersion": 1,
+      "position": [
+        2208,
+        0
+      ],
+      "id": "b12aa8ba-86b6-4581-853f-bbee248fc21b",
+      "webhookId": "c4e7bc07-1200-4660-b453-9f0030945588"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Procesar resultado final\nconst datos = $('Verificar Rama').item.json;\nconst fileResponse = $json;\n\nlet exito = false;\nlet mensaje = '';\n\nif (fileResponse && fileResponse.content) {\n  exito = true;\n  mensaje = `🎉 **¡Demo creada exitosamente!**\\n\\n` +\n    `📋 **Rama:** \\`${datos.branchName}\\`\\n` +\n    `📁 **Archivo:** \\`demo-${datos.chat_id}-modulos.txt\\`\\n` +\n    `🔗 **URL:** https://github.com/mchecagoshawk/testn8n/tree/${datos.branchName}\\n\\n` +\n    `✅ **Módulos configurados:**\\n${datos.modulos}\\n\\n` +\n    `🚀 **Tu demo está lista para usar!**`;\n} else {\n  mensaje = `❌ **Error al crear demo**\\n\\n` +\n    `Hubo un problema al crear la rama o archivo.\\n` +\n    `Por favor, inténtalo de nuevo.`;\n}\n\nreturn {\n  ...datos,\n  exito: exito,\n  mensaje: mensaje\n};"
+      },
+      "type": "n8n-nodes-base.function",
+      "name": "Procesar Resultado",
+      "typeVersion": 1,
+      "position": [
+        2416,
+        0
+      ],
+      "id": "40e7cc1e-f692-46cb-b9c2-a08e427eda05"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chat_id }}",
+        "text": "={{ $json.mensaje }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "name": "Notificar Resultado",
+      "typeVersion": 1.2,
+      "position": [
+        2608,
+        0
+      ],
+      "id": "4ed3f617-5581-4ba7-9be6-8170edf0439c",
+      "webhookId": "629f656b-13ee-44e5-84ed-14902c0095f8"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Configurar duplicación de rama (OPCIONAL)\n// Cambiar ramaOrigen por la rama que quieres duplicar\nconst ramaOrigen = 'develop';\nconst ramaNueva = `duplicada-${Date.now()}`;\nconst owner = 'mchecagoshawk';\nconst repository = 'testn8n';\n\nreturn {\n  ramaOrigen: ramaOrigen,\n  ramaNueva: ramaNueva,\n  owner: owner,\n  repository: repository\n};"
+      },
+      "type": "n8n-nodes-base.function",
+      "name": "Configurar Duplicación",
+      "typeVersion": 1,
+      "position": [
+        1008,
+        208
+      ],
+      "id": "67b5d281-a692-4cf2-9779-fe114f14eb52"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.github.com/repos/{{ $json.owner }}/{{ $json.repository }}/git/refs/heads/{{ $json.ramaOrigen }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "Obtener SHA Origen",
+      "typeVersion": 4.2,
+      "position": [
+        1216,
+        208
+      ],
+      "id": "7e5a62c6-6618-412c-82d0-05b2d8575a5a"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.github.com/repos/{{ $('Configurar Duplicación').item.json.owner }}/{{ $('Configurar Duplicación').item.json.repository }}/git/refs",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "Duplicar Rama",
+      "typeVersion": 4.2,
+      "position": [
+        1408,
+        208
+      ],
+      "id": "329bcb05-cac8-4a23-a5f0-aac1cc47b3f7"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "owner": "={{ $('Configurar Duplicación').item.json.owner }}",
+        "repository": "={{ $('Configurar Duplicación').item.json.repository }}",
+        "filePath": "=modificaciones/cambios-{{ $('Configurar Duplicación').item.json.ramaNueva }}.txt",
+        "fileContent": "=# Rama Duplicada\\n\\n**Origen:** {{ $('Configurar Duplicación').item.json.ramaOrigen }}\\n**Nueva:** {{ $('Configurar Duplicación').item.json.ramaNueva }}\\n**Fecha:** {{ new Date().toISOString() }}\\n\\n## Estado\\n✅ Rama duplicada exitosamente\\n🔄 Lista para modificaciones",
+        "commitMessage": "=Añadir archivo de control a rama duplicada",
+        "additionalParameters": {
+          "branch": {
+            "branch": "={{ $('Configurar Duplicación').item.json.ramaNueva }}"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.github",
+      "name": "Añadir Archivo Control",
+      "typeVersion": 1,
+      "position": [
+        1616,
+        208
+      ],
+      "id": "a4e8b0e7-e7b2-472c-b2d3-a3b98e253838",
+      "webhookId": "0543b6bf-9011-40e8-b9ce-828bbc4ff875"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $node['Telegram Trigger'].json.message.chat.id }}",
+        "text": "=🔄 **Rama duplicada**\\n\\n✅ **Origen:** \\`{{ $('Configurar Duplicación').item.json.ramaOrigen }}\\`\\n🆕 **Nueva:** \\`{{ $('Configurar Duplicación').item.json.ramaNueva }}\\`\\n🔗 **URL:** https://github.com/{{ $('Configurar Duplicación').item.json.owner }}/{{ $('Configurar Duplicación').item.json.repository }}/tree/{{ $('Configurar Duplicación').item.json.ramaNueva }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "name": "Notificar Duplicación",
+      "typeVersion": 1.2,
+      "position": [
+        1808,
+        208
+      ],
+      "id": "b16014da-8b94-4a08-8e1d-1759a886f558",
+      "webhookId": "f8dc951e-70f3-4c8b-b183-b6d111cf8668"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-18T08:02:08.567Z",
+      "createdAt": "2026-02-18T08:02:08.567Z",
+      "role": "workflow:owner",
+      "workflowId": "7UNjEM078tRe3Yby",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-02-18T08:02:08.567Z",
+  "versionId": "2bbe0247-ae80-45e0-b8a7-0b706b829ea3"
+}
