@@ -1,0 +1,255 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-02T16:01:34.200Z",
+    "createdAt": "2026-03-02T16:01:32.071Z",
+    "versionId": "57c6439d-5f82-4162-b981-8e7f4a36666b",
+    "workflowId": "uc64EmYpZwRV4oKY",
+    "nodes": [
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.errorTrigger",
+        "typeVersion": 1,
+        "position": [
+          -288,
+          -128
+        ],
+        "id": "19257550-530b-44dd-8e59-526c56b6f723",
+        "name": "Error Trigger"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT chat_id, user_id, user_name FROM telegram_users WHERE is_admin = true AND chat_id IS NOT NULL",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.4,
+        "position": [
+          -48,
+          -128
+        ],
+        "id": "f54c30c5-0764-4998-81d9-829c6773c81e",
+        "name": "Obtener Admins",
+        "credentials": {
+          "postgres": {
+            "id": "T3QBOxYypSNBQAxx",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Construir un mensaje por cada admin con la información del error\n// Datos del error desde el Error Trigger\n// En ejecución real (como error workflow), los datos del error están en el nodo \"Error Trigger\".\n// En ejecuciones manuales, puede no existir, así que usamos un fallback seguro.\n\nlet errorData;\n\ntry {\n  // n8n 1.x: acceder al nodo de origen de error\n  errorData = $item(0).$node[\"Error Trigger\"]?.json;\n} catch (e) {\n  errorData = undefined;\n}\n\nif (!errorData || Object.keys(errorData).length === 0) {\n  // Fallback: usar el propio $json (útil para pruebas manuales)\n  errorData = $json || {};\n}\n\n// Usar accesos defensivos para evitar errores si alguna propiedad no existe\nconst workflowName = errorData.workflow?.name || errorData.workflowName || errorData.workflow_id || 'Workflow desconocido';\nconst workflowId = errorData.workflow?.id || errorData.workflowId || errorData.workflow_id || 'N/A';\nconst errorMessage = errorData.error?.message || errorData.message || errorData.error || 'Error sin mensaje';\nconst timestamp = errorData.timestamp || new Date().toISOString();\nconst executionId = errorData.execution?.id || errorData.executionId || errorData.execution_id || 'N/A';\n\nconsole.log('⚠️ Notificador de errores - Datos del error:');\nconsole.log({ workflowName, workflowId, errorMessage, timestamp, executionId, rawError: errorData });\n\n// Por cada admin (items actuales), generamos un nuevo item con los datos del mensaje\nreturn items.map(item => {\n  const admin = item.json;\n  return {\n    json: {\n      chat_id: admin.chat_id,\n      user_id: admin.user_id,\n      user_name: admin.user_name,\n      workflow_name: workflowName,\n      workflow_id: workflowId,\n      error_message: errorMessage,\n      timestamp,\n      execution_id: executionId\n    }\n  };\n});"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          192,
+          -128
+        ],
+        "id": "2ee38c5f-00fb-487b-9ba1-bd21a1cdccee",
+        "name": "Preparar Mensajes Error"
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $json.chat_id }}",
+          "text": "=⚠️ *Error en workflow de n8n*\n\n👤 *Admin*: {{ $json.user_name || $json.user_id }}\n\n📛 *Workflow*: {{ $json.workflow_name }} (ID: {{ $json.workflow_id }})\n🕒 *Fecha*: {{ $json.timestamp }}\n\n💥 *Error*:\n{{ $json.error_message }}\n\n🔍 *Execution ID*: {{ $json.execution_id }}\n\nPor favor, revisa el workflow en n8n / Odoo lo antes posible.",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "Markdown"
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          432,
+          -128
+        ],
+        "id": "a6f0e59b-b0b6-4b1e-8f65-0d0a44e2d1a5",
+        "name": "Notificar Admins Telegram",
+        "webhookId": "error-notifier-webhook-0001",
+        "credentials": {
+          "telegramApi": {
+            "id": "GCy2TmVR3Ynwvy19",
+            "name": "AzorErrorBot"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Error Trigger": {
+        "main": [
+          [
+            {
+              "node": "Obtener Admins",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Obtener Admins": {
+        "main": [
+          [
+            {
+              "node": "Preparar Mensajes Error",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Preparar Mensajes Error": {
+        "main": [
+          [
+            {
+              "node": "Notificar Admins Telegram",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jorge Huescar",
+    "name": "Version 57c6439d",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "57c6439d-5f82-4162-b981-8e7f4a36666b",
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Obtener Admins",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Admins": {
+      "main": [
+        [
+          {
+            "node": "Preparar Mensajes Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Mensajes Error": {
+      "main": [
+        [
+          {
+            "node": "Notificar Admins Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-02T15:31:09.332Z",
+  "id": "uc64EmYpZwRV4oKY",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Error Sender",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        -128
+      ],
+      "id": "19257550-530b-44dd-8e59-526c56b6f723",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT chat_id, user_id, user_name FROM telegram_users WHERE is_admin = true AND chat_id IS NOT NULL",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        -48,
+        -128
+      ],
+      "id": "f54c30c5-0764-4998-81d9-829c6773c81e",
+      "name": "Obtener Admins",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Construir un mensaje por cada admin con la información del error\n// Datos del error desde el Error Trigger\n// En ejecución real (como error workflow), los datos del error están en el nodo \"Error Trigger\".\n// En ejecuciones manuales, puede no existir, así que usamos un fallback seguro.\n\nlet errorData;\n\ntry {\n  // n8n 1.x: acceder al nodo de origen de error\n  errorData = $item(0).$node[\"Error Trigger\"]?.json;\n} catch (e) {\n  errorData = undefined;\n}\n\nif (!errorData || Object.keys(errorData).length === 0) {\n  // Fallback: usar el propio $json (útil para pruebas manuales)\n  errorData = $json || {};\n}\n\n// Usar accesos defensivos para evitar errores si alguna propiedad no existe\nconst workflowName = errorData.workflow?.name || errorData.workflowName || errorData.workflow_id || 'Workflow desconocido';\nconst workflowId = errorData.workflow?.id || errorData.workflowId || errorData.workflow_id || 'N/A';\nconst errorMessage = errorData.error?.message || errorData.message || errorData.error || 'Error sin mensaje';\nconst timestamp = errorData.timestamp || new Date().toISOString();\nconst executionId = errorData.execution?.id || errorData.executionId || errorData.execution_id || 'N/A';\n\nconsole.log('⚠️ Notificador de errores - Datos del error:');\nconsole.log({ workflowName, workflowId, errorMessage, timestamp, executionId, rawError: errorData });\n\n// Por cada admin (items actuales), generamos un nuevo item con los datos del mensaje\nreturn items.map(item => {\n  const admin = item.json;\n  return {\n    json: {\n      chat_id: admin.chat_id,\n      user_id: admin.user_id,\n      user_name: admin.user_name,\n      workflow_name: workflowName,\n      workflow_id: workflowId,\n      error_message: errorMessage,\n      timestamp,\n      execution_id: executionId\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        192,
+        -128
+      ],
+      "id": "2ee38c5f-00fb-487b-9ba1-bd21a1cdccee",
+      "name": "Preparar Mensajes Error"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chat_id }}",
+        "text": "=⚠️ *Error en workflow de n8n*\n\n👤 *Admin*: {{ $json.user_name || $json.user_id }}\n\n📛 *Workflow*: {{ $json.workflow_name }} (ID: {{ $json.workflow_id }})\n🕒 *Fecha*: {{ $json.timestamp }}\n\n💥 *Error*:\n{{ $json.error_message }}\n\n🔍 *Execution ID*: {{ $json.execution_id }}\n\nPor favor, revisa el workflow en n8n / Odoo lo antes posible.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        432,
+        -128
+      ],
+      "id": "a6f0e59b-b0b6-4b1e-8f65-0d0a44e2d1a5",
+      "name": "Notificar Admins Telegram",
+      "webhookId": "error-notifier-webhook-0001",
+      "credentials": {
+        "telegramApi": {
+          "id": "GCy2TmVR3Ynwvy19",
+          "name": "AzorErrorBot"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-02T15:31:09.332Z",
+      "createdAt": "2026-03-02T15:31:09.332Z",
+      "role": "workflow:owner",
+      "workflowId": "uc64EmYpZwRV4oKY",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-02T16:01:32.070Z",
+  "versionId": "57c6439d-5f82-4162-b981-8e7f4a36666b"
+}
