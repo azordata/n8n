@@ -1,0 +1,774 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Outlook ▸ Correo Entrada": {
+      "main": [
+        [
+          {
+            "node": "Parsear Solicitud Recogida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsear Solicitud Recogida": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Datos Completos?": {
+      "main": [
+        [
+          {
+            "node": "Postgres ▸ Buscar Pedido Recogida",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Outlook ▸ Responder Faltan Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Outlook ▸ Responder Faltan Datos": {
+      "main": [
+        [
+          {
+            "node": "Postgres ▸ Log Faltan Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Es Valido? (Cliente no existe)": {
+      "main": [
+        [
+          {
+            "node": "¿Datos Completos?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Outlook ▸ Responder Cliente No Registrado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Outlook ▸ Responder Cliente No Registrado": {
+      "main": [
+        [
+          {
+            "node": "Postgres ▸ Log Cliente No Registrado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres ▸ Buscar Pedido Recogida": {
+      "main": [
+        [
+          {
+            "node": "¿Pedido Encontrado?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Pedido Encontrado?": {
+      "main": [
+        [
+          {
+            "node": "Outlook ▸ Responder Estado Pedido",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Outlook ▸ Responder Pedido No Encontrado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Outlook ▸ Responder Pedido No Encontrado": {
+      "main": [
+        [
+          {
+            "node": "Postgres ▸ Log No Encontrado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Outlook ▸ Responder Estado Pedido": {
+      "main": [
+        [
+          {
+            "node": "Postgres ▸ Log Estado Pedido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar Respuesta AI": {
+      "main": [
+        [
+          {
+            "node": "Postgres ▸ Validar Cliente Existe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres ▸ Validar Cliente Existe": {
+      "main": [
+        [
+          {
+            "node": "Fusionar Con Validación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Procesar Respuesta AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fusionar Con Validación": {
+      "main": [
+        [
+          {
+            "node": "¿Es Valido? (Cliente no existe)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-09T13:05:48.520Z",
+  "id": "FxWmPJLDpPXZnHEx",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Outlook Pedido Recogida",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {
+          "custom": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlookTrigger",
+      "typeVersion": 1,
+      "position": [
+        -10288,
+        1888
+      ],
+      "id": "08206c1d-b3b9-4618-b49a-a6307f75f8fe",
+      "name": "Outlook ▸ Correo Entrada",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "HfFKkQCvWehdiTrF",
+          "name": "Microsoft Outlook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// PARSEAR SOLICITUD DE RECOGIDA DESDE UN CORREO DE TEXTO LIBRE\n\n// 1) Obtener texto del correo (HTML o texto plano)\nlet raw = $json.text || $json.body || $json.bodyPreview || '';\n\n// Si viene en HTML, quitar etiquetas básicas\nraw = String(raw)\n  .replace(/<br\\s*\\/?>/gi, '\\n')\n  .replace(/<[^>]+>/g, ' ')\n  .replace(/&nbsp;/g, ' ')\n  .replace(/&amp;/g, '&')\n  .replace(/\\s+/g, ' ')\n  .trim();\n\nconst textoOriginal = raw;\nconst text = textoOriginal.toLowerCase();\n\nfunction extraer(regexes, parseFn = v => v) {\n  for (const r of regexes) {\n    const m = text.match(r);\n    if (m && m[1]) return parseFn(m[1].trim());\n  }\n  return null;\n}\n\nconst codigo_cliente = extraer([\n  /codigo\\s*cliente[:\\-]?\\s*([a-z0-9\\-]+)/i,\n  /c[óo]digo\\s*de\\s*cliente[:\\-]?\\s*([a-z0-9\\-]+)/i,\n  /cliente[:\\-]?\\s*([a-z0-9\\-]+)/i\n]);\n\nconst cp = extraer([\n  /c\\.?p\\.?\\s*[:\\-]?\\s*(\\d{4,5})/i,\n  /c[óo]digo\\s*postal[:\\-]?\\s*(\\d{4,5})/i\n]);\n\nconst telefono = extraer([\n  /tel[eé]fono[:\\-]?\\s*([+0-9\\s\\-]{7,20})/i,\n  /tlf[:\\-]?\\s*([+0-9\\s\\-]{7,20})/i,\n  /m[óo]vil[:\\-]?\\s*([+0-9\\s\\-]{7,20})/i\n], v => v.replace(/\\s+/g, ''));\n\nconst palets = extraer([\n  /(\\d+)\\s*(palets?|pallets?|bultos?)/i,\n  /palets?[:\\-]?\\s*(\\d+)/i,\n  /bultos?[:\\-]?\\s*(\\d+)/i\n], v => parseInt(v, 10));\n\nconst peso = extraer([\n  /peso[:\\-]?\\s*([\\d.,]+)\\s*(kg|kgs|kil[oó]s)?/i,\n  /([\\d.,]+)\\s*(kg|kgs|kil[oó]s)/i\n], v => parseFloat(v.replace(',', '.')));\n\nconst direccion_recogida = extraer([\n  /direcci[óo]n\\s*de\\s*recogida[:\\-]?\\s*(.+)/i,\n  /direcci[óo]n\\s*recogida[:\\-]?\\s*(.+)/i,\n  /recoger\\s+en[:\\-]?\\s*(.+)/i\n]);\n\nconst campos_faltantes = [];\nif (!codigo_cliente) campos_faltantes.push('código de cliente');\nif (!direccion_recogida) campos_faltantes.push('dirección de recogida');\nif (!cp) campos_faltantes.push('código postal');\nif (!palets) campos_faltantes.push('número de palets/bultos');\nif (!peso) campos_faltantes.push('peso');\nif (!telefono) campos_faltantes.push('teléfono');\n\nreturn {\n  codigo_cliente,\n  direccion_recogida,\n  cp,\n  palets,\n  peso,\n  telefono,\n  campos_faltantes,\n  es_valido: campos_faltantes.length === 0,\n  raw_text: textoOriginal,\n  from: $json.from,\n  subject: $json.subject\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -10048,
+        1888
+      ],
+      "id": "b13e2c89-665b-4281-b37d-416d1752a1a9",
+      "name": "Parsear Solicitud Recogida"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "datos-completos-cond-001",
+              "leftValue": "={{ $json.es_valido && $json.cliente_existe }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -8640,
+        1776
+      ],
+      "id": "70872f11-7c0b-4f10-a1bc-30ba6cf49046",
+      "name": "¿Datos Completos?"
+    },
+    {
+      "parameters": {
+        "subject": "Faltan datos para tu solicitud de recogida",
+        "bodyContent": "=Estimado/a,\n\nHemos recibido su solicitud de recogida, pero para poder procesarla necesitamos que nos facilite la siguiente información que falta en su mensaje:\n\n{{ '• ' + ($json.campos_faltantes || []).join('\\n• ') }}\n\nPor favor, envíe un nuevo correo incluyendo todos los datos en el siguiente formato:\n\n- Código de cliente: [su código]\n- Dirección de recogida: [dirección completa]\n- Código postal: [5 dígitos]\n- Número de palets/bultos: [cantidad]\n- Peso total: [kg]\n- Teléfono de contacto: [con prefijo si aplica]\n\nQuedamos a la espera de su respuesta para proceder con la gestión.\n\nAtentamente,\nEquipo de Logística",
+        "toRecipients": "={{ $item(0).$node[\"Parsear Solicitud Recogida\"].json.from?.email || $item(0).$node[\"Parsear Solicitud Recogida\"].json.from || '' }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 1,
+      "position": [
+        -8368,
+        1920
+      ],
+      "id": "e94e0e46-04b1-4820-ad45-715194057b9d",
+      "name": "Outlook ▸ Responder Faltan Datos",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "HfFKkQCvWehdiTrF",
+          "name": "Microsoft Outlook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "es-valido-cond-001",
+              "leftValue": "={{ $json.es_valido }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -8992,
+        1888
+      ],
+      "id": "9153e08e-44fa-4cf6-9587-5c85dccacb21",
+      "name": "¿Es Valido? (Cliente no existe)"
+    },
+    {
+      "parameters": {
+        "subject": "Cliente no registrado",
+        "bodyContent": "=Estimado/a,\n\nHemos recibido su solicitud de recogida con el código de cliente {{ $json.codigo_cliente || 'indicado' }}.\n\nNo hemos encontrado este código en nuestro sistema. Por favor, verifique que el código de cliente sea correcto o póngase en contacto con nosotros para darse de alta.\n\nAtentamente,\nEquipo de Logística",
+        "toRecipients": "={{ $('Parsear Solicitud Recogida').first().json.from?.email || $('Parsear Solicitud Recogida').first().json.from || '' }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 1,
+      "position": [
+        -8816,
+        2112
+      ],
+      "id": "4c13262f-7134-4164-918d-736ca6ab66c4",
+      "name": "Outlook ▸ Responder Cliente No Registrado",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "HfFKkQCvWehdiTrF",
+          "name": "Microsoft Outlook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO logs_recogida (tipo_respuesta, email_destinatario, subject, codigo_cliente, metadata)\nVALUES ($1, $2, $3, $4, $5::jsonb);",
+        "options": {
+          "queryReplacement": "={{ ['cliente_no_registrado', ($('Parsear Solicitud Recogida').first().json.from?.email || $('Parsear Solicitud Recogida').first().json.from || '').toString(), 'Cliente no registrado', $('Fusionar Con Validación').first().json.codigo_cliente || null, JSON.stringify({ codigo_cliente: $('Fusionar Con Validación').first().json.codigo_cliente })] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        -8672,
+        2112
+      ],
+      "id": "70f99c92-94d3-45f1-94ab-cef5bb1dd9a7",
+      "name": "Postgres ▸ Log Cliente No Registrado",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO logs_recogida (tipo_respuesta, email_destinatario, subject, codigo_cliente, metadata)\nVALUES ($1, $2, $3, $4, $5::jsonb);",
+        "options": {
+          "queryReplacement": "={{ ['faltan_datos', ($('Parsear Solicitud Recogida').first().json.from?.email || $('Parsear Solicitud Recogida').first().json.from || '').toString(), 'Faltan datos para tu solicitud de recogida', $('Procesar Respuesta AI').first().json.codigo_cliente || null, JSON.stringify({ campos_faltantes: $('Procesar Respuesta AI').first().json.campos_faltantes || [] })] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        -8176,
+        1920
+      ],
+      "id": "f6ce4c20-05c5-4b52-b799-ce11218d59b8",
+      "name": "Postgres ▸ Log Faltan Datos",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id, codigo_cliente, direccion_recogida, cp, palets, peso, telefono, estado\nFROM pedidos_recogida\nWHERE lower(codigo_cliente) = lower($1)\n  AND cp = $2\n  AND telefono = $3\nORDER BY fecha_creacion DESC\nLIMIT 1;",
+        "options": {
+          "queryReplacement": "={{ [$json.codigo_cliente, $json.cp, $json.telefono] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        -8384,
+        1648
+      ],
+      "id": "f3e002f5-6a75-4fb1-8ce0-f2ef90ffe185",
+      "name": "Postgres ▸ Buscar Pedido Recogida",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "pedido-encontrado-cond-001",
+              "leftValue": "={{ !!$json.estado || !!$json[0]?.estado }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -8192,
+        1648
+      ],
+      "id": "fef49a4e-6a89-4ae1-802c-121574d90738",
+      "name": "¿Pedido Encontrado?"
+    },
+    {
+      "parameters": {
+        "subject": "No se ha encontrado tu pedido de recogida",
+        "bodyContent": "=Estimado/a,\n\nHemos buscado en nuestro sistema el pedido de recogida con los siguientes datos:\n\n• Código de cliente: {{ $('Procesar Respuesta AI').first().json.codigo_cliente || 'N/A' }}\n• Código postal: {{ $('Procesar Respuesta AI').first().json.cp || 'N/A' }}\n• Teléfono: {{ $('Procesar Respuesta AI').first().json.telefono || 'N/A' }}\n\nNo hemos encontrado ningún pedido que coincida con esta información. Por favor, verifique que los datos sean correctos y que el pedido esté registrado en nuestro sistema.\n\nSi considera que hay un error o necesita ayuda, no dude en contactarnos.\n\nAtentamente,\nEquipo de Logística",
+        "toRecipients": "={{ $item(0).$node[\"Parsear Solicitud Recogida\"].json.from?.email || $('Parsear Solicitud Recogida').first().json.from?.email || $('Parsear Solicitud Recogida').first().json.from || '' }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 1,
+      "position": [
+        -7904,
+        1728
+      ],
+      "id": "7f0d53ed-ac11-42ce-aa66-32addb8c8483",
+      "name": "Outlook ▸ Responder Pedido No Encontrado",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "HfFKkQCvWehdiTrF",
+          "name": "Microsoft Outlook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO logs_recogida (tipo_respuesta, email_destinatario, subject, codigo_cliente, metadata)\nVALUES ($1, $2, $3, $4, $5::jsonb);",
+        "options": {
+          "queryReplacement": "={{ ['pedido_no_encontrado', ($('Parsear Solicitud Recogida').first().json.from?.email || $('Parsear Solicitud Recogida').first().json.from || '').toString(), 'No se ha encontrado tu pedido de recogida', $('Procesar Respuesta AI').first().json.codigo_cliente || null, JSON.stringify({ codigo_cliente: $('Procesar Respuesta AI').first().json.codigo_cliente, cp: $('Procesar Respuesta AI').first().json.cp, telefono: $('Procesar Respuesta AI').first().json.telefono })] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        -7664,
+        1728
+      ],
+      "id": "424685e5-4c6d-48c0-873a-264dc3943903",
+      "name": "Postgres ▸ Log No Encontrado",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "subject": "Estado de tu pedido de recogida",
+        "bodyContent": "=Estimado/a,\n\nLe informamos del estado actual de su pedido de recogida:\n\n━━━━━━━━━━━━━━━━━━━━━━━━\n📋 ESTADO: {{ $json.estado }}\n━━━━━━━━━━━━━━━━━━━━━━━━\n\nDetalles del pedido:\n• Código cliente: {{ $json.codigo_cliente }}\n• Dirección de recogida: {{ $json.direccion_recogida }}\n• Código postal: {{ $json.cp }}\n• Palets/bultos: {{ $json.palets }}\n• Peso: {{ $json.peso }} kg\n• Teléfono: {{ $json.telefono }}\n\nRecibirá una notificación cuando el pedido avance de estado.\n\nAtentamente,\nEquipo de Logística",
+        "toRecipients": "={{ $item(0).$node[\"Parsear Solicitud Recogida\"].json.from?.email || $('Parsear Solicitud Recogida').first().json.from?.email || $('Parsear Solicitud Recogida').first().json.from || '' }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 1,
+      "position": [
+        -7904,
+        1376
+      ],
+      "id": "144e7c97-b5c5-4939-8496-301c09613a51",
+      "name": "Outlook ▸ Responder Estado Pedido",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "HfFKkQCvWehdiTrF",
+          "name": "Microsoft Outlook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO logs_recogida (tipo_respuesta, email_destinatario, subject, codigo_cliente, metadata)\nVALUES ($1, $2, $3, $4, $5::jsonb);",
+        "options": {
+          "queryReplacement": "={{ ['estado_pedido', ($('Parsear Solicitud Recogida').first().json.from?.email || $('Parsear Solicitud Recogida').first().json.from || '').toString(), 'Estado de tu pedido de recogida', $('Postgres ▸ Buscar Pedido Recogida').first().json.codigo_cliente || null, JSON.stringify({ estado: $('Postgres ▸ Buscar Pedido Recogida').first().json.estado, direccion_recogida: $('Postgres ▸ Buscar Pedido Recogida').first().json.direccion_recogida, cp: $('Postgres ▸ Buscar Pedido Recogida').first().json.cp, palets: $('Postgres ▸ Buscar Pedido Recogida').first().json.palets, peso: $('Postgres ▸ Buscar Pedido Recogida').first().json.peso })] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        -7680,
+        1376
+      ],
+      "id": "513836a4-4af1-41e6-bf62-8a4d3be86800",
+      "name": "Postgres ▸ Log Estado Pedido",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// PROCESAR LA SALIDA DEL AI AGENT Y DEVOLVER JSON LIMPIO\n// El agente suele devolver un string con un bloque ```json ... ```.\n// Aquí extraemos ese bloque y hacemos JSON.parse para que el resto del flujo\n// pueda usar directamente las propiedades (es_valido, campos_faltantes, etc.).\n\nlet raw = $json.output || $json.text || $json.response || '';\nraw = String(raw).trim();\n\nlet jsonString = raw;\n\n// Intentar extraer bloque ```json ... ``` si existe\nconst match = raw.match(/```json\\s*([\\s\\S]*?)\\s*```/i);\nif (match && match[1]) {\n  jsonString = match[1];\n}\n\nlet parsed;\ntry {\n  parsed = JSON.parse(jsonString);\n} catch (e) {\n  // Fallback seguro: marcamos como no válido y devolvemos info de depuración\n  parsed = {\n    codigo_cliente: null,\n    direccion_recogida: null,\n    cp: null,\n    palets: null,\n    peso: null,\n    telefono: null,\n    campos_faltantes: [\n      'código de cliente',\n      'dirección de recogida',\n      'código postal',\n      'número de palets/bultos',\n      'peso',\n      'teléfono'\n    ],\n    es_valido: false,\n    error_parseo: e.message,\n    raw_output: raw\n  };\n}\n\nreturn parsed;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -9568,
+        1888
+      ],
+      "id": "2911049b-6500-4312-ba8c-0c6089a86c0a",
+      "name": "Procesar Respuesta AI"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT EXISTS (SELECT 1 FROM pedidos_recogida WHERE lower(codigo_cliente) = lower($1)) AS cliente_existe;",
+        "options": {
+          "queryReplacement": "={{ [$json.codigo_cliente || ''] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        -9376,
+        1888
+      ],
+      "id": "36fa550d-f429-4439-82df-dddcfe1816aa",
+      "name": "Postgres ▸ Validar Cliente Existe",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -9872,
+        2096
+      ],
+      "id": "c7b19a4e-8b57-43c1-b12e-37f135f60399",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Swwga5f6vKPJ1T0E",
+          "name": "gemini azor"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Recibimos correo\n"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -10336,
+        1824
+      ],
+      "typeVersion": 1,
+      "id": "94e1f3e8-d00d-4917-b000-ed1a17147bf1",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Agente IA",
+        "height": 416,
+        "width": 576,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -10048,
+        1824
+      ],
+      "typeVersion": 1,
+      "id": "6b88c401-dbcd-4372-8565-e09775e73a42",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Eres un asistente que analiza correos de solicitud de recogida y devuelve SIEMPRE un JSON con los campos necesarios.\n\nTienes que trabajar con este contexto:\n\n- TEXTO_ORIGINAL: {{ $json.raw_text || $json.text || '' }}\n- CAMPOS_PREVIOS (pueden venir vacíos o incompletos):\n  - codigo_cliente: {{ $json.codigo_cliente || '' }}\n  - direccion_recogida: {{ $json.direccion_recogida || '' }}\n  - cp: {{ $json.cp || '' }}\n  - palets: {{ $json.palets || '' }}\n  - peso: {{ $json.peso || '' }}\n  - telefono: {{ $json.telefono || '' }}\n\nTu trabajo es:\n1. Leer el TEXTO_ORIGINAL completo del correo.\n2. Intentar extraer estos datos aunque no vengan en formato fijo:\n   - codigo_cliente (ID, código o referencia de cliente)\n   - direccion_recogida (dirección donde hay que recoger mercancía)\n   - cp (código postal de la dirección de recogida)\n   - palets (número de palets o bultos a recoger)\n   - peso (peso total aproximado en kg)\n   - telefono (teléfono de contacto, con o sin prefijo)\n3. Si algún dato ya viene relleno en CAMPOS_PREVIOS y el texto no lo contradice, puedes reutilizarlo.\n4. Si NO puedes obtener algún dato con seguridad, déjalo vacío y márcalo como faltante.\n5. Indica claramente qué campos faltan en un array `campos_faltantes`.\n6. Si todos los campos obligatorios están presentes y coherentes, marca `es_valido` en true. Si falta al menos uno, `es_valido` en false.\n\nCampos OBLIGATORIOS para considerar que la solicitud está completa:\n- codigo_cliente\n- direccion_recogida\n- cp\n- palets\n- peso\n- telefono\n\nDevuelve SIEMPRE SOLO un JSON válido con esta forma EXACTA (sin texto extra):\n\n{\n  \"codigo_cliente\": \"...\",\n  \"direccion_recogida\": \"...\",\n  \"cp\": \"...\",\n  \"palets\": 0,\n  \"peso\": 0,\n  \"telefono\": \"...\",\n  \"campos_faltantes\": [\"código de cliente\", \"dirección de recogida\", \"código postal\", \"número de palets/bultos\", \"peso\", \"teléfono\"],\n  \"es_valido\": false\n}\n\nREGLAS IMPORTANTES:\n- Si un campo NO está en el correo, NO lo inventes: déjalo vacío y añádelo a `campos_faltantes`.\n- `palets` y `peso` deben ser numéricos (puedes interpretar \"3 palets\" como 3, \"450 kg\" como 450).\n- `telefono` debe ser una cadena con solo números, espacios, guiones y/o `+`.\n- Nunca devuelvas comentarios ni texto fuera del JSON.",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -9872,
+        1888
+      ],
+      "id": "35964033-27d9-4d8a-921b-09c954f2ee53",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "content": "## Consulta Base datos\n",
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -9392,
+        1824
+      ],
+      "typeVersion": 1,
+      "id": "bc311f09-a52c-4e81-b08e-8a78638a98c8",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fusionar datos de Procesar Respuesta AI con resultado de validación Postgres\nconst ai = $('Procesar Respuesta AI').first().json;\nconst pg = $json;\nconst parsear = $('Parsear Solicitud Recogida').first().json;\nreturn {\n  ...ai,\n  cliente_existe: pg.cliente_existe === true || pg.cliente_existe === 't',\n  from: parsear.from,\n  subject: parsear.subject\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -9200,
+        1888
+      ],
+      "id": "073c5d54-e1dc-461a-bbac-9367bcbead6d",
+      "name": "Fusionar Con Validación"
+    },
+    {
+      "parameters": {
+        "content": "## Validación\n",
+        "height": 656,
+        "width": 1526,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -9024,
+        1616
+      ],
+      "typeVersion": 1,
+      "id": "9b922acb-fbce-4601-8dc8-346e069cf944",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Mensaje éxito",
+        "height": 144,
+        "width": 320,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -7904,
+        1328
+      ],
+      "typeVersion": 1,
+      "id": "07339403-5854-42ba-bde1-f70d181da260",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## Mensaje Error cliente",
+        "width": 320,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -8832,
+        2064
+      ],
+      "typeVersion": 1,
+      "id": "bdaf4297-1f52-49bd-8b20-b2134d46c0d2",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## Mensaje Error datos faltantes",
+        "width": 384,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -8384,
+        1872
+      ],
+      "typeVersion": 1,
+      "id": "a1d1590e-5c74-46fd-9a96-dffb58f12a52",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Mensaje Error pedido no vinculado a cliente",
+        "height": 176,
+        "width": 384,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -7920,
+        1648
+      ],
+      "typeVersion": 1,
+      "id": "a3ed922d-6746-4041-880a-1f11b27ac464",
+      "name": "Sticky Note7"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-09T13:05:48.520Z",
+      "createdAt": "2026-03-09T13:05:48.520Z",
+      "role": "workflow:owner",
+      "workflowId": "FxWmPJLDpPXZnHEx",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": {
+    "node:Outlook ▸ Correo Entrada": {
+      "lastTimeChecked": "2026-03-11T15:41:16.007+01:00"
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-03-11T14:41:34.100Z",
+  "versionId": "2937e8e3-d83b-40ee-9865-b9312c0217cf"
+}
