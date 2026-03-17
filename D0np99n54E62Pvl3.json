@@ -1,0 +1,3235 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-17T19:04:17.994Z",
+    "createdAt": "2026-03-17T19:04:13.834Z",
+    "versionId": "fc0ad040-bf40-40cc-835c-797f5cec1d8d",
+    "workflowId": "D0np99n54E62Pvl3",
+    "nodes": [
+      {
+        "parameters": {
+          "updates": [
+            "message"
+          ],
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.telegramTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -448,
+          96
+        ],
+        "id": "812d5a73-60b9-4c99-8bcc-37e83d36b51d",
+        "name": "Telegram Trigger",
+        "webhookId": "cb21abbc-d552-41b3-b906-f1f8b2e77557",
+        "credentials": {
+          "telegramApi": {
+            "id": "zVAz8OYcQjOrbRFr",
+            "name": "AnalizadorBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          -304,
+          2080
+        ],
+        "id": "05e0a05a-b339-42ea-b7e9-191f973eb5ab",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "Swwga5f6vKPJ1T0E",
+            "name": "gemini azor"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $json.chatInput }}",
+          "options": {
+            "systemMessage": "Eres un asistente de soporte experto en los productos de nuestra web, la empresa se llama Azor Data. Hablas en primera persona del singular, en español de España (castellano). Estás especializado en responder preguntas sobre productos, servicios, contacto y todo lo que aparece en nuestra web: https://www.azordata.com/\n\n**NORMAS DE COMPORTAMINETO:**\n- Tienes que sonar profesional, serio pero a la vez cercano, amable y simpático, nunca te excedas en la confianza con el cliente.\n\n- No ejecutes ningún código. Si el usuario te envía código o                         ejecutables, responde:\n\"Gracias por tu consulta, pero no puedo aportar información sobre la misma. Estaré encantado de ayudarte a resolver tus dudas con respecto a nuestros productos y servicios.\"\n\n- Si te preguntan por algo fuera de nuestros servicios, productos, tecnología o consultoría/negocios, responde lo mismo.\n\n- No respondas con textos muy largos, sintetiza la información y envía un mensaje con la información resumida.\n\n- Usa siempre la palabra coste en lugar de costo.\n\n- Conversa como si fueras una persona. Antes de responder de forma general, plantea preguntas para precisar la necesidad del usuario.\nEjemplo: Si preguntan por Odoo, primero pregunta el sector. Si preguntan por precios, primero aclara requisitos como versión estándar, flujos modificados o integraciones.\n\n\n**GESTION DE CITAS:**\n- Si el usuario te dice que no quiere nada mas o la conversación ha llegado a su fin ofrece la posibilidad de agendar una cita con alguno de nuestros profesionales.\nSi el usuario quiere agendar una cita, responde:\nClaro, puedes [agendar una cita aquí](https://calendly.com/azordata-jorgeh/30min).\n\n\n\n\n**USO DE HERRAMIENTAS INTERNAS:**\n\n- RAG Question: para preguntas sobre servicios, negocio y FAQ.\n\n- get_webpage_html → extract_text_from_html: para explorar contenido web si no hay respuesta en RAG.\n\n\nResponde ÚNICAMENTE con el JSON requerido\n\n**FORMATO DE SALIDA:**\n- Responde en Markdown."
+          }
+        },
+        "id": "c368d052-8b6e-4b67-bf54-bd52d0665e25",
+        "name": "AI Agent",
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.6,
+        "position": [
+          32,
+          1856
+        ]
+      },
+      {
+        "parameters": {
+          "name": "My_Tool",
+          "description": "Usa esta herramienta para limpiar el HTML bruto y devolver solo el texto visible.",
+          "jsCode": "const html = $json.body || $json.data || '';\nconst text = html.replace(/<[^>]+>/g, ' ').replace(/\\s+/g, ' ').trim();\nreturn text;"
+        },
+        "id": "ce52b63d-6938-4628-80b9-46acc07a7a8e",
+        "name": "extract_text_from_html",
+        "type": "@n8n/n8n-nodes-langchain.toolCode",
+        "typeVersion": 1.1,
+        "position": [
+          384,
+          2032
+        ]
+      },
+      {
+        "parameters": {
+          "toolDescription": "Usa esta herramienta para obtener el HTML bruto de la página https://www.azordata.com/",
+          "url": "https://www.azordata.com/",
+          "optimizeResponse": true,
+          "responseType": "text"
+        },
+        "id": "89f56e44-6a69-4b62-b463-372e0c8d434f",
+        "name": "get_webpage_html",
+        "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+        "typeVersion": 1.1,
+        "position": [
+          176,
+          2080
+        ]
+      },
+      {
+        "parameters": {
+          "toolDescription": "Usa esta herramienta para consultar preguntas frecuentes generales sobre negocios o FAQ ",
+          "method": "POST",
+          "url": "https://prod-1-data.ke.pinecone.io/assistant/chat/azor-data",
+          "sendHeaders": true,
+          "parametersHeaders": {
+            "values": [
+              {
+                "name": "Api-Key",
+                "valueProvider": "fieldValue",
+                "value": "pcsk_2PWDZX_3sxFSNnvF4jd9SR7SH5rfKJD1VSD2LesrrFibrNn9q3gUeLYkRnRj2Pm9herKV9"
+              },
+              {
+                "name": "Content-Type",
+                "valueProvider": "fieldValue",
+                "value": "application/json"
+              },
+              {
+                "name": "X-Pinecone-API-Version",
+                "valueProvider": "fieldValue",
+                "value": "2025-04"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"{rag-question}\"\n    }\n  ],\n  \"stream\": false,\n  \"model\": \"gpt-4o\"\n}",
+          "placeholderDefinitions": {
+            "values": [
+              {
+                "name": "{rag-question}",
+                "description": "La pregunta que se le hará al RAG agent"
+              }
+            ]
+          }
+        },
+        "id": "a5ee3586-4f6b-4833-ac70-2cd390b195ec",
+        "name": "Rag Question",
+        "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+        "typeVersion": 1.1,
+        "position": [
+          16,
+          2096
+        ]
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "={{ $json.sessionId }}",
+          "contextWindowLength": 20
+        },
+        "id": "b164f32f-f1f7-4e14-b278-0c050a5630ea",
+        "name": "Window Buffer Memory",
+        "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+        "typeVersion": 1.2,
+        "position": [
+          -144,
+          2096
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const userInput = $('Extraer Datos').first().json.mensaje_usuario || 'No se pudo obtener el mensaje del usuario.';\nconst chatId = $('Extraer Datos').first().json.chat_id || '';\nconst userName = $('Extraer Datos').first().json.user_name || 'Usuario'; // Asume que 'user_name' viene de 'Extraer Datos'\n\n// Intenta obtener la respuesta del bot de varias fuentes potenciales\nlet botResponse = '';\n\n// Si viene de la rama FAQ (Preguntas FAQ -> Set3)\nconst set3Output = items.find(item => item.json && item.json.response);\nif (set3Output) {\n    botResponse = set3Output.json.response;\n}\n\n// Si viene de la rama de citas (Llamar envio de citas1 -> Merge2 -> ...)\n// Aquí deberías buscar la respuesta final generada por tu subflujo de citas.\n// Asumimos que el subflujo de citas o un nodo posterior en esa rama también expone una 'response'.\nconst citaOutput = items.find(item => item.json && item.json.response);\nif (citaOutput && !botResponse) { // Solo si no se encontró ya una respuesta de FAQ\n    botResponse = citaOutput.json.response;\n}\n\n// Si aún no se encontró una respuesta, usa un fallback\nif (!botResponse) {\n  botResponse = 'No se pudo obtener la respuesta final del bot.';\n}\n\nconst timestamp = new Date().toISOString();\n\nconst logEntry = {\n    timestamp: timestamp,\n    chat_id: chatId,\n    user_name: userName,\n    user_input: userInput,\n    bot_response: botResponse\n};\n\nreturn [ { json: logEntry } ];"
+        },
+        "id": "b18f67c6-bc17-479a-bbbf-7b47259b75ff",
+        "name": "Registrar Conversación (Code)",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          192,
+          1648
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const mensaje = $input.first().json.chatInput;\nconst chatId = $input.first().json.sessionId;\n\n// Hora local de Madrid en formato ISO (YYYY-MM-DD HH:mm:ss)\nconst fechaMadrid = new Date().toLocaleString(\"sv-SE\", { timeZone: \"Europe/Madrid\" }).replace(\" \", \"T\");\n\nreturn [\n  {\n    json: {\n      mensaje_usuario: mensaje,\n      chat_id: chatId,\n      sessionId: chatId,\n      timestamp: fechaMadrid\n    }\n  }\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          0,
+          1648
+        ],
+        "name": "Extraer Datos",
+        "id": "8bd080fe-43cb-4525-8a86-96e354881b7d"
+      },
+      {
+        "parameters": {
+          "jsCode": "// 1) Marca de tiempo\nconst timestamp = new Date().toISOString();\n// 2) Mismo chat ID que recibes en la petición\nconst chatId = $('Generar ID').first().json.sessionId|| $json.sessionId || $json[\"Chat ID\"] || \"\";\n// 3) Texto de la respuesta del bot (ajusta la propiedad según tu payload)\nconst botResponse = $input.first().json.output;\n\n// 4) Devuelve el objeto con las mismas claves que tu hoja\nreturn [{\n  Timestap:      timestamp,    // coincide con tu columna \"Timestap\"\n  \"Chat ID\":     chatId,       // con tu columna \"Chat ID\"\n  \"Bot Response\": botResponse  // con tu columna \"Bot Response\"\n}];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          400,
+          1856
+        ],
+        "id": "932791fc-872a-4f69-a31c-ec1b1bd8b5ae",
+        "name": "Extraer Datos Bot"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Tomamos la respuesta\nlet raw = $json.Bot_response ?? '';\n\n// Quitamos corchetes [ ] si viene como string tipo \"[{...}]\"\nlet text = String(raw).replace(/^\\s*\\[\\s*|\\s*\\]\\s*$/g, '');\n\n// Quitamos únicamente las etiquetas HTML (ej. <b>...</b>)\ntext = text.replace(/<[^>]*>/g, '');\n\n// Devolvemos el texto limpio de etiquetas\nreturn [\n  {\n    json: { text }\n  }\n];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          992,
+          1856
+        ],
+        "id": "3f3004a6-9a41-4a0c-bbb9-26c09f46b2dc",
+        "name": "Formatear Respuesta Bot"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "582d86ba-2f16-43e6-aa1e-30be8c6610c4",
+                "name": "Bot_response",
+                "value": "={{ $('Extraer Datos Bot').item.json['Bot Response'] }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          816,
+          1856
+        ],
+        "id": "45650d9c-8db3-485e-9cd8-4ebfda583dae",
+        "name": "Mapear Respuesta"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Toma el input original\nconst input = $input.first().json;\n\n// Genera un ID fijo\nconst sessionId = $input.first().json.sessionId ;\n\n// Devuelve el objeto original más el campo sessionId fijo\nreturn {\n  ...input,\n  sessionId,\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -176,
+          1856
+        ],
+        "id": "31f70d72-191a-41a3-aa61-5cc178ad16eb",
+        "name": "Generar ID"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "    with u as (\n      insert into public.chat_users (chat_id, user_name)\n      values ($1, $2)\n      on conflict do nothing\n      returning id\n    ),\n    u2 as (\n      select coalesce(\n        (select id from u),\n        (select id from public.chat_users where chat_id = $1 order by created_at asc limit 1)\n      ) as chat_user_id\n    ),\n    c as (\n      insert into public.chat_conversations (session_id, chat_user_id)\n      values ($3, (select chat_user_id from u2))\n      on conflict (session_id) do update\n      set chat_user_id = excluded.chat_user_id\n      returning id\n    )\n    select id as conversation_id from c;",
+          "options": {
+            "queryReplacement": "=$1 ={{ $json.chat_id || $json.sessionId }}, $2 ={{ $json.user_name || 'Usuario' }}, $3 = {{ $json.chat_id }}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          432,
+          1648
+        ],
+        "id": "db031943-3db0-4ddb-bafb-e069ae4b43ec",
+        "name": "Insertar Conversacion",
+        "credentials": {
+          "postgres": {
+            "id": "4XLvezcpD5suZgk3",
+            "name": "Supabase chatbot web"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "insert into public.chat_messages (conversation_id, role, content)\n    values ($1, 'user', $2)\n    returning id;",
+          "options": {
+            "queryReplacement": "=$1 = {{ $('Insertar Conversacion').first().json.conversation_id }}, $2 ={{  $('Registrar Conversación (Code)').item.json.user_input}}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          656,
+          1648
+        ],
+        "id": "a18debc6-b716-41f7-835e-6d6e3020f291",
+        "name": "Insertar Mensaje Usuario",
+        "credentials": {
+          "postgres": {
+            "id": "4XLvezcpD5suZgk3",
+            "name": "Supabase chatbot web"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "insert into public.chat_messages (conversation_id, role, content)\n    values ($1, 'assistant', $2)\n    returning id;",
+          "options": {
+            "queryReplacement": "=$1 ={{ $('Insertar Conversacion').first().json.conversation_id }}, $2 ={{ $json['Bot Response'] || $json.output || $json.bot_response || $json.text }}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          608,
+          1856
+        ],
+        "id": "e3b3acec-7812-41ca-871e-d01ede5e9896",
+        "name": "Insertar Respuesta Bot",
+        "credentials": {
+          "postgres": {
+            "id": "4XLvezcpD5suZgk3",
+            "name": "Supabase chatbot web"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "2e5aa583-03f8-411b-be32-9eb298d8dfe7",
+                "leftValue": "= {{ $json.chatInput }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -480,
+          1872
+        ],
+        "id": "a9e72925-0885-4703-90ef-8bd15fefbe83",
+        "name": "Validar que haya mensaje"
+      },
+      {
+        "parameters": {},
+        "id": "aec13b01-2cca-4aa7-a531-221460c8276c",
+        "name": "Manual Trigger",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          -720,
+          -704
+        ]
+      },
+      {
+        "parameters": {
+          "resource": "fileFolder",
+          "returnAll": true,
+          "filter": {
+            "folderId": {
+              "__rl": true,
+              "value": "1b2ilKEWZkj47SkfgtD_ZxVmTUZUNFGuo",
+              "mode": "list",
+              "cachedResultName": "EuK",
+              "cachedResultUrl": "https://drive.google.com/drive/folders/1b2ilKEWZkj47SkfgtD_ZxVmTUZUNFGuo"
+            }
+          },
+          "options": {
+            "fields": [
+              "id",
+              "name",
+              "mimeType",
+              "version",
+              "webViewLink"
+            ]
+          }
+        },
+        "id": "e74d56e5-8d72-40c3-877a-fb10349271f0",
+        "name": "List All Files in Drive",
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          -512,
+          -704
+        ],
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "FYOVRhK9QqktCKpI",
+            "name": "Drive laura azor"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "download",
+          "fileId": {
+            "__rl": true,
+            "value": "={{$('Prepare File Metadata').item.json.file_id}}",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "id": "c2ab5eb6-8420-4922-b92c-861eaacdcc75",
+        "name": "Download File",
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          496,
+          -848
+        ],
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "FYOVRhK9QqktCKpI",
+            "name": "Drive laura azor"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const text = $('Build Full Document').item.json.full_text;\nconst chunkSize = 1200;\nconst overlap = 200;\n\nconst chunks = [];\nlet start = 0;\nlet index = 0;\n\nwhile (start < text.length) {\n  const end = Math.min(start + chunkSize, text.length);\n  const chunk = text.slice(start, end);\n\n  chunks.push({\n    json: {\n      document_id: $('Upsert Document Metadata').first().json.id,\n      chunk_index: index,\n      chunk_text: chunk,\n      file_name: $('Build Full Document').item.json.file_name,\n      document_date: $('Build Full Document').item.json.document_date\n    }\n  });\n\n  start += (chunkSize - overlap);\n  index++;\n}\n\nreturn chunks;"
+        },
+        "id": "b17dea5c-7c33-444d-9079-c4280c36bcff",
+        "name": "Split Into Chunks",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 1,
+        "position": [
+          1744,
+          -848
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googlePalmApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\n  \"model\": \"models/gemini-embedding-001\",\n  \"content\": {\n    \"parts\": [\n      {\n        \"text\": \"{{$json.chunk_text}}\"\n      }\n    ]\n  },\n  \"outputDimensionality\": 768\n}",
+          "options": {}
+        },
+        "id": "abecb098-ac34-482d-880d-b42d86a87d41",
+        "name": "Generate Embedding (Gemini)",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2096,
+          -864
+        ],
+        "credentials": {
+          "googlePalmApi": {
+            "id": "Swwga5f6vKPJ1T0E",
+            "name": "gemini azor"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const embedding =\n  $json.embedding?.values ||\n  $json.embeddings?.[0]?.values ||\n  $json.values ||\n  null;\n\nif (!embedding) {\n  throw new Error('No se pudo extraer el vector de embedding');\n}\n\nreturn [\n  {\n    json: {\n      document_id: $('Loop Chunks').item.json.document_id,\n      chunk_index: $('Loop Chunks').item.json.chunk_index,\n      chunk_text: $('Loop Chunks').item.json.chunk_text,\n      embedding: `[${embedding.join(',')}]`\n    }\n  }\n];"
+        },
+        "id": "a072fae1-8161-4f6c-9448-e37db71e622a",
+        "name": "Extract Embedding Vector",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 1,
+        "position": [
+          2272,
+          -864
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "return [\n  {\n    json: {\n      ok: true,\n      file_name: $('Build Full Document').item.json.file_name,\n      file_id: $('Build Full Document').item.json.file_id,\n      document_id: $('Upsert Document Metadata').first().json.id,\n      indexed_at: new Date().toISOString()\n    }\n  }\n];"
+        },
+        "id": "587076fc-a23b-4cdb-bdc1-198764a93997",
+        "name": "Log Indexing Success",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 1,
+        "position": [
+          2688,
+          -944
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const embedding =\n  $json.embedding?.values ||\n  $json.embeddings?.[0]?.values ||\n  $json.values ||\n  null;\n\nif (!embedding) {\n  throw new Error('No se pudo extraer el embedding de la pregunta');\n}\n\nreturn [\n  {\n    json: {\n      question: $('Telegram Trigger').first().json.message.text,\n      chat_id: $('Telegram Trigger').first().json.message.chat.id,\n      embedding: `[${embedding.join(',')}]`\n    }\n  }\n];"
+        },
+        "id": "bda04a3c-f861-4475-903e-496dbe7b083f",
+        "name": "Extract Question Embedding",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 1,
+        "position": [
+          144,
+          80
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googlePalmApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": \"Eres un asistente documental. Da respuestas detalladas, no cortes frases, responde con la respuesta entera. Responde SOLO con la información de los documentos proporcionados.\\n\\nReglas:\\n- Si la respuesta exacta no aparece, pero hay una respuesta parcial o inferencia directa muy clara, explícalo.\\n- Si el usuario pide una fecha exacta y el documento no la da, dilo expresamente.\\n- Si el documento solo indica una duración o plazo aproximado, indícalo claramente.\\n- No inventes nada.\\n- Responde en español de España.\\n- Sé claro y directo.\\n- Al final añade una sección llamada \\\"Fuentes usadas\\\".\\n- En cada fuente indica archivo, fecha y URL si existe.\\n\\n=== DOCUMENTOS RELEVANTES ===\\n{{$json.context}}\\n\\n=== PREGUNTA ===\\n{{$json.question}}\"\n        }\n      ]\n    }\n  ],\n  \"generationConfig\": {\n    \"temperature\": 0.2,\n    \"maxOutputTokens\": 700,\n    \"topP\": 0.9\n  }\n}",
+          "options": {}
+        },
+        "id": "e0f0f2e5-00b2-46eb-b46b-90880c8f7dfe",
+        "name": "Call Gemini (with context)",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          944,
+          -80
+        ],
+        "credentials": {
+          "googlePalmApi": {
+            "id": "Swwga5f6vKPJ1T0E",
+            "name": "gemini azor"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const response =\n  $json.candidates?.[0]?.content?.parts?.[0]?.text ||\n  'No se pudo generar una respuesta.';\n\nreturn [\n  {\n    json: {\n      question: $('Build Context').first().json.question,\n      chat_id: $('Build Context').first().json.chat_id,\n      response,\n      sources: JSON.stringify($('Build Context').first().json.sources),\n      has_context: true\n    }\n  }\n];"
+        },
+        "id": "9099924e-99c7-47af-af33-fe8026a5a956",
+        "name": "Extract Gemini Response",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 1,
+        "position": [
+          1136,
+          -80
+        ]
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          -320,
+          -704
+        ],
+        "id": "93e0778b-78fe-4881-9523-f2b05db46db5",
+        "name": "Loop Over Items"
+      },
+      {
+        "parameters": {
+          "jsCode": "const file = $json;\n\nreturn [\n  {\n    json: {\n      file_id: file.id,\n      file_name: file.name,\n      mime_type: file.mimeType,\n      version: file.version || null,\n      source_url: file.webViewLink || null,\n      created_time: file.createdTime || null,\n      modified_time: file.modifiedTime || null,\n      document_date: file.modifiedTime || file.createdTime || null\n    }\n  }\n];"
+        },
+        "id": "45ac7cbc-b269-4df9-ac76-8af1f3b4f322",
+        "name": "Prepare File Metadata",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 1,
+        "position": [
+          -112,
+          -704
+        ]
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT\n  EXISTS(\n    SELECT 1\n    FROM documents\n    WHERE drive_file_id = $1\n  ) AS exists_in_db,\n  (\n    SELECT version\n    FROM documents\n    WHERE drive_file_id = $1\n    LIMIT 1\n  ) AS db_version;",
+          "additionalFields": {
+            "queryParams": "=$1 = {{$json.file_id}}"
+          }
+        },
+        "id": "0d2d01b6-82cc-4e1b-9272-46179ab99fe2",
+        "name": "Check File Version",
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 1,
+        "position": [
+          96,
+          -704
+        ],
+        "credentials": {
+          "postgres": {
+            "id": "6NhBxBM4mqUiWTOV",
+            "name": "Supabase AnaizadorDoc"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "ddfd896e-27ad-4b30-b067-e3a574cce0cc",
+                "leftValue": "={{ !$json.exists_in_db || $json.db_version !== $('Prepare File Metadata').item.json.version }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          304,
+          -704
+        ],
+        "id": "e07d5b07-3b06-448f-907b-8cf6ae644bb7",
+        "name": "Is New Or Changed?"
+      },
+      {
+        "parameters": {
+          "jsCode": "const meta = $('Prepare File Metadata').item.json;\nconst extracted = $('Extract Document Date').first().json;\n\nconst plainText = extracted.extracted_pdf_text || '';\nconst effectiveDate = extracted.document_date || null;\n\nconst sourceHeader = [\n  `[FUENTE]`,\n  `archivo: ${meta.file_name || ''}`,\n  `fecha_documento: ${effectiveDate || 'desconocida'}`,\n  `file_id: ${meta.file_id || ''}`,\n  `mime_type: ${meta.mime_type || ''}`,\n  `version: ${meta.version || ''}`,\n  `url: ${meta.source_url || ''}`,\n  `evidencia_fecha: ${extracted.date_evidence || ''}`,\n  `[/FUENTE]`\n].join('\\n');\n\nreturn [\n  {\n    json: {\n      file_id: meta.file_id,\n      file_name: meta.file_name,\n      mime_type: meta.mime_type,\n      version: meta.version,\n      source_url: meta.source_url,\n      document_date: effectiveDate,\n      date_evidence: extracted.date_evidence || null,\n      full_text: `${sourceHeader}\\n\\n${plainText}`\n    }\n  }\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          976,
+          -848
+        ],
+        "id": "bddfdf9a-2635-4b84-abbf-cd08c7693140",
+        "name": "Build Full Document"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "278171e8-8b4d-4b35-bdbe-a6b4ec25401c",
+                "leftValue": "={{$json.message.text}}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          -272,
+          96
+        ],
+        "id": "a2893e3a-9edc-453a-950b-a3e5d1f71707",
+        "name": "Is Text Message?"
+      },
+      {
+        "parameters": {
+          "jsCode": "const rows = $input.all();\n\nif (!rows.length) {\n  return [\n    {\n      json: {\n        question: $('Extract Question Embedding').first().json.question,\n        chat_id: $('Extract Question Embedding').first().json.chat_id,\n        has_context: false,\n        context: '',\n        sources: []\n      }\n    }\n  ];\n}\n\nconst sources = [];\nconst contextParts = [];\n\nfor (const item of rows) {\n  const r = item.json;\n\n  sources.push({\n    filename: r.filename || r.file_name || 'Documento sin nombre',\n    date_created: r.date_created,\n    source_url: r.source_url,\n    similarity: r.similarity\n  });\n\n  contextParts.push(\n`Archivo: ${r.filename || r.file_name || 'Documento sin nombre'}\nFecha: ${r.date_created}\nURL: ${r.source_url || 'sin URL'}\nContenido:\n${r.chunk_text}`\n  );\n}\n\nreturn [\n  {\n    json: {\n      question: $('Extract Question Embedding').first().json.question,\n      chat_id: $('Extract Question Embedding').first().json.chat_id,\n      has_context: true,\n      context: contextParts.join('\\n\\n---\\n\\n'),\n      sources\n    }\n  }\n];"
+        },
+        "id": "9fa8d91a-6f28-4f3e-a234-a9724cfba73f",
+        "name": "Build Context",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 1,
+        "position": [
+          528,
+          80
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "84a9145d-a042-4fa7-a815-b9bc4771bbb9",
+                "leftValue": "={{$json.has_context}}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          736,
+          80
+        ],
+        "id": "a21f56af-4a4b-4c2f-85d1-84f92b052d89",
+        "name": "Has Context?"
+      },
+      {
+        "parameters": {
+          "jsCode": "return [\n  {\n    json: {\n      question: $('Build Context').first().json.question,\n      chat_id: $('Build Context').first().json.chat_id,\n      response: 'No encuentro esa información en los documentos indexados.',\n      sources: '[]',\n      has_context: false\n    }\n  }\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          944,
+          176
+        ],
+        "id": "a140865a-0613-4682-8562-9440bcdce26e",
+        "name": "No Context Response"
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $('Extract Gemini Response').item.json.chat_id }}",
+          "text": "={{ $('Extract Gemini Response').item.json.response }}",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "Markdown"
+          }
+        },
+        "id": "0e702b29-ad0d-4c62-8bd4-0d622f4bfc59",
+        "name": "Send Answer",
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1,
+        "position": [
+          1504,
+          -80
+        ],
+        "webhookId": "bb271667-6ba2-44ff-84b7-172b9b437169",
+        "credentials": {
+          "telegramApi": {
+            "id": "zVAz8OYcQjOrbRFr",
+            "name": "AnalizadorBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          1904,
+          -896
+        ],
+        "id": "cfbbb813-1636-4e7c-a4b4-defff52b7a75",
+        "name": "Loop Chunks"
+      },
+      {
+        "parameters": {
+          "operation": "pdf",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.extractFromFile",
+        "typeVersion": 1.1,
+        "position": [
+          640,
+          -848
+        ],
+        "id": "0ee4d6d7-3b24-4674-91c4-554277b524cb",
+        "name": "Extract PDF Text"
+      },
+      {
+        "parameters": {
+          "jsCode": "const input = $input.first().json;\nconst text = input.text || '';\n\nconst patterns = [\n  /Date:\\s*(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})(?:\\s+\\d{1,2}:\\d{2}:\\d{2}\\s*(AM|PM))?/i,\n  /Sent:\\s*(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})(?:\\s+\\d{1,2}:\\d{2}:\\d{2}\\s*(AM|PM))?/i,\n  /Fecha:\\s*(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})(?:\\s+\\d{1,2}:\\d{2}:\\d{2})?/i,\n  /Enviado el:\\s*(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})(?:\\s+\\d{1,2}:\\d{2}:\\d{2})?/i\n];\n\nlet documentDate = null;\nlet dateEvidence = null;\n\nfor (const regex of patterns) {\n  const match = text.match(regex);\n  if (match) {\n    const month = String(match[1]).padStart(2, '0');\n    const day = String(match[2]).padStart(2, '0');\n    const year = match[3];\n\n    documentDate = `${year}-${month}-${day}`;\n    dateEvidence = match[0];\n    break;\n  }\n}\n\nreturn [\n  {\n    json: {\n      extracted_pdf_text: text,\n      document_date: documentDate,\n      date_evidence: dateEvidence,\n      date_found: !!documentDate\n    }\n  }\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          816,
+          -848
+        ],
+        "id": "6119d731-24de-405e-aabd-3caeb4ba5936",
+        "name": "Extract Document Date"
+      },
+      {
+        "parameters": {
+          "jsCode": "const fileName =\n  $json.file_name ??\n  ($json.file_id ? `archivo_${$json.file_id}.pdf` : null);\n\nconst driveFileId = $json.file_id ?? null;\n\nif (!fileName) {\n  throw new Error('Falta file_name antes de insertar en documents');\n}\n\nif (!driveFileId) {\n  throw new Error('Falta file_id antes de insertar en documents');\n}\n\n// date_created en tu tabla es NOT NULL.\n// Si has podido extraer document_date del PDF, úsala.\n// Si no, usa la fecha actual para no romper el insert.\nconst dateCreated =\n  $json.document_date\n    ? `${$json.document_date} 00:00:00`\n    : new Date().toISOString().slice(0, 19).replace('T', ' ');\n\nreturn [\n  {\n    json: {\n      file_name: fileName,\n      file_type: $json.mime_type ?? 'application/pdf',\n      folder_path: '/',\n      date_created: dateCreated,\n      date_added: new Date().toISOString().slice(0, 19).replace('T', ' '),\n      drive_file_id: driveFileId,\n      document_date: $json.document_date ?? null,\n      indexed_at: new Date().toISOString(),\n      date_evidence: $json.date_evidence ?? null,\n      version: $json.version ?? null,\n      source_url: $json.source_url ?? null\n    }\n  }\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1184,
+          -848
+        ],
+        "id": "574c4d5d-5d2c-4be1-9ba0-7dc4fd50f8d1",
+        "name": "Prepare Document Row"
+      },
+      {
+        "parameters": {
+          "schema": {
+            "__rl": true,
+            "mode": "list",
+            "value": "public"
+          },
+          "table": {
+            "__rl": true,
+            "value": "documents",
+            "mode": "list",
+            "cachedResultName": "documents"
+          },
+          "columns": {
+            "mappingMode": "autoMapInputData",
+            "value": {
+              "id": 0,
+              "file_size": 0
+            },
+            "matchingColumns": [
+              "id"
+            ],
+            "schema": [
+              {
+                "id": "id",
+                "displayName": "id",
+                "required": false,
+                "defaultMatch": true,
+                "display": true,
+                "type": "number",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "file_name",
+                "displayName": "file_name",
+                "required": true,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "file_type",
+                "displayName": "file_type",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "folder_path",
+                "displayName": "folder_path",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "date_created",
+                "displayName": "date_created",
+                "required": true,
+                "defaultMatch": false,
+                "display": true,
+                "type": "dateTime",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "date_added",
+                "displayName": "date_added",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "dateTime",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "file_size",
+                "displayName": "file_size",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "number",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "drive_file_id",
+                "displayName": "drive_file_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "created_at",
+                "displayName": "created_at",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "dateTime",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "document_date",
+                "displayName": "document_date",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "dateTime",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "indexed_at",
+                "displayName": "indexed_at",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "dateTime",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "date_evidence",
+                "displayName": "date_evidence",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "version",
+                "displayName": "version",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "source_url",
+                "displayName": "source_url",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          1392,
+          -848
+        ],
+        "id": "deee3942-3e67-42a2-b415-0bf95e7bb097",
+        "name": "Upsert Document Metadata",
+        "credentials": {
+          "postgres": {
+            "id": "6NhBxBM4mqUiWTOV",
+            "name": "Supabase AnaizadorDoc"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "WITH deleted AS (\n  DELETE FROM document_chunks\n  WHERE document_id = {{ $('Upsert Document Metadata').first().json.id }}\n  RETURNING document_id\n)\nSELECT COALESCE(\n  (SELECT document_id FROM deleted LIMIT 1),\n  {{ $('Upsert Document Metadata').first().json.id }}\n) AS document_id;",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          1568,
+          -848
+        ],
+        "id": "d972f3fe-7b30-47c2-8a8a-cc98f056c671",
+        "name": "Delete Old Chunks",
+        "credentials": {
+          "postgres": {
+            "id": "6NhBxBM4mqUiWTOV",
+            "name": "Supabase AnaizadorDoc"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "INSERT INTO document_chunks (\n  document_id,\n  chunk_text,\n  chunk_index,\n  embedding\n)\nVALUES ($1, $2, $3, $4::vector);",
+          "options": {
+            "queryReplacement": "={{ [$json.document_id, $json.chunk_text, $json.chunk_index, $json.embedding] }}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          2448,
+          -864
+        ],
+        "id": "7b896a75-9c25-48e2-b833-d869eadc3120",
+        "name": "Insert Chunk with Embedding",
+        "credentials": {
+          "postgres": {
+            "id": "6NhBxBM4mqUiWTOV",
+            "name": "Supabase AnaizadorDoc"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT\n  dc.chunk_text,\n  d.file_name,\n  d.date_created,\n  d.drive_file_id,\n  d.source_url,\n  1 - (dc.embedding <=> $1::vector) AS similarity\nFROM document_chunks dc\nJOIN documents d ON d.id = dc.document_id\nWHERE 1 - (dc.embedding <=> $1::vector) >= 0.3\nORDER BY dc.embedding <=> $1::vector\nLIMIT 5;",
+          "options": {
+            "queryReplacement": "={{$json.embedding}}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          352,
+          80
+        ],
+        "id": "03c80aa4-5b82-4bd6-9675-f95cb04f5b86",
+        "name": "Vector Search (Supabase)1",
+        "credentials": {
+          "postgres": {
+            "id": "6NhBxBM4mqUiWTOV",
+            "name": "Supabase AnaizadorDoc"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "INSERT INTO public.conversations (\n  telegram_user_id,\n  question,\n  answer,\n  sources,\n  created_at\n)\nVALUES ($1, $2, $3, $4::jsonb, NOW());",
+          "options": {
+            "queryReplacement": "={{ [\n  $json.chat_id,\n  $json.question,\n  $json.response,\n  $json.sources || '[]'\n] }}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          1344,
+          -80
+        ],
+        "id": "9080edcd-ed1a-4fab-83e1-3faa8f1f0cf6",
+        "name": "Log Conversation",
+        "credentials": {
+          "postgres": {
+            "id": "6NhBxBM4mqUiWTOV",
+            "name": "Supabase AnaizadorDoc"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googlePalmApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\n  \"model\": \"models/gemini-embedding-001\",\n  \"content\": {\n    \"parts\": [\n      {\n        \"text\": \"{{$json.chunk_text}}\"\n      }\n    ]\n  },\n  \"outputDimensionality\": 768\n}",
+          "options": {}
+        },
+        "id": "d2ee6088-e056-4612-b277-b7b0f3cae53f",
+        "name": "Embed Question (Gemini)",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -48,
+          80
+        ],
+        "credentials": {
+          "googlePalmApi": {
+            "id": "Swwga5f6vKPJ1T0E",
+            "name": "gemini azor"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent": {
+        "main": [
+          [
+            {
+              "node": "Extraer Datos Bot",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "extract_text_from_html": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "get_webpage_html": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Rag Question": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Window Buffer Memory": {
+        "ai_memory": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Registrar Conversación (Code)": {
+        "main": [
+          [
+            {
+              "node": "Insertar Conversacion",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extraer Datos": {
+        "main": [
+          [
+            {
+              "node": "Registrar Conversación (Code)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extraer Datos Bot": {
+        "main": [
+          [
+            {
+              "node": "Insertar Respuesta Bot",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Mapear Respuesta": {
+        "main": [
+          [
+            {
+              "node": "Formatear Respuesta Bot",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generar ID": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Insertar Conversacion": {
+        "main": [
+          [
+            {
+              "node": "Insertar Mensaje Usuario",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Insertar Respuesta Bot": {
+        "main": [
+          [
+            {
+              "node": "Mapear Respuesta",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Validar que haya mensaje": {
+        "main": [
+          [
+            {
+              "node": "Generar ID",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Extraer Datos",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Telegram Trigger": {
+        "main": [
+          [
+            {
+              "node": "Is Text Message?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Download File": {
+        "main": [
+          [
+            {
+              "node": "Extract PDF Text",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract Embedding Vector": {
+        "main": [
+          [
+            {
+              "node": "Insert Chunk with Embedding",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Manual Trigger": {
+        "main": [
+          [
+            {
+              "node": "List All Files in Drive",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split Into Chunks": {
+        "main": [
+          [
+            {
+              "node": "Loop Chunks",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generate Embedding (Gemini)": {
+        "main": [
+          [
+            {
+              "node": "Extract Embedding Vector",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call Gemini (with context)": {
+        "main": [
+          [
+            {
+              "node": "Extract Gemini Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract Gemini Response": {
+        "main": [
+          [
+            {
+              "node": "Log Conversation",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "List All Files in Drive": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Prepare File Metadata",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare File Metadata": {
+        "main": [
+          [
+            {
+              "node": "Check File Version",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Check File Version": {
+        "main": [
+          [
+            {
+              "node": "Is New Or Changed?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Is New Or Changed?": {
+        "main": [
+          [
+            {
+              "node": "Download File",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Build Full Document": {
+        "main": [
+          [
+            {
+              "node": "Prepare Document Row",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract Question Embedding": {
+        "main": [
+          [
+            {
+              "node": "Vector Search (Supabase)1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Is Text Message?": {
+        "main": [
+          [
+            {
+              "node": "Embed Question (Gemini)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Build Context": {
+        "main": [
+          [
+            {
+              "node": "Has Context?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Has Context?": {
+        "main": [
+          [
+            {
+              "node": "Call Gemini (with context)",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Context Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Chunks": {
+        "main": [
+          [
+            {
+              "node": "Log Indexing Success",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Generate Embedding (Gemini)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "No Context Response": {
+        "main": [
+          []
+        ]
+      },
+      "Extract PDF Text": {
+        "main": [
+          [
+            {
+              "node": "Extract Document Date",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract Document Date": {
+        "main": [
+          [
+            {
+              "node": "Build Full Document",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Log Indexing Success": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare Document Row": {
+        "main": [
+          [
+            {
+              "node": "Upsert Document Metadata",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upsert Document Metadata": {
+        "main": [
+          [
+            {
+              "node": "Delete Old Chunks",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Delete Old Chunks": {
+        "main": [
+          [
+            {
+              "node": "Split Into Chunks",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Insert Chunk with Embedding": {
+        "main": [
+          [
+            {
+              "node": "Loop Chunks",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Vector Search (Supabase)1": {
+        "main": [
+          [
+            {
+              "node": "Build Context",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Log Conversation": {
+        "main": [
+          [
+            {
+              "node": "Send Answer",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Embed Question (Gemini)": {
+        "main": [
+          [
+            {
+              "node": "Extract Question Embedding",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jorge Huescar",
+    "name": "Version fc0ad040",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "fc0ad040-bf40-40cc-835c-797f5cec1d8d",
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Extraer Datos Bot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "extract_text_from_html": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_webpage_html": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rag Question": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registrar Conversación (Code)": {
+      "main": [
+        [
+          {
+            "node": "Insertar Conversacion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraer Datos": {
+      "main": [
+        [
+          {
+            "node": "Registrar Conversación (Code)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraer Datos Bot": {
+      "main": [
+        [
+          {
+            "node": "Insertar Respuesta Bot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mapear Respuesta": {
+      "main": [
+        [
+          {
+            "node": "Formatear Respuesta Bot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar ID": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insertar Conversacion": {
+      "main": [
+        [
+          {
+            "node": "Insertar Mensaje Usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insertar Respuesta Bot": {
+      "main": [
+        [
+          {
+            "node": "Mapear Respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar que haya mensaje": {
+      "main": [
+        [
+          {
+            "node": "Generar ID",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Extraer Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Is Text Message?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download File": {
+      "main": [
+        [
+          {
+            "node": "Extract PDF Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Embedding Vector": {
+      "main": [
+        [
+          {
+            "node": "Insert Chunk with Embedding",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "List All Files in Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Into Chunks": {
+      "main": [
+        [
+          {
+            "node": "Loop Chunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Embedding (Gemini)": {
+      "main": [
+        [
+          {
+            "node": "Extract Embedding Vector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Gemini (with context)": {
+      "main": [
+        [
+          {
+            "node": "Extract Gemini Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Gemini Response": {
+      "main": [
+        [
+          {
+            "node": "Log Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List All Files in Drive": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Prepare File Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare File Metadata": {
+      "main": [
+        [
+          {
+            "node": "Check File Version",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check File Version": {
+      "main": [
+        [
+          {
+            "node": "Is New Or Changed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is New Or Changed?": {
+      "main": [
+        [
+          {
+            "node": "Download File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Full Document": {
+      "main": [
+        [
+          {
+            "node": "Prepare Document Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Question Embedding": {
+      "main": [
+        [
+          {
+            "node": "Vector Search (Supabase)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Text Message?": {
+      "main": [
+        [
+          {
+            "node": "Embed Question (Gemini)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Context": {
+      "main": [
+        [
+          {
+            "node": "Has Context?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Context?": {
+      "main": [
+        [
+          {
+            "node": "Call Gemini (with context)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Context Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Chunks": {
+      "main": [
+        [
+          {
+            "node": "Log Indexing Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Generate Embedding (Gemini)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Context Response": {
+      "main": [
+        []
+      ]
+    },
+    "Extract PDF Text": {
+      "main": [
+        [
+          {
+            "node": "Extract Document Date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Document Date": {
+      "main": [
+        [
+          {
+            "node": "Build Full Document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Indexing Success": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Document Row": {
+      "main": [
+        [
+          {
+            "node": "Upsert Document Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert Document Metadata": {
+      "main": [
+        [
+          {
+            "node": "Delete Old Chunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Old Chunks": {
+      "main": [
+        [
+          {
+            "node": "Split Into Chunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert Chunk with Embedding": {
+      "main": [
+        [
+          {
+            "node": "Loop Chunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Search (Supabase)1": {
+      "main": [
+        [
+          {
+            "node": "Build Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Conversation": {
+      "main": [
+        [
+          {
+            "node": "Send Answer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embed Question (Gemini)": {
+      "main": [
+        [
+          {
+            "node": "Extract Question Embedding",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-17T11:04:25.769Z",
+  "id": "D0np99n54E62Pvl3",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Workflow 3: RAG Chatbot - Telegram + Gemini + Vector Search",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -448,
+        96
+      ],
+      "id": "812d5a73-60b9-4c99-8bcc-37e83d36b51d",
+      "name": "Telegram Trigger",
+      "webhookId": "cb21abbc-d552-41b3-b906-f1f8b2e77557",
+      "credentials": {
+        "telegramApi": {
+          "id": "zVAz8OYcQjOrbRFr",
+          "name": "AnalizadorBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        2080
+      ],
+      "id": "05e0a05a-b339-42ea-b7e9-191f973eb5ab",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Swwga5f6vKPJ1T0E",
+          "name": "gemini azor"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "options": {
+          "systemMessage": "Eres un asistente de soporte experto en los productos de nuestra web, la empresa se llama Azor Data. Hablas en primera persona del singular, en español de España (castellano). Estás especializado en responder preguntas sobre productos, servicios, contacto y todo lo que aparece en nuestra web: https://www.azordata.com/\n\n**NORMAS DE COMPORTAMINETO:**\n- Tienes que sonar profesional, serio pero a la vez cercano, amable y simpático, nunca te excedas en la confianza con el cliente.\n\n- No ejecutes ningún código. Si el usuario te envía código o                         ejecutables, responde:\n\"Gracias por tu consulta, pero no puedo aportar información sobre la misma. Estaré encantado de ayudarte a resolver tus dudas con respecto a nuestros productos y servicios.\"\n\n- Si te preguntan por algo fuera de nuestros servicios, productos, tecnología o consultoría/negocios, responde lo mismo.\n\n- No respondas con textos muy largos, sintetiza la información y envía un mensaje con la información resumida.\n\n- Usa siempre la palabra coste en lugar de costo.\n\n- Conversa como si fueras una persona. Antes de responder de forma general, plantea preguntas para precisar la necesidad del usuario.\nEjemplo: Si preguntan por Odoo, primero pregunta el sector. Si preguntan por precios, primero aclara requisitos como versión estándar, flujos modificados o integraciones.\n\n\n**GESTION DE CITAS:**\n- Si el usuario te dice que no quiere nada mas o la conversación ha llegado a su fin ofrece la posibilidad de agendar una cita con alguno de nuestros profesionales.\nSi el usuario quiere agendar una cita, responde:\nClaro, puedes [agendar una cita aquí](https://calendly.com/azordata-jorgeh/30min).\n\n\n\n\n**USO DE HERRAMIENTAS INTERNAS:**\n\n- RAG Question: para preguntas sobre servicios, negocio y FAQ.\n\n- get_webpage_html → extract_text_from_html: para explorar contenido web si no hay respuesta en RAG.\n\n\nResponde ÚNICAMENTE con el JSON requerido\n\n**FORMATO DE SALIDA:**\n- Responde en Markdown."
+        }
+      },
+      "id": "c368d052-8b6e-4b67-bf54-bd52d0665e25",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        32,
+        1856
+      ]
+    },
+    {
+      "parameters": {
+        "name": "My_Tool",
+        "description": "Usa esta herramienta para limpiar el HTML bruto y devolver solo el texto visible.",
+        "jsCode": "const html = $json.body || $json.data || '';\nconst text = html.replace(/<[^>]+>/g, ' ').replace(/\\s+/g, ' ').trim();\nreturn text;"
+      },
+      "id": "ce52b63d-6938-4628-80b9-46acc07a7a8e",
+      "name": "extract_text_from_html",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        2032
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Usa esta herramienta para obtener el HTML bruto de la página https://www.azordata.com/",
+        "url": "https://www.azordata.com/",
+        "optimizeResponse": true,
+        "responseType": "text"
+      },
+      "id": "89f56e44-6a69-4b62-b463-372e0c8d434f",
+      "name": "get_webpage_html",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        176,
+        2080
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Usa esta herramienta para consultar preguntas frecuentes generales sobre negocios o FAQ ",
+        "method": "POST",
+        "url": "https://prod-1-data.ke.pinecone.io/assistant/chat/azor-data",
+        "sendHeaders": true,
+        "parametersHeaders": {
+          "values": [
+            {
+              "name": "Api-Key",
+              "valueProvider": "fieldValue",
+              "value": "pcsk_2PWDZX_3sxFSNnvF4jd9SR7SH5rfKJD1VSD2LesrrFibrNn9q3gUeLYkRnRj2Pm9herKV9"
+            },
+            {
+              "name": "Content-Type",
+              "valueProvider": "fieldValue",
+              "value": "application/json"
+            },
+            {
+              "name": "X-Pinecone-API-Version",
+              "valueProvider": "fieldValue",
+              "value": "2025-04"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"{rag-question}\"\n    }\n  ],\n  \"stream\": false,\n  \"model\": \"gpt-4o\"\n}",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "{rag-question}",
+              "description": "La pregunta que se le hará al RAG agent"
+            }
+          ]
+        }
+      },
+      "id": "a5ee3586-4f6b-4833-ac70-2cd390b195ec",
+      "name": "Rag Question",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        16,
+        2096
+      ]
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.sessionId }}",
+        "contextWindowLength": 20
+      },
+      "id": "b164f32f-f1f7-4e14-b278-0c050a5630ea",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [
+        -144,
+        2096
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const userInput = $('Extraer Datos').first().json.mensaje_usuario || 'No se pudo obtener el mensaje del usuario.';\nconst chatId = $('Extraer Datos').first().json.chat_id || '';\nconst userName = $('Extraer Datos').first().json.user_name || 'Usuario'; // Asume que 'user_name' viene de 'Extraer Datos'\n\n// Intenta obtener la respuesta del bot de varias fuentes potenciales\nlet botResponse = '';\n\n// Si viene de la rama FAQ (Preguntas FAQ -> Set3)\nconst set3Output = items.find(item => item.json && item.json.response);\nif (set3Output) {\n    botResponse = set3Output.json.response;\n}\n\n// Si viene de la rama de citas (Llamar envio de citas1 -> Merge2 -> ...)\n// Aquí deberías buscar la respuesta final generada por tu subflujo de citas.\n// Asumimos que el subflujo de citas o un nodo posterior en esa rama también expone una 'response'.\nconst citaOutput = items.find(item => item.json && item.json.response);\nif (citaOutput && !botResponse) { // Solo si no se encontró ya una respuesta de FAQ\n    botResponse = citaOutput.json.response;\n}\n\n// Si aún no se encontró una respuesta, usa un fallback\nif (!botResponse) {\n  botResponse = 'No se pudo obtener la respuesta final del bot.';\n}\n\nconst timestamp = new Date().toISOString();\n\nconst logEntry = {\n    timestamp: timestamp,\n    chat_id: chatId,\n    user_name: userName,\n    user_input: userInput,\n    bot_response: botResponse\n};\n\nreturn [ { json: logEntry } ];"
+      },
+      "id": "b18f67c6-bc17-479a-bbbf-7b47259b75ff",
+      "name": "Registrar Conversación (Code)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        192,
+        1648
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const mensaje = $input.first().json.chatInput;\nconst chatId = $input.first().json.sessionId;\n\n// Hora local de Madrid en formato ISO (YYYY-MM-DD HH:mm:ss)\nconst fechaMadrid = new Date().toLocaleString(\"sv-SE\", { timeZone: \"Europe/Madrid\" }).replace(\" \", \"T\");\n\nreturn [\n  {\n    json: {\n      mensaje_usuario: mensaje,\n      chat_id: chatId,\n      sessionId: chatId,\n      timestamp: fechaMadrid\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        1648
+      ],
+      "name": "Extraer Datos",
+      "id": "8bd080fe-43cb-4525-8a86-96e354881b7d"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1) Marca de tiempo\nconst timestamp = new Date().toISOString();\n// 2) Mismo chat ID que recibes en la petición\nconst chatId = $('Generar ID').first().json.sessionId|| $json.sessionId || $json[\"Chat ID\"] || \"\";\n// 3) Texto de la respuesta del bot (ajusta la propiedad según tu payload)\nconst botResponse = $input.first().json.output;\n\n// 4) Devuelve el objeto con las mismas claves que tu hoja\nreturn [{\n  Timestap:      timestamp,    // coincide con tu columna \"Timestap\"\n  \"Chat ID\":     chatId,       // con tu columna \"Chat ID\"\n  \"Bot Response\": botResponse  // con tu columna \"Bot Response\"\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        1856
+      ],
+      "id": "932791fc-872a-4f69-a31c-ec1b1bd8b5ae",
+      "name": "Extraer Datos Bot"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Tomamos la respuesta\nlet raw = $json.Bot_response ?? '';\n\n// Quitamos corchetes [ ] si viene como string tipo \"[{...}]\"\nlet text = String(raw).replace(/^\\s*\\[\\s*|\\s*\\]\\s*$/g, '');\n\n// Quitamos únicamente las etiquetas HTML (ej. <b>...</b>)\ntext = text.replace(/<[^>]*>/g, '');\n\n// Devolvemos el texto limpio de etiquetas\nreturn [\n  {\n    json: { text }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        992,
+        1856
+      ],
+      "id": "3f3004a6-9a41-4a0c-bbb9-26c09f46b2dc",
+      "name": "Formatear Respuesta Bot"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "582d86ba-2f16-43e6-aa1e-30be8c6610c4",
+              "name": "Bot_response",
+              "value": "={{ $('Extraer Datos Bot').item.json['Bot Response'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        816,
+        1856
+      ],
+      "id": "45650d9c-8db3-485e-9cd8-4ebfda583dae",
+      "name": "Mapear Respuesta"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Toma el input original\nconst input = $input.first().json;\n\n// Genera un ID fijo\nconst sessionId = $input.first().json.sessionId ;\n\n// Devuelve el objeto original más el campo sessionId fijo\nreturn {\n  ...input,\n  sessionId,\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -176,
+        1856
+      ],
+      "id": "31f70d72-191a-41a3-aa61-5cc178ad16eb",
+      "name": "Generar ID"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "    with u as (\n      insert into public.chat_users (chat_id, user_name)\n      values ($1, $2)\n      on conflict do nothing\n      returning id\n    ),\n    u2 as (\n      select coalesce(\n        (select id from u),\n        (select id from public.chat_users where chat_id = $1 order by created_at asc limit 1)\n      ) as chat_user_id\n    ),\n    c as (\n      insert into public.chat_conversations (session_id, chat_user_id)\n      values ($3, (select chat_user_id from u2))\n      on conflict (session_id) do update\n      set chat_user_id = excluded.chat_user_id\n      returning id\n    )\n    select id as conversation_id from c;",
+        "options": {
+          "queryReplacement": "=$1 ={{ $json.chat_id || $json.sessionId }}, $2 ={{ $json.user_name || 'Usuario' }}, $3 = {{ $json.chat_id }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        432,
+        1648
+      ],
+      "id": "db031943-3db0-4ddb-bafb-e069ae4b43ec",
+      "name": "Insertar Conversacion",
+      "credentials": {
+        "postgres": {
+          "id": "4XLvezcpD5suZgk3",
+          "name": "Supabase chatbot web"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into public.chat_messages (conversation_id, role, content)\n    values ($1, 'user', $2)\n    returning id;",
+        "options": {
+          "queryReplacement": "=$1 = {{ $('Insertar Conversacion').first().json.conversation_id }}, $2 ={{  $('Registrar Conversación (Code)').item.json.user_input}}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        656,
+        1648
+      ],
+      "id": "a18debc6-b716-41f7-835e-6d6e3020f291",
+      "name": "Insertar Mensaje Usuario",
+      "credentials": {
+        "postgres": {
+          "id": "4XLvezcpD5suZgk3",
+          "name": "Supabase chatbot web"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into public.chat_messages (conversation_id, role, content)\n    values ($1, 'assistant', $2)\n    returning id;",
+        "options": {
+          "queryReplacement": "=$1 ={{ $('Insertar Conversacion').first().json.conversation_id }}, $2 ={{ $json['Bot Response'] || $json.output || $json.bot_response || $json.text }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        608,
+        1856
+      ],
+      "id": "e3b3acec-7812-41ca-871e-d01ede5e9896",
+      "name": "Insertar Respuesta Bot",
+      "credentials": {
+        "postgres": {
+          "id": "4XLvezcpD5suZgk3",
+          "name": "Supabase chatbot web"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2e5aa583-03f8-411b-be32-9eb298d8dfe7",
+              "leftValue": "= {{ $json.chatInput }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -480,
+        1872
+      ],
+      "id": "a9e72925-0885-4703-90ef-8bd15fefbe83",
+      "name": "Validar que haya mensaje"
+    },
+    {
+      "parameters": {},
+      "id": "aec13b01-2cca-4aa7-a531-221460c8276c",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        -704
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1b2ilKEWZkj47SkfgtD_ZxVmTUZUNFGuo",
+            "mode": "list",
+            "cachedResultName": "EuK",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1b2ilKEWZkj47SkfgtD_ZxVmTUZUNFGuo"
+          }
+        },
+        "options": {
+          "fields": [
+            "id",
+            "name",
+            "mimeType",
+            "version",
+            "webViewLink"
+          ]
+        }
+      },
+      "id": "e74d56e5-8d72-40c3-877a-fb10349271f0",
+      "name": "List All Files in Drive",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -512,
+        -704
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "FYOVRhK9QqktCKpI",
+          "name": "Drive laura azor"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{$('Prepare File Metadata').item.json.file_id}}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "c2ab5eb6-8420-4922-b92c-861eaacdcc75",
+      "name": "Download File",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        496,
+        -848
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "FYOVRhK9QqktCKpI",
+          "name": "Drive laura azor"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $('Build Full Document').item.json.full_text;\nconst chunkSize = 1200;\nconst overlap = 200;\n\nconst chunks = [];\nlet start = 0;\nlet index = 0;\n\nwhile (start < text.length) {\n  const end = Math.min(start + chunkSize, text.length);\n  const chunk = text.slice(start, end);\n\n  chunks.push({\n    json: {\n      document_id: $('Upsert Document Metadata').first().json.id,\n      chunk_index: index,\n      chunk_text: chunk,\n      file_name: $('Build Full Document').item.json.file_name,\n      document_date: $('Build Full Document').item.json.document_date\n    }\n  });\n\n  start += (chunkSize - overlap);\n  index++;\n}\n\nreturn chunks;"
+      },
+      "id": "b17dea5c-7c33-444d-9079-c4280c36bcff",
+      "name": "Split Into Chunks",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1744,
+        -848
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googlePalmApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"model\": \"models/gemini-embedding-001\",\n  \"content\": {\n    \"parts\": [\n      {\n        \"text\": \"{{$json.chunk_text}}\"\n      }\n    ]\n  },\n  \"outputDimensionality\": 768\n}",
+        "options": {}
+      },
+      "id": "abecb098-ac34-482d-880d-b42d86a87d41",
+      "name": "Generate Embedding (Gemini)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2096,
+        -864
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Swwga5f6vKPJ1T0E",
+          "name": "gemini azor"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const embedding =\n  $json.embedding?.values ||\n  $json.embeddings?.[0]?.values ||\n  $json.values ||\n  null;\n\nif (!embedding) {\n  throw new Error('No se pudo extraer el vector de embedding');\n}\n\nreturn [\n  {\n    json: {\n      document_id: $('Loop Chunks').item.json.document_id,\n      chunk_index: $('Loop Chunks').item.json.chunk_index,\n      chunk_text: $('Loop Chunks').item.json.chunk_text,\n      embedding: `[${embedding.join(',')}]`\n    }\n  }\n];"
+      },
+      "id": "a072fae1-8161-4f6c-9448-e37db71e622a",
+      "name": "Extract Embedding Vector",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        2272,
+        -864
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      ok: true,\n      file_name: $('Build Full Document').item.json.file_name,\n      file_id: $('Build Full Document').item.json.file_id,\n      document_id: $('Upsert Document Metadata').first().json.id,\n      indexed_at: new Date().toISOString()\n    }\n  }\n];"
+      },
+      "id": "587076fc-a23b-4cdb-bdc1-198764a93997",
+      "name": "Log Indexing Success",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        2688,
+        -944
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const embedding =\n  $json.embedding?.values ||\n  $json.embeddings?.[0]?.values ||\n  $json.values ||\n  null;\n\nif (!embedding) {\n  throw new Error('No se pudo extraer el embedding de la pregunta');\n}\n\nreturn [\n  {\n    json: {\n      question: $('Telegram Trigger').first().json.message.text,\n      chat_id: $('Telegram Trigger').first().json.message.chat.id,\n      embedding: `[${embedding.join(',')}]`\n    }\n  }\n];"
+      },
+      "id": "bda04a3c-f861-4475-903e-496dbe7b083f",
+      "name": "Extract Question Embedding",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        144,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googlePalmApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": \"Eres un asistente documental. Da respuestas detalladas, no cortes frases, responde con la respuesta entera. Responde SOLO con la información de los documentos proporcionados.\\n\\nReglas:\\n- Si la respuesta exacta no aparece, pero hay una respuesta parcial o inferencia directa muy clara, explícalo.\\n- Si el usuario pide una fecha exacta y el documento no la da, dilo expresamente.\\n- Si el documento solo indica una duración o plazo aproximado, indícalo claramente.\\n- No inventes nada.\\n- Responde en español de España.\\n- Sé claro y directo.\\n- Al final añade una sección llamada \\\"Fuentes usadas\\\".\\n- En cada fuente indica archivo, fecha y URL si existe.\\n\\n=== DOCUMENTOS RELEVANTES ===\\n{{$json.context}}\\n\\n=== PREGUNTA ===\\n{{$json.question}}\"\n        }\n      ]\n    }\n  ],\n  \"generationConfig\": {\n    \"temperature\": 0.2,\n    \"maxOutputTokens\": 700,\n    \"topP\": 0.9\n  }\n}",
+        "options": {}
+      },
+      "id": "e0f0f2e5-00b2-46eb-b46b-90880c8f7dfe",
+      "name": "Call Gemini (with context)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        944,
+        -80
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Swwga5f6vKPJ1T0E",
+          "name": "gemini azor"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const response =\n  $json.candidates?.[0]?.content?.parts?.[0]?.text ||\n  'No se pudo generar una respuesta.';\n\nreturn [\n  {\n    json: {\n      question: $('Build Context').first().json.question,\n      chat_id: $('Build Context').first().json.chat_id,\n      response,\n      sources: JSON.stringify($('Build Context').first().json.sources),\n      has_context: true\n    }\n  }\n];"
+      },
+      "id": "9099924e-99c7-47af-af33-fe8026a5a956",
+      "name": "Extract Gemini Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1136,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -320,
+        -704
+      ],
+      "id": "93e0778b-78fe-4881-9523-f2b05db46db5",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "jsCode": "const file = $json;\n\nreturn [\n  {\n    json: {\n      file_id: file.id,\n      file_name: file.name,\n      mime_type: file.mimeType,\n      version: file.version || null,\n      source_url: file.webViewLink || null,\n      created_time: file.createdTime || null,\n      modified_time: file.modifiedTime || null,\n      document_date: file.modifiedTime || file.createdTime || null\n    }\n  }\n];"
+      },
+      "id": "45ac7cbc-b269-4df9-ac76-8af1f3b4f322",
+      "name": "Prepare File Metadata",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        -704
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n  EXISTS(\n    SELECT 1\n    FROM documents\n    WHERE drive_file_id = $1\n  ) AS exists_in_db,\n  (\n    SELECT version\n    FROM documents\n    WHERE drive_file_id = $1\n    LIMIT 1\n  ) AS db_version;",
+        "additionalFields": {
+          "queryParams": "=$1 = {{$json.file_id}}"
+        }
+      },
+      "id": "0d2d01b6-82cc-4e1b-9272-46179ab99fe2",
+      "name": "Check File Version",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 1,
+      "position": [
+        96,
+        -704
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "6NhBxBM4mqUiWTOV",
+          "name": "Supabase AnaizadorDoc"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ddfd896e-27ad-4b30-b067-e3a574cce0cc",
+              "leftValue": "={{ !$json.exists_in_db || $json.db_version !== $('Prepare File Metadata').item.json.version }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        304,
+        -704
+      ],
+      "id": "e07d5b07-3b06-448f-907b-8cf6ae644bb7",
+      "name": "Is New Or Changed?"
+    },
+    {
+      "parameters": {
+        "jsCode": "const meta = $('Prepare File Metadata').item.json;\nconst extracted = $('Extract Document Date').first().json;\n\nconst plainText = extracted.extracted_pdf_text || '';\nconst effectiveDate = extracted.document_date || null;\n\nconst sourceHeader = [\n  `[FUENTE]`,\n  `archivo: ${meta.file_name || ''}`,\n  `fecha_documento: ${effectiveDate || 'desconocida'}`,\n  `file_id: ${meta.file_id || ''}`,\n  `mime_type: ${meta.mime_type || ''}`,\n  `version: ${meta.version || ''}`,\n  `url: ${meta.source_url || ''}`,\n  `evidencia_fecha: ${extracted.date_evidence || ''}`,\n  `[/FUENTE]`\n].join('\\n');\n\nreturn [\n  {\n    json: {\n      file_id: meta.file_id,\n      file_name: meta.file_name,\n      mime_type: meta.mime_type,\n      version: meta.version,\n      source_url: meta.source_url,\n      document_date: effectiveDate,\n      date_evidence: extracted.date_evidence || null,\n      full_text: `${sourceHeader}\\n\\n${plainText}`\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        976,
+        -848
+      ],
+      "id": "bddfdf9a-2635-4b84-abbf-cd08c7693140",
+      "name": "Build Full Document"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "278171e8-8b4d-4b35-bdbe-a6b4ec25401c",
+              "leftValue": "={{$json.message.text}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -272,
+        96
+      ],
+      "id": "a2893e3a-9edc-453a-950b-a3e5d1f71707",
+      "name": "Is Text Message?"
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all();\n\nif (!rows.length) {\n  return [\n    {\n      json: {\n        question: $('Extract Question Embedding').first().json.question,\n        chat_id: $('Extract Question Embedding').first().json.chat_id,\n        has_context: false,\n        context: '',\n        sources: []\n      }\n    }\n  ];\n}\n\nconst sources = [];\nconst contextParts = [];\n\nfor (const item of rows) {\n  const r = item.json;\n\n  sources.push({\n    filename: r.filename || r.file_name || 'Documento sin nombre',\n    date_created: r.date_created,\n    source_url: r.source_url,\n    similarity: r.similarity\n  });\n\n  contextParts.push(\n`Archivo: ${r.filename || r.file_name || 'Documento sin nombre'}\nFecha: ${r.date_created}\nURL: ${r.source_url || 'sin URL'}\nContenido:\n${r.chunk_text}`\n  );\n}\n\nreturn [\n  {\n    json: {\n      question: $('Extract Question Embedding').first().json.question,\n      chat_id: $('Extract Question Embedding').first().json.chat_id,\n      has_context: true,\n      context: contextParts.join('\\n\\n---\\n\\n'),\n      sources\n    }\n  }\n];"
+      },
+      "id": "9fa8d91a-6f28-4f3e-a234-a9724cfba73f",
+      "name": "Build Context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        528,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "84a9145d-a042-4fa7-a815-b9bc4771bbb9",
+              "leftValue": "={{$json.has_context}}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        736,
+        80
+      ],
+      "id": "a21f56af-4a4b-4c2f-85d1-84f92b052d89",
+      "name": "Has Context?"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      question: $('Build Context').first().json.question,\n      chat_id: $('Build Context').first().json.chat_id,\n      response: 'No encuentro esa información en los documentos indexados.',\n      sources: '[]',\n      has_context: false\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        944,
+        176
+      ],
+      "id": "a140865a-0613-4682-8562-9440bcdce26e",
+      "name": "No Context Response"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Extract Gemini Response').item.json.chat_id }}",
+        "text": "={{ $('Extract Gemini Response').item.json.response }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "0e702b29-ad0d-4c62-8bd4-0d622f4bfc59",
+      "name": "Send Answer",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        1504,
+        -80
+      ],
+      "webhookId": "bb271667-6ba2-44ff-84b7-172b9b437169",
+      "credentials": {
+        "telegramApi": {
+          "id": "zVAz8OYcQjOrbRFr",
+          "name": "AnalizadorBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1904,
+        -896
+      ],
+      "id": "cfbbb813-1636-4e7c-a4b4-defff52b7a75",
+      "name": "Loop Chunks"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        -848
+      ],
+      "id": "0ee4d6d7-3b24-4674-91c4-554277b524cb",
+      "name": "Extract PDF Text"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nconst text = input.text || '';\n\nconst patterns = [\n  /Date:\\s*(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})(?:\\s+\\d{1,2}:\\d{2}:\\d{2}\\s*(AM|PM))?/i,\n  /Sent:\\s*(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})(?:\\s+\\d{1,2}:\\d{2}:\\d{2}\\s*(AM|PM))?/i,\n  /Fecha:\\s*(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})(?:\\s+\\d{1,2}:\\d{2}:\\d{2})?/i,\n  /Enviado el:\\s*(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})(?:\\s+\\d{1,2}:\\d{2}:\\d{2})?/i\n];\n\nlet documentDate = null;\nlet dateEvidence = null;\n\nfor (const regex of patterns) {\n  const match = text.match(regex);\n  if (match) {\n    const month = String(match[1]).padStart(2, '0');\n    const day = String(match[2]).padStart(2, '0');\n    const year = match[3];\n\n    documentDate = `${year}-${month}-${day}`;\n    dateEvidence = match[0];\n    break;\n  }\n}\n\nreturn [\n  {\n    json: {\n      extracted_pdf_text: text,\n      document_date: documentDate,\n      date_evidence: dateEvidence,\n      date_found: !!documentDate\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        816,
+        -848
+      ],
+      "id": "6119d731-24de-405e-aabd-3caeb4ba5936",
+      "name": "Extract Document Date"
+    },
+    {
+      "parameters": {
+        "jsCode": "const fileName =\n  $json.file_name ??\n  ($json.file_id ? `archivo_${$json.file_id}.pdf` : null);\n\nconst driveFileId = $json.file_id ?? null;\n\nif (!fileName) {\n  throw new Error('Falta file_name antes de insertar en documents');\n}\n\nif (!driveFileId) {\n  throw new Error('Falta file_id antes de insertar en documents');\n}\n\n// date_created en tu tabla es NOT NULL.\n// Si has podido extraer document_date del PDF, úsala.\n// Si no, usa la fecha actual para no romper el insert.\nconst dateCreated =\n  $json.document_date\n    ? `${$json.document_date} 00:00:00`\n    : new Date().toISOString().slice(0, 19).replace('T', ' ');\n\nreturn [\n  {\n    json: {\n      file_name: fileName,\n      file_type: $json.mime_type ?? 'application/pdf',\n      folder_path: '/',\n      date_created: dateCreated,\n      date_added: new Date().toISOString().slice(0, 19).replace('T', ' '),\n      drive_file_id: driveFileId,\n      document_date: $json.document_date ?? null,\n      indexed_at: new Date().toISOString(),\n      date_evidence: $json.date_evidence ?? null,\n      version: $json.version ?? null,\n      source_url: $json.source_url ?? null\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1184,
+        -848
+      ],
+      "id": "574c4d5d-5d2c-4be1-9ba0-7dc4fd50f8d1",
+      "name": "Prepare Document Row"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "id": 0,
+            "file_size": 0
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "file_name",
+              "displayName": "file_name",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "file_type",
+              "displayName": "file_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "folder_path",
+              "displayName": "folder_path",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date_created",
+              "displayName": "date_created",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date_added",
+              "displayName": "date_added",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "file_size",
+              "displayName": "file_size",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "drive_file_id",
+              "displayName": "drive_file_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "document_date",
+              "displayName": "document_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "indexed_at",
+              "displayName": "indexed_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date_evidence",
+              "displayName": "date_evidence",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "version",
+              "displayName": "version",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source_url",
+              "displayName": "source_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1392,
+        -848
+      ],
+      "id": "deee3942-3e67-42a2-b415-0bf95e7bb097",
+      "name": "Upsert Document Metadata",
+      "credentials": {
+        "postgres": {
+          "id": "6NhBxBM4mqUiWTOV",
+          "name": "Supabase AnaizadorDoc"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH deleted AS (\n  DELETE FROM document_chunks\n  WHERE document_id = {{ $('Upsert Document Metadata').first().json.id }}\n  RETURNING document_id\n)\nSELECT COALESCE(\n  (SELECT document_id FROM deleted LIMIT 1),\n  {{ $('Upsert Document Metadata').first().json.id }}\n) AS document_id;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1568,
+        -848
+      ],
+      "id": "d972f3fe-7b30-47c2-8a8a-cc98f056c671",
+      "name": "Delete Old Chunks",
+      "credentials": {
+        "postgres": {
+          "id": "6NhBxBM4mqUiWTOV",
+          "name": "Supabase AnaizadorDoc"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO document_chunks (\n  document_id,\n  chunk_text,\n  chunk_index,\n  embedding\n)\nVALUES ($1, $2, $3, $4::vector);",
+        "options": {
+          "queryReplacement": "={{ [$json.document_id, $json.chunk_text, $json.chunk_index, $json.embedding] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2448,
+        -864
+      ],
+      "id": "7b896a75-9c25-48e2-b833-d869eadc3120",
+      "name": "Insert Chunk with Embedding",
+      "credentials": {
+        "postgres": {
+          "id": "6NhBxBM4mqUiWTOV",
+          "name": "Supabase AnaizadorDoc"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n  dc.chunk_text,\n  d.file_name,\n  d.date_created,\n  d.drive_file_id,\n  d.source_url,\n  1 - (dc.embedding <=> $1::vector) AS similarity\nFROM document_chunks dc\nJOIN documents d ON d.id = dc.document_id\nWHERE 1 - (dc.embedding <=> $1::vector) >= 0.3\nORDER BY dc.embedding <=> $1::vector\nLIMIT 5;",
+        "options": {
+          "queryReplacement": "={{$json.embedding}}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        352,
+        80
+      ],
+      "id": "03c80aa4-5b82-4bd6-9675-f95cb04f5b86",
+      "name": "Vector Search (Supabase)1",
+      "credentials": {
+        "postgres": {
+          "id": "6NhBxBM4mqUiWTOV",
+          "name": "Supabase AnaizadorDoc"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO public.conversations (\n  telegram_user_id,\n  question,\n  answer,\n  sources,\n  created_at\n)\nVALUES ($1, $2, $3, $4::jsonb, NOW());",
+        "options": {
+          "queryReplacement": "={{ [\n  $json.chat_id,\n  $json.question,\n  $json.response,\n  $json.sources || '[]'\n] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1344,
+        -80
+      ],
+      "id": "9080edcd-ed1a-4fab-83e1-3faa8f1f0cf6",
+      "name": "Log Conversation",
+      "credentials": {
+        "postgres": {
+          "id": "6NhBxBM4mqUiWTOV",
+          "name": "Supabase AnaizadorDoc"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googlePalmApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"model\": \"models/gemini-embedding-001\",\n  \"content\": {\n    \"parts\": [\n      {\n        \"text\": \"{{$json.chunk_text}}\"\n      }\n    ]\n  },\n  \"outputDimensionality\": 768\n}",
+        "options": {}
+      },
+      "id": "d2ee6088-e056-4612-b277-b7b0f3cae53f",
+      "name": "Embed Question (Gemini)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -48,
+        80
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Swwga5f6vKPJ1T0E",
+          "name": "gemini azor"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-17T11:04:25.769Z",
+      "createdAt": "2026-03-17T11:04:25.769Z",
+      "role": "workflow:owner",
+      "workflowId": "D0np99n54E62Pvl3",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-03-17T19:04:13.832Z",
+  "versionId": "fc0ad040-bf40-40cc-835c-797f5cec1d8d"
+}
