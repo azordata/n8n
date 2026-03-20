@@ -1,34 +1,11 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-17T19:04:17.994Z",
-    "createdAt": "2026-03-17T19:04:13.834Z",
-    "versionId": "fc0ad040-bf40-40cc-835c-797f5cec1d8d",
+    "updatedAt": "2026-03-18T09:40:10.969Z",
+    "createdAt": "2026-03-18T09:40:08.619Z",
+    "versionId": "172b3d76-dfdb-4dc4-9d66-a5fb0e55ff4a",
     "workflowId": "D0np99n54E62Pvl3",
     "nodes": [
-      {
-        "parameters": {
-          "updates": [
-            "message"
-          ],
-          "additionalFields": {}
-        },
-        "type": "n8n-nodes-base.telegramTrigger",
-        "typeVersion": 1.2,
-        "position": [
-          -448,
-          96
-        ],
-        "id": "812d5a73-60b9-4c99-8bcc-37e83d36b51d",
-        "name": "Telegram Trigger",
-        "webhookId": "cb21abbc-d552-41b3-b906-f1f8b2e77557",
-        "credentials": {
-          "telegramApi": {
-            "id": "zVAz8OYcQjOrbRFr",
-            "name": "AnalizadorBot"
-          }
-        }
-      },
       {
         "parameters": {
           "options": {}
@@ -350,13 +327,13 @@
       },
       {
         "parameters": {},
-        "id": "aec13b01-2cca-4aa7-a531-221460c8276c",
+        "id": "37161545-48bc-4f68-a1c3-36da973d1599",
         "name": "Manual Trigger",
         "type": "n8n-nodes-base.manualTrigger",
         "typeVersion": 1,
         "position": [
-          -720,
-          -704
+          -1072,
+          -656
         ]
       },
       {
@@ -382,13 +359,13 @@
             ]
           }
         },
-        "id": "e74d56e5-8d72-40c3-877a-fb10349271f0",
+        "id": "8fde7aed-1c02-4a93-bfc5-d637da741226",
         "name": "List All Files in Drive",
         "type": "n8n-nodes-base.googleDrive",
         "typeVersion": 3,
         "position": [
-          -512,
-          -704
+          -864,
+          -656
         ],
         "credentials": {
           "googleDriveOAuth2Api": {
@@ -407,13 +384,13 @@
           },
           "options": {}
         },
-        "id": "c2ab5eb6-8420-4922-b92c-861eaacdcc75",
+        "id": "0b20c63e-38b0-4cdd-9b44-d6387e495014",
         "name": "Download File",
         "type": "n8n-nodes-base.googleDrive",
         "typeVersion": 3,
         "position": [
-          496,
-          -848
+          144,
+          -800
         ],
         "credentials": {
           "googleDriveOAuth2Api": {
@@ -426,13 +403,13 @@
         "parameters": {
           "jsCode": "const text = $('Build Full Document').item.json.full_text;\nconst chunkSize = 1200;\nconst overlap = 200;\n\nconst chunks = [];\nlet start = 0;\nlet index = 0;\n\nwhile (start < text.length) {\n  const end = Math.min(start + chunkSize, text.length);\n  const chunk = text.slice(start, end);\n\n  chunks.push({\n    json: {\n      document_id: $('Upsert Document Metadata').first().json.id,\n      chunk_index: index,\n      chunk_text: chunk,\n      file_name: $('Build Full Document').item.json.file_name,\n      document_date: $('Build Full Document').item.json.document_date\n    }\n  });\n\n  start += (chunkSize - overlap);\n  index++;\n}\n\nreturn chunks;"
         },
-        "id": "b17dea5c-7c33-444d-9079-c4280c36bcff",
+        "id": "111cc081-ab97-4389-91cc-64b8ae070b49",
         "name": "Split Into Chunks",
         "type": "n8n-nodes-base.code",
         "typeVersion": 1,
         "position": [
-          1744,
-          -848
+          1376,
+          -800
         ]
       },
       {
@@ -446,13 +423,13 @@
           "jsonBody": "{\n  \"model\": \"models/gemini-embedding-001\",\n  \"content\": {\n    \"parts\": [\n      {\n        \"text\": \"{{$json.chunk_text}}\"\n      }\n    ]\n  },\n  \"outputDimensionality\": 768\n}",
           "options": {}
         },
-        "id": "abecb098-ac34-482d-880d-b42d86a87d41",
+        "id": "81a023f8-ada3-446e-a226-d9607224a5d4",
         "name": "Generate Embedding (Gemini)",
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.2,
         "position": [
-          2096,
-          -864
+          1744,
+          -816
         ],
         "credentials": {
           "googlePalmApi": {
@@ -465,78 +442,26 @@
         "parameters": {
           "jsCode": "const embedding =\n  $json.embedding?.values ||\n  $json.embeddings?.[0]?.values ||\n  $json.values ||\n  null;\n\nif (!embedding) {\n  throw new Error('No se pudo extraer el vector de embedding');\n}\n\nreturn [\n  {\n    json: {\n      document_id: $('Loop Chunks').item.json.document_id,\n      chunk_index: $('Loop Chunks').item.json.chunk_index,\n      chunk_text: $('Loop Chunks').item.json.chunk_text,\n      embedding: `[${embedding.join(',')}]`\n    }\n  }\n];"
         },
-        "id": "a072fae1-8161-4f6c-9448-e37db71e622a",
+        "id": "d979083c-46bd-4fc6-884f-be723b983dd5",
         "name": "Extract Embedding Vector",
         "type": "n8n-nodes-base.code",
         "typeVersion": 1,
         "position": [
-          2272,
-          -864
+          1920,
+          -816
         ]
       },
       {
         "parameters": {
           "jsCode": "return [\n  {\n    json: {\n      ok: true,\n      file_name: $('Build Full Document').item.json.file_name,\n      file_id: $('Build Full Document').item.json.file_id,\n      document_id: $('Upsert Document Metadata').first().json.id,\n      indexed_at: new Date().toISOString()\n    }\n  }\n];"
         },
-        "id": "587076fc-a23b-4cdb-bdc1-198764a93997",
+        "id": "eabc2063-a662-4256-b168-c435a3ffa6e2",
         "name": "Log Indexing Success",
         "type": "n8n-nodes-base.code",
         "typeVersion": 1,
         "position": [
-          2688,
-          -944
-        ]
-      },
-      {
-        "parameters": {
-          "jsCode": "const embedding =\n  $json.embedding?.values ||\n  $json.embeddings?.[0]?.values ||\n  $json.values ||\n  null;\n\nif (!embedding) {\n  throw new Error('No se pudo extraer el embedding de la pregunta');\n}\n\nreturn [\n  {\n    json: {\n      question: $('Telegram Trigger').first().json.message.text,\n      chat_id: $('Telegram Trigger').first().json.message.chat.id,\n      embedding: `[${embedding.join(',')}]`\n    }\n  }\n];"
-        },
-        "id": "bda04a3c-f861-4475-903e-496dbe7b083f",
-        "name": "Extract Question Embedding",
-        "type": "n8n-nodes-base.code",
-        "typeVersion": 1,
-        "position": [
-          144,
-          80
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
-          "authentication": "predefinedCredentialType",
-          "nodeCredentialType": "googlePalmApi",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "{\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": \"Eres un asistente documental. Da respuestas detalladas, no cortes frases, responde con la respuesta entera. Responde SOLO con la información de los documentos proporcionados.\\n\\nReglas:\\n- Si la respuesta exacta no aparece, pero hay una respuesta parcial o inferencia directa muy clara, explícalo.\\n- Si el usuario pide una fecha exacta y el documento no la da, dilo expresamente.\\n- Si el documento solo indica una duración o plazo aproximado, indícalo claramente.\\n- No inventes nada.\\n- Responde en español de España.\\n- Sé claro y directo.\\n- Al final añade una sección llamada \\\"Fuentes usadas\\\".\\n- En cada fuente indica archivo, fecha y URL si existe.\\n\\n=== DOCUMENTOS RELEVANTES ===\\n{{$json.context}}\\n\\n=== PREGUNTA ===\\n{{$json.question}}\"\n        }\n      ]\n    }\n  ],\n  \"generationConfig\": {\n    \"temperature\": 0.2,\n    \"maxOutputTokens\": 700,\n    \"topP\": 0.9\n  }\n}",
-          "options": {}
-        },
-        "id": "e0f0f2e5-00b2-46eb-b46b-90880c8f7dfe",
-        "name": "Call Gemini (with context)",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.2,
-        "position": [
-          944,
-          -80
-        ],
-        "credentials": {
-          "googlePalmApi": {
-            "id": "Swwga5f6vKPJ1T0E",
-            "name": "gemini azor"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "jsCode": "const response =\n  $json.candidates?.[0]?.content?.parts?.[0]?.text ||\n  'No se pudo generar una respuesta.';\n\nreturn [\n  {\n    json: {\n      question: $('Build Context').first().json.question,\n      chat_id: $('Build Context').first().json.chat_id,\n      response,\n      sources: JSON.stringify($('Build Context').first().json.sources),\n      has_context: true\n    }\n  }\n];"
-        },
-        "id": "9099924e-99c7-47af-af33-fe8026a5a956",
-        "name": "Extract Gemini Response",
-        "type": "n8n-nodes-base.code",
-        "typeVersion": 1,
-        "position": [
-          1136,
-          -80
+          2336,
+          -896
         ]
       },
       {
@@ -546,23 +471,23 @@
         "type": "n8n-nodes-base.splitInBatches",
         "typeVersion": 3,
         "position": [
-          -320,
-          -704
+          -672,
+          -656
         ],
-        "id": "93e0778b-78fe-4881-9523-f2b05db46db5",
+        "id": "b9d84076-0da9-4b25-b831-587fd3e9eb52",
         "name": "Loop Over Items"
       },
       {
         "parameters": {
           "jsCode": "const file = $json;\n\nreturn [\n  {\n    json: {\n      file_id: file.id,\n      file_name: file.name,\n      mime_type: file.mimeType,\n      version: file.version || null,\n      source_url: file.webViewLink || null,\n      created_time: file.createdTime || null,\n      modified_time: file.modifiedTime || null,\n      document_date: file.modifiedTime || file.createdTime || null\n    }\n  }\n];"
         },
-        "id": "45ac7cbc-b269-4df9-ac76-8af1f3b4f322",
+        "id": "ec65a2b1-6602-41a5-bac2-a19002c714c7",
         "name": "Prepare File Metadata",
         "type": "n8n-nodes-base.code",
         "typeVersion": 1,
         "position": [
-          -112,
-          -704
+          -464,
+          -656
         ]
       },
       {
@@ -573,13 +498,13 @@
             "queryParams": "=$1 = {{$json.file_id}}"
           }
         },
-        "id": "0d2d01b6-82cc-4e1b-9272-46179ab99fe2",
+        "id": "3110d619-6f3c-4b69-96a6-6179fa1c51a0",
         "name": "Check File Version",
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 1,
         "position": [
-          96,
-          -704
+          -256,
+          -656
         ],
         "credentials": {
           "postgres": {
@@ -616,10 +541,10 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.3,
         "position": [
-          304,
-          -704
+          -48,
+          -656
         ],
-        "id": "e07d5b07-3b06-448f-907b-8cf6ae644bb7",
+        "id": "d70fe734-df52-437f-9ef1-400d3d164275",
         "name": "Is New Or Changed?"
       },
       {
@@ -629,130 +554,11 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          976,
-          -848
+          640,
+          -800
         ],
-        "id": "bddfdf9a-2635-4b84-abbf-cd08c7693140",
+        "id": "f67e7d09-01b7-4eb3-bc4b-33229864349a",
         "name": "Build Full Document"
-      },
-      {
-        "parameters": {
-          "conditions": {
-            "options": {
-              "caseSensitive": true,
-              "leftValue": "",
-              "typeValidation": "strict",
-              "version": 3
-            },
-            "conditions": [
-              {
-                "id": "278171e8-8b4d-4b35-bdbe-a6b4ec25401c",
-                "leftValue": "={{$json.message.text}}",
-                "rightValue": "",
-                "operator": {
-                  "type": "string",
-                  "operation": "notEmpty",
-                  "singleValue": true
-                }
-              }
-            ],
-            "combinator": "and"
-          },
-          "options": {}
-        },
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 2.3,
-        "position": [
-          -272,
-          96
-        ],
-        "id": "a2893e3a-9edc-453a-950b-a3e5d1f71707",
-        "name": "Is Text Message?"
-      },
-      {
-        "parameters": {
-          "jsCode": "const rows = $input.all();\n\nif (!rows.length) {\n  return [\n    {\n      json: {\n        question: $('Extract Question Embedding').first().json.question,\n        chat_id: $('Extract Question Embedding').first().json.chat_id,\n        has_context: false,\n        context: '',\n        sources: []\n      }\n    }\n  ];\n}\n\nconst sources = [];\nconst contextParts = [];\n\nfor (const item of rows) {\n  const r = item.json;\n\n  sources.push({\n    filename: r.filename || r.file_name || 'Documento sin nombre',\n    date_created: r.date_created,\n    source_url: r.source_url,\n    similarity: r.similarity\n  });\n\n  contextParts.push(\n`Archivo: ${r.filename || r.file_name || 'Documento sin nombre'}\nFecha: ${r.date_created}\nURL: ${r.source_url || 'sin URL'}\nContenido:\n${r.chunk_text}`\n  );\n}\n\nreturn [\n  {\n    json: {\n      question: $('Extract Question Embedding').first().json.question,\n      chat_id: $('Extract Question Embedding').first().json.chat_id,\n      has_context: true,\n      context: contextParts.join('\\n\\n---\\n\\n'),\n      sources\n    }\n  }\n];"
-        },
-        "id": "9fa8d91a-6f28-4f3e-a234-a9724cfba73f",
-        "name": "Build Context",
-        "type": "n8n-nodes-base.code",
-        "typeVersion": 1,
-        "position": [
-          528,
-          80
-        ]
-      },
-      {
-        "parameters": {
-          "conditions": {
-            "options": {
-              "caseSensitive": true,
-              "leftValue": "",
-              "typeValidation": "strict",
-              "version": 3
-            },
-            "conditions": [
-              {
-                "id": "84a9145d-a042-4fa7-a815-b9bc4771bbb9",
-                "leftValue": "={{$json.has_context}}",
-                "rightValue": "",
-                "operator": {
-                  "type": "boolean",
-                  "operation": "true",
-                  "singleValue": true
-                }
-              }
-            ],
-            "combinator": "and"
-          },
-          "options": {}
-        },
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 2.3,
-        "position": [
-          736,
-          80
-        ],
-        "id": "a21f56af-4a4b-4c2f-85d1-84f92b052d89",
-        "name": "Has Context?"
-      },
-      {
-        "parameters": {
-          "jsCode": "return [\n  {\n    json: {\n      question: $('Build Context').first().json.question,\n      chat_id: $('Build Context').first().json.chat_id,\n      response: 'No encuentro esa información en los documentos indexados.',\n      sources: '[]',\n      has_context: false\n    }\n  }\n];"
-        },
-        "type": "n8n-nodes-base.code",
-        "typeVersion": 2,
-        "position": [
-          944,
-          176
-        ],
-        "id": "a140865a-0613-4682-8562-9440bcdce26e",
-        "name": "No Context Response"
-      },
-      {
-        "parameters": {
-          "chatId": "={{ $('Extract Gemini Response').item.json.chat_id }}",
-          "text": "={{ $('Extract Gemini Response').item.json.response }}",
-          "additionalFields": {
-            "appendAttribution": false,
-            "parse_mode": "Markdown"
-          }
-        },
-        "id": "0e702b29-ad0d-4c62-8bd4-0d622f4bfc59",
-        "name": "Send Answer",
-        "type": "n8n-nodes-base.telegram",
-        "typeVersion": 1,
-        "position": [
-          1504,
-          -80
-        ],
-        "webhookId": "bb271667-6ba2-44ff-84b7-172b9b437169",
-        "credentials": {
-          "telegramApi": {
-            "id": "zVAz8OYcQjOrbRFr",
-            "name": "AnalizadorBot"
-          }
-        }
       },
       {
         "parameters": {
@@ -761,10 +567,10 @@
         "type": "n8n-nodes-base.splitInBatches",
         "typeVersion": 3,
         "position": [
-          1904,
-          -896
+          1552,
+          -848
         ],
-        "id": "cfbbb813-1636-4e7c-a4b4-defff52b7a75",
+        "id": "192d3d94-b9dc-494e-939b-0ea2596ce42a",
         "name": "Loop Chunks"
       },
       {
@@ -775,10 +581,10 @@
         "type": "n8n-nodes-base.extractFromFile",
         "typeVersion": 1.1,
         "position": [
-          640,
-          -848
+          288,
+          -800
         ],
-        "id": "0ee4d6d7-3b24-4674-91c4-554277b524cb",
+        "id": "84c9ba0b-450c-4aae-bca0-c2a605bbfd93",
         "name": "Extract PDF Text"
       },
       {
@@ -788,10 +594,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          816,
-          -848
+          464,
+          -800
         ],
-        "id": "6119d731-24de-405e-aabd-3caeb4ba5936",
+        "id": "549d0933-9757-4241-b558-bff15b2e5dea",
         "name": "Extract Document Date"
       },
       {
@@ -801,10 +607,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          1184,
-          -848
+          832,
+          -800
         ],
-        "id": "574c4d5d-5d2c-4be1-9ba0-7dc4fd50f8d1",
+        "id": "730347c6-bbf7-46ab-80b2-35a195a5cdd8",
         "name": "Prepare Document Row"
       },
       {
@@ -966,10 +772,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          1392,
-          -848
+          1040,
+          -800
         ],
-        "id": "deee3942-3e67-42a2-b415-0bf95e7bb097",
+        "id": "f5f1ccab-b920-400e-891d-79e5e0758a54",
         "name": "Upsert Document Metadata",
         "credentials": {
           "postgres": {
@@ -987,10 +793,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          1568,
-          -848
+          1216,
+          -800
         ],
-        "id": "d972f3fe-7b30-47c2-8a8a-cc98f056c671",
+        "id": "6e431d86-d4f1-441b-8952-6ea9908b13d8",
         "name": "Delete Old Chunks",
         "credentials": {
           "postgres": {
@@ -1010,10 +816,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          2448,
-          -864
+          2096,
+          -816
         ],
-        "id": "7b896a75-9c25-48e2-b833-d869eadc3120",
+        "id": "098096ee-c6fa-47c2-b77f-67f559f5cbe6",
         "name": "Insert Chunk with Embedding",
         "credentials": {
           "postgres": {
@@ -1024,8 +830,202 @@
       },
       {
         "parameters": {
+          "updates": [
+            "message"
+          ],
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.telegramTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -896,
+          352
+        ],
+        "id": "cdf8336c-adcb-44a8-af76-ed7cae4414cf",
+        "name": "Telegram Trigger",
+        "webhookId": "cb21abbc-d552-41b3-b906-f1f8b2e77557",
+        "credentials": {
+          "telegramApi": {
+            "id": "zVAz8OYcQjOrbRFr",
+            "name": "AnalizadorBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const embedding =\n  $json.embedding?.values ||\n  $json.embeddings?.[0]?.values ||\n  $json.values ||\n  null;\n\nif (!embedding) {\n  throw new Error('No se pudo extraer el embedding de la pregunta');\n}\n\nreturn [\n  {\n    json: {\n      question: $('Telegram Trigger').first().json.message.text,\n      chat_id: $('Telegram Trigger').first().json.message.chat.id,\n      embedding: `[${embedding.join(',')}]`\n    }\n  }\n];"
+        },
+        "id": "7b1647ee-ce83-4a8a-a127-9f3a9ee80aaa",
+        "name": "Extract Question Embedding",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 1,
+        "position": [
+          -304,
+          336
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googlePalmApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {\n  contents: [\n    {\n      parts: [\n        {\n          text: `Eres un asistente documental. Da respuestas detalladas, no cortes frases, responde con la respuesta entera. Responde SOLO con la información de los documentos proporcionados.\n\nReglas:\n- Si la respuesta exacta no aparece, pero hay una respuesta parcial o inferencia directa muy clara, explícalo.\n- No busques la respuesta en internet, solo con la información que te llega de los documentos.\n- Si el usuario pide una fecha exacta y el documento no la da, dilo expresamente.\n- Si el documento solo indica una duración o plazo aproximado, indícalo claramente.\n- No inventes nada.\n- Responde en español de España.\n- Sé claro y directo.\n- Al final añade una sección llamada \"Fuentes usadas\".\n- En cada fuente indica archivo y fecha.\n\nFORMATO DE RESPUESTA (MUY IMPORTANTE):\n- NO uses headers con # o ## o ###. Telegram no los soporta.\n- Para títulos usa *negrita* con un solo asterisco a cada lado.\n- Para listas usa guiones - en lugar de asteriscos *.\n- NO uses doble asterisco **texto**, usa simple *texto*.\n- Evita caracteres especiales como _ dentro de palabras.\n\n=== DOCUMENTOS RELEVANTES ===\n${$json.context}\n\n=== PREGUNTA ===\n${$json.question}`\n        }\n      ]\n    }\n  ],\n  generationConfig: {\n    temperature: 0.2,\n    maxOutputTokens: 2000,\n    topP: 0.9\n  }\n} }}",
+          "options": {}
+        },
+        "id": "835da602-46b7-4338-8675-e60eb15d87bd",
+        "name": "Call Gemini (with context)",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          496,
+          176
+        ],
+        "credentials": {
+          "googlePalmApi": {
+            "id": "Swwga5f6vKPJ1T0E",
+            "name": "gemini azor"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "let response =\n  $json.candidates?.[0]?.content?.parts?.[0]?.text ||\n  'No se pudo generar una respuesta.';\n\n// Escapar caracteres especiales para Telegram MarkdownV2\n// Mantiene los asteriscos para negrita\nconst cleanMarkdown = (text) => {\n  // Escape de caracteres especiales excepto * (negrita)\n  const specials = /_\\[\\]()~`>#+=|{}.\\\\/g;\n  let cleaned = text.replace(/([_\\[\\]()~`>#+=|{}.\\\\])/g, '\\\\$1');\n  // Reemplazar - y ! con forma segura\n  cleaned = cleaned.replace(/-/g, '\\\\-').replace(/!/g, '\\\\!');\n  return cleaned;\n};\n\nresponse = cleanMarkdown(response);\n\nreturn [\n  {\n    json: {\n      question: $('Build Context').first().json.question,\n      chat_id: $('Build Context').first().json.chat_id,\n      response,\n      sources: JSON.stringify($('Build Context').first().json.sources),\n      has_context: true\n    }\n  }\n];"
+        },
+        "id": "1633e155-f5b4-4e14-9fd8-36a3cabcadd4",
+        "name": "Extract Gemini Response",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 1,
+        "position": [
+          688,
+          176
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "278171e8-8b4d-4b35-bdbe-a6b4ec25401c",
+                "leftValue": "={{$json.message.text}}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          -720,
+          352
+        ],
+        "id": "1c2cf4fe-b6dc-42f5-a467-5c84f6531952",
+        "name": "Is Text Message?"
+      },
+      {
+        "parameters": {
+          "jsCode": "const rows = $input.all();\n\nif (!rows.length) {\n  return [\n    {\n      json: {\n        question: $('Extract Question Embedding').first().json.question,\n        chat_id: $('Extract Question Embedding').first().json.chat_id,\n        has_context: false,\n        context: '',\n        sources: []\n      }\n    }\n  ];\n}\n\n// Deduplicar por filename para evitar traer el mismo doc 100 veces\nconst uniqueByFilename = {};\nconst sourcesList = [];\nconst contextParts = [];\n\nfor (const item of rows) {\n  const r = item.json;\n  const filename = r.filename || r.file_name || 'Documento sin nombre';\n  \n  // Si no hemos visto este filename aún, agregarlo\n  if (!uniqueByFilename[filename]) {\n    uniqueByFilename[filename] = true;\n    \n    sourcesList.push({\n      filename: filename,\n      date_created: r.date_created,\n      source_url: r.source_url,\n      similarity: r.similarity\n    });\n    \n    contextParts.push(\n`Archivo: ${filename}\nFecha: ${r.date_created}\nURL: ${r.source_url || 'sin URL'}\nContenido:\n${r.chunk_text}`\n    );\n  }\n}\n\nreturn [\n  {\n    json: {\n      question: $('Extract Question Embedding').first().json.question,\n      chat_id: $('Extract Question Embedding').first().json.chat_id,\n      has_context: true,\n      context: contextParts.join('\\n\\n---\\n\\n'),\n      sources: sourcesList\n    }\n  }\n];"
+        },
+        "id": "d9c90678-bf7b-4ba2-9136-77f3c8ae9f03",
+        "name": "Build Context",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 1,
+        "position": [
+          80,
+          336
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "84a9145d-a042-4fa7-a815-b9bc4771bbb9",
+                "leftValue": "={{$json.has_context}}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          288,
+          336
+        ],
+        "id": "d3829ef7-7af6-495d-9f38-c7d2efc8f1ee",
+        "name": "Has Context?"
+      },
+      {
+        "parameters": {
+          "jsCode": "return [\n  {\n    json: {\n      question: $('Build Context').first().json.question,\n      chat_id: $('Build Context').first().json.chat_id,\n      response: 'No encuentro esa información en los documentos indexados.',\n      sources: '[]',\n      has_context: false\n    }\n  }\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          496,
+          432
+        ],
+        "id": "6012ba93-cf1a-47d4-a096-0419ca733da2",
+        "name": "No Context Response"
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $('Extract Gemini Response').item.json.chat_id }}",
+          "text": "={{ $('Extract Gemini Response').item.json.response }}",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "MarkdownV2"
+          }
+        },
+        "id": "4db414ca-b902-4360-9978-8ecb3e746c4d",
+        "name": "Send Answer",
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1,
+        "position": [
+          1056,
+          176
+        ],
+        "webhookId": "bb271667-6ba2-44ff-84b7-172b9b437169",
+        "credentials": {
+          "telegramApi": {
+            "id": "zVAz8OYcQjOrbRFr",
+            "name": "AnalizadorBot"
+          }
+        }
+      },
+      {
+        "parameters": {
           "operation": "executeQuery",
-          "query": "SELECT\n  dc.chunk_text,\n  d.file_name,\n  d.date_created,\n  d.drive_file_id,\n  d.source_url,\n  1 - (dc.embedding <=> $1::vector) AS similarity\nFROM document_chunks dc\nJOIN documents d ON d.id = dc.document_id\nWHERE 1 - (dc.embedding <=> $1::vector) >= 0.3\nORDER BY dc.embedding <=> $1::vector\nLIMIT 5;",
+          "query": "SELECT\n  dc.chunk_text,\n  d.file_name,\n  d.date_created,\n  d.drive_file_id,\n  d.source_url,\n  1 - (dc.embedding <=> $1::vector) AS similarity\nFROM document_chunks dc\nJOIN documents d ON d.id = dc.document_id\nWHERE 1 - (dc.embedding <=> $1::vector) > 0.5\nORDER BY dc.embedding <=> $1::vector\nLIMIT 400;",
           "options": {
             "queryReplacement": "={{$json.embedding}}"
           }
@@ -1033,10 +1033,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          352,
-          80
+          -96,
+          336
         ],
-        "id": "03c80aa4-5b82-4bd6-9675-f95cb04f5b86",
+        "id": "bb799627-b3bc-4302-9191-8a1d945748ed",
         "name": "Vector Search (Supabase)1",
         "credentials": {
           "postgres": {
@@ -1056,10 +1056,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          1344,
-          -80
+          896,
+          176
         ],
-        "id": "9080edcd-ed1a-4fab-83e1-3faa8f1f0cf6",
+        "id": "77e1eb60-4915-4638-986b-c4e7d1193e34",
         "name": "Log Conversation",
         "credentials": {
           "postgres": {
@@ -1079,13 +1079,13 @@
           "jsonBody": "{\n  \"model\": \"models/gemini-embedding-001\",\n  \"content\": {\n    \"parts\": [\n      {\n        \"text\": \"{{$json.chunk_text}}\"\n      }\n    ]\n  },\n  \"outputDimensionality\": 768\n}",
           "options": {}
         },
-        "id": "d2ee6088-e056-4612-b277-b7b0f3cae53f",
+        "id": "9d6e9bce-9dd7-4ff4-9373-89823744ac08",
         "name": "Embed Question (Gemini)",
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.2,
         "position": [
-          -48,
-          80
+          -496,
+          336
         ],
         "credentials": {
           "googlePalmApi": {
@@ -1255,11 +1255,22 @@
           ]
         ]
       },
-      "Telegram Trigger": {
+      "Manual Trigger": {
         "main": [
           [
             {
-              "node": "Is Text Message?",
+              "node": "List All Files in Drive",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "List All Files in Drive": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
               "type": "main",
               "index": 0
             }
@@ -1271,28 +1282,6 @@
           [
             {
               "node": "Extract PDF Text",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Extract Embedding Vector": {
-        "main": [
-          [
-            {
-              "node": "Insert Chunk with Embedding",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Manual Trigger": {
-        "main": [
-          [
-            {
-              "node": "List All Files in Drive",
               "type": "main",
               "index": 0
             }
@@ -1321,29 +1310,18 @@
           ]
         ]
       },
-      "Call Gemini (with context)": {
+      "Extract Embedding Vector": {
         "main": [
           [
             {
-              "node": "Extract Gemini Response",
+              "node": "Insert Chunk with Embedding",
               "type": "main",
               "index": 0
             }
           ]
         ]
       },
-      "Extract Gemini Response": {
-        "main": [
-          [
-            {
-              "node": "Log Conversation",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "List All Files in Drive": {
+      "Log Indexing Success": {
         "main": [
           [
             {
@@ -1417,57 +1395,6 @@
           ]
         ]
       },
-      "Extract Question Embedding": {
-        "main": [
-          [
-            {
-              "node": "Vector Search (Supabase)1",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Is Text Message?": {
-        "main": [
-          [
-            {
-              "node": "Embed Question (Gemini)",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Build Context": {
-        "main": [
-          [
-            {
-              "node": "Has Context?",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Has Context?": {
-        "main": [
-          [
-            {
-              "node": "Call Gemini (with context)",
-              "type": "main",
-              "index": 0
-            }
-          ],
-          [
-            {
-              "node": "No Context Response",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
       "Loop Chunks": {
         "main": [
           [
@@ -1486,11 +1413,6 @@
           ]
         ]
       },
-      "No Context Response": {
-        "main": [
-          []
-        ]
-      },
       "Extract PDF Text": {
         "main": [
           [
@@ -1507,17 +1429,6 @@
           [
             {
               "node": "Build Full Document",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Log Indexing Success": {
-        "main": [
-          [
-            {
-              "node": "Loop Over Items",
               "type": "main",
               "index": 0
             }
@@ -1568,6 +1479,90 @@
           ]
         ]
       },
+      "Telegram Trigger": {
+        "main": [
+          [
+            {
+              "node": "Is Text Message?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract Question Embedding": {
+        "main": [
+          [
+            {
+              "node": "Vector Search (Supabase)1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call Gemini (with context)": {
+        "main": [
+          [
+            {
+              "node": "Extract Gemini Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract Gemini Response": {
+        "main": [
+          [
+            {
+              "node": "Log Conversation",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Is Text Message?": {
+        "main": [
+          [
+            {
+              "node": "Embed Question (Gemini)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Build Context": {
+        "main": [
+          [
+            {
+              "node": "Has Context?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Has Context?": {
+        "main": [
+          [
+            {
+              "node": "Call Gemini (with context)",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Context Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
       "Vector Search (Supabase)1": {
         "main": [
           [
@@ -1603,11 +1598,11 @@
       }
     },
     "authors": "Jorge Huescar",
-    "name": "Version fc0ad040",
+    "name": "Version 172b3d76",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "fc0ad040-bf40-40cc-835c-797f5cec1d8d",
+  "activeVersionId": "172b3d76-dfdb-4dc4-9d66-a5fb0e55ff4a",
   "connections": {
     "Google Gemini Chat Model": {
       "ai_languageModel": [
@@ -1768,11 +1763,22 @@
         ]
       ]
     },
-    "Telegram Trigger": {
+    "Manual Trigger": {
       "main": [
         [
           {
-            "node": "Is Text Message?",
+            "node": "List All Files in Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List All Files in Drive": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
             "type": "main",
             "index": 0
           }
@@ -1784,28 +1790,6 @@
         [
           {
             "node": "Extract PDF Text",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract Embedding Vector": {
-      "main": [
-        [
-          {
-            "node": "Insert Chunk with Embedding",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Manual Trigger": {
-      "main": [
-        [
-          {
-            "node": "List All Files in Drive",
             "type": "main",
             "index": 0
           }
@@ -1834,29 +1818,18 @@
         ]
       ]
     },
-    "Call Gemini (with context)": {
+    "Extract Embedding Vector": {
       "main": [
         [
           {
-            "node": "Extract Gemini Response",
+            "node": "Insert Chunk with Embedding",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Extract Gemini Response": {
-      "main": [
-        [
-          {
-            "node": "Log Conversation",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "List All Files in Drive": {
+    "Log Indexing Success": {
       "main": [
         [
           {
@@ -1930,57 +1903,6 @@
         ]
       ]
     },
-    "Extract Question Embedding": {
-      "main": [
-        [
-          {
-            "node": "Vector Search (Supabase)1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Is Text Message?": {
-      "main": [
-        [
-          {
-            "node": "Embed Question (Gemini)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Build Context": {
-      "main": [
-        [
-          {
-            "node": "Has Context?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Has Context?": {
-      "main": [
-        [
-          {
-            "node": "Call Gemini (with context)",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Context Response",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Loop Chunks": {
       "main": [
         [
@@ -1999,11 +1921,6 @@
         ]
       ]
     },
-    "No Context Response": {
-      "main": [
-        []
-      ]
-    },
     "Extract PDF Text": {
       "main": [
         [
@@ -2020,17 +1937,6 @@
         [
           {
             "node": "Build Full Document",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Log Indexing Success": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items",
             "type": "main",
             "index": 0
           }
@@ -2081,6 +1987,90 @@
         ]
       ]
     },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Is Text Message?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Question Embedding": {
+      "main": [
+        [
+          {
+            "node": "Vector Search (Supabase)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Gemini (with context)": {
+      "main": [
+        [
+          {
+            "node": "Extract Gemini Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Gemini Response": {
+      "main": [
+        [
+          {
+            "node": "Log Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Text Message?": {
+      "main": [
+        [
+          {
+            "node": "Embed Question (Gemini)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Context": {
+      "main": [
+        [
+          {
+            "node": "Has Context?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Context?": {
+      "main": [
+        [
+          {
+            "node": "Call Gemini (with context)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Context Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Vector Search (Supabase)1": {
       "main": [
         [
@@ -2121,31 +2111,8 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "Workflow 3: RAG Chatbot - Telegram + Gemini + Vector Search",
+  "name": "Bot Analizador",
   "nodes": [
-    {
-      "parameters": {
-        "updates": [
-          "message"
-        ],
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.telegramTrigger",
-      "typeVersion": 1.2,
-      "position": [
-        -448,
-        96
-      ],
-      "id": "812d5a73-60b9-4c99-8bcc-37e83d36b51d",
-      "name": "Telegram Trigger",
-      "webhookId": "cb21abbc-d552-41b3-b906-f1f8b2e77557",
-      "credentials": {
-        "telegramApi": {
-          "id": "zVAz8OYcQjOrbRFr",
-          "name": "AnalizadorBot"
-        }
-      }
-    },
     {
       "parameters": {
         "options": {}
@@ -2467,13 +2434,13 @@
     },
     {
       "parameters": {},
-      "id": "aec13b01-2cca-4aa7-a531-221460c8276c",
+      "id": "37161545-48bc-4f68-a1c3-36da973d1599",
       "name": "Manual Trigger",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -720,
-        -704
+        -1072,
+        -656
       ]
     },
     {
@@ -2499,13 +2466,13 @@
           ]
         }
       },
-      "id": "e74d56e5-8d72-40c3-877a-fb10349271f0",
+      "id": "8fde7aed-1c02-4a93-bfc5-d637da741226",
       "name": "List All Files in Drive",
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -512,
-        -704
+        -864,
+        -656
       ],
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -2524,13 +2491,13 @@
         },
         "options": {}
       },
-      "id": "c2ab5eb6-8420-4922-b92c-861eaacdcc75",
+      "id": "0b20c63e-38b0-4cdd-9b44-d6387e495014",
       "name": "Download File",
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        496,
-        -848
+        144,
+        -800
       ],
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -2543,13 +2510,13 @@
       "parameters": {
         "jsCode": "const text = $('Build Full Document').item.json.full_text;\nconst chunkSize = 1200;\nconst overlap = 200;\n\nconst chunks = [];\nlet start = 0;\nlet index = 0;\n\nwhile (start < text.length) {\n  const end = Math.min(start + chunkSize, text.length);\n  const chunk = text.slice(start, end);\n\n  chunks.push({\n    json: {\n      document_id: $('Upsert Document Metadata').first().json.id,\n      chunk_index: index,\n      chunk_text: chunk,\n      file_name: $('Build Full Document').item.json.file_name,\n      document_date: $('Build Full Document').item.json.document_date\n    }\n  });\n\n  start += (chunkSize - overlap);\n  index++;\n}\n\nreturn chunks;"
       },
-      "id": "b17dea5c-7c33-444d-9079-c4280c36bcff",
+      "id": "111cc081-ab97-4389-91cc-64b8ae070b49",
       "name": "Split Into Chunks",
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        1744,
-        -848
+        1376,
+        -800
       ]
     },
     {
@@ -2563,13 +2530,13 @@
         "jsonBody": "{\n  \"model\": \"models/gemini-embedding-001\",\n  \"content\": {\n    \"parts\": [\n      {\n        \"text\": \"{{$json.chunk_text}}\"\n      }\n    ]\n  },\n  \"outputDimensionality\": 768\n}",
         "options": {}
       },
-      "id": "abecb098-ac34-482d-880d-b42d86a87d41",
+      "id": "81a023f8-ada3-446e-a226-d9607224a5d4",
       "name": "Generate Embedding (Gemini)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2096,
-        -864
+        1744,
+        -816
       ],
       "credentials": {
         "googlePalmApi": {
@@ -2582,78 +2549,26 @@
       "parameters": {
         "jsCode": "const embedding =\n  $json.embedding?.values ||\n  $json.embeddings?.[0]?.values ||\n  $json.values ||\n  null;\n\nif (!embedding) {\n  throw new Error('No se pudo extraer el vector de embedding');\n}\n\nreturn [\n  {\n    json: {\n      document_id: $('Loop Chunks').item.json.document_id,\n      chunk_index: $('Loop Chunks').item.json.chunk_index,\n      chunk_text: $('Loop Chunks').item.json.chunk_text,\n      embedding: `[${embedding.join(',')}]`\n    }\n  }\n];"
       },
-      "id": "a072fae1-8161-4f6c-9448-e37db71e622a",
+      "id": "d979083c-46bd-4fc6-884f-be723b983dd5",
       "name": "Extract Embedding Vector",
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        2272,
-        -864
+        1920,
+        -816
       ]
     },
     {
       "parameters": {
         "jsCode": "return [\n  {\n    json: {\n      ok: true,\n      file_name: $('Build Full Document').item.json.file_name,\n      file_id: $('Build Full Document').item.json.file_id,\n      document_id: $('Upsert Document Metadata').first().json.id,\n      indexed_at: new Date().toISOString()\n    }\n  }\n];"
       },
-      "id": "587076fc-a23b-4cdb-bdc1-198764a93997",
+      "id": "eabc2063-a662-4256-b168-c435a3ffa6e2",
       "name": "Log Indexing Success",
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        2688,
-        -944
-      ]
-    },
-    {
-      "parameters": {
-        "jsCode": "const embedding =\n  $json.embedding?.values ||\n  $json.embeddings?.[0]?.values ||\n  $json.values ||\n  null;\n\nif (!embedding) {\n  throw new Error('No se pudo extraer el embedding de la pregunta');\n}\n\nreturn [\n  {\n    json: {\n      question: $('Telegram Trigger').first().json.message.text,\n      chat_id: $('Telegram Trigger').first().json.message.chat.id,\n      embedding: `[${embedding.join(',')}]`\n    }\n  }\n];"
-      },
-      "id": "bda04a3c-f861-4475-903e-496dbe7b083f",
-      "name": "Extract Question Embedding",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 1,
-      "position": [
-        144,
-        80
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "googlePalmApi",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "{\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": \"Eres un asistente documental. Da respuestas detalladas, no cortes frases, responde con la respuesta entera. Responde SOLO con la información de los documentos proporcionados.\\n\\nReglas:\\n- Si la respuesta exacta no aparece, pero hay una respuesta parcial o inferencia directa muy clara, explícalo.\\n- Si el usuario pide una fecha exacta y el documento no la da, dilo expresamente.\\n- Si el documento solo indica una duración o plazo aproximado, indícalo claramente.\\n- No inventes nada.\\n- Responde en español de España.\\n- Sé claro y directo.\\n- Al final añade una sección llamada \\\"Fuentes usadas\\\".\\n- En cada fuente indica archivo, fecha y URL si existe.\\n\\n=== DOCUMENTOS RELEVANTES ===\\n{{$json.context}}\\n\\n=== PREGUNTA ===\\n{{$json.question}}\"\n        }\n      ]\n    }\n  ],\n  \"generationConfig\": {\n    \"temperature\": 0.2,\n    \"maxOutputTokens\": 700,\n    \"topP\": 0.9\n  }\n}",
-        "options": {}
-      },
-      "id": "e0f0f2e5-00b2-46eb-b46b-90880c8f7dfe",
-      "name": "Call Gemini (with context)",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        944,
-        -80
-      ],
-      "credentials": {
-        "googlePalmApi": {
-          "id": "Swwga5f6vKPJ1T0E",
-          "name": "gemini azor"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "const response =\n  $json.candidates?.[0]?.content?.parts?.[0]?.text ||\n  'No se pudo generar una respuesta.';\n\nreturn [\n  {\n    json: {\n      question: $('Build Context').first().json.question,\n      chat_id: $('Build Context').first().json.chat_id,\n      response,\n      sources: JSON.stringify($('Build Context').first().json.sources),\n      has_context: true\n    }\n  }\n];"
-      },
-      "id": "9099924e-99c7-47af-af33-fe8026a5a956",
-      "name": "Extract Gemini Response",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 1,
-      "position": [
-        1136,
-        -80
+        2336,
+        -896
       ]
     },
     {
@@ -2663,23 +2578,23 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -320,
-        -704
+        -672,
+        -656
       ],
-      "id": "93e0778b-78fe-4881-9523-f2b05db46db5",
+      "id": "b9d84076-0da9-4b25-b831-587fd3e9eb52",
       "name": "Loop Over Items"
     },
     {
       "parameters": {
         "jsCode": "const file = $json;\n\nreturn [\n  {\n    json: {\n      file_id: file.id,\n      file_name: file.name,\n      mime_type: file.mimeType,\n      version: file.version || null,\n      source_url: file.webViewLink || null,\n      created_time: file.createdTime || null,\n      modified_time: file.modifiedTime || null,\n      document_date: file.modifiedTime || file.createdTime || null\n    }\n  }\n];"
       },
-      "id": "45ac7cbc-b269-4df9-ac76-8af1f3b4f322",
+      "id": "ec65a2b1-6602-41a5-bac2-a19002c714c7",
       "name": "Prepare File Metadata",
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        -112,
-        -704
+        -464,
+        -656
       ]
     },
     {
@@ -2690,13 +2605,13 @@
           "queryParams": "=$1 = {{$json.file_id}}"
         }
       },
-      "id": "0d2d01b6-82cc-4e1b-9272-46179ab99fe2",
+      "id": "3110d619-6f3c-4b69-96a6-6179fa1c51a0",
       "name": "Check File Version",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        96,
-        -704
+        -256,
+        -656
       ],
       "credentials": {
         "postgres": {
@@ -2733,10 +2648,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        304,
-        -704
+        -48,
+        -656
       ],
-      "id": "e07d5b07-3b06-448f-907b-8cf6ae644bb7",
+      "id": "d70fe734-df52-437f-9ef1-400d3d164275",
       "name": "Is New Or Changed?"
     },
     {
@@ -2746,130 +2661,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        976,
-        -848
+        640,
+        -800
       ],
-      "id": "bddfdf9a-2635-4b84-abbf-cd08c7693140",
+      "id": "f67e7d09-01b7-4eb3-bc4b-33229864349a",
       "name": "Build Full Document"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "278171e8-8b4d-4b35-bdbe-a6b4ec25401c",
-              "leftValue": "={{$json.message.text}}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
-      "position": [
-        -272,
-        96
-      ],
-      "id": "a2893e3a-9edc-453a-950b-a3e5d1f71707",
-      "name": "Is Text Message?"
-    },
-    {
-      "parameters": {
-        "jsCode": "const rows = $input.all();\n\nif (!rows.length) {\n  return [\n    {\n      json: {\n        question: $('Extract Question Embedding').first().json.question,\n        chat_id: $('Extract Question Embedding').first().json.chat_id,\n        has_context: false,\n        context: '',\n        sources: []\n      }\n    }\n  ];\n}\n\nconst sources = [];\nconst contextParts = [];\n\nfor (const item of rows) {\n  const r = item.json;\n\n  sources.push({\n    filename: r.filename || r.file_name || 'Documento sin nombre',\n    date_created: r.date_created,\n    source_url: r.source_url,\n    similarity: r.similarity\n  });\n\n  contextParts.push(\n`Archivo: ${r.filename || r.file_name || 'Documento sin nombre'}\nFecha: ${r.date_created}\nURL: ${r.source_url || 'sin URL'}\nContenido:\n${r.chunk_text}`\n  );\n}\n\nreturn [\n  {\n    json: {\n      question: $('Extract Question Embedding').first().json.question,\n      chat_id: $('Extract Question Embedding').first().json.chat_id,\n      has_context: true,\n      context: contextParts.join('\\n\\n---\\n\\n'),\n      sources\n    }\n  }\n];"
-      },
-      "id": "9fa8d91a-6f28-4f3e-a234-a9724cfba73f",
-      "name": "Build Context",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 1,
-      "position": [
-        528,
-        80
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "84a9145d-a042-4fa7-a815-b9bc4771bbb9",
-              "leftValue": "={{$json.has_context}}",
-              "rightValue": "",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
-      "position": [
-        736,
-        80
-      ],
-      "id": "a21f56af-4a4b-4c2f-85d1-84f92b052d89",
-      "name": "Has Context?"
-    },
-    {
-      "parameters": {
-        "jsCode": "return [\n  {\n    json: {\n      question: $('Build Context').first().json.question,\n      chat_id: $('Build Context').first().json.chat_id,\n      response: 'No encuentro esa información en los documentos indexados.',\n      sources: '[]',\n      has_context: false\n    }\n  }\n];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        944,
-        176
-      ],
-      "id": "a140865a-0613-4682-8562-9440bcdce26e",
-      "name": "No Context Response"
-    },
-    {
-      "parameters": {
-        "chatId": "={{ $('Extract Gemini Response').item.json.chat_id }}",
-        "text": "={{ $('Extract Gemini Response').item.json.response }}",
-        "additionalFields": {
-          "appendAttribution": false,
-          "parse_mode": "Markdown"
-        }
-      },
-      "id": "0e702b29-ad0d-4c62-8bd4-0d622f4bfc59",
-      "name": "Send Answer",
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1,
-      "position": [
-        1504,
-        -80
-      ],
-      "webhookId": "bb271667-6ba2-44ff-84b7-172b9b437169",
-      "credentials": {
-        "telegramApi": {
-          "id": "zVAz8OYcQjOrbRFr",
-          "name": "AnalizadorBot"
-        }
-      }
     },
     {
       "parameters": {
@@ -2878,10 +2674,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1904,
-        -896
+        1552,
+        -848
       ],
-      "id": "cfbbb813-1636-4e7c-a4b4-defff52b7a75",
+      "id": "192d3d94-b9dc-494e-939b-0ea2596ce42a",
       "name": "Loop Chunks"
     },
     {
@@ -2892,10 +2688,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        640,
-        -848
+        288,
+        -800
       ],
-      "id": "0ee4d6d7-3b24-4674-91c4-554277b524cb",
+      "id": "84c9ba0b-450c-4aae-bca0-c2a605bbfd93",
       "name": "Extract PDF Text"
     },
     {
@@ -2905,10 +2701,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        816,
-        -848
+        464,
+        -800
       ],
-      "id": "6119d731-24de-405e-aabd-3caeb4ba5936",
+      "id": "549d0933-9757-4241-b558-bff15b2e5dea",
       "name": "Extract Document Date"
     },
     {
@@ -2918,10 +2714,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1184,
-        -848
+        832,
+        -800
       ],
-      "id": "574c4d5d-5d2c-4be1-9ba0-7dc4fd50f8d1",
+      "id": "730347c6-bbf7-46ab-80b2-35a195a5cdd8",
       "name": "Prepare Document Row"
     },
     {
@@ -3083,10 +2879,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1392,
-        -848
+        1040,
+        -800
       ],
-      "id": "deee3942-3e67-42a2-b415-0bf95e7bb097",
+      "id": "f5f1ccab-b920-400e-891d-79e5e0758a54",
       "name": "Upsert Document Metadata",
       "credentials": {
         "postgres": {
@@ -3104,10 +2900,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1568,
-        -848
+        1216,
+        -800
       ],
-      "id": "d972f3fe-7b30-47c2-8a8a-cc98f056c671",
+      "id": "6e431d86-d4f1-441b-8952-6ea9908b13d8",
       "name": "Delete Old Chunks",
       "credentials": {
         "postgres": {
@@ -3127,10 +2923,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        2448,
-        -864
+        2096,
+        -816
       ],
-      "id": "7b896a75-9c25-48e2-b833-d869eadc3120",
+      "id": "098096ee-c6fa-47c2-b77f-67f559f5cbe6",
       "name": "Insert Chunk with Embedding",
       "credentials": {
         "postgres": {
@@ -3141,8 +2937,202 @@
     },
     {
       "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -896,
+        352
+      ],
+      "id": "cdf8336c-adcb-44a8-af76-ed7cae4414cf",
+      "name": "Telegram Trigger",
+      "webhookId": "cb21abbc-d552-41b3-b906-f1f8b2e77557",
+      "credentials": {
+        "telegramApi": {
+          "id": "zVAz8OYcQjOrbRFr",
+          "name": "AnalizadorBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const embedding =\n  $json.embedding?.values ||\n  $json.embeddings?.[0]?.values ||\n  $json.values ||\n  null;\n\nif (!embedding) {\n  throw new Error('No se pudo extraer el embedding de la pregunta');\n}\n\nreturn [\n  {\n    json: {\n      question: $('Telegram Trigger').first().json.message.text,\n      chat_id: $('Telegram Trigger').first().json.message.chat.id,\n      embedding: `[${embedding.join(',')}]`\n    }\n  }\n];"
+      },
+      "id": "7b1647ee-ce83-4a8a-a127-9f3a9ee80aaa",
+      "name": "Extract Question Embedding",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        336
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googlePalmApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {\n  contents: [\n    {\n      parts: [\n        {\n          text: `Eres un asistente documental. Da respuestas detalladas, no cortes frases, responde con la respuesta entera. Responde SOLO con la información de los documentos proporcionados.\n\nReglas:\n- Si la respuesta exacta no aparece, pero hay una respuesta parcial o inferencia directa muy clara, explícalo.\n- No busques la respuesta en internet, solo con la información que te llega de los documentos.\n- Si el usuario pide una fecha exacta y el documento no la da, dilo expresamente.\n- Si el documento solo indica una duración o plazo aproximado, indícalo claramente.\n- No inventes nada.\n- Responde en español de España.\n- Sé claro y directo.\n- Al final añade una sección llamada \"Fuentes usadas\".\n- En cada fuente indica archivo y fecha.\n\nFORMATO DE RESPUESTA (MUY IMPORTANTE):\n- NO uses headers con # o ## o ###. Telegram no los soporta.\n- Para títulos usa *negrita* con un solo asterisco a cada lado.\n- Para listas usa guiones - en lugar de asteriscos *.\n- NO uses doble asterisco **texto**, usa simple *texto*.\n- Evita caracteres especiales como _ dentro de palabras.\n\n=== DOCUMENTOS RELEVANTES ===\n${$json.context}\n\n=== PREGUNTA ===\n${$json.question}`\n        }\n      ]\n    }\n  ],\n  generationConfig: {\n    temperature: 0.2,\n    maxOutputTokens: 2000,\n    topP: 0.9\n  }\n} }}",
+        "options": {}
+      },
+      "id": "835da602-46b7-4338-8675-e60eb15d87bd",
+      "name": "Call Gemini (with context)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        496,
+        176
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Swwga5f6vKPJ1T0E",
+          "name": "gemini azor"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let response =\n  $json.candidates?.[0]?.content?.parts?.[0]?.text ||\n  'No se pudo generar una respuesta.';\n\n// Escapar caracteres especiales para Telegram MarkdownV2\n// Mantiene los asteriscos para negrita\nconst cleanMarkdown = (text) => {\n  // Escape de caracteres especiales excepto * (negrita)\n  const specials = /_\\[\\]()~`>#+=|{}.\\\\/g;\n  let cleaned = text.replace(/([_\\[\\]()~`>#+=|{}.\\\\])/g, '\\\\$1');\n  // Reemplazar - y ! con forma segura\n  cleaned = cleaned.replace(/-/g, '\\\\-').replace(/!/g, '\\\\!');\n  return cleaned;\n};\n\nresponse = cleanMarkdown(response);\n\nreturn [\n  {\n    json: {\n      question: $('Build Context').first().json.question,\n      chat_id: $('Build Context').first().json.chat_id,\n      response,\n      sources: JSON.stringify($('Build Context').first().json.sources),\n      has_context: true\n    }\n  }\n];"
+      },
+      "id": "1633e155-f5b4-4e14-9fd8-36a3cabcadd4",
+      "name": "Extract Gemini Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        688,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "278171e8-8b4d-4b35-bdbe-a6b4ec25401c",
+              "leftValue": "={{$json.message.text}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -720,
+        352
+      ],
+      "id": "1c2cf4fe-b6dc-42f5-a467-5c84f6531952",
+      "name": "Is Text Message?"
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all();\n\nif (!rows.length) {\n  return [\n    {\n      json: {\n        question: $('Extract Question Embedding').first().json.question,\n        chat_id: $('Extract Question Embedding').first().json.chat_id,\n        has_context: false,\n        context: '',\n        sources: []\n      }\n    }\n  ];\n}\n\n// Deduplicar por filename para evitar traer el mismo doc 100 veces\nconst uniqueByFilename = {};\nconst sourcesList = [];\nconst contextParts = [];\n\nfor (const item of rows) {\n  const r = item.json;\n  const filename = r.filename || r.file_name || 'Documento sin nombre';\n  \n  // Si no hemos visto este filename aún, agregarlo\n  if (!uniqueByFilename[filename]) {\n    uniqueByFilename[filename] = true;\n    \n    sourcesList.push({\n      filename: filename,\n      date_created: r.date_created,\n      source_url: r.source_url,\n      similarity: r.similarity\n    });\n    \n    contextParts.push(\n`Archivo: ${filename}\nFecha: ${r.date_created}\nURL: ${r.source_url || 'sin URL'}\nContenido:\n${r.chunk_text}`\n    );\n  }\n}\n\nreturn [\n  {\n    json: {\n      question: $('Extract Question Embedding').first().json.question,\n      chat_id: $('Extract Question Embedding').first().json.chat_id,\n      has_context: true,\n      context: contextParts.join('\\n\\n---\\n\\n'),\n      sources: sourcesList\n    }\n  }\n];"
+      },
+      "id": "d9c90678-bf7b-4ba2-9136-77f3c8ae9f03",
+      "name": "Build Context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        80,
+        336
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "84a9145d-a042-4fa7-a815-b9bc4771bbb9",
+              "leftValue": "={{$json.has_context}}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        288,
+        336
+      ],
+      "id": "d3829ef7-7af6-495d-9f38-c7d2efc8f1ee",
+      "name": "Has Context?"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      question: $('Build Context').first().json.question,\n      chat_id: $('Build Context').first().json.chat_id,\n      response: 'No encuentro esa información en los documentos indexados.',\n      sources: '[]',\n      has_context: false\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        496,
+        432
+      ],
+      "id": "6012ba93-cf1a-47d4-a096-0419ca733da2",
+      "name": "No Context Response"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Extract Gemini Response').item.json.chat_id }}",
+        "text": "={{ $('Extract Gemini Response').item.json.response }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "MarkdownV2"
+        }
+      },
+      "id": "4db414ca-b902-4360-9978-8ecb3e746c4d",
+      "name": "Send Answer",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        1056,
+        176
+      ],
+      "webhookId": "bb271667-6ba2-44ff-84b7-172b9b437169",
+      "credentials": {
+        "telegramApi": {
+          "id": "zVAz8OYcQjOrbRFr",
+          "name": "AnalizadorBot"
+        }
+      }
+    },
+    {
+      "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT\n  dc.chunk_text,\n  d.file_name,\n  d.date_created,\n  d.drive_file_id,\n  d.source_url,\n  1 - (dc.embedding <=> $1::vector) AS similarity\nFROM document_chunks dc\nJOIN documents d ON d.id = dc.document_id\nWHERE 1 - (dc.embedding <=> $1::vector) >= 0.3\nORDER BY dc.embedding <=> $1::vector\nLIMIT 5;",
+        "query": "SELECT\n  dc.chunk_text,\n  d.file_name,\n  d.date_created,\n  d.drive_file_id,\n  d.source_url,\n  1 - (dc.embedding <=> $1::vector) AS similarity\nFROM document_chunks dc\nJOIN documents d ON d.id = dc.document_id\nWHERE 1 - (dc.embedding <=> $1::vector) > 0.5\nORDER BY dc.embedding <=> $1::vector\nLIMIT 400;",
         "options": {
           "queryReplacement": "={{$json.embedding}}"
         }
@@ -3150,10 +3140,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        352,
-        80
+        -96,
+        336
       ],
-      "id": "03c80aa4-5b82-4bd6-9675-f95cb04f5b86",
+      "id": "bb799627-b3bc-4302-9191-8a1d945748ed",
       "name": "Vector Search (Supabase)1",
       "credentials": {
         "postgres": {
@@ -3173,10 +3163,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1344,
-        -80
+        896,
+        176
       ],
-      "id": "9080edcd-ed1a-4fab-83e1-3faa8f1f0cf6",
+      "id": "77e1eb60-4915-4638-986b-c4e7d1193e34",
       "name": "Log Conversation",
       "credentials": {
         "postgres": {
@@ -3196,13 +3186,13 @@
         "jsonBody": "{\n  \"model\": \"models/gemini-embedding-001\",\n  \"content\": {\n    \"parts\": [\n      {\n        \"text\": \"{{$json.chunk_text}}\"\n      }\n    ]\n  },\n  \"outputDimensionality\": 768\n}",
         "options": {}
       },
-      "id": "d2ee6088-e056-4612-b277-b7b0f3cae53f",
+      "id": "9d6e9bce-9dd7-4ff4-9373-89823744ac08",
       "name": "Embed Question (Gemini)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -48,
-        80
+        -496,
+        336
       ],
       "credentials": {
         "googlePalmApi": {
@@ -3230,6 +3220,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-17T19:04:13.832Z",
-  "versionId": "fc0ad040-bf40-40cc-835c-797f5cec1d8d"
+  "updatedAt": "2026-03-18T10:02:13.190Z",
+  "versionId": "172b3d76-dfdb-4dc4-9d66-a5fb0e55ff4a"
 }
