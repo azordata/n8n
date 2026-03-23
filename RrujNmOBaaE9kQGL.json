@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-02T16:01:22.033Z",
-    "createdAt": "2026-03-02T16:01:15.886Z",
-    "versionId": "82fed529-699f-4eb5-b557-5e8c3826e6d0",
+    "updatedAt": "2026-03-23T09:59:52.304Z",
+    "createdAt": "2026-03-23T09:59:50.561Z",
+    "versionId": "803c0c00-2df4-4298-86f7-086a9164d7ee",
     "workflowId": "RrujNmOBaaE9kQGL",
     "nodes": [
       {
@@ -260,8 +260,8 @@
         "name": "Insertar Conversacion",
         "credentials": {
           "postgres": {
-            "id": "4XLvezcpD5suZgk3",
-            "name": "Supabase chatbot web"
+            "id": "XJF1vq7BKqjyMgBN",
+            "name": "base datos interna"
           }
         }
       },
@@ -283,8 +283,8 @@
         "name": "Insertar Mensaje Usuario",
         "credentials": {
           "postgres": {
-            "id": "4XLvezcpD5suZgk3",
-            "name": "Supabase chatbot web"
+            "id": "XJF1vq7BKqjyMgBN",
+            "name": "base datos interna"
           }
         }
       },
@@ -306,8 +306,8 @@
         "name": "Insertar Respuesta Bot",
         "credentials": {
           "postgres": {
-            "id": "4XLvezcpD5suZgk3",
-            "name": "Supabase chatbot web"
+            "id": "XJF1vq7BKqjyMgBN",
+            "name": "base datos interna"
           }
         }
       },
@@ -519,11 +519,11 @@
       }
     },
     "authors": "Jorge Huescar",
-    "name": "Version 82fed529",
+    "name": "Version 803c0c00",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "82fed529-699f-4eb5-b557-5e8c3826e6d0",
+  "activeVersionId": "803c0c00-2df4-4298-86f7-086a9164d7ee",
   "connections": {
     "When chat message received": {
       "main": [
@@ -958,8 +958,8 @@
       "name": "Insertar Conversacion",
       "credentials": {
         "postgres": {
-          "id": "4XLvezcpD5suZgk3",
-          "name": "Supabase chatbot web"
+          "id": "XJF1vq7BKqjyMgBN",
+          "name": "base datos interna"
         }
       }
     },
@@ -981,8 +981,8 @@
       "name": "Insertar Mensaje Usuario",
       "credentials": {
         "postgres": {
-          "id": "4XLvezcpD5suZgk3",
-          "name": "Supabase chatbot web"
+          "id": "XJF1vq7BKqjyMgBN",
+          "name": "base datos interna"
         }
       }
     },
@@ -1004,8 +1004,8 @@
       "name": "Insertar Respuesta Bot",
       "credentials": {
         "postgres": {
-          "id": "4XLvezcpD5suZgk3",
-          "name": "Supabase chatbot web"
+          "id": "XJF1vq7BKqjyMgBN",
+          "name": "base datos interna"
         }
       }
     },
@@ -1065,6 +1065,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-02T16:01:15.885Z",
-  "versionId": "82fed529-699f-4eb5-b557-5e8c3826e6d0"
+  "updatedAt": "2026-03-23T09:59:50.560Z",
+  "versionId": "803c0c00-2df4-4298-86f7-086a9164d7ee"
 }
