@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-23T09:59:52.304Z",
-    "createdAt": "2026-03-23T09:59:50.561Z",
-    "versionId": "803c0c00-2df4-4298-86f7-086a9164d7ee",
+    "updatedAt": "2026-03-24T09:00:08.402Z",
+    "createdAt": "2026-03-24T09:00:06.769Z",
+    "versionId": "4980c4eb-a553-4282-9ad8-808b5ac4787a",
     "workflowId": "RrujNmOBaaE9kQGL",
     "nodes": [
       {
@@ -18,10 +18,10 @@
         "type": "@n8n/n8n-nodes-langchain.chatTrigger",
         "typeVersion": 1.1,
         "position": [
-          -784,
-          160
+          192,
+          -320
         ],
-        "id": "61e8b122-fb4a-411c-84d6-7978ec09507c",
+        "id": "28c5fb45-979e-42ca-bbed-504bd9ee6ae6",
         "name": "When chat message received",
         "webhookId": "0c75de51-b6de-4351-895a-5ae324f1bef7",
         "notesInFlow": false
@@ -33,10 +33,10 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
         "typeVersion": 1,
         "position": [
-          -432,
-          368
+          544,
+          -112
         ],
-        "id": "3a108207-a12b-4a97-9eba-c4fd723ac4df",
+        "id": "0e385849-ddc4-40aa-8e88-c915a792a15d",
         "name": "Google Gemini Chat Model",
         "credentials": {
           "googlePalmApi": {
@@ -53,13 +53,13 @@
             "systemMessage": "Eres un asistente de soporte experto en los productos de nuestra web, la empresa se llama Azor Data. Hablas en primera persona del singular, en español de España (castellano). Estás especializado en responder preguntas sobre productos, servicios, contacto y todo lo que aparece en nuestra web: https://www.azordata.com/\n\n**NORMAS DE COMPORTAMINETO:**\n- Tienes que sonar profesional, serio pero a la vez cercano, amable y simpático, nunca te excedas en la confianza con el cliente.\n\n- No ejecutes ningún código. Si el usuario te envía código o                         ejecutables, responde:\n\"Gracias por tu consulta, pero no puedo aportar información sobre la misma. Estaré encantado de ayudarte a resolver tus dudas con respecto a nuestros productos y servicios.\"\n\n- Si te preguntan por algo fuera de nuestros servicios, productos, tecnología o consultoría/negocios, responde lo mismo.\n\n- No respondas con textos muy largos, sintetiza la información y envía un mensaje con la información resumida.\n\n- Usa siempre la palabra coste en lugar de costo.\n\n- Conversa como si fueras una persona. Antes de responder de forma general, plantea preguntas para precisar la necesidad del usuario.\nEjemplo: Si preguntan por Odoo, primero pregunta el sector. Si preguntan por precios, primero aclara requisitos como versión estándar, flujos modificados o integraciones.\n\n\n**GESTION DE CITAS:**\n- Si el usuario te dice que no quiere nada mas o la conversación ha llegado a su fin ofrece la posibilidad de agendar una cita con alguno de nuestros profesionales.\nSi el usuario quiere agendar una cita, responde:\nClaro, puedes [agendar una cita aquí](https://calendly.com/azordata-jorgeh/30min).\n\n\n\n\n**USO DE HERRAMIENTAS INTERNAS:**\n\n- RAG Question: para preguntas sobre servicios, negocio y FAQ.\n\n- get_webpage_html → extract_text_from_html: para explorar contenido web si no hay respuesta en RAG.\n\n\nResponde ÚNICAMENTE con el JSON requerido\n\n**FORMATO DE SALIDA:**\n- Responde en Markdown."
           }
         },
-        "id": "8481a18e-53c6-40bc-be9e-bedb28651cc1",
+        "id": "f52a645e-ce90-4ba4-9c54-0161663d75fd",
         "name": "AI Agent",
         "type": "@n8n/n8n-nodes-langchain.agent",
         "typeVersion": 1.6,
         "position": [
-          -96,
-          144
+          880,
+          -336
         ]
       },
       {
@@ -68,13 +68,13 @@
           "description": "Usa esta herramienta para limpiar el HTML bruto y devolver solo el texto visible.",
           "jsCode": "const html = $json.body || $json.data || '';\nconst text = html.replace(/<[^>]+>/g, ' ').replace(/\\s+/g, ' ').trim();\nreturn text;"
         },
-        "id": "7f98feb8-814c-4490-b37a-8b8210c71d52",
+        "id": "56a320ab-44bd-4799-ad31-33d84a53f7b4",
         "name": "extract_text_from_html",
         "type": "@n8n/n8n-nodes-langchain.toolCode",
         "typeVersion": 1.1,
         "position": [
-          256,
-          320
+          1232,
+          -160
         ]
       },
       {
@@ -84,13 +84,13 @@
           "optimizeResponse": true,
           "responseType": "text"
         },
-        "id": "6edcc91e-9beb-4bcd-a2b8-52f3e538da9e",
+        "id": "0678dcb6-edef-4e3b-a97a-9c6c27d7f75a",
         "name": "get_webpage_html",
         "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
         "typeVersion": 1.1,
         "position": [
-          48,
-          368
+          1024,
+          -112
         ]
       },
       {
@@ -130,13 +130,13 @@
             ]
           }
         },
-        "id": "96c9163f-9082-49d9-87d7-a0e55ddd10e8",
+        "id": "2d56cbe2-c151-44b0-8831-fabf7f0b404e",
         "name": "Rag Question",
         "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
         "typeVersion": 1.1,
         "position": [
-          -112,
-          384
+          864,
+          -96
         ]
       },
       {
@@ -145,26 +145,26 @@
           "sessionKey": "={{ $json.sessionId }}",
           "contextWindowLength": 20
         },
-        "id": "3a7fc757-634b-4f4d-a9c3-f10f0d26c647",
+        "id": "68e38b7c-08e9-4def-b651-172c131a4fd6",
         "name": "Window Buffer Memory",
         "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
         "typeVersion": 1.2,
         "position": [
-          -272,
-          384
+          704,
+          -96
         ]
       },
       {
         "parameters": {
           "jsCode": "const userInput = $('Extraer Datos').first().json.mensaje_usuario || 'No se pudo obtener el mensaje del usuario.';\nconst chatId = $('Extraer Datos').first().json.chat_id || '';\nconst userName = $('Extraer Datos').first().json.user_name || 'Usuario'; // Asume que 'user_name' viene de 'Extraer Datos'\n\n// Intenta obtener la respuesta del bot de varias fuentes potenciales\nlet botResponse = '';\n\n// Si viene de la rama FAQ (Preguntas FAQ -> Set3)\nconst set3Output = items.find(item => item.json && item.json.response);\nif (set3Output) {\n    botResponse = set3Output.json.response;\n}\n\n// Si viene de la rama de citas (Llamar envio de citas1 -> Merge2 -> ...)\n// Aquí deberías buscar la respuesta final generada por tu subflujo de citas.\n// Asumimos que el subflujo de citas o un nodo posterior en esa rama también expone una 'response'.\nconst citaOutput = items.find(item => item.json && item.json.response);\nif (citaOutput && !botResponse) { // Solo si no se encontró ya una respuesta de FAQ\n    botResponse = citaOutput.json.response;\n}\n\n// Si aún no se encontró una respuesta, usa un fallback\nif (!botResponse) {\n  botResponse = 'No se pudo obtener la respuesta final del bot.';\n}\n\nconst timestamp = new Date().toISOString();\n\nconst logEntry = {\n    timestamp: timestamp,\n    chat_id: chatId,\n    user_name: userName,\n    user_input: userInput,\n    bot_response: botResponse\n};\n\nreturn [ { json: logEntry } ];"
         },
-        "id": "8bfcb778-6f7d-44ac-ba55-c04d5b63f847",
+        "id": "e5959fe5-6e2d-432e-89a0-65836fda2517",
         "name": "Registrar Conversación (Code)",
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          64,
-          -64
+          1040,
+          -544
         ]
       },
       {
@@ -174,11 +174,11 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -128,
-          -64
+          848,
+          -544
         ],
         "name": "Extraer Datos",
-        "id": "12e9cdb7-bc41-420a-a7e9-b75895c28dcf"
+        "id": "cc70a518-1904-4b7d-b7bd-08734a904b3d"
       },
       {
         "parameters": {
@@ -187,10 +187,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          272,
-          144
+          1248,
+          -336
         ],
-        "id": "f7e36d77-7d85-4eb6-a814-c813cd4162eb",
+        "id": "55e77cd7-9bd7-4fc3-92c8-a59e0f2ce64e",
         "name": "Extraer Datos Bot"
       },
       {
@@ -200,10 +200,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          864,
-          144
+          1840,
+          -336
         ],
-        "id": "9e91dbb8-bac3-4208-81aa-2fc4850e4b85",
+        "id": "504fa5ff-9971-4b18-9208-ac81af93b823",
         "name": "Formatear Respuesta Bot"
       },
       {
@@ -223,10 +223,10 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          688,
-          144
+          1664,
+          -336
         ],
-        "id": "f1be195b-e14a-4b8e-b17c-65bef13e1e2a",
+        "id": "54d10a34-890e-48c3-91fe-c8842423319f",
         "name": "Mapear Respuesta"
       },
       {
@@ -236,10 +236,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -304,
-          144
+          672,
+          -336
         ],
-        "id": "738d03af-e888-41eb-a2a6-e69d99406c17",
+        "id": "fb7f6630-ee07-4272-ae97-194f35b5defa",
         "name": "Generar ID"
       },
       {
@@ -253,10 +253,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          304,
-          -64
+          1280,
+          -544
         ],
-        "id": "0b3256b4-2a01-43ca-ac5d-5d77d5b23f5a",
+        "id": "82c47fbf-816b-4e4e-bd17-3c4dd097aa3c",
         "name": "Insertar Conversacion",
         "credentials": {
           "postgres": {
@@ -276,10 +276,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          528,
-          -64
+          1504,
+          -544
         ],
-        "id": "90646407-5bf2-4bed-aa76-fc0302736b84",
+        "id": "bfd5b82b-b1d1-4b17-9763-c42fcd182a25",
         "name": "Insertar Mensaje Usuario",
         "credentials": {
           "postgres": {
@@ -299,10 +299,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          480,
-          144
+          1456,
+          -336
         ],
-        "id": "9242bd29-98af-4605-9b61-065c3ec354f2",
+        "id": "686aad82-497a-49e8-bb4d-baf91aed1637",
         "name": "Insertar Respuesta Bot",
         "credentials": {
           "postgres": {
@@ -339,11 +339,90 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.2,
         "position": [
-          -608,
-          160
+          368,
+          -320
         ],
-        "id": "fd802815-6737-4eda-9afc-0a5bc675b68f",
+        "id": "88ac1c99-6b8b-4a96-8ba4-c92b589d501a",
         "name": "Validar que haya mensaje"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "a7c54578-9af8-4cc4-8871-d240107906aa",
+                "leftValue": "={{ $('When chat message received').first().json.tipo }}",
+                "rightValue": "notificacion_contacto_bot",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          2048,
+          -336
+        ],
+        "id": "dd4cbe7e-4fa3-4cac-968c-804762b324ee",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $json.chat_id }}",
+          "text": "={{ (() => { const raw = $('When chat message received').first().json; const w = Array.isArray(raw) ? (raw[0] || {}) : raw; const sel = Array.isArray(w.contextoSeleccion) ? w.contextoSeleccion.map((s, i) => (i + 1) + '. ' + s).join('\\n') : ''; const ext = $('Extraer Datos').first().json || {}; const msg = w.message || w.chatInput || ext.mensaje_usuario || ''; return '🔔 notificacioncontactobot\\n\\nAsunto: ' + (w.subject || '') + '\\nSesión: ' + (w.sessionId || ext.sessionId || '') + '\\n\\n--- Selección del usuario ---\\n' + (sel || '(sin lista)') + '\\n\\n--- Mensaje / contacto ---\\n' + msg; })() }}",
+          "additionalFields": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          2432,
+          -416
+        ],
+        "id": "f1777734-5889-4995-b000-a9625b607d83",
+        "name": "Send a text message",
+        "webhookId": "510f01e5-be99-41ec-8307-ae1ed6e9ad9e",
+        "credentials": {
+          "telegramApi": {
+            "id": "GCy2TmVR3Ynwvy19",
+            "name": "AzorErrorBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT chat_id, user_id, user_name FROM telegram_users WHERE is_admin = true AND chat_id IS NOT NULL",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.4,
+        "position": [
+          2240,
+          -416
+        ],
+        "id": "d709d13d-4460-4cfa-8f43-d51b4a234e51",
+        "name": "Obtener Admins",
+        "credentials": {
+          "postgres": {
+            "id": "T3QBOxYypSNBQAxx",
+            "name": "Postgres account"
+          }
+        }
       }
     ],
     "connections": {
@@ -457,6 +536,17 @@
           ]
         ]
       },
+      "Formatear Respuesta Bot": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
       "Mapear Respuesta": {
         "main": [
           [
@@ -516,14 +606,36 @@
             }
           ]
         ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Obtener Admins",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Obtener Admins": {
+        "main": [
+          [
+            {
+              "node": "Send a text message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Jorge Huescar",
-    "name": "Version 803c0c00",
+    "name": "Version 4980c4eb",
     "description": "",
-    "autosaved": true
+    "autosaved": false
   },
-  "activeVersionId": "803c0c00-2df4-4298-86f7-086a9164d7ee",
+  "activeVersionId": "4980c4eb-a553-4282-9ad8-808b5ac4787a",
   "connections": {
     "When chat message received": {
       "main": [
@@ -635,6 +747,17 @@
         ]
       ]
     },
+    "Formatear Respuesta Bot": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Mapear Respuesta": {
       "main": [
         [
@@ -694,6 +817,28 @@
           }
         ]
       ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Obtener Admins",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Admins": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2026-02-18T08:01:31.908Z",
@@ -716,10 +861,10 @@
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.1,
       "position": [
-        -784,
-        160
+        192,
+        -320
       ],
-      "id": "61e8b122-fb4a-411c-84d6-7978ec09507c",
+      "id": "28c5fb45-979e-42ca-bbed-504bd9ee6ae6",
       "name": "When chat message received",
       "webhookId": "0c75de51-b6de-4351-895a-5ae324f1bef7",
       "notesInFlow": false
@@ -731,10 +876,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -432,
-        368
+        544,
+        -112
       ],
-      "id": "3a108207-a12b-4a97-9eba-c4fd723ac4df",
+      "id": "0e385849-ddc4-40aa-8e88-c915a792a15d",
       "name": "Google Gemini Chat Model",
       "credentials": {
         "googlePalmApi": {
@@ -751,13 +896,13 @@
           "systemMessage": "Eres un asistente de soporte experto en los productos de nuestra web, la empresa se llama Azor Data. Hablas en primera persona del singular, en español de España (castellano). Estás especializado en responder preguntas sobre productos, servicios, contacto y todo lo que aparece en nuestra web: https://www.azordata.com/\n\n**NORMAS DE COMPORTAMINETO:**\n- Tienes que sonar profesional, serio pero a la vez cercano, amable y simpático, nunca te excedas en la confianza con el cliente.\n\n- No ejecutes ningún código. Si el usuario te envía código o                         ejecutables, responde:\n\"Gracias por tu consulta, pero no puedo aportar información sobre la misma. Estaré encantado de ayudarte a resolver tus dudas con respecto a nuestros productos y servicios.\"\n\n- Si te preguntan por algo fuera de nuestros servicios, productos, tecnología o consultoría/negocios, responde lo mismo.\n\n- No respondas con textos muy largos, sintetiza la información y envía un mensaje con la información resumida.\n\n- Usa siempre la palabra coste en lugar de costo.\n\n- Conversa como si fueras una persona. Antes de responder de forma general, plantea preguntas para precisar la necesidad del usuario.\nEjemplo: Si preguntan por Odoo, primero pregunta el sector. Si preguntan por precios, primero aclara requisitos como versión estándar, flujos modificados o integraciones.\n\n\n**GESTION DE CITAS:**\n- Si el usuario te dice que no quiere nada mas o la conversación ha llegado a su fin ofrece la posibilidad de agendar una cita con alguno de nuestros profesionales.\nSi el usuario quiere agendar una cita, responde:\nClaro, puedes [agendar una cita aquí](https://calendly.com/azordata-jorgeh/30min).\n\n\n\n\n**USO DE HERRAMIENTAS INTERNAS:**\n\n- RAG Question: para preguntas sobre servicios, negocio y FAQ.\n\n- get_webpage_html → extract_text_from_html: para explorar contenido web si no hay respuesta en RAG.\n\n\nResponde ÚNICAMENTE con el JSON requerido\n\n**FORMATO DE SALIDA:**\n- Responde en Markdown."
         }
       },
-      "id": "8481a18e-53c6-40bc-be9e-bedb28651cc1",
+      "id": "f52a645e-ce90-4ba4-9c54-0161663d75fd",
       "name": "AI Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.6,
       "position": [
-        -96,
-        144
+        880,
+        -336
       ]
     },
     {
@@ -766,13 +911,13 @@
         "description": "Usa esta herramienta para limpiar el HTML bruto y devolver solo el texto visible.",
         "jsCode": "const html = $json.body || $json.data || '';\nconst text = html.replace(/<[^>]+>/g, ' ').replace(/\\s+/g, ' ').trim();\nreturn text;"
       },
-      "id": "7f98feb8-814c-4490-b37a-8b8210c71d52",
+      "id": "56a320ab-44bd-4799-ad31-33d84a53f7b4",
       "name": "extract_text_from_html",
       "type": "@n8n/n8n-nodes-langchain.toolCode",
       "typeVersion": 1.1,
       "position": [
-        256,
-        320
+        1232,
+        -160
       ]
     },
     {
@@ -782,13 +927,13 @@
         "optimizeResponse": true,
         "responseType": "text"
       },
-      "id": "6edcc91e-9beb-4bcd-a2b8-52f3e538da9e",
+      "id": "0678dcb6-edef-4e3b-a97a-9c6c27d7f75a",
       "name": "get_webpage_html",
       "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
       "typeVersion": 1.1,
       "position": [
-        48,
-        368
+        1024,
+        -112
       ]
     },
     {
@@ -828,13 +973,13 @@
           ]
         }
       },
-      "id": "96c9163f-9082-49d9-87d7-a0e55ddd10e8",
+      "id": "2d56cbe2-c151-44b0-8831-fabf7f0b404e",
       "name": "Rag Question",
       "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
       "typeVersion": 1.1,
       "position": [
-        -112,
-        384
+        864,
+        -96
       ]
     },
     {
@@ -843,26 +988,26 @@
         "sessionKey": "={{ $json.sessionId }}",
         "contextWindowLength": 20
       },
-      "id": "3a7fc757-634b-4f4d-a9c3-f10f0d26c647",
+      "id": "68e38b7c-08e9-4def-b651-172c131a4fd6",
       "name": "Window Buffer Memory",
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.2,
       "position": [
-        -272,
-        384
+        704,
+        -96
       ]
     },
     {
       "parameters": {
         "jsCode": "const userInput = $('Extraer Datos').first().json.mensaje_usuario || 'No se pudo obtener el mensaje del usuario.';\nconst chatId = $('Extraer Datos').first().json.chat_id || '';\nconst userName = $('Extraer Datos').first().json.user_name || 'Usuario'; // Asume que 'user_name' viene de 'Extraer Datos'\n\n// Intenta obtener la respuesta del bot de varias fuentes potenciales\nlet botResponse = '';\n\n// Si viene de la rama FAQ (Preguntas FAQ -> Set3)\nconst set3Output = items.find(item => item.json && item.json.response);\nif (set3Output) {\n    botResponse = set3Output.json.response;\n}\n\n// Si viene de la rama de citas (Llamar envio de citas1 -> Merge2 -> ...)\n// Aquí deberías buscar la respuesta final generada por tu subflujo de citas.\n// Asumimos que el subflujo de citas o un nodo posterior en esa rama también expone una 'response'.\nconst citaOutput = items.find(item => item.json && item.json.response);\nif (citaOutput && !botResponse) { // Solo si no se encontró ya una respuesta de FAQ\n    botResponse = citaOutput.json.response;\n}\n\n// Si aún no se encontró una respuesta, usa un fallback\nif (!botResponse) {\n  botResponse = 'No se pudo obtener la respuesta final del bot.';\n}\n\nconst timestamp = new Date().toISOString();\n\nconst logEntry = {\n    timestamp: timestamp,\n    chat_id: chatId,\n    user_name: userName,\n    user_input: userInput,\n    bot_response: botResponse\n};\n\nreturn [ { json: logEntry } ];"
       },
-      "id": "8bfcb778-6f7d-44ac-ba55-c04d5b63f847",
+      "id": "e5959fe5-6e2d-432e-89a0-65836fda2517",
       "name": "Registrar Conversación (Code)",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        64,
-        -64
+        1040,
+        -544
       ]
     },
     {
@@ -872,11 +1017,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -128,
-        -64
+        848,
+        -544
       ],
       "name": "Extraer Datos",
-      "id": "12e9cdb7-bc41-420a-a7e9-b75895c28dcf"
+      "id": "cc70a518-1904-4b7d-b7bd-08734a904b3d"
     },
     {
       "parameters": {
@@ -885,10 +1030,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        272,
-        144
+        1248,
+        -336
       ],
-      "id": "f7e36d77-7d85-4eb6-a814-c813cd4162eb",
+      "id": "55e77cd7-9bd7-4fc3-92c8-a59e0f2ce64e",
       "name": "Extraer Datos Bot"
     },
     {
@@ -898,10 +1043,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        864,
-        144
+        1840,
+        -336
       ],
-      "id": "9e91dbb8-bac3-4208-81aa-2fc4850e4b85",
+      "id": "504fa5ff-9971-4b18-9208-ac81af93b823",
       "name": "Formatear Respuesta Bot"
     },
     {
@@ -921,10 +1066,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        688,
-        144
+        1664,
+        -336
       ],
-      "id": "f1be195b-e14a-4b8e-b17c-65bef13e1e2a",
+      "id": "54d10a34-890e-48c3-91fe-c8842423319f",
       "name": "Mapear Respuesta"
     },
     {
@@ -934,10 +1079,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -304,
-        144
+        672,
+        -336
       ],
-      "id": "738d03af-e888-41eb-a2a6-e69d99406c17",
+      "id": "fb7f6630-ee07-4272-ae97-194f35b5defa",
       "name": "Generar ID"
     },
     {
@@ -951,10 +1096,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        304,
-        -64
+        1280,
+        -544
       ],
-      "id": "0b3256b4-2a01-43ca-ac5d-5d77d5b23f5a",
+      "id": "82c47fbf-816b-4e4e-bd17-3c4dd097aa3c",
       "name": "Insertar Conversacion",
       "credentials": {
         "postgres": {
@@ -974,10 +1119,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        528,
-        -64
+        1504,
+        -544
       ],
-      "id": "90646407-5bf2-4bed-aa76-fc0302736b84",
+      "id": "bfd5b82b-b1d1-4b17-9763-c42fcd182a25",
       "name": "Insertar Mensaje Usuario",
       "credentials": {
         "postgres": {
@@ -997,10 +1142,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        480,
-        144
+        1456,
+        -336
       ],
-      "id": "9242bd29-98af-4605-9b61-065c3ec354f2",
+      "id": "686aad82-497a-49e8-bb4d-baf91aed1637",
       "name": "Insertar Respuesta Bot",
       "credentials": {
         "postgres": {
@@ -1037,11 +1182,90 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -608,
-        160
+        368,
+        -320
       ],
-      "id": "fd802815-6737-4eda-9afc-0a5bc675b68f",
+      "id": "88ac1c99-6b8b-4a96-8ba4-c92b589d501a",
       "name": "Validar que haya mensaje"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a7c54578-9af8-4cc4-8871-d240107906aa",
+              "leftValue": "={{ $('When chat message received').first().json.tipo }}",
+              "rightValue": "notificacion_contacto_bot",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2048,
+        -336
+      ],
+      "id": "dd4cbe7e-4fa3-4cac-968c-804762b324ee",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chat_id }}",
+        "text": "={{ (() => { const raw = $('When chat message received').first().json; const w = Array.isArray(raw) ? (raw[0] || {}) : raw; const sel = Array.isArray(w.contextoSeleccion) ? w.contextoSeleccion.map((s, i) => (i + 1) + '. ' + s).join('\\n') : ''; const ext = $('Extraer Datos').first().json || {}; const msg = w.message || w.chatInput || ext.mensaje_usuario || ''; return '🔔 notificacioncontactobot\\n\\nAsunto: ' + (w.subject || '') + '\\nSesión: ' + (w.sessionId || ext.sessionId || '') + '\\n\\n--- Selección del usuario ---\\n' + (sel || '(sin lista)') + '\\n\\n--- Mensaje / contacto ---\\n' + msg; })() }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2432,
+        -416
+      ],
+      "id": "f1777734-5889-4995-b000-a9625b607d83",
+      "name": "Send a text message",
+      "webhookId": "510f01e5-be99-41ec-8307-ae1ed6e9ad9e",
+      "credentials": {
+        "telegramApi": {
+          "id": "GCy2TmVR3Ynwvy19",
+          "name": "AzorErrorBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT chat_id, user_id, user_name FROM telegram_users WHERE is_admin = true AND chat_id IS NOT NULL",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        2240,
+        -416
+      ],
+      "id": "d709d13d-4460-4cfa-8f43-d51b4a234e51",
+      "name": "Obtener Admins",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -1065,6 +1289,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-23T09:59:50.560Z",
-  "versionId": "803c0c00-2df4-4298-86f7-086a9164d7ee"
+  "updatedAt": "2026-03-24T09:00:06.768Z",
+  "versionId": "4980c4eb-a553-4282-9ad8-808b5ac4787a"
 }
