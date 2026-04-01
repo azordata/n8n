@@ -1,0 +1,166 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Client": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-31T09:29:18.734Z",
+  "id": "vI6yoOZJ0KjCasQi",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "spoki",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        48,
+        -64
+      ],
+      "id": "5edcdc13-5d19-4248-94d5-4e168607cb82",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        32,
+        -208
+      ],
+      "id": "b7d6418f-428d-4bb6-9ccc-a44b7a0b6745",
+      "name": "When chat message received",
+      "webhookId": "c9d193f5-e6ea-494b-8d2d-788ab3a62c9a"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=haz la accion sobre el mcp que puede hacer lo siguiente \ncreate_custom_field: Create a new custom field\ncreate_list: Create a new list\ncreate_ticket: Create a new support ticket\ndelete_list: Delete a list\nget_account_report: Get current usage report for an account\nget_automation: Get details of a specific automation by ID\nget_automation_steps: Get steps of a specific automation by ID\nget_contact: Retrieve a specific contact by ID\nget_custom_field: Get details of a specific custom field by ID\nget_list: Get a list by ID\nlist_accounts: List all accounts accessible to the user\nlist_automations: List all automations for the configured Spoki account with optional filtering\nlist_contact_lists: List all contact lists\nlist_contacts: List and search contacts with comprehensive filtering options\nlist_custom_fields: List all custom fields for the account\nlist_lists: List all lists\nlist_reports: List all reports with optional filtering and sorting\nlist_templates: List all message templates\nlist_tickets: List support tickets with filtering options\nremove_all_contacts_from_list: Remove all contacts from a list\nremove_contacts_from_list: Remove contacts from a list\nsend_message: Send a message to a contact\nstart_automation: Start/trigger an automation for a specific contact with provided data\nsync_contact: Create or update a single contact\nsync_contacts_to_list: Sync contacts to a list\nupdate_list: Update a list\n\nBasandote en la necesidad del usuario{{ $json.chatInput }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        336,
+        -64
+      ],
+      "id": "72d43231-2b93-47b5-9533-7ccebe9e509c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "endpointUrl": "https://mcp.spoki.com/mcp",
+        "serverTransport": "sse",
+        "authentication": "headerAuth",
+        "include": "selected",
+        "includeTools": [
+          "list_lists"
+        ],
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.2,
+      "position": [
+        528,
+        128
+      ],
+      "id": "5c7cb8fe-b946-4746-adc3-1cba152144de",
+      "name": "MCP Client",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "yh8y6NrP1AHq6H1b",
+          "name": "spoki api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        336,
+        144
+      ],
+      "id": "605e5db7-e077-4829-bc9e-59a3452b8f6f",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Swwga5f6vKPJ1T0E",
+          "name": "gemini azor"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-31T09:29:18.734Z",
+      "createdAt": "2026-03-31T09:29:18.734Z",
+      "role": "workflow:owner",
+      "workflowId": "vI6yoOZJ0KjCasQi",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-31T12:03:19.079Z",
+  "versionId": "5e43beaa-e681-43d2-ac68-91a8cf86ffc4"
+}
