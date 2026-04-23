@@ -1341,7 +1341,9 @@
   ],
   "staticData": {
     "node:Schedule Trigger": {
-      "recurrenceRules": []
+      "recurrenceRules": [
+        114
+      ]
     }
   },
   "tags": [],
