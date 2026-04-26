@@ -1,0 +1,859 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "¿Es Ubicación?": {
+      "main": [
+        [
+          {
+            "node": "Obtener Estado Visita",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "¿Lead Seleccionado?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Estado Visita": {
+      "main": [
+        [
+          {
+            "node": "¿Es Entrada o Salida?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Es Entrada o Salida?": {
+      "main": [
+        [
+          {
+            "node": "Guardar Ubicación Entrada",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Obtener Leads Abiertos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Ubicación Entrada": {
+      "main": [
+        [
+          {
+            "node": "Responder Entrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Leads Abiertos": {
+      "main": [
+        [
+          {
+            "node": "Guardar Ubicación Salida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Ubicación Salida": {
+      "main": [
+        [
+          {
+            "node": "Mostrar Menú Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Lead Seleccionado?": {
+      "main": [
+        [
+          {
+            "node": "Obtener Detalles Lead",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "¿Hay Audio?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Detalles Lead": {
+      "main": [
+        [
+          {
+            "node": "¿Lead es Won?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Lead es Won?": {
+      "main": [
+        [
+          {
+            "node": "Vincular Visita a Lead (Won)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Vincular Visita a Lead (Abierto)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vincular Visita a Lead (Won)": {
+      "main": [
+        [
+          {
+            "node": "Mensaje: Lead Won",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vincular Visita a Lead (Abierto)": {
+      "main": [
+        [
+          {
+            "node": "Mensaje: Lead Abierto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje: Lead Won": {
+      "main": [
+        [
+          {
+            "node": "¿Hay Audio?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje: Lead Abierto": {
+      "main": [
+        [
+          {
+            "node": "¿Hay Audio?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Hay Audio?": {
+      "main": [
+        [
+          {
+            "node": "Obtener Audio de Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Guardar Actividad con Texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Audio de Telegram": {
+      "main": [
+        [
+          {
+            "node": "Transcribir Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribir Audio": {
+      "main": [
+        [
+          {
+            "node": "Guardar Actividad con Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Actividad con Audio": {
+      "main": [
+        [
+          {
+            "node": "Confirmar Guardado (Audio)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Actividad con Texto": {
+      "main": [
+        [
+          {
+            "node": "Confirmar Guardado (Texto)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Extraer ubicación / usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraer ubicación / usuario": {
+      "main": [
+        [
+          {
+            "node": "Consultar memoria PostgreSQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consultar memoria PostgreSQL": {
+      "main": [
+        [
+          {
+            "node": "Router Entrada / Salida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Router Entrada / Salida": {
+      "main": [
+        [
+          {
+            "node": "¿Es Entrada?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Es Entrada?": {
+      "main": [
+        [
+          {
+            "node": "Guardar Entrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-04-24T10:41:28.665Z",
+  "id": "z2zwrAepN37q0K10",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Gestión de Visitas a Leads (Odoo 16)",
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.hasLocation }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "e9b1890f-4b35-49f3-8789-00e81129ad5a",
+      "name": "¿Es Ubicación?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -752,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/odoo-api/get-user-visit-state",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ userId: $('Extraer ubicación / usuario').first().json.userId }) }}",
+        "options": {}
+      },
+      "id": "2b7d8adf-5e1f-4cbc-8a55-48b94bc46527",
+      "name": "Obtener Estado Visita",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -544,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.hasEntryLocation }}"
+            }
+          ]
+        }
+      },
+      "id": "8a984628-6cc1-45a0-acd4-8898f4c3622a",
+      "name": "¿Es Entrada o Salida?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/odoo-api/register-entry-location",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ userId: $('Extraer ubicación / usuario').first().json.userId, latitude: $('Extraer ubicación / usuario').first().json.latitude, longitude: $('Extraer ubicación / usuario').first().json.longitude }) }}",
+        "options": {}
+      },
+      "id": "544290d2-4f50-4383-afc7-2c2211e7ac69",
+      "name": "Guardar Ubicación Entrada",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -144,
+        48
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/telegram/send-message",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ chatId: $('Extraer ubicación / usuario').first().json.chatId, text: '✅ Ubicación de entrada registrada en:\\n📍 Lat: ' + $('Extraer ubicación / usuario').first().json.latitude + '\\n📍 Lon: ' + $('Extraer ubicación / usuario').first().json.longitude }) }}",
+        "options": {}
+      },
+      "id": "86f88635-71c6-4927-bde3-2eccc97f9921",
+      "name": "Responder Entrada",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        64,
+        48
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/odoo-api/get-open-leads",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ userId: $('Extraer ubicación / usuario').first().json.userId }) }}",
+        "options": {}
+      },
+      "id": "a1d7a5e3-c084-49bc-9457-9cb1bed4815d",
+      "name": "Obtener Leads Abiertos",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -144,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/odoo-api/register-exit-location",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ userId: $('Extraer ubicación / usuario').first().json.userId, latitude: $('Extraer ubicación / usuario').first().json.latitude, longitude: $('Extraer ubicación / usuario').first().json.longitude }) }}",
+        "options": {}
+      },
+      "id": "6efb2190-fc95-491e-8fd5-190e89bd852c",
+      "name": "Guardar Ubicación Salida",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -144,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/telegram/send-leads-menu",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ chatId: $('Extraer ubicación / usuario').first().json.chatId, leads: $('Obtener Leads Abiertos').first().json.leads }) }}",
+        "options": {}
+      },
+      "id": "48e8432f-61c5-473c-8dd7-6499643b6f14",
+      "name": "Mostrar Menú Leads",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        64,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.selectedLeadId }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "f42810ec-434b-4c60-83fd-daea1182ba1f",
+      "name": "¿Lead Seleccionado?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -752,
+        608
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/odoo-api/get-lead-details",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ leadId: $('Extraer ubicación / usuario').first().json.selectedLeadId }) }}",
+        "options": {}
+      },
+      "id": "2e97de76-3d7a-4da3-bf8c-679e58155e26",
+      "name": "Obtener Detalles Lead",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -544,
+        608
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.probability }}",
+              "operation": "equal",
+              "value2": 100
+            }
+          ]
+        }
+      },
+      "id": "17875132-9ac4-490b-b773-fd2bdd7718aa",
+      "name": "¿Lead es Won?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        608
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/odoo-api/link-visit-to-lead",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, leadId: $('Extraer ubicación / usuario').first().json.selectedLeadId }) }}",
+        "options": {}
+      },
+      "id": "0d51eb87-8c0a-4770-ab6c-53e89779e962",
+      "name": "Vincular Visita a Lead (Won)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -144,
+        512
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/odoo-api/link-visit-to-lead",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, leadId: $('Extraer ubicación / usuario').first().json.selectedLeadId }) }}",
+        "options": {}
+      },
+      "id": "c91c41b3-1275-45e1-b007-2c99a4b880f2",
+      "name": "Vincular Visita a Lead (Abierto)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -144,
+        704
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/telegram/send-message",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ chatId: $('Extraer ubicación / usuario').first().json.chatId, text: '✅ Lead ganado (' + $('Obtener Detalles Lead').first().json.name + ')\\n👤 Se creará el contacto automáticamente\\n\\n¿Qué has ido a hacer? (Texto o 🎤 audio)' }) }}",
+        "options": {}
+      },
+      "id": "3f23a588-83d9-4a44-a333-47480ddceb39",
+      "name": "Mensaje: Lead Won",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        64,
+        512
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/telegram/send-message",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ chatId: $('Extraer ubicación / usuario').first().json.chatId, text: '📊 Lead abierto (' + $('Obtener Detalles Lead').first().json.name + ')\\n✓ Visita registrada\\n❌ No se crea contacto (Lead abierto)\\n\\n¿Qué has ido a hacer? (Texto o 🎤 audio)' }) }}",
+        "options": {}
+      },
+      "id": "fc7929a0-e1d7-42cd-896f-c1f4cf6e5a48",
+      "name": "Mensaje: Lead Abierto",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        64,
+        704
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.hasVoice }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "3f670169-c9ff-4ea2-b118-ed1d67f49b68",
+      "name": "¿Hay Audio?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -752,
+        912
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/getFile",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "file_id",
+              "value": "={{ $('Extraer ubicación / usuario').first().json.fileId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5814b5e5-464f-455b-b6e2-f969b24a9ba9",
+      "name": "Obtener Audio de Telegram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -544,
+        848
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/openai/transcribe",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ audioUrl: 'https://api.telegram.org/file/bot' + $env.TELEGRAM_BOT_TOKEN + '/' + $('Obtener Audio de Telegram').first().json.result.file_path }) }}",
+        "options": {}
+      },
+      "id": "ee56dae1-1d46-43d2-930f-ec71ff0b17a8",
+      "name": "Transcribir Audio",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -352,
+        848
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/odoo-api/save-visit-activity",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, summary: $('Transcribir Audio').first().json.transcription, notes: 'Actividad registrada desde Telegram (audio)', audio_transcription: $('Transcribir Audio').first().json.transcription }) }}",
+        "options": {}
+      },
+      "id": "4f308b43-ac64-45d1-a3db-cb86aa2e2e00",
+      "name": "Guardar Actividad con Audio",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -144,
+        848
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/odoo-api/save-visit-activity",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, summary: $('Extraer ubicación / usuario').first().json.text, notes: 'Actividad registrada desde Telegram (texto)', audio_transcription: null }) }}",
+        "options": {}
+      },
+      "id": "5a83a111-d181-495b-ad0d-57d54f01dd08",
+      "name": "Guardar Actividad con Texto",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -544,
+        1056
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/telegram/send-message",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ chatId: $('Extraer ubicación / usuario').first().json.chatId, text: '✅ Visita guardada exitosamente\\n🎤 Transcripción: ' + $('Transcribir Audio').first().json.transcription + '\\n\\n👍 Todo registrado en el CRM' }) }}",
+        "options": {}
+      },
+      "id": "e1c81111-4a70-4985-9860-1ba6e071401c",
+      "name": "Confirmar Guardado (Audio)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        64,
+        848
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/telegram/send-message",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ chatId: $('Extraer ubicación / usuario').first().json.chatId, text: '✅ Visita guardada exitosamente\\n📝 Resumen: ' + $('Extraer ubicación / usuario').first().json.text + '\\n\\n👍 Todo registrado en el CRM' }) }}",
+        "options": {}
+      },
+      "id": "6f01ab42-074e-457c-877e-842f2ddd1314",
+      "name": "Confirmar Guardado (Texto)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -352,
+        1056
+      ]
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1088,
+        -608
+      ],
+      "id": "2b41dbcd-0340-4457-84d6-046796eeb60f",
+      "name": "Telegram Trigger",
+      "webhookId": "10466960-1bb6-4e83-84f4-97818410efc4",
+      "credentials": {
+        "telegramApi": {
+          "id": "V5cPrt9IZsvJlgjs",
+          "name": "CrmBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const msg = $json.message || {};\nconst location = msg.location;\n\nif (!location) {\n  return {\n    error: true,\n    respuesta_usuario: '📍 Envíame tu ubicación para registrar entrada o salida de la visita.'\n  };\n}\n\nreturn {\n  chat_id: msg.chat.id,\n  user_id: msg.from.id,\n  user_name: `${msg.from.first_name || ''} ${msg.from.last_name || ''}`.trim(),\n  latitude: location.latitude,\n  longitude: location.longitude,\n  fecha_hora: new Date().toISOString(),\n  plataforma: 'telegram'\n};"
+      },
+      "id": "40e0f4f3-0134-4733-bc48-0fbf2da190a7",
+      "name": "Extraer ubicación / usuario",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -896,
+        -608
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -688,
+        -608
+      ],
+      "id": "7187688d-9db3-4909-b9c6-73dae53b5e00",
+      "name": "Consultar memoria PostgreSQL",
+      "credentials": {
+        "postgres": {
+          "id": "4XLvezcpD5suZgk3",
+          "name": "Supabase chatbot web"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const memoria = $('Consultar Memoria Visita').first().json || {};\nconst actual = $json;\n\nif (!memoria.estado || memoria.estado !== 'visita_abierta') {\n  return {\n    ...actual,\n    accion: 'registrar_entrada',\n    respuesta_usuario: '✅ Entrada registrada. Cuando termines la visita, vuelve a enviarme tu ubicación para registrar la salida.'\n  };\n}\n\nreturn {\n  ...actual,\n  accion: 'registrar_salida',\n  entrada_lat: memoria.entrada_lat,\n  entrada_lon: memoria.entrada_lon,\n  entrada_at: memoria.entrada_at,\n  respuesta_usuario: '✅ Salida registrada. ¿A qué lead u oportunidad has ido a visitar?'\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -480,
+        -608
+      ],
+      "id": "8fa0cfd7-1474-4abf-9393-9aa9bc2ab632",
+      "name": "Router Entrada / Salida"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ff39c823-f2be-47a5-a482-d712fd73e55c",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -272,
+        -608
+      ],
+      "id": "4492e95c-5000-4e17-b3f7-4682b6f51bf7",
+      "name": "¿Es Entrada?"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO crm_visitas_bot (\n  chat_id, estado, entrada_lat, entrada_lon, entrada_at, datos_pendientes, updated_at\n)\nVALUES (\n  $1, 'visita_abierta', $2, $3, NOW(), $4::jsonb, NOW()\n)\nON CONFLICT (chat_id)\nDO UPDATE SET\n  estado = 'visita_abierta',\n  entrada_lat = EXCLUDED.entrada_lat,\n  entrada_lon = EXCLUDED.entrada_lon,\n  entrada_at = EXCLUDED.entrada_at,\n  datos_pendientes = EXCLUDED.datos_pendientes,\n  updated_at = NOW();",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -32,
+        -704
+      ],
+      "id": "72b5a193-f8ad-4474-ab27-6f570524c2ab",
+      "name": "Guardar Entrada",
+      "credentials": {
+        "postgres": {
+          "id": "4XLvezcpD5suZgk3",
+          "name": "Supabase chatbot web"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-04-24T10:41:28.665Z",
+      "createdAt": "2026-04-24T10:41:28.665Z",
+      "role": "workflow:owner",
+      "workflowId": "z2zwrAepN37q0K10",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-04-24T12:33:47.924Z",
+  "versionId": "981a8d7f-fe8d-430f-ae5f-cb766f0f8a0f"
+}
