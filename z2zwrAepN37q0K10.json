@@ -1,7 +1,2389 @@
 {
-  "active": false,
-  "activeVersion": null,
-  "activeVersionId": null,
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-04-28T15:19:15.421Z",
+    "createdAt": "2026-04-28T15:19:13.275Z",
+    "versionId": "dd1258e2-7391-4a41-9a44-c0483beae126",
+    "workflowId": "z2zwrAepN37q0K10",
+    "nodes": [
+      {
+        "parameters": {
+          "conditions": {
+            "boolean": [
+              {
+                "value1": "={{ $json.hasLocation }}",
+                "value2": true
+              }
+            ]
+          }
+        },
+        "id": "e9b1890f-4b35-49f3-8789-00e81129ad5a",
+        "name": "¿Es Ubicación?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          -2704,
+          2496
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://localhost:3000/odoo-api/get-user-visit-state",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ userId: $('Detectar Tipo Inicial').first().json.userId }) }}",
+          "options": {}
+        },
+        "id": "2b7d8adf-5e1f-4cbc-8a55-48b94bc46527",
+        "name": "Obtener Estado Visita",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -2496,
+          2352
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "boolean": [
+              {
+                "value1": "={{ $json.hasEntryLocation }}"
+              }
+            ]
+          }
+        },
+        "id": "8a984628-6cc1-45a0-acd4-8898f4c3622a",
+        "name": "¿Es Entrada o Salida?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          -2304,
+          2352
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://localhost:3000/odoo-api/register-entry-location",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ userId: $('Detectar Tipo Inicial').first().json.userId, latitude: $('Detectar Tipo Inicial').first().json.latitude, longitude: $('Detectar Tipo Inicial').first().json.longitude }) }}",
+          "options": {}
+        },
+        "id": "544290d2-4f50-4383-afc7-2c2211e7ac69",
+        "name": "Guardar Ubicación Entrada",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -2096,
+          2240
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://localhost:3000/telegram/send-message",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '✅ Ubicación de entrada registrada en:\\n📍 Lat: ' + $('Detectar Tipo Inicial').first().json.latitude + '\\n📍 Lon: ' + $('Detectar Tipo Inicial').first().json.longitude }) }}",
+          "options": {}
+        },
+        "id": "86f88635-71c6-4927-bde3-2eccc97f9921",
+        "name": "Responder Entrada",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -1888,
+          2240
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://localhost:3000/odoo-api/get-open-leads",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ userId: $('Detectar Tipo Inicial').first().json.userId }) }}",
+          "options": {}
+        },
+        "id": "a1d7a5e3-c084-49bc-9457-9cb1bed4815d",
+        "name": "Obtener Leads Abiertos",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -2096,
+          2448
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://localhost:3000/odoo-api/register-exit-location",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ userId: $('Detectar Tipo Inicial').first().json.userId, latitude: $('Detectar Tipo Inicial').first().json.latitude, longitude: $('Detectar Tipo Inicial').first().json.longitude }) }}",
+          "options": {}
+        },
+        "id": "6efb2190-fc95-491e-8fd5-190e89bd852c",
+        "name": "Guardar Ubicación Salida",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -2096,
+          2592
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://localhost:3000/telegram/send-leads-menu",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, leads: $('Obtener Leads Abiertos').first().json.leads }) }}",
+          "options": {}
+        },
+        "id": "48e8432f-61c5-473c-8dd7-6499643b6f14",
+        "name": "Mostrar Menú Leads",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -1888,
+          2544
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "string": [
+              {
+                "value1": "={{ $json.selectedLeadId }}",
+                "operation": "isNotEmpty"
+              }
+            ]
+          }
+        },
+        "id": "f42810ec-434b-4c60-83fd-daea1182ba1f",
+        "name": "¿Lead Seleccionado?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          -2704,
+          2800
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://localhost:3000/odoo-api/get-lead-details",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ leadId: $('Detectar Tipo Inicial').first().json.selectedLeadId }) }}",
+          "options": {}
+        },
+        "id": "2e97de76-3d7a-4da3-bf8c-679e58155e26",
+        "name": "Obtener Detalles Lead",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -2496,
+          2800
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "number": [
+              {
+                "value1": "={{ $json.probability }}",
+                "operation": "equal",
+                "value2": 100
+              }
+            ]
+          }
+        },
+        "id": "17875132-9ac4-490b-b773-fd2bdd7718aa",
+        "name": "¿Lead es Won?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          -2304,
+          2800
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://localhost:3000/odoo-api/link-visit-to-lead",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, leadId: $('Detectar Tipo Inicial').first().json.selectedLeadId }) }}",
+          "options": {}
+        },
+        "id": "0d51eb87-8c0a-4770-ab6c-53e89779e962",
+        "name": "Vincular Visita a Lead (Won)",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -2096,
+          2704
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://localhost:3000/odoo-api/link-visit-to-lead",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, leadId: $('Detectar Tipo Inicial').first().json.selectedLeadId }) }}",
+          "options": {}
+        },
+        "id": "c91c41b3-1275-45e1-b007-2c99a4b880f2",
+        "name": "Vincular Visita a Lead (Abierto)",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -2096,
+          2896
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://localhost:3000/telegram/send-message",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '✅ Lead ganado (' + $('Obtener Detalles Lead').first().json.name + ')\\n👤 Se creará el contacto automáticamente\\n\\n¿Qué has ido a hacer? (Texto o 🎤 audio)' }) }}",
+          "options": {}
+        },
+        "id": "3f23a588-83d9-4a44-a333-47480ddceb39",
+        "name": "Mensaje: Lead Won",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -1888,
+          2704
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://localhost:3000/telegram/send-message",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '📊 Lead abierto (' + $('Obtener Detalles Lead').first().json.name + ')\\n✓ Visita registrada\\n❌ No se crea contacto (Lead abierto)\\n\\n¿Qué has ido a hacer? (Texto o 🎤 audio)' }) }}",
+          "options": {}
+        },
+        "id": "fc7929a0-e1d7-42cd-896f-c1f4cf6e5a48",
+        "name": "Mensaje: Lead Abierto",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -1888,
+          2896
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "boolean": [
+              {
+                "value1": "={{ $json.hasVoice }}",
+                "value2": true
+              }
+            ]
+          }
+        },
+        "id": "3f670169-c9ff-4ea2-b118-ed1d67f49b68",
+        "name": "¿Hay Audio?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          -2704,
+          3104
+        ]
+      },
+      {
+        "parameters": {
+          "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/getFile",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "file_id",
+                "value": "={{ $('Detectar Tipo Inicial').first().json.fileId }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "5814b5e5-464f-455b-b6e2-f969b24a9ba9",
+        "name": "Obtener Audio de Telegram",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -2496,
+          3040
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://localhost:3000/openai/transcribe",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ audioUrl: 'https://api.telegram.org/file/bot' + $env.TELEGRAM_BOT_TOKEN + '/' + $('Obtener Audio de Telegram').first().json.result.file_path }) }}",
+          "options": {}
+        },
+        "id": "ee56dae1-1d46-43d2-930f-ec71ff0b17a8",
+        "name": "Transcribir Audio",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -2304,
+          3040
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://localhost:3000/odoo-api/save-visit-activity",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, summary: $('Transcribir Audio').first().json.transcription, notes: 'Actividad registrada desde Telegram (audio)', audio_transcription: $('Transcribir Audio').first().json.transcription }) }}",
+          "options": {}
+        },
+        "id": "4f308b43-ac64-45d1-a3db-cb86aa2e2e00",
+        "name": "Guardar Actividad con Audio",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -2096,
+          3040
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://localhost:3000/odoo-api/save-visit-activity",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, summary: $('Detectar Tipo Inicial').first().json.text, notes: 'Actividad registrada desde Telegram (texto)', audio_transcription: null }) }}",
+          "options": {}
+        },
+        "id": "5a83a111-d181-495b-ad0d-57d54f01dd08",
+        "name": "Guardar Actividad con Texto",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -2496,
+          3248
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://localhost:3000/telegram/send-message",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '✅ Visita guardada exitosamente\\n🎤 Transcripción: ' + $('Transcribir Audio').first().json.transcription + '\\n\\n👍 Todo registrado en el CRM' }) }}",
+          "options": {}
+        },
+        "id": "e1c81111-4a70-4985-9860-1ba6e071401c",
+        "name": "Confirmar Guardado (Audio)",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -1888,
+          3040
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://localhost:3000/telegram/send-message",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '✅ Visita guardada exitosamente\\n📝 Resumen: ' + $('Detectar Tipo Inicial').first().json.text + '\\n\\n👍 Todo registrado en el CRM' }) }}",
+          "options": {}
+        },
+        "id": "6f01ab42-074e-457c-877e-842f2ddd1314",
+        "name": "Confirmar Guardado (Texto)",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -2304,
+          3248
+        ]
+      },
+      {
+        "parameters": {
+          "updates": [
+            "message"
+          ],
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.telegramTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -1712,
+          -608
+        ],
+        "id": "2b41dbcd-0340-4457-84d6-046796eeb60f",
+        "name": "Telegram Trigger",
+        "webhookId": "10466960-1bb6-4e83-84f4-97818410efc4",
+        "credentials": {
+          "telegramApi": {
+            "id": "V5cPrt9IZsvJlgjs",
+            "name": "CrmBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $json.telegram_chat_id || $json.chat_id }}",
+          "text": "=✅ Entrada registrada.  \n\nCuando termines la visita, vuelve a enviarme tu ubicación para registrar la salida.",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "Markdown"
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          800,
+          -1296
+        ],
+        "id": "1b90b557-c5d8-4223-b719-8d1e6395a88a",
+        "name": "Entrada Registrada",
+        "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+        "credentials": {
+          "telegramApi": {
+            "id": "V5cPrt9IZsvJlgjs",
+            "name": "CrmBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT\n  base.chat_id,\n  t.user_id,\n  t.user_name,\n  t.estado,\n  t.ultimo_mensaje_bot,\n  t.datos_pendientes,\n  t.entrada_lat,\n  t.entrada_lon,\n  t.entrada_at,\n  t.salida_lat,\n  t.salida_lon,\n  t.salida_at,\n  t.lead_id,\n  t.lead_name,\n  t.created_at,\n  t.updated_at\nFROM (SELECT $1::bigint AS chat_id) base\nLEFT JOIN crm_visitas_bot t\n  ON t.chat_id = base.chat_id;",
+          "options": {
+            "queryReplacement": "={{ [$json.chat_id] }}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          -976,
+          -608
+        ],
+        "id": "7187688d-9db3-4909-b9c6-73dae53b5e00",
+        "name": "Consultar Memoria Visita",
+        "credentials": {
+          "postgres": {
+            "id": "T3QBOxYypSNBQAxx",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const entrada = $json;\nconst memoria = $json.memoria || {};\n\nconst estado = memoria.estado || null;\nconst tipo = entrada.tipo_mensaje;\nconst texto = String(entrada.mensaje_usuario || '').toLowerCase().trim();\n\nconst esCancelar = ['cancelar', 'cancela', 'anula', 'salir'].some(x => texto.includes(x));\n\nif (esCancelar) {\n  return { ...entrada, accion: 'cancelar' };\n}\n\nif (tipo === 'location') {\n  if (!estado || estado !== 'visita_abierta') {\n    return { ...entrada, accion: 'registrar_entrada' };\n  } else {\n    return { ...entrada, accion: 'registrar_salida' };\n  }\n}\n\nif (estado === 'esperando_lead' && tipo === 'text') {\n  return { ...entrada, accion: 'procesar_respuesta_lead' };\n}\n\nif (estado === 'esperando_crear_oportunidad' && (tipo === 'text' || tipo === 'voice')) {\n  return { ...entrada, accion: 'crear_oportunidad' };\n}\n\nif (estado === 'esperando_descripcion_visita' && (tipo === 'text' || tipo === 'voice')) {\n  return { ...entrada, accion: 'guardar_visita' };\n}\n\nreturn {\n  ...entrada,\n  accion: 'mensaje_ayuda',\n  respuesta_usuario: 'Envíame una ubicación para empezar una visita comercial.'\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -560,
+          -608
+        ],
+        "id": "8fa0cfd7-1474-4abf-9393-9aa9bc2ab632",
+        "name": "Router Principal CRM"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.accion }}",
+                      "rightValue": "registrar_entrada",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "48445e91-6a6c-4c09-b3d6-81ac6c231aa6"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "registrar_entrada"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "ea805b24-dacc-4db0-84c1-5c469b33ac58",
+                      "leftValue": "={{ $json.accion }}",
+                      "rightValue": "registrar_salida",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "registrar_salida"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "1cf96c94-68c0-4dd0-88ff-bdcb32e62d19",
+                      "leftValue": "={{ $json.accion }}",
+                      "rightValue": "procesar_respuesta_lead",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "procesar_respuesta_lead"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "1a84146f-5a6b-404b-80a0-91621b965248",
+                      "leftValue": "={{ $json.accion }}",
+                      "rightValue": "crear_oportunidad",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "crear_oportunidad"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "aa7abee8-4d78-412f-a6f5-5dc21d229edc",
+                      "leftValue": "={{ $json.accion }}",
+                      "rightValue": "guardar_visita",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "guardar_visita"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "80b9b6ff-34e7-44a2-a7c6-906065d31775",
+                      "leftValue": "={{ $json.accion }}",
+                      "rightValue": "cancelar",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "cancelar"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "5a4840d0-3bcf-44cf-bec1-2d9b133263ae",
+                      "leftValue": "={{ $json.accion }}",
+                      "rightValue": "mensaje_ayuda",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "mensaje_ayuda"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.4,
+        "position": [
+          144,
+          -688
+        ],
+        "id": "1d39b34c-90e0-4f41-8fc4-e7bca840e4c0",
+        "name": "Switch Acción"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "INSERT INTO crm_visitas_bot (\n  chat_id, user_id, user_name, estado,\n  entrada_lat, entrada_lon, entrada_at,\n  ultimo_mensaje_bot, datos_pendientes, updated_at\n)\nVALUES (\n  $1, $2, $3, 'visita_abierta',\n  $4, $5, NOW(),\n  $6, $7::jsonb, NOW()\n)\nON CONFLICT (chat_id)\nDO UPDATE SET\n  user_id = EXCLUDED.user_id,\n  user_name = EXCLUDED.user_name,\n  estado = 'visita_abierta',\n  entrada_lat = EXCLUDED.entrada_lat,\n  entrada_lon = EXCLUDED.entrada_lon,\n  entrada_at = EXCLUDED.entrada_at,\n  ultimo_mensaje_bot = EXCLUDED.ultimo_mensaje_bot,\n  datos_pendientes = EXCLUDED.datos_pendientes,\n  updated_at = NOW()\nRETURNING chat_id, user_id, user_name, estado;",
+          "options": {
+            "queryReplacement": "={{\n[\n  $json.chat_id,\n  $json.user_id,\n  $json.user_name,\n  $json.latitude,\n  $json.longitude,\n  '✅ Entrada registrada. Cuando termines la visita, vuelve a enviarme tu ubicación para registrar la salida.',\n  JSON.stringify({ fase: 'entrada_registrada' })\n]\n}}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          576,
+          -1296
+        ],
+        "id": "182887e7-6bfa-492d-aeb0-f72a802b3e32",
+        "name": "Guardar Entrada",
+        "credentials": {
+          "postgres": {
+            "id": "T3QBOxYypSNBQAxx",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "UPDATE crm_visitas_bot\nSET\n  estado = 'esperando_lead',\n  salida_lat = $2,\n  salida_lon = $3,\n  salida_at = NOW(),\n  ultimo_mensaje_bot = $4,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id, estado;",
+          "options": {
+            "queryReplacement": "={{\n[\n  $json.chat_id,\n  $json.latitude,\n  $json.longitude,\n  '¿A qué lead u oportunidad has ido a visitar?'\n]\n}}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          576,
+          -1056
+        ],
+        "id": "c2f04e0e-d36b-4024-a992-3543273ce2e7",
+        "name": "Guardar Salida",
+        "credentials": {
+          "postgres": {
+            "id": "T3QBOxYypSNBQAxx",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      $('Unificar Contexto Odoo').first().json.odoo.db,\n      $('Unificar Contexto Odoo').first().json.odoo.uid,\n      $('Unificar Contexto Odoo').first().json.odoo.password,\n      \"crm.lead\",\n      \"search_read\",\n      [\n        [\n          [\"type\", \"=\", \"opportunity\"],\n          [\"probability\", \"<\", 100],\n          [\"active\", \"=\", true]\n        ]\n      ],\n      {\n        fields: [\"id\", \"name\", \"partner_name\", \"contact_name\", \"stage_id\"],\n        limit: 20,\n        order: \"write_date desc\"\n      }\n    ]\n  }\n}) }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          800,
+          -1056
+        ],
+        "id": "1fe89e8c-8d7c-4175-8140-9e3d148a1140",
+        "name": "Consultar Oportunidades Abiertas Odoo"
+      },
+      {
+        "parameters": {
+          "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"call\",\n  \"params\": {\n    \"service\": \"common\",\n    \"method\": \"authenticate\",\n    \"args\": [\n      \"lsanchezgoshawk-crm-main-31347967\",\n      \"admin\",\n      \"admin\",\n      {}\n    ]\n  },\n  \"id\": 1\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -304,
+          -608
+        ],
+        "id": "22ed0f56-4cb8-4034-a0ea-d88bd4db5b14",
+        "name": "Autenticar Odoo"
+      },
+      {
+        "parameters": {
+          "jsCode": "const actual = $('Unificar Contexto Odoo').first().json;\nconst oportunidades = $json.result || [];\n\nconst textoLista = oportunidades.length\n  ? oportunidades.map((o, i) => `${i + 1}. ${o.name}`).join('\\n')\n  : 'No he encontrado oportunidades abiertas.';\n\nreturn {\n  ...actual,\n  oportunidades,\n  textoLista,\n  mensaje_bot:\n`✅ Salida registrada.\n\n¿A qué lead u oportunidad has ido a visitar?\n\n${textoLista}\n\nResponde con el número, escribe \"crear oportunidad\" o \"cancelar\".`\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1008,
+          -1056
+        ],
+        "id": "d79240f7-43d1-43d6-ac0d-58aecffce8d4",
+        "name": "Preparar Lista Oportunidades"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "UPDATE crm_visitas_bot\nSET\n  estado = 'esperando_lead',\n  ultimo_mensaje_bot = $2,\n  datos_pendientes = $3::jsonb,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id, estado;",
+          "options": {
+            "queryReplacement": "={{\n[\n  $json.chat_id,\n  $json.mensaje_bot,\n  JSON.stringify({\n    oportunidades: $json.oportunidades\n  })\n]\n}}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          1216,
+          -1056
+        ],
+        "id": "9de80e44-2683-46cf-8e03-facbdc2197a3",
+        "name": "Guardar Memoria Oportunidades",
+        "credentials": {
+          "postgres": {
+            "id": "T3QBOxYypSNBQAxx",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $('Preparar Lista Oportunidades').first().json.telegram_chat_id || $('Preparar Lista Oportunidades').first().json.chat_id }}",
+          "text": "={{ $('Preparar Lista Oportunidades').first().json.mensaje_bot }}",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "Markdown"
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          1408,
+          -1056
+        ],
+        "id": "78bc8d06-9773-4bc5-9cbe-554a5d3911af",
+        "name": "Enviar Lista Leads",
+        "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+        "credentials": {
+          "telegramApi": {
+            "id": "V5cPrt9IZsvJlgjs",
+            "name": "CrmBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const memoria = $json.memoria || {};\nconst pendientes = memoria.datos_pendientes || {};\nconst opciones = pendientes.oportunidades || [];\nconst texto = String($json.mensaje_usuario || '').trim().toLowerCase();\n\nif (['cancelar', 'cancela', 'anular'].includes(texto)) {\n  return { ...$json, resultado: 'cancelar' };\n}\n\nif (texto.includes('crear oportunidad')) {\n  return { ...$json, resultado: 'crear_oportunidad' };\n}\n\nconst n = parseInt(texto, 10);\nif (Number.isFinite(n) && n >= 1 && n <= opciones.length) {\n  return {\n    ...$json,\n    resultado: 'lead_elegido',\n    lead_id: opciones[n - 1].id,\n    lead_name: opciones[n - 1].name\n  };\n}\n\nconst match = opciones.find(o =>\n  String(o.name || '').toLowerCase().includes(texto)\n);\n\nif (match) {\n  return {\n    ...$json,\n    resultado: 'lead_elegido',\n    lead_id: match.id,\n    lead_name: match.name\n  };\n}\n\nreturn {\n  ...$json,\n  resultado: 'no_entendido'\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          576,
+          -768
+        ],
+        "id": "468ff440-5713-4b0e-b98e-8693947df512",
+        "name": "Resolver Lead Elegido"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.resultado }}",
+                      "rightValue": "lead_elegido",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "4ac3b34d-0aea-43ea-a90b-c638b3e71a77"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "lead_elegido"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "5c59cfd6-f7ce-44e5-8803-9280bcfbc403",
+                      "leftValue": "={{ $json.resultado }}",
+                      "rightValue": "crear_oportunidad",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "crear_oportunidad"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "1ed2f583-e031-471b-83bf-21b9944950d0",
+                      "leftValue": "={{ $json.resultado }}",
+                      "rightValue": "cancelar",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "cancelar"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 3
+                  },
+                  "conditions": [
+                    {
+                      "id": "b04cebeb-4856-45b8-81dd-58995f7afe3e",
+                      "leftValue": "={{ $json.resultado }}",
+                      "rightValue": "no_entendido",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "no_entendido"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.4,
+        "position": [
+          768,
+          -800
+        ],
+        "id": "27aff82e-0243-4faa-956f-e6907413c29e",
+        "name": "Switch Resultado Lead"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "UPDATE crm_visitas_bot\nSET\n  lead_id = $2,\n  lead_name = $3,\n  estado = 'esperando_descripcion_visita',\n  ultimo_mensaje_bot = $4,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id, lead_id, lead_name, estado;",
+          "options": {
+            "queryReplacement": "={{\n[\n  $json.chat_id,\n  $json.lead_id,\n  $json.lead_name,\n  `Perfecto. ¿Qué has ido a hacer en la visita a \"${$json.lead_name}\"? Puedes escribirlo o enviarlo por audio.`\n]\n}}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          1056,
+          -816
+        ],
+        "id": "6769cb31-6449-4d13-aafd-66bfa6fdb5ed",
+        "name": "Guardar Lead Elegido",
+        "credentials": {
+          "postgres": {
+            "id": "T3QBOxYypSNBQAxx",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $json.telegram_chat_id || $json.chat_id }}",
+          "text": "={{ `Perfecto. ¿Qué has ido a hacer en la visita a \"${$json.lead_name}\"?\\n\\nPuedes escribirlo o enviarlo por audio.` }}",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "HTML"
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          1264,
+          -816
+        ],
+        "id": "c0791c5a-aa85-4e13-aa4f-7dda3a5ef3d8",
+        "name": "Preguntar Descripción Visita",
+        "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+        "credentials": {
+          "telegramApi": {
+            "id": "V5cPrt9IZsvJlgjs",
+            "name": "CrmBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "UPDATE crm_visitas_bot\nSET\n  estado = 'esperando_crear_oportunidad',\n  ultimo_mensaje_bot = $2,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id, estado;",
+          "options": {
+            "queryReplacement": "={{\n[\n  $json.chat_id,\n  'Perfecto. Envíame los datos de la oportunidad por texto o audio: empresa, contacto, necesidad, presupuesto, urgencia, o lo que sepas.'\n]\n}}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          1056,
+          -608
+        ],
+        "id": "bfe95355-0041-45cf-9b3d-4696df5387be",
+        "name": "Guardar Estado Crear Oportunidad",
+        "credentials": {
+          "postgres": {
+            "id": "T3QBOxYypSNBQAxx",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $json.telegram_chat_id || $json.chat_id }}",
+          "text": "=Perfecto. Envíame los datos de la oportunidad por texto o audio:\nempresa, contacto, necesidad, presupuesto, urgencia, o lo que sepas.",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "Markdown"
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          1264,
+          -608
+        ],
+        "id": "4ac1831e-cccf-41c4-9548-6d6cde436cde",
+        "name": "Pedir Datos Nueva Oportunidad",
+        "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+        "credentials": {
+          "telegramApi": {
+            "id": "V5cPrt9IZsvJlgjs",
+            "name": "CrmBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "a69f9611-da2e-4b5e-bc4d-db867b9bc4f7",
+                "leftValue": "={{ $json.tipo_mensaje }}",
+                "rightValue": "voice",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          -1504,
+          -256
+        ],
+        "id": "240aac6e-4049-49b3-ab2b-c7ac399e7ef0",
+        "name": "¿Es Audio?"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Combinar datos de transcripción para que lleguen correctamente al AI Agent\nconst datosTranscripcion = $('Procesar Transcripción').item.json;\nconst datosOriginales = $('Detectar Tipo Inicial').first().json;\n\nconsole.log('🔄 Combinando datos para AI Agent:');\nconsole.log('📄 Datos originales:', JSON.stringify(datosOriginales, null, 2));\nconsole.log('🎤 Datos transcripción:', JSON.stringify(datosTranscripcion, null, 2));\n\nconst plataforma = String(\n  datosTranscripcion.plataforma ||\n  datosOriginales.plataforma ||\n  'telegram'\n).toLowerCase().trim();\n\nconst canalEnvio = plataforma;\n\nconst chatId = datosTranscripcion.chat_id ?? datosOriginales.chat_id ?? null;\nconst userId = datosTranscripcion.user_id ?? datosOriginales.user_id ?? null;\nconst userName = datosTranscripcion.user_name ?? datosOriginales.user_name ?? 'Usuario';\nconst timestamp = datosTranscripcion.timestamp ?? datosOriginales.timestamp ?? new Date().toISOString();\n\nconst rawTelegramChatId =\n  datosTranscripcion.telegram_chat_id ??\n  datosOriginales.telegram_chat_id ??\n  (plataforma === 'telegram' ? chatId : null);\n\nconst rawWhatsappPhone =\n  datosTranscripcion.whatsapp_phone ??\n  datosOriginales.whatsapp_phone ??\n  (plataforma === 'whatsapp' ? chatId : null);\n\nconst telegramChatId =\n  plataforma === 'telegram' &&\n  rawTelegramChatId != null &&\n  String(rawTelegramChatId).trim() !== ''\n    ? Number(rawTelegramChatId)\n    : null;\n\nconst whatsappPhone =\n  plataforma === 'whatsapp' &&\n  rawWhatsappPhone != null &&\n  String(rawWhatsappPhone).trim() !== ''\n    ? String(rawWhatsappPhone).replace(/\\D/g, '').trim()\n    : null;\n\nconst datosFinales = {\n  ...datosTranscripcion,\n  ...datosOriginales,\n\n  chat_id: chatId,\n  user_id: userId,\n  user_name: userName,\n  timestamp,\n\n  plataforma,\n  canal_respuesta: canalEnvio,\n  canal_envio: canalEnvio,\n  telegram_chat_id: telegramChatId,\n  whatsapp_phone: whatsappPhone,\n\n  es_audio: true,\n  audio_transcrito: true,\n  file_id: datosTranscripcion.file_id || datosOriginales.file_id\n};\n\nconsole.log('✅ Datos finales para AI Agent:', JSON.stringify(datosFinales, null, 2));\nconsole.log('💬 Mensaje que recibirá AI Agent:', datosFinales.mensaje_usuario);\n\nreturn datosFinales;"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -128,
+          -272
+        ],
+        "id": "364f67af-1620-4d11-a18c-2ddb7fd85d64",
+        "name": "Actualizar Datos Transcripción"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Procesar transcripción de AssemblyAI y combinar con datos originales\nconst datosOriginales = $('Detectar Tipo Inicial').first().json;\n\nconsole.log('📄 Respuesta completa de AssemblyAI:', JSON.stringify($json, null, 2));\n\n// Canal/plataforma\nconst plataforma = String(datosOriginales.plataforma || 'telegram').toLowerCase().trim();\nconst canalEnvio = plataforma;\n\n// IDs por canal\nconst rawChatId = datosOriginales.chat_id ?? null;\nconst rawTelegramChatId = datosOriginales.telegram_chat_id ?? rawChatId;\nconst rawWhatsappPhone = datosOriginales.whatsapp_phone ?? rawChatId;\n\nconst telegramChatId =\n  plataforma === 'telegram' &&\n  rawTelegramChatId != null &&\n  String(rawTelegramChatId).trim() !== ''\n    ? Number(rawTelegramChatId)\n    : null;\n\nconst whatsappPhone =\n  plataforma === 'whatsapp' &&\n  rawWhatsappPhone != null &&\n  String(rawWhatsappPhone).trim() !== ''\n    ? String(rawWhatsappPhone).replace(/\\D/g, '').trim()\n    : null;\n\n// AssemblyAI devuelve la transcripción en el campo 'text'\nlet transcripcion = '';\n\nif ($json.status === 'completed' && $json.text) {\n  transcripcion = $json.text;\n} else if ($json.status === 'error') {\n  transcripcion = '[Error en transcripción: ' + ($json.error || 'Error desconocido') + ']';\n  console.error('❌ Error en AssemblyAI:', $json.error);\n} else if ($json.status === 'processing') {\n  transcripcion = '[Transcripción aún en proceso, espera un momento más]';\n  console.log('⏳ AssemblyAI aún está procesando');\n} else if ($json.status === 'queued') {\n  transcripcion = '[Transcripción en cola, espera un momento]';\n  console.log('⏳ AssemblyAI en cola');\n} else {\n  transcripcion = $json.text || $json.transcript || '[Error: no se pudo obtener transcripción]';\n}\n\ntranscripcion = String(transcripcion).trim();\n\nif (!transcripcion || transcripcion === '' || transcripcion === 'undefined') {\n  transcripcion = '[Error: transcripción vacía]';\n  console.error('❌ Error: No se pudo obtener transcripción válida');\n  console.error('📄 Estado:', $json.status);\n  console.error('📄 Datos recibidos:', JSON.stringify($json, null, 2));\n}\n\nconsole.log('🎤 Transcripción obtenida de AssemblyAI (ES):', transcripcion);\nconsole.log('📊 Estado AssemblyAI:', $json.status);\nconsole.log('🌍 Idioma detectado:', $json.language_code);\nconsole.log('🎯 Confianza:', $json.confidence);\n\n// Versión normalizada\nconst transcripcionNormalizada = transcripcion\n  .normalize('NFD')\n  .replace(/[\\u0300-\\u036f]/g, '')\n  .replace(/´/g, '')\n  .toLowerCase();\n\nconsole.log('🎤 Transcripción normalizada (sin tildes):', transcripcionNormalizada);\n\nreturn {\n  ...datosOriginales,\n\n  // canal\n  plataforma,\n  canal_respuesta: canalEnvio,\n  canal_envio: canalEnvio,\n  telegram_chat_id: telegramChatId,\n  whatsapp_phone: whatsappPhone,\n\n  // mensaje\n  mensaje_usuario: transcripcionNormalizada,\n  transcripcion_original: transcripcion,\n  mensaje_usuario_original: transcripcion,\n\n  es_audio: true,\n  audio_transcrito: true,\n  assemblyai_response: $json,\n  transcriptor: 'assemblyai',\n  estado_transcripcion: $json.status,\n  confidence: $json.confidence,\n  audio_duration: $json.audio_duration\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -560,
+          -272
+        ],
+        "id": "8b293b5c-b49e-4833-a6f7-45bb220e3825",
+        "name": "Procesar Transcripción"
+      },
+      {
+        "parameters": {
+          "jsCode": "const datosArchivo = $json;\nconst datosOriginales = $('Detectar Tipo Inicial').first().json;\n\nconst plataforma = String(datosOriginales.plataforma || 'telegram').toLowerCase().trim();\n\nlet fileId = datosOriginales.file_id || null;\nlet filePath = null;\nlet mediaUrl = null;\nlet mimeType = null;\n\nif (plataforma === 'telegram') {\n  if (datosArchivo.file_path) {\n    filePath = datosArchivo.file_path;\n  } else if (datosArchivo.result?.file_path) {\n    filePath = datosArchivo.result.file_path;\n  } else if (datosArchivo.body?.result?.file_path) {\n    filePath = datosArchivo.body.result.file_path;\n  }\n\n  if (!fileId) {\n    throw new Error('No se obtuvo file_id de Telegram');\n  }\n\n  return {\n    ...datosOriginales,\n    ...datosArchivo,\n    plataforma,\n    canal_envio: 'telegram',\n    file_id: fileId,\n    file_path: filePath,\n    media_url: null,\n    mime_type: datosArchivo.mime_type || null,\n    voice_file_ready: true,\n    processing_method: 'telegram_get_file',\n    download_info: {\n      file_id: fileId,\n      file_path: filePath,\n      method: 'telegram_get_file',\n    },\n  };\n}\n\nif (plataforma === 'whatsapp') {\n  fileId = datosArchivo.id || datosOriginales.file_id || null;\n  mediaUrl = datosArchivo.url || datosArchivo.body?.url || null;\n  mimeType = datosArchivo.mime_type || datosArchivo.body?.mime_type || null;\n\n  if (!mediaUrl) {\n    throw new Error('No se obtuvo media_url de WhatsApp');\n  }\n\n  return {\n    ...datosOriginales,\n    ...datosArchivo,\n    plataforma,\n    canal_envio: 'whatsapp',\n    file_id: fileId,\n    file_path: null,\n    media_url: mediaUrl,\n    mime_type: mimeType,\n    voice_file_ready: true,\n    processing_method: 'whatsapp_media_url',\n    download_info: {\n      file_id: fileId,\n      file_path: null,\n      media_url: mediaUrl,\n      method: 'whatsapp_media_download',\n    },\n  };\n}\n\nthrow new Error(`Plataforma no soportada: ${plataforma}`);"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -1184,
+          -272
+        ],
+        "id": "e1008653-612a-4b86-9ac3-89c75b2fab1a",
+        "name": "Preparar Descarga"
+      },
+      {
+        "parameters": {
+          "resource": "audio",
+          "operation": "transcribe",
+          "options": {
+            "language": "es",
+            "temperature": 0.2
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.openAi",
+        "typeVersion": 1.8,
+        "position": [
+          -736,
+          -272
+        ],
+        "id": "ebbdf1a7-1878-4e3f-a969-f2a184f58855",
+        "name": "Transcribe a recording",
+        "credentials": {
+          "openAiApi": {
+            "id": "DAJxp34XPnMfaoV9",
+            "name": "OpenAi account 2"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $json.telegram_chat_id || $json.chat_id }}",
+          "text": "=🎤 **Audio transcrito exitosamente:**\n\n\"{{ $('Procesar Transcripción').item.json.transcripcion_original}}\"\n\n✅ Procesando tu solicitud...",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "Markdown"
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          -336,
+          -272
+        ],
+        "id": "aa8cd7e6-a447-40ef-a86d-18c72a533b8b",
+        "name": "Confirmar Transcripción T",
+        "webhookId": "237a0319-b9b0-4c5f-8561-1aef1c7c9116",
+        "credentials": {
+          "telegramApi": {
+            "id": "V5cPrt9IZsvJlgjs",
+            "name": "CrmBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "fileId": "={{ $json.file_id }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          -944,
+          -272
+        ],
+        "id": "7bbd087a-f6ef-4501-b52c-9b262e0fb326",
+        "name": "Descargar Audio T",
+        "webhookId": "1f9d320a-2e58-48ab-bf94-f02ee44a09d2",
+        "credentials": {
+          "telegramApi": {
+            "id": "V5cPrt9IZsvJlgjs",
+            "name": "CrmBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const msg = $json.message || {};\n\nlet tipo_mensaje = 'unknown';\nif (msg.location) tipo_mensaje = 'location';\nelse if (msg.voice) tipo_mensaje = 'voice';\nelse if (msg.text) tipo_mensaje = 'text';\n\nreturn {\n  raw_message: msg,\n  chat_id: msg.chat?.id || null,\n  telegram_chat_id: msg.chat?.id || null,\n  user_id: msg.from?.id || null,\n  user_name: [msg.from?.first_name, msg.from?.last_name].filter(Boolean).join(' ').trim(),\n  tipo_mensaje,\n  mensaje_usuario: msg.text || '',\n  mensaje_usuario_original: msg.text || '',\n  latitude: msg.location?.latitude || null,\n  longitude: msg.location?.longitude || null,\n  file_id: msg.voice?.file_id || null,\n  fecha_hora: new Date().toISOString(),\n  plataforma: 'telegram',\n  es_audio: tipo_mensaje === 'voice'\n};"
+        },
+        "id": "40e0f4f3-0134-4733-bc48-0fbf2da190a7",
+        "name": "Detectar Tipo Inicial",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -1520,
+          -608
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const textoOriginal = String($json.mensaje_usuario_original || $json.mensaje_usuario || '').trim();\n\nconst textoNormalizado = textoOriginal\n  .normalize('NFD')\n  .replace(/[\\u0300-\\u036f]/g, '')\n  .toLowerCase()\n  .trim();\n\nreturn {\n  ...$json,\n  mensaje_usuario: textoNormalizado,\n  mensaje_usuario_original: textoOriginal,\n  es_audio: false\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -1376,
+          -112
+        ],
+        "id": "0806d628-1c12-4c24-8a8a-2e63f3776427",
+        "name": "Normalizar Mensaje Directo"
+      },
+      {
+        "parameters": {
+          "jsCode": "const actual = $('Router Principal CRM').first().json;\nconst auth = $('Autenticar Odoo').first().json;\n\nconst uid = auth.result;\n\nif (!uid) {\n  throw new Error('No se obtuvo uid de Odoo en la autenticación');\n}\n\nreturn {\n  ...actual,\n  odoo: {\n    url: 'https://lsanchezgoshawk-crm.odoo.com/jsonrpc',\n    db: 'lsanchezgoshawk-crm-main-31347967',\n    username: 'admin',\n    password: 'admin',\n    uid\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -96,
+          -608
+        ],
+        "id": "3356bd3d-39e8-40a6-82d5-f1a4d8d270a3",
+        "name": "Unificar Contexto Odoo"
+      },
+      {
+        "parameters": {
+          "jsCode": "const texto = String($json.mensaje_usuario_original || $json.mensaje_usuario || '').trim();\n\nreturn {\n  ...$json,\n  opportunity_payload: {\n    name: 'Nueva oportunidad desde Telegram',\n    type: 'opportunity',\n    description: texto\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          656,
+          48
+        ],
+        "id": "ed63c270-2813-4c82-b26f-37ea9146c602",
+        "name": "Preparar Payload Nueva Oportunidad"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{\n{\n  jsonrpc: '2.0',\n  method: 'call',\n  params: {\n    service: 'object',\n    method: 'execute_kw',\n    args: [\n      $json.odoo.db,\n      $json.odoo.uid,\n      $json.odoo.password,\n      'crm.lead',\n      'create',\n      [\n        $json.opportunity_payload\n      ]\n    ]\n  }\n}\n}}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          864,
+          48
+        ],
+        "id": "552366e5-22e0-496e-96ee-ffbae0151758",
+        "name": "Crear Oportunidad Odoo"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      $('Unificar Contexto Odoo').first().json.odoo.db,\n      $('Unificar Contexto Odoo').first().json.odoo.uid,\n      $('Unificar Contexto Odoo').first().json.odoo.password,\n      \"crm.lead\",\n      \"read\",\n      [\n        [ $('Crear Oportunidad Odoo').first().json.result ]\n      ],\n      {\n        fields: [\"id\", \"name\", \"description\"]\n      }\n    ]\n  }\n}) }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          1056,
+          48
+        ],
+        "id": "4bfd8bc8-4f5f-48a1-8c15-fae7b817c515",
+        "name": "Leer Lead Creado"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "UPDATE crm_visitas_bot\nSET\n  lead_id = $2,\n  lead_name = $3,\n  estado = 'esperando_descripcion_visita',\n  ultimo_mensaje_bot = $4,\n  updated_at = NOW()\nWHERE chat_id = $1;",
+          "options": {
+            "queryReplacement": "={{\n[\n  $('Unificar Contexto Odoo').first().json.chat_id,\n  $json.result?.[0]?.id || $('Crear Oportunidad Odoo').first().json.result,\n  $json.result?.[0]?.name || 'Nueva oportunidad desde Telegram',\n  'Ahora cuéntame qué has ido a hacer en la visita. Puedes escribirlo o enviarlo por audio.'\n]\n}}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          1248,
+          48
+        ],
+        "id": "2cf32d61-2b12-4db0-b963-38e33eb0e894",
+        "name": "Guardar Lead Creado",
+        "credentials": {
+          "postgres": {
+            "id": "T3QBOxYypSNBQAxx",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $('Unificar Contexto Odoo').first().json.chat_id }}",
+          "text": "=✅ Oportunidad creada correctamente.\n\nAhora cuéntame qué has ido a hacer en la visita. Puedes escribirlo o enviarlo por audio.",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "Markdown"
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          1424,
+          48
+        ],
+        "id": "087339b0-7df4-405c-8e97-b15b601f3edd",
+        "name": "Preguntar Qué Ha Ido a Hacer",
+        "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+        "credentials": {
+          "telegramApi": {
+            "id": "V5cPrt9IZsvJlgjs",
+            "name": "CrmBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const memoria = $json.memoria || {};\n\nconst resumenUsuario = String(\n  $json.mensaje_usuario_original || $json.mensaje_usuario || ''\n).trim();\n\nconst fechaBonita = new Date().toLocaleString('es-ES', {\n  day: '2-digit',\n  month: '2-digit',\n  year: 'numeric',\n  hour: '2-digit',\n  minute: '2-digit'\n});\n\n// 1) Texto para el chatter: dejarlo completo con ubicaciones y fechas\nconst note_body = `\nVisita comercial registrada desde Telegram\n\nFecha registro: ${fechaBonita}\nEntrada: ${memoria.entrada_at || '-'}\nSalida: ${memoria.salida_at || '-'}\nUbicación entrada: ${memoria.entrada_lat || '-'}, ${memoria.entrada_lon || '-'}\nUbicación salida: ${memoria.salida_lat || '-'}, ${memoria.salida_lon || '-'}\n\nResumen de la visita:\n${resumenUsuario}\n`.trim();\n\n// 2) Texto para Notas internas: histórico sencillo por fecha\nconst internal_note_entry = `\n[${fechaBonita}]\n${resumenUsuario}\n`.trim();\n\nreturn {\n  ...$json,\n  note_body,\n  internal_note_entry,\n  fecha_bonita: fechaBonita\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          656,
+          336
+        ],
+        "id": "35be3617-c7ec-4116-b936-6bb37c63d0af",
+        "name": "Construir Nota Visita"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      $json.odoo.db,\n      $json.odoo.uid,\n      $json.odoo.password,\n      \"crm.lead\",\n      \"message_post\",\n      [\n        [$json.memoria.lead_id]\n      ],\n      {\n        body: $json.note_body\n      }\n    ]\n  }\n}) }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          832,
+          336
+        ],
+        "id": "022d4d97-7a68-4876-af66-916f82d44fc5",
+        "name": "Guardar Nota en Lead Odoo"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "UPDATE crm_visitas_bot\nSET\n  estado = NULL,\n  ultimo_mensaje_bot = NULL,\n  datos_pendientes = NULL,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id;",
+          "options": {
+            "queryReplacement": "={{ [$json.chat_id] }}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          1408,
+          336
+        ],
+        "id": "8439beb3-9754-49ba-a641-afd2eaabab92",
+        "name": "Cerrar Visita",
+        "credentials": {
+          "postgres": {
+            "id": "T3QBOxYypSNBQAxx",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $('Construir Nota Visita').first().json.telegram_chat_id || $('Construir Nota Visita').first().json.chat_id }}",
+          "text": "={{ `✅ Visita registrada correctamente.\\n\\n🏢 Oportunidad: ${$('Construir Nota Visita').first().json.memoria?.lead_name || 'Sin nombre'}\\n📝 Resumen añadido al CRM de Odoo.` }}",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "HTML"
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          1600,
+          336
+        ],
+        "id": "67d6e700-6077-43ef-9d3d-b24a9dd66836",
+        "name": "Confirmación Final",
+        "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+        "credentials": {
+          "telegramApi": {
+            "id": "V5cPrt9IZsvJlgjs",
+            "name": "CrmBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "UPDATE crm_visitas_bot\nSET\n  estado = NULL,\n  ultimo_mensaje_bot = NULL,\n  datos_pendientes = NULL,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id;",
+          "options": {
+            "queryReplacement": "={{ [$json.chat_id] }}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          704,
+          624
+        ],
+        "id": "c551bf3e-daf0-4c4c-90bb-b945fb96d40c",
+        "name": "Cancelar Flujo",
+        "credentials": {
+          "postgres": {
+            "id": "T3QBOxYypSNBQAxx",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $json.chat_id }}",
+          "text": "=✅ Operación cancelada.",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "Markdown"
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          896,
+          624
+        ],
+        "id": "9b68d348-f4ba-40b8-af6b-1759676b8119",
+        "name": "Mensaje Cancelación",
+        "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+        "credentials": {
+          "telegramApi": {
+            "id": "V5cPrt9IZsvJlgjs",
+            "name": "CrmBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $json.chat_id }}",
+          "text": "={{ $json.respuesta_usuario }}",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "Markdown"
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          640,
+          848
+        ],
+        "id": "9f8fced3-f049-48f9-b908-7e727dae1422",
+        "name": "Enviar Ayuda",
+        "webhookId": "81870251-e5cc-4b36-8e10-1263fbce611d",
+        "credentials": {
+          "telegramApi": {
+            "id": "V5cPrt9IZsvJlgjs",
+            "name": "CrmBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $json.chat_id }}",
+          "text": "=✅ Operación cancelada.",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "Markdown"
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          1264,
+          -336
+        ],
+        "id": "dbda28ec-b0de-4d1e-81a0-21de8eb0a268",
+        "name": "Mensaje Cancelación1",
+        "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+        "credentials": {
+          "telegramApi": {
+            "id": "V5cPrt9IZsvJlgjs",
+            "name": "CrmBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "UPDATE crm_visitas_bot\nSET\n  estado = NULL,\n  ultimo_mensaje_bot = NULL,\n  datos_pendientes = NULL,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id;",
+          "options": {
+            "queryReplacement": "={{ [$json.chat_id] }}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          1072,
+          -336
+        ],
+        "id": "3c4693ca-b7f6-497c-9c4c-d6926309a003",
+        "name": "Cancelar Operación",
+        "credentials": {
+          "postgres": {
+            "id": "T3QBOxYypSNBQAxx",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $json.chat_id }}",
+          "text": "={{ `No he entendido tu respuesta.\\n\\nResponde con el número de la oportunidad, escribe \"crear oportunidad\" o \"cancelar\".` }}",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "HTML"
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          1072,
+          -112
+        ],
+        "id": "7765849b-32a8-4ced-b6d5-8f863ee2652b",
+        "name": "Lead No Entendido",
+        "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+        "credentials": {
+          "telegramApi": {
+            "id": "V5cPrt9IZsvJlgjs",
+            "name": "CrmBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "let entrada = null;\n\n// Intentar coger la entrada desde la rama texto\ntry {\n  entrada = $('Normalizar Mensaje Directo').first().json;\n} catch (e) {}\n\n// Si no existe, intentar desde la rama audio\nif (!entrada) {\n  try {\n    entrada = $('Actualizar Datos Transcripción').first().json;\n  } catch (e) {}\n}\n\nif (!entrada) {\n  throw new Error('No se pudo recuperar la entrada original del usuario');\n}\n\nconst memoria = $json || {};\n\nlet datosPendientes = memoria.datos_pendientes || {};\nif (typeof datosPendientes === 'string') {\n  try {\n    datosPendientes = JSON.parse(datosPendientes);\n  } catch {\n    datosPendientes = {};\n  }\n}\n\nreturn {\n  ...entrada,\n  memoria: {\n    ...memoria,\n    datos_pendientes: datosPendientes\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -768,
+          -608
+        ],
+        "id": "b6cb4542-7846-475b-9f86-24dc4957f565",
+        "name": "Combinar Entrada + Memoria"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      $('Unificar Contexto Odoo').first().json.odoo.db,\n      $('Unificar Contexto Odoo').first().json.odoo.uid,\n      $('Unificar Contexto Odoo').first().json.odoo.password,\n      \"crm.lead\",\n      \"read\",\n      [\n        [ $('Construir Nota Visita').first().json.memoria.lead_id ]\n      ],\n      {\n        fields: [\"id\", \"description\"]\n      }\n    ]\n  }\n}) }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          1024,
+          336
+        ],
+        "id": "fcfca674-c4f1-4c20-a0cf-cbb032c98d49",
+        "name": "Leer Descripción Actual Lead"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      $('Construir Nota Visita').first().json.odoo.db,\n      $('Construir Nota Visita').first().json.odoo.uid,\n      $('Construir Nota Visita').first().json.odoo.password,\n      \"crm.lead\",\n      \"write\",\n      [\n        [ $('Construir Nota Visita').first().json.memoria.lead_id ],\n        {\n          description: (() => {\n            const actual = $('Leer Descripción Actual Lead').first().json.result?.[0]?.description || '';\n            const nueva = $('Construir Nota Visita').first().json.internal_note_entry || '';\n            return actual && actual.trim() ? `${actual}\\n\\n${nueva}` : nueva;\n          })()\n        }\n      ]\n    ]\n  }\n}) }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          1216,
+          336
+        ],
+        "id": "e7eb58ab-4e97-4bf8-8208-a845989ac236",
+        "name": "Guardar Notas Internas Lead"
+      }
+    ],
+    "connections": {
+      "¿Es Ubicación?": {
+        "main": [
+          [
+            {
+              "node": "Obtener Estado Visita",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "¿Lead Seleccionado?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Obtener Estado Visita": {
+        "main": [
+          [
+            {
+              "node": "¿Es Entrada o Salida?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "¿Es Entrada o Salida?": {
+        "main": [
+          [
+            {
+              "node": "Guardar Ubicación Entrada",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Obtener Leads Abiertos",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Guardar Ubicación Entrada": {
+        "main": [
+          [
+            {
+              "node": "Responder Entrada",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Obtener Leads Abiertos": {
+        "main": [
+          [
+            {
+              "node": "Guardar Ubicación Salida",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Guardar Ubicación Salida": {
+        "main": [
+          [
+            {
+              "node": "Mostrar Menú Leads",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "¿Lead Seleccionado?": {
+        "main": [
+          [
+            {
+              "node": "Obtener Detalles Lead",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "¿Hay Audio?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Obtener Detalles Lead": {
+        "main": [
+          [
+            {
+              "node": "¿Lead es Won?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "¿Lead es Won?": {
+        "main": [
+          [
+            {
+              "node": "Vincular Visita a Lead (Won)",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Vincular Visita a Lead (Abierto)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Vincular Visita a Lead (Won)": {
+        "main": [
+          [
+            {
+              "node": "Mensaje: Lead Won",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Vincular Visita a Lead (Abierto)": {
+        "main": [
+          [
+            {
+              "node": "Mensaje: Lead Abierto",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Mensaje: Lead Won": {
+        "main": [
+          [
+            {
+              "node": "¿Hay Audio?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Mensaje: Lead Abierto": {
+        "main": [
+          [
+            {
+              "node": "¿Hay Audio?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "¿Hay Audio?": {
+        "main": [
+          [
+            {
+              "node": "Obtener Audio de Telegram",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Guardar Actividad con Texto",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Obtener Audio de Telegram": {
+        "main": [
+          [
+            {
+              "node": "Transcribir Audio",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Transcribir Audio": {
+        "main": [
+          [
+            {
+              "node": "Guardar Actividad con Audio",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Guardar Actividad con Audio": {
+        "main": [
+          [
+            {
+              "node": "Confirmar Guardado (Audio)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Guardar Actividad con Texto": {
+        "main": [
+          [
+            {
+              "node": "Confirmar Guardado (Texto)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Telegram Trigger": {
+        "main": [
+          [
+            {
+              "node": "Detectar Tipo Inicial",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Consultar Memoria Visita": {
+        "main": [
+          [
+            {
+              "node": "Combinar Entrada + Memoria",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Router Principal CRM": {
+        "main": [
+          [
+            {
+              "node": "Autenticar Odoo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch Acción": {
+        "main": [
+          [
+            {
+              "node": "Guardar Entrada",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Guardar Salida",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Resolver Lead Elegido",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Preparar Payload Nueva Oportunidad",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Construir Nota Visita",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Cancelar Flujo",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Enviar Ayuda",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Guardar Entrada": {
+        "main": [
+          [
+            {
+              "node": "Entrada Registrada",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Guardar Salida": {
+        "main": [
+          [
+            {
+              "node": "Consultar Oportunidades Abiertas Odoo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Autenticar Odoo": {
+        "main": [
+          [
+            {
+              "node": "Unificar Contexto Odoo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Consultar Oportunidades Abiertas Odoo": {
+        "main": [
+          [
+            {
+              "node": "Preparar Lista Oportunidades",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Preparar Lista Oportunidades": {
+        "main": [
+          [
+            {
+              "node": "Guardar Memoria Oportunidades",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Guardar Memoria Oportunidades": {
+        "main": [
+          [
+            {
+              "node": "Enviar Lista Leads",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Resolver Lead Elegido": {
+        "main": [
+          [
+            {
+              "node": "Switch Resultado Lead",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch Resultado Lead": {
+        "main": [
+          [
+            {
+              "node": "Guardar Lead Elegido",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Guardar Estado Crear Oportunidad",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Cancelar Operación",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Lead No Entendido",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Guardar Lead Elegido": {
+        "main": [
+          [
+            {
+              "node": "Preguntar Descripción Visita",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Guardar Estado Crear Oportunidad": {
+        "main": [
+          [
+            {
+              "node": "Pedir Datos Nueva Oportunidad",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Procesar Transcripción": {
+        "main": [
+          [
+            {
+              "node": "Confirmar Transcripción T",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Preparar Descarga": {
+        "main": [
+          [
+            {
+              "node": "Descargar Audio T",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Transcribe a recording": {
+        "main": [
+          [
+            {
+              "node": "Procesar Transcripción",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Confirmar Transcripción T": {
+        "main": [
+          [
+            {
+              "node": "Actualizar Datos Transcripción",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Descargar Audio T": {
+        "main": [
+          [
+            {
+              "node": "Transcribe a recording",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "¿Es Audio?": {
+        "main": [
+          [
+            {
+              "node": "Preparar Descarga",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Normalizar Mensaje Directo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Actualizar Datos Transcripción": {
+        "main": [
+          [
+            {
+              "node": "Consultar Memoria Visita",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Detectar Tipo Inicial": {
+        "main": [
+          [
+            {
+              "node": "¿Es Audio?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Normalizar Mensaje Directo": {
+        "main": [
+          [
+            {
+              "node": "Consultar Memoria Visita",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Unificar Contexto Odoo": {
+        "main": [
+          [
+            {
+              "node": "Switch Acción",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Preparar Payload Nueva Oportunidad": {
+        "main": [
+          [
+            {
+              "node": "Crear Oportunidad Odoo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Crear Oportunidad Odoo": {
+        "main": [
+          [
+            {
+              "node": "Leer Lead Creado",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Leer Lead Creado": {
+        "main": [
+          [
+            {
+              "node": "Guardar Lead Creado",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Guardar Lead Creado": {
+        "main": [
+          [
+            {
+              "node": "Preguntar Qué Ha Ido a Hacer",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Construir Nota Visita": {
+        "main": [
+          [
+            {
+              "node": "Guardar Nota en Lead Odoo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Guardar Nota en Lead Odoo": {
+        "main": [
+          [
+            {
+              "node": "Leer Descripción Actual Lead",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Cerrar Visita": {
+        "main": [
+          [
+            {
+              "node": "Confirmación Final",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Cancelar Flujo": {
+        "main": [
+          [
+            {
+              "node": "Mensaje Cancelación",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Cancelar Operación": {
+        "main": [
+          [
+            {
+              "node": "Mensaje Cancelación1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Combinar Entrada + Memoria": {
+        "main": [
+          [
+            {
+              "node": "Router Principal CRM",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Leer Descripción Actual Lead": {
+        "main": [
+          [
+            {
+              "node": "Guardar Notas Internas Lead",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Guardar Notas Internas Lead": {
+        "main": [
+          [
+            {
+              "node": "Cerrar Visita",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jorge Huescar",
+    "name": "Version dd1258e2",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "dd1258e2-7391-4a41-9a44-c0483beae126",
   "connections": {
     "¿Es Ubicación?": {
       "main": [
@@ -240,51 +2622,462 @@
       "main": [
         [
           {
-            "node": "Extraer ubicación / usuario",
+            "node": "Detectar Tipo Inicial",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Extraer ubicación / usuario": {
+    "Consultar Memoria Visita": {
       "main": [
         [
           {
-            "node": "Consultar memoria PostgreSQL",
+            "node": "Combinar Entrada + Memoria",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Consultar memoria PostgreSQL": {
+    "Router Principal CRM": {
       "main": [
         [
           {
-            "node": "Router Entrada / Salida",
+            "node": "Autenticar Odoo",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Router Entrada / Salida": {
-      "main": [
-        [
-          {
-            "node": "¿Es Entrada?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "¿Es Entrada?": {
+    "Switch Acción": {
       "main": [
         [
           {
             "node": "Guardar Entrada",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Guardar Salida",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Resolver Lead Elegido",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Preparar Payload Nueva Oportunidad",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Construir Nota Visita",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Cancelar Flujo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enviar Ayuda",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Entrada": {
+      "main": [
+        [
+          {
+            "node": "Entrada Registrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Salida": {
+      "main": [
+        [
+          {
+            "node": "Consultar Oportunidades Abiertas Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Autenticar Odoo": {
+      "main": [
+        [
+          {
+            "node": "Unificar Contexto Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consultar Oportunidades Abiertas Odoo": {
+      "main": [
+        [
+          {
+            "node": "Preparar Lista Oportunidades",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Lista Oportunidades": {
+      "main": [
+        [
+          {
+            "node": "Guardar Memoria Oportunidades",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Memoria Oportunidades": {
+      "main": [
+        [
+          {
+            "node": "Enviar Lista Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resolver Lead Elegido": {
+      "main": [
+        [
+          {
+            "node": "Switch Resultado Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Resultado Lead": {
+      "main": [
+        [
+          {
+            "node": "Guardar Lead Elegido",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Guardar Estado Crear Oportunidad",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Cancelar Operación",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Lead No Entendido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Lead Elegido": {
+      "main": [
+        [
+          {
+            "node": "Preguntar Descripción Visita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Estado Crear Oportunidad": {
+      "main": [
+        [
+          {
+            "node": "Pedir Datos Nueva Oportunidad",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar Transcripción": {
+      "main": [
+        [
+          {
+            "node": "Confirmar Transcripción T",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Descarga": {
+      "main": [
+        [
+          {
+            "node": "Descargar Audio T",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe a recording": {
+      "main": [
+        [
+          {
+            "node": "Procesar Transcripción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirmar Transcripción T": {
+      "main": [
+        [
+          {
+            "node": "Actualizar Datos Transcripción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Descargar Audio T": {
+      "main": [
+        [
+          {
+            "node": "Transcribe a recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Es Audio?": {
+      "main": [
+        [
+          {
+            "node": "Preparar Descarga",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Normalizar Mensaje Directo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualizar Datos Transcripción": {
+      "main": [
+        [
+          {
+            "node": "Consultar Memoria Visita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detectar Tipo Inicial": {
+      "main": [
+        [
+          {
+            "node": "¿Es Audio?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar Mensaje Directo": {
+      "main": [
+        [
+          {
+            "node": "Consultar Memoria Visita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Unificar Contexto Odoo": {
+      "main": [
+        [
+          {
+            "node": "Switch Acción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Payload Nueva Oportunidad": {
+      "main": [
+        [
+          {
+            "node": "Crear Oportunidad Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear Oportunidad Odoo": {
+      "main": [
+        [
+          {
+            "node": "Leer Lead Creado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer Lead Creado": {
+      "main": [
+        [
+          {
+            "node": "Guardar Lead Creado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Lead Creado": {
+      "main": [
+        [
+          {
+            "node": "Preguntar Qué Ha Ido a Hacer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Construir Nota Visita": {
+      "main": [
+        [
+          {
+            "node": "Guardar Nota en Lead Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Nota en Lead Odoo": {
+      "main": [
+        [
+          {
+            "node": "Leer Descripción Actual Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cerrar Visita": {
+      "main": [
+        [
+          {
+            "node": "Confirmación Final",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cancelar Flujo": {
+      "main": [
+        [
+          {
+            "node": "Mensaje Cancelación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cancelar Operación": {
+      "main": [
+        [
+          {
+            "node": "Mensaje Cancelación1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combinar Entrada + Memoria": {
+      "main": [
+        [
+          {
+            "node": "Router Principal CRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer Descripción Actual Lead": {
+      "main": [
+        [
+          {
+            "node": "Guardar Notas Internas Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Notas Internas Lead": {
+      "main": [
+        [
+          {
+            "node": "Cerrar Visita",
             "type": "main",
             "index": 0
           }
@@ -316,8 +3109,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -752,
-        304
+        -2704,
+        2496
       ]
     },
     {
@@ -326,7 +3119,7 @@
         "url": "http://localhost:3000/odoo-api/get-user-visit-state",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ userId: $('Extraer ubicación / usuario').first().json.userId }) }}",
+        "jsonBody": "={{ JSON.stringify({ userId: $('Detectar Tipo Inicial').first().json.userId }) }}",
         "options": {}
       },
       "id": "2b7d8adf-5e1f-4cbc-8a55-48b94bc46527",
@@ -334,8 +3127,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        -544,
-        160
+        -2496,
+        2352
       ]
     },
     {
@@ -353,8 +3146,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -352,
-        160
+        -2304,
+        2352
       ]
     },
     {
@@ -363,7 +3156,7 @@
         "url": "http://localhost:3000/odoo-api/register-entry-location",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ userId: $('Extraer ubicación / usuario').first().json.userId, latitude: $('Extraer ubicación / usuario').first().json.latitude, longitude: $('Extraer ubicación / usuario').first().json.longitude }) }}",
+        "jsonBody": "={{ JSON.stringify({ userId: $('Detectar Tipo Inicial').first().json.userId, latitude: $('Detectar Tipo Inicial').first().json.latitude, longitude: $('Detectar Tipo Inicial').first().json.longitude }) }}",
         "options": {}
       },
       "id": "544290d2-4f50-4383-afc7-2c2211e7ac69",
@@ -371,8 +3164,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        -144,
-        48
+        -2096,
+        2240
       ]
     },
     {
@@ -381,7 +3174,7 @@
         "url": "http://localhost:3000/telegram/send-message",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ chatId: $('Extraer ubicación / usuario').first().json.chatId, text: '✅ Ubicación de entrada registrada en:\\n📍 Lat: ' + $('Extraer ubicación / usuario').first().json.latitude + '\\n📍 Lon: ' + $('Extraer ubicación / usuario').first().json.longitude }) }}",
+        "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '✅ Ubicación de entrada registrada en:\\n📍 Lat: ' + $('Detectar Tipo Inicial').first().json.latitude + '\\n📍 Lon: ' + $('Detectar Tipo Inicial').first().json.longitude }) }}",
         "options": {}
       },
       "id": "86f88635-71c6-4927-bde3-2eccc97f9921",
@@ -389,8 +3182,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        64,
-        48
+        -1888,
+        2240
       ]
     },
     {
@@ -399,7 +3192,7 @@
         "url": "http://localhost:3000/odoo-api/get-open-leads",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ userId: $('Extraer ubicación / usuario').first().json.userId }) }}",
+        "jsonBody": "={{ JSON.stringify({ userId: $('Detectar Tipo Inicial').first().json.userId }) }}",
         "options": {}
       },
       "id": "a1d7a5e3-c084-49bc-9457-9cb1bed4815d",
@@ -407,8 +3200,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        -144,
-        256
+        -2096,
+        2448
       ]
     },
     {
@@ -417,7 +3210,7 @@
         "url": "http://localhost:3000/odoo-api/register-exit-location",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ userId: $('Extraer ubicación / usuario').first().json.userId, latitude: $('Extraer ubicación / usuario').first().json.latitude, longitude: $('Extraer ubicación / usuario').first().json.longitude }) }}",
+        "jsonBody": "={{ JSON.stringify({ userId: $('Detectar Tipo Inicial').first().json.userId, latitude: $('Detectar Tipo Inicial').first().json.latitude, longitude: $('Detectar Tipo Inicial').first().json.longitude }) }}",
         "options": {}
       },
       "id": "6efb2190-fc95-491e-8fd5-190e89bd852c",
@@ -425,8 +3218,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        -144,
-        400
+        -2096,
+        2592
       ]
     },
     {
@@ -435,7 +3228,7 @@
         "url": "http://localhost:3000/telegram/send-leads-menu",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ chatId: $('Extraer ubicación / usuario').first().json.chatId, leads: $('Obtener Leads Abiertos').first().json.leads }) }}",
+        "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, leads: $('Obtener Leads Abiertos').first().json.leads }) }}",
         "options": {}
       },
       "id": "48e8432f-61c5-473c-8dd7-6499643b6f14",
@@ -443,8 +3236,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        64,
-        352
+        -1888,
+        2544
       ]
     },
     {
@@ -463,8 +3256,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -752,
-        608
+        -2704,
+        2800
       ]
     },
     {
@@ -473,7 +3266,7 @@
         "url": "http://localhost:3000/odoo-api/get-lead-details",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ leadId: $('Extraer ubicación / usuario').first().json.selectedLeadId }) }}",
+        "jsonBody": "={{ JSON.stringify({ leadId: $('Detectar Tipo Inicial').first().json.selectedLeadId }) }}",
         "options": {}
       },
       "id": "2e97de76-3d7a-4da3-bf8c-679e58155e26",
@@ -481,8 +3274,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        -544,
-        608
+        -2496,
+        2800
       ]
     },
     {
@@ -502,8 +3295,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -352,
-        608
+        -2304,
+        2800
       ]
     },
     {
@@ -512,7 +3305,7 @@
         "url": "http://localhost:3000/odoo-api/link-visit-to-lead",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, leadId: $('Extraer ubicación / usuario').first().json.selectedLeadId }) }}",
+        "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, leadId: $('Detectar Tipo Inicial').first().json.selectedLeadId }) }}",
         "options": {}
       },
       "id": "0d51eb87-8c0a-4770-ab6c-53e89779e962",
@@ -520,8 +3313,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        -144,
-        512
+        -2096,
+        2704
       ]
     },
     {
@@ -530,7 +3323,7 @@
         "url": "http://localhost:3000/odoo-api/link-visit-to-lead",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, leadId: $('Extraer ubicación / usuario').first().json.selectedLeadId }) }}",
+        "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, leadId: $('Detectar Tipo Inicial').first().json.selectedLeadId }) }}",
         "options": {}
       },
       "id": "c91c41b3-1275-45e1-b007-2c99a4b880f2",
@@ -538,8 +3331,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        -144,
-        704
+        -2096,
+        2896
       ]
     },
     {
@@ -548,7 +3341,7 @@
         "url": "http://localhost:3000/telegram/send-message",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ chatId: $('Extraer ubicación / usuario').first().json.chatId, text: '✅ Lead ganado (' + $('Obtener Detalles Lead').first().json.name + ')\\n👤 Se creará el contacto automáticamente\\n\\n¿Qué has ido a hacer? (Texto o 🎤 audio)' }) }}",
+        "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '✅ Lead ganado (' + $('Obtener Detalles Lead').first().json.name + ')\\n👤 Se creará el contacto automáticamente\\n\\n¿Qué has ido a hacer? (Texto o 🎤 audio)' }) }}",
         "options": {}
       },
       "id": "3f23a588-83d9-4a44-a333-47480ddceb39",
@@ -556,8 +3349,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        64,
-        512
+        -1888,
+        2704
       ]
     },
     {
@@ -566,7 +3359,7 @@
         "url": "http://localhost:3000/telegram/send-message",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ chatId: $('Extraer ubicación / usuario').first().json.chatId, text: '📊 Lead abierto (' + $('Obtener Detalles Lead').first().json.name + ')\\n✓ Visita registrada\\n❌ No se crea contacto (Lead abierto)\\n\\n¿Qué has ido a hacer? (Texto o 🎤 audio)' }) }}",
+        "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '📊 Lead abierto (' + $('Obtener Detalles Lead').first().json.name + ')\\n✓ Visita registrada\\n❌ No se crea contacto (Lead abierto)\\n\\n¿Qué has ido a hacer? (Texto o 🎤 audio)' }) }}",
         "options": {}
       },
       "id": "fc7929a0-e1d7-42cd-896f-c1f4cf6e5a48",
@@ -574,8 +3367,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        64,
-        704
+        -1888,
+        2896
       ]
     },
     {
@@ -594,8 +3387,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -752,
-        912
+        -2704,
+        3104
       ]
     },
     {
@@ -606,7 +3399,7 @@
           "parameters": [
             {
               "name": "file_id",
-              "value": "={{ $('Extraer ubicación / usuario').first().json.fileId }}"
+              "value": "={{ $('Detectar Tipo Inicial').first().json.fileId }}"
             }
           ]
         },
@@ -617,8 +3410,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        -544,
-        848
+        -2496,
+        3040
       ]
     },
     {
@@ -635,8 +3428,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        -352,
-        848
+        -2304,
+        3040
       ]
     },
     {
@@ -653,8 +3446,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        -144,
-        848
+        -2096,
+        3040
       ]
     },
     {
@@ -663,7 +3456,7 @@
         "url": "http://localhost:3000/odoo-api/save-visit-activity",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, summary: $('Extraer ubicación / usuario').first().json.text, notes: 'Actividad registrada desde Telegram (texto)', audio_transcription: null }) }}",
+        "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, summary: $('Detectar Tipo Inicial').first().json.text, notes: 'Actividad registrada desde Telegram (texto)', audio_transcription: null }) }}",
         "options": {}
       },
       "id": "5a83a111-d181-495b-ad0d-57d54f01dd08",
@@ -671,8 +3464,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        -544,
-        1056
+        -2496,
+        3248
       ]
     },
     {
@@ -681,7 +3474,7 @@
         "url": "http://localhost:3000/telegram/send-message",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ chatId: $('Extraer ubicación / usuario').first().json.chatId, text: '✅ Visita guardada exitosamente\\n🎤 Transcripción: ' + $('Transcribir Audio').first().json.transcription + '\\n\\n👍 Todo registrado en el CRM' }) }}",
+        "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '✅ Visita guardada exitosamente\\n🎤 Transcripción: ' + $('Transcribir Audio').first().json.transcription + '\\n\\n👍 Todo registrado en el CRM' }) }}",
         "options": {}
       },
       "id": "e1c81111-4a70-4985-9860-1ba6e071401c",
@@ -689,8 +3482,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        64,
-        848
+        -1888,
+        3040
       ]
     },
     {
@@ -699,7 +3492,7 @@
         "url": "http://localhost:3000/telegram/send-message",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ chatId: $('Extraer ubicación / usuario').first().json.chatId, text: '✅ Visita guardada exitosamente\\n📝 Resumen: ' + $('Extraer ubicación / usuario').first().json.text + '\\n\\n👍 Todo registrado en el CRM' }) }}",
+        "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '✅ Visita guardada exitosamente\\n📝 Resumen: ' + $('Detectar Tipo Inicial').first().json.text + '\\n\\n👍 Todo registrado en el CRM' }) }}",
         "options": {}
       },
       "id": "6f01ab42-074e-457c-877e-842f2ddd1314",
@@ -707,8 +3500,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        -352,
-        1056
+        -2304,
+        3248
       ]
     },
     {
@@ -721,7 +3514,7 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -1088,
+        -1712,
         -608
       ],
       "id": "2b41dbcd-0340-4457-84d6-046796eeb60f",
@@ -736,49 +3529,640 @@
     },
     {
       "parameters": {
-        "jsCode": "const msg = $json.message || {};\nconst location = msg.location;\n\nif (!location) {\n  return {\n    error: true,\n    respuesta_usuario: '📍 Envíame tu ubicación para registrar entrada o salida de la visita.'\n  };\n}\n\nreturn {\n  chat_id: msg.chat.id,\n  user_id: msg.from.id,\n  user_name: `${msg.from.first_name || ''} ${msg.from.last_name || ''}`.trim(),\n  latitude: location.latitude,\n  longitude: location.longitude,\n  fecha_hora: new Date().toISOString(),\n  plataforma: 'telegram'\n};"
+        "chatId": "={{ $json.telegram_chat_id || $json.chat_id }}",
+        "text": "=✅ Entrada registrada.  \n\nCuando termines la visita, vuelve a enviarme tu ubicación para registrar la salida.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
       },
-      "id": "40e0f4f3-0134-4733-bc48-0fbf2da190a7",
-      "name": "Extraer ubicación / usuario",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
       "position": [
-        -896,
-        -608
-      ]
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        -688,
-        -608
+        800,
+        -1296
       ],
-      "id": "7187688d-9db3-4909-b9c6-73dae53b5e00",
-      "name": "Consultar memoria PostgreSQL",
+      "id": "1b90b557-c5d8-4223-b719-8d1e6395a88a",
+      "name": "Entrada Registrada",
+      "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
-        "postgres": {
-          "id": "4XLvezcpD5suZgk3",
-          "name": "Supabase chatbot web"
+        "telegramApi": {
+          "id": "V5cPrt9IZsvJlgjs",
+          "name": "CrmBot"
         }
       }
     },
     {
       "parameters": {
-        "jsCode": "const memoria = $('Consultar Memoria Visita').first().json || {};\nconst actual = $json;\n\nif (!memoria.estado || memoria.estado !== 'visita_abierta') {\n  return {\n    ...actual,\n    accion: 'registrar_entrada',\n    respuesta_usuario: '✅ Entrada registrada. Cuando termines la visita, vuelve a enviarme tu ubicación para registrar la salida.'\n  };\n}\n\nreturn {\n  ...actual,\n  accion: 'registrar_salida',\n  entrada_lat: memoria.entrada_lat,\n  entrada_lon: memoria.entrada_lon,\n  entrada_at: memoria.entrada_at,\n  respuesta_usuario: '✅ Salida registrada. ¿A qué lead u oportunidad has ido a visitar?'\n};"
+        "operation": "executeQuery",
+        "query": "SELECT\n  base.chat_id,\n  t.user_id,\n  t.user_name,\n  t.estado,\n  t.ultimo_mensaje_bot,\n  t.datos_pendientes,\n  t.entrada_lat,\n  t.entrada_lon,\n  t.entrada_at,\n  t.salida_lat,\n  t.salida_lon,\n  t.salida_at,\n  t.lead_id,\n  t.lead_name,\n  t.created_at,\n  t.updated_at\nFROM (SELECT $1::bigint AS chat_id) base\nLEFT JOIN crm_visitas_bot t\n  ON t.chat_id = base.chat_id;",
+        "options": {
+          "queryReplacement": "={{ [$json.chat_id] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -976,
+        -608
+      ],
+      "id": "7187688d-9db3-4909-b9c6-73dae53b5e00",
+      "name": "Consultar Memoria Visita",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const entrada = $json;\nconst memoria = $json.memoria || {};\n\nconst estado = memoria.estado || null;\nconst tipo = entrada.tipo_mensaje;\nconst texto = String(entrada.mensaje_usuario || '').toLowerCase().trim();\n\nconst esCancelar = ['cancelar', 'cancela', 'anula', 'salir'].some(x => texto.includes(x));\n\nif (esCancelar) {\n  return { ...entrada, accion: 'cancelar' };\n}\n\nif (tipo === 'location') {\n  if (!estado || estado !== 'visita_abierta') {\n    return { ...entrada, accion: 'registrar_entrada' };\n  } else {\n    return { ...entrada, accion: 'registrar_salida' };\n  }\n}\n\nif (estado === 'esperando_lead' && tipo === 'text') {\n  return { ...entrada, accion: 'procesar_respuesta_lead' };\n}\n\nif (estado === 'esperando_crear_oportunidad' && (tipo === 'text' || tipo === 'voice')) {\n  return { ...entrada, accion: 'crear_oportunidad' };\n}\n\nif (estado === 'esperando_descripcion_visita' && (tipo === 'text' || tipo === 'voice')) {\n  return { ...entrada, accion: 'guardar_visita' };\n}\n\nreturn {\n  ...entrada,\n  accion: 'mensaje_ayuda',\n  respuesta_usuario: 'Envíame una ubicación para empezar una visita comercial.'\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -480,
+        -560,
         -608
       ],
       "id": "8fa0cfd7-1474-4abf-9393-9aa9bc2ab632",
-      "name": "Router Entrada / Salida"
+      "name": "Router Principal CRM"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.accion }}",
+                    "rightValue": "registrar_entrada",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "48445e91-6a6c-4c09-b3d6-81ac6c231aa6"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "registrar_entrada"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "ea805b24-dacc-4db0-84c1-5c469b33ac58",
+                    "leftValue": "={{ $json.accion }}",
+                    "rightValue": "registrar_salida",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "registrar_salida"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "1cf96c94-68c0-4dd0-88ff-bdcb32e62d19",
+                    "leftValue": "={{ $json.accion }}",
+                    "rightValue": "procesar_respuesta_lead",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "procesar_respuesta_lead"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "1a84146f-5a6b-404b-80a0-91621b965248",
+                    "leftValue": "={{ $json.accion }}",
+                    "rightValue": "crear_oportunidad",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "crear_oportunidad"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "aa7abee8-4d78-412f-a6f5-5dc21d229edc",
+                    "leftValue": "={{ $json.accion }}",
+                    "rightValue": "guardar_visita",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "guardar_visita"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "80b9b6ff-34e7-44a2-a7c6-906065d31775",
+                    "leftValue": "={{ $json.accion }}",
+                    "rightValue": "cancelar",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "cancelar"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "5a4840d0-3bcf-44cf-bec1-2d9b133263ae",
+                    "leftValue": "={{ $json.accion }}",
+                    "rightValue": "mensaje_ayuda",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "mensaje_ayuda"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        144,
+        -688
+      ],
+      "id": "1d39b34c-90e0-4f41-8fc4-e7bca840e4c0",
+      "name": "Switch Acción"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO crm_visitas_bot (\n  chat_id, user_id, user_name, estado,\n  entrada_lat, entrada_lon, entrada_at,\n  ultimo_mensaje_bot, datos_pendientes, updated_at\n)\nVALUES (\n  $1, $2, $3, 'visita_abierta',\n  $4, $5, NOW(),\n  $6, $7::jsonb, NOW()\n)\nON CONFLICT (chat_id)\nDO UPDATE SET\n  user_id = EXCLUDED.user_id,\n  user_name = EXCLUDED.user_name,\n  estado = 'visita_abierta',\n  entrada_lat = EXCLUDED.entrada_lat,\n  entrada_lon = EXCLUDED.entrada_lon,\n  entrada_at = EXCLUDED.entrada_at,\n  ultimo_mensaje_bot = EXCLUDED.ultimo_mensaje_bot,\n  datos_pendientes = EXCLUDED.datos_pendientes,\n  updated_at = NOW()\nRETURNING chat_id, user_id, user_name, estado;",
+        "options": {
+          "queryReplacement": "={{\n[\n  $json.chat_id,\n  $json.user_id,\n  $json.user_name,\n  $json.latitude,\n  $json.longitude,\n  '✅ Entrada registrada. Cuando termines la visita, vuelve a enviarme tu ubicación para registrar la salida.',\n  JSON.stringify({ fase: 'entrada_registrada' })\n]\n}}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        576,
+        -1296
+      ],
+      "id": "182887e7-6bfa-492d-aeb0-f72a802b3e32",
+      "name": "Guardar Entrada",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE crm_visitas_bot\nSET\n  estado = 'esperando_lead',\n  salida_lat = $2,\n  salida_lon = $3,\n  salida_at = NOW(),\n  ultimo_mensaje_bot = $4,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id, estado;",
+        "options": {
+          "queryReplacement": "={{\n[\n  $json.chat_id,\n  $json.latitude,\n  $json.longitude,\n  '¿A qué lead u oportunidad has ido a visitar?'\n]\n}}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        576,
+        -1056
+      ],
+      "id": "c2f04e0e-d36b-4024-a992-3543273ce2e7",
+      "name": "Guardar Salida",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      $('Unificar Contexto Odoo').first().json.odoo.db,\n      $('Unificar Contexto Odoo').first().json.odoo.uid,\n      $('Unificar Contexto Odoo').first().json.odoo.password,\n      \"crm.lead\",\n      \"search_read\",\n      [\n        [\n          [\"type\", \"=\", \"opportunity\"],\n          [\"probability\", \"<\", 100],\n          [\"active\", \"=\", true]\n        ]\n      ],\n      {\n        fields: [\"id\", \"name\", \"partner_name\", \"contact_name\", \"stage_id\"],\n        limit: 20,\n        order: \"write_date desc\"\n      }\n    ]\n  }\n}) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        800,
+        -1056
+      ],
+      "id": "1fe89e8c-8d7c-4175-8140-9e3d148a1140",
+      "name": "Consultar Oportunidades Abiertas Odoo"
+    },
+    {
+      "parameters": {
+        "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"call\",\n  \"params\": {\n    \"service\": \"common\",\n    \"method\": \"authenticate\",\n    \"args\": [\n      \"lsanchezgoshawk-crm-main-31347967\",\n      \"admin\",\n      \"admin\",\n      {}\n    ]\n  },\n  \"id\": 1\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -304,
+        -608
+      ],
+      "id": "22ed0f56-4cb8-4034-a0ea-d88bd4db5b14",
+      "name": "Autenticar Odoo"
+    },
+    {
+      "parameters": {
+        "jsCode": "const actual = $('Unificar Contexto Odoo').first().json;\nconst oportunidades = $json.result || [];\n\nconst textoLista = oportunidades.length\n  ? oportunidades.map((o, i) => `${i + 1}. ${o.name}`).join('\\n')\n  : 'No he encontrado oportunidades abiertas.';\n\nreturn {\n  ...actual,\n  oportunidades,\n  textoLista,\n  mensaje_bot:\n`✅ Salida registrada.\n\n¿A qué lead u oportunidad has ido a visitar?\n\n${textoLista}\n\nResponde con el número, escribe \"crear oportunidad\" o \"cancelar\".`\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1008,
+        -1056
+      ],
+      "id": "d79240f7-43d1-43d6-ac0d-58aecffce8d4",
+      "name": "Preparar Lista Oportunidades"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE crm_visitas_bot\nSET\n  estado = 'esperando_lead',\n  ultimo_mensaje_bot = $2,\n  datos_pendientes = $3::jsonb,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id, estado;",
+        "options": {
+          "queryReplacement": "={{\n[\n  $json.chat_id,\n  $json.mensaje_bot,\n  JSON.stringify({\n    oportunidades: $json.oportunidades\n  })\n]\n}}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1216,
+        -1056
+      ],
+      "id": "9de80e44-2683-46cf-8e03-facbdc2197a3",
+      "name": "Guardar Memoria Oportunidades",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Preparar Lista Oportunidades').first().json.telegram_chat_id || $('Preparar Lista Oportunidades').first().json.chat_id }}",
+        "text": "={{ $('Preparar Lista Oportunidades').first().json.mensaje_bot }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1408,
+        -1056
+      ],
+      "id": "78bc8d06-9773-4bc5-9cbe-554a5d3911af",
+      "name": "Enviar Lista Leads",
+      "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+      "credentials": {
+        "telegramApi": {
+          "id": "V5cPrt9IZsvJlgjs",
+          "name": "CrmBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const memoria = $json.memoria || {};\nconst pendientes = memoria.datos_pendientes || {};\nconst opciones = pendientes.oportunidades || [];\nconst texto = String($json.mensaje_usuario || '').trim().toLowerCase();\n\nif (['cancelar', 'cancela', 'anular'].includes(texto)) {\n  return { ...$json, resultado: 'cancelar' };\n}\n\nif (texto.includes('crear oportunidad')) {\n  return { ...$json, resultado: 'crear_oportunidad' };\n}\n\nconst n = parseInt(texto, 10);\nif (Number.isFinite(n) && n >= 1 && n <= opciones.length) {\n  return {\n    ...$json,\n    resultado: 'lead_elegido',\n    lead_id: opciones[n - 1].id,\n    lead_name: opciones[n - 1].name\n  };\n}\n\nconst match = opciones.find(o =>\n  String(o.name || '').toLowerCase().includes(texto)\n);\n\nif (match) {\n  return {\n    ...$json,\n    resultado: 'lead_elegido',\n    lead_id: match.id,\n    lead_name: match.name\n  };\n}\n\nreturn {\n  ...$json,\n  resultado: 'no_entendido'\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        576,
+        -768
+      ],
+      "id": "468ff440-5713-4b0e-b98e-8693947df512",
+      "name": "Resolver Lead Elegido"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.resultado }}",
+                    "rightValue": "lead_elegido",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "4ac3b34d-0aea-43ea-a90b-c638b3e71a77"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "lead_elegido"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "5c59cfd6-f7ce-44e5-8803-9280bcfbc403",
+                    "leftValue": "={{ $json.resultado }}",
+                    "rightValue": "crear_oportunidad",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "crear_oportunidad"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "1ed2f583-e031-471b-83bf-21b9944950d0",
+                    "leftValue": "={{ $json.resultado }}",
+                    "rightValue": "cancelar",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "cancelar"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "b04cebeb-4856-45b8-81dd-58995f7afe3e",
+                    "leftValue": "={{ $json.resultado }}",
+                    "rightValue": "no_entendido",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "no_entendido"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        768,
+        -800
+      ],
+      "id": "27aff82e-0243-4faa-956f-e6907413c29e",
+      "name": "Switch Resultado Lead"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE crm_visitas_bot\nSET\n  lead_id = $2,\n  lead_name = $3,\n  estado = 'esperando_descripcion_visita',\n  ultimo_mensaje_bot = $4,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id, lead_id, lead_name, estado;",
+        "options": {
+          "queryReplacement": "={{\n[\n  $json.chat_id,\n  $json.lead_id,\n  $json.lead_name,\n  `Perfecto. ¿Qué has ido a hacer en la visita a \"${$json.lead_name}\"? Puedes escribirlo o enviarlo por audio.`\n]\n}}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1056,
+        -816
+      ],
+      "id": "6769cb31-6449-4d13-aafd-66bfa6fdb5ed",
+      "name": "Guardar Lead Elegido",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.telegram_chat_id || $json.chat_id }}",
+        "text": "={{ `Perfecto. ¿Qué has ido a hacer en la visita a \"${$json.lead_name}\"?\\n\\nPuedes escribirlo o enviarlo por audio.` }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1264,
+        -816
+      ],
+      "id": "c0791c5a-aa85-4e13-aa4f-7dda3a5ef3d8",
+      "name": "Preguntar Descripción Visita",
+      "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+      "credentials": {
+        "telegramApi": {
+          "id": "V5cPrt9IZsvJlgjs",
+          "name": "CrmBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE crm_visitas_bot\nSET\n  estado = 'esperando_crear_oportunidad',\n  ultimo_mensaje_bot = $2,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id, estado;",
+        "options": {
+          "queryReplacement": "={{\n[\n  $json.chat_id,\n  'Perfecto. Envíame los datos de la oportunidad por texto o audio: empresa, contacto, necesidad, presupuesto, urgencia, o lo que sepas.'\n]\n}}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1056,
+        -608
+      ],
+      "id": "bfe95355-0041-45cf-9b3d-4696df5387be",
+      "name": "Guardar Estado Crear Oportunidad",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.telegram_chat_id || $json.chat_id }}",
+        "text": "=Perfecto. Envíame los datos de la oportunidad por texto o audio:\nempresa, contacto, necesidad, presupuesto, urgencia, o lo que sepas.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1264,
+        -608
+      ],
+      "id": "4ac1831e-cccf-41c4-9548-6d6cde436cde",
+      "name": "Pedir Datos Nueva Oportunidad",
+      "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+      "credentials": {
+        "telegramApi": {
+          "id": "V5cPrt9IZsvJlgjs",
+          "name": "CrmBot"
+        }
+      }
     },
     {
       "parameters": {
@@ -791,9 +4175,9 @@
           },
           "conditions": [
             {
-              "id": "ff39c823-f2be-47a5-a482-d712fd73e55c",
-              "leftValue": "",
-              "rightValue": "",
+              "id": "a69f9611-da2e-4b5e-bc4d-db867b9bc4f7",
+              "leftValue": "={{ $json.tipo_mensaje }}",
+              "rightValue": "voice",
               "operator": {
                 "type": "string",
                 "operation": "equals",
@@ -808,32 +4192,576 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -272,
+        -1504,
+        -256
+      ],
+      "id": "240aac6e-4049-49b3-ab2b-c7ac399e7ef0",
+      "name": "¿Es Audio?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Combinar datos de transcripción para que lleguen correctamente al AI Agent\nconst datosTranscripcion = $('Procesar Transcripción').item.json;\nconst datosOriginales = $('Detectar Tipo Inicial').first().json;\n\nconsole.log('🔄 Combinando datos para AI Agent:');\nconsole.log('📄 Datos originales:', JSON.stringify(datosOriginales, null, 2));\nconsole.log('🎤 Datos transcripción:', JSON.stringify(datosTranscripcion, null, 2));\n\nconst plataforma = String(\n  datosTranscripcion.plataforma ||\n  datosOriginales.plataforma ||\n  'telegram'\n).toLowerCase().trim();\n\nconst canalEnvio = plataforma;\n\nconst chatId = datosTranscripcion.chat_id ?? datosOriginales.chat_id ?? null;\nconst userId = datosTranscripcion.user_id ?? datosOriginales.user_id ?? null;\nconst userName = datosTranscripcion.user_name ?? datosOriginales.user_name ?? 'Usuario';\nconst timestamp = datosTranscripcion.timestamp ?? datosOriginales.timestamp ?? new Date().toISOString();\n\nconst rawTelegramChatId =\n  datosTranscripcion.telegram_chat_id ??\n  datosOriginales.telegram_chat_id ??\n  (plataforma === 'telegram' ? chatId : null);\n\nconst rawWhatsappPhone =\n  datosTranscripcion.whatsapp_phone ??\n  datosOriginales.whatsapp_phone ??\n  (plataforma === 'whatsapp' ? chatId : null);\n\nconst telegramChatId =\n  plataforma === 'telegram' &&\n  rawTelegramChatId != null &&\n  String(rawTelegramChatId).trim() !== ''\n    ? Number(rawTelegramChatId)\n    : null;\n\nconst whatsappPhone =\n  plataforma === 'whatsapp' &&\n  rawWhatsappPhone != null &&\n  String(rawWhatsappPhone).trim() !== ''\n    ? String(rawWhatsappPhone).replace(/\\D/g, '').trim()\n    : null;\n\nconst datosFinales = {\n  ...datosTranscripcion,\n  ...datosOriginales,\n\n  chat_id: chatId,\n  user_id: userId,\n  user_name: userName,\n  timestamp,\n\n  plataforma,\n  canal_respuesta: canalEnvio,\n  canal_envio: canalEnvio,\n  telegram_chat_id: telegramChatId,\n  whatsapp_phone: whatsappPhone,\n\n  es_audio: true,\n  audio_transcrito: true,\n  file_id: datosTranscripcion.file_id || datosOriginales.file_id\n};\n\nconsole.log('✅ Datos finales para AI Agent:', JSON.stringify(datosFinales, null, 2));\nconsole.log('💬 Mensaje que recibirá AI Agent:', datosFinales.mensaje_usuario);\n\nreturn datosFinales;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -128,
+        -272
+      ],
+      "id": "364f67af-1620-4d11-a18c-2ddb7fd85d64",
+      "name": "Actualizar Datos Transcripción"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Procesar transcripción de AssemblyAI y combinar con datos originales\nconst datosOriginales = $('Detectar Tipo Inicial').first().json;\n\nconsole.log('📄 Respuesta completa de AssemblyAI:', JSON.stringify($json, null, 2));\n\n// Canal/plataforma\nconst plataforma = String(datosOriginales.plataforma || 'telegram').toLowerCase().trim();\nconst canalEnvio = plataforma;\n\n// IDs por canal\nconst rawChatId = datosOriginales.chat_id ?? null;\nconst rawTelegramChatId = datosOriginales.telegram_chat_id ?? rawChatId;\nconst rawWhatsappPhone = datosOriginales.whatsapp_phone ?? rawChatId;\n\nconst telegramChatId =\n  plataforma === 'telegram' &&\n  rawTelegramChatId != null &&\n  String(rawTelegramChatId).trim() !== ''\n    ? Number(rawTelegramChatId)\n    : null;\n\nconst whatsappPhone =\n  plataforma === 'whatsapp' &&\n  rawWhatsappPhone != null &&\n  String(rawWhatsappPhone).trim() !== ''\n    ? String(rawWhatsappPhone).replace(/\\D/g, '').trim()\n    : null;\n\n// AssemblyAI devuelve la transcripción en el campo 'text'\nlet transcripcion = '';\n\nif ($json.status === 'completed' && $json.text) {\n  transcripcion = $json.text;\n} else if ($json.status === 'error') {\n  transcripcion = '[Error en transcripción: ' + ($json.error || 'Error desconocido') + ']';\n  console.error('❌ Error en AssemblyAI:', $json.error);\n} else if ($json.status === 'processing') {\n  transcripcion = '[Transcripción aún en proceso, espera un momento más]';\n  console.log('⏳ AssemblyAI aún está procesando');\n} else if ($json.status === 'queued') {\n  transcripcion = '[Transcripción en cola, espera un momento]';\n  console.log('⏳ AssemblyAI en cola');\n} else {\n  transcripcion = $json.text || $json.transcript || '[Error: no se pudo obtener transcripción]';\n}\n\ntranscripcion = String(transcripcion).trim();\n\nif (!transcripcion || transcripcion === '' || transcripcion === 'undefined') {\n  transcripcion = '[Error: transcripción vacía]';\n  console.error('❌ Error: No se pudo obtener transcripción válida');\n  console.error('📄 Estado:', $json.status);\n  console.error('📄 Datos recibidos:', JSON.stringify($json, null, 2));\n}\n\nconsole.log('🎤 Transcripción obtenida de AssemblyAI (ES):', transcripcion);\nconsole.log('📊 Estado AssemblyAI:', $json.status);\nconsole.log('🌍 Idioma detectado:', $json.language_code);\nconsole.log('🎯 Confianza:', $json.confidence);\n\n// Versión normalizada\nconst transcripcionNormalizada = transcripcion\n  .normalize('NFD')\n  .replace(/[\\u0300-\\u036f]/g, '')\n  .replace(/´/g, '')\n  .toLowerCase();\n\nconsole.log('🎤 Transcripción normalizada (sin tildes):', transcripcionNormalizada);\n\nreturn {\n  ...datosOriginales,\n\n  // canal\n  plataforma,\n  canal_respuesta: canalEnvio,\n  canal_envio: canalEnvio,\n  telegram_chat_id: telegramChatId,\n  whatsapp_phone: whatsappPhone,\n\n  // mensaje\n  mensaje_usuario: transcripcionNormalizada,\n  transcripcion_original: transcripcion,\n  mensaje_usuario_original: transcripcion,\n\n  es_audio: true,\n  audio_transcrito: true,\n  assemblyai_response: $json,\n  transcriptor: 'assemblyai',\n  estado_transcripcion: $json.status,\n  confidence: $json.confidence,\n  audio_duration: $json.audio_duration\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -560,
+        -272
+      ],
+      "id": "8b293b5c-b49e-4833-a6f7-45bb220e3825",
+      "name": "Procesar Transcripción"
+    },
+    {
+      "parameters": {
+        "jsCode": "const datosArchivo = $json;\nconst datosOriginales = $('Detectar Tipo Inicial').first().json;\n\nconst plataforma = String(datosOriginales.plataforma || 'telegram').toLowerCase().trim();\n\nlet fileId = datosOriginales.file_id || null;\nlet filePath = null;\nlet mediaUrl = null;\nlet mimeType = null;\n\nif (plataforma === 'telegram') {\n  if (datosArchivo.file_path) {\n    filePath = datosArchivo.file_path;\n  } else if (datosArchivo.result?.file_path) {\n    filePath = datosArchivo.result.file_path;\n  } else if (datosArchivo.body?.result?.file_path) {\n    filePath = datosArchivo.body.result.file_path;\n  }\n\n  if (!fileId) {\n    throw new Error('No se obtuvo file_id de Telegram');\n  }\n\n  return {\n    ...datosOriginales,\n    ...datosArchivo,\n    plataforma,\n    canal_envio: 'telegram',\n    file_id: fileId,\n    file_path: filePath,\n    media_url: null,\n    mime_type: datosArchivo.mime_type || null,\n    voice_file_ready: true,\n    processing_method: 'telegram_get_file',\n    download_info: {\n      file_id: fileId,\n      file_path: filePath,\n      method: 'telegram_get_file',\n    },\n  };\n}\n\nif (plataforma === 'whatsapp') {\n  fileId = datosArchivo.id || datosOriginales.file_id || null;\n  mediaUrl = datosArchivo.url || datosArchivo.body?.url || null;\n  mimeType = datosArchivo.mime_type || datosArchivo.body?.mime_type || null;\n\n  if (!mediaUrl) {\n    throw new Error('No se obtuvo media_url de WhatsApp');\n  }\n\n  return {\n    ...datosOriginales,\n    ...datosArchivo,\n    plataforma,\n    canal_envio: 'whatsapp',\n    file_id: fileId,\n    file_path: null,\n    media_url: mediaUrl,\n    mime_type: mimeType,\n    voice_file_ready: true,\n    processing_method: 'whatsapp_media_url',\n    download_info: {\n      file_id: fileId,\n      file_path: null,\n      media_url: mediaUrl,\n      method: 'whatsapp_media_download',\n    },\n  };\n}\n\nthrow new Error(`Plataforma no soportada: ${plataforma}`);"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1184,
+        -272
+      ],
+      "id": "e1008653-612a-4b86-9ac3-89c75b2fab1a",
+      "name": "Preparar Descarga"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {
+          "language": "es",
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -736,
+        -272
+      ],
+      "id": "ebbdf1a7-1878-4e3f-a969-f2a184f58855",
+      "name": "Transcribe a recording",
+      "credentials": {
+        "openAiApi": {
+          "id": "DAJxp34XPnMfaoV9",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.telegram_chat_id || $json.chat_id }}",
+        "text": "=🎤 **Audio transcrito exitosamente:**\n\n\"{{ $('Procesar Transcripción').item.json.transcripcion_original}}\"\n\n✅ Procesando tu solicitud...",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -336,
+        -272
+      ],
+      "id": "aa8cd7e6-a447-40ef-a86d-18c72a533b8b",
+      "name": "Confirmar Transcripción T",
+      "webhookId": "237a0319-b9b0-4c5f-8561-1aef1c7c9116",
+      "credentials": {
+        "telegramApi": {
+          "id": "V5cPrt9IZsvJlgjs",
+          "name": "CrmBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -944,
+        -272
+      ],
+      "id": "7bbd087a-f6ef-4501-b52c-9b262e0fb326",
+      "name": "Descargar Audio T",
+      "webhookId": "1f9d320a-2e58-48ab-bf94-f02ee44a09d2",
+      "credentials": {
+        "telegramApi": {
+          "id": "V5cPrt9IZsvJlgjs",
+          "name": "CrmBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const msg = $json.message || {};\n\nlet tipo_mensaje = 'unknown';\nif (msg.location) tipo_mensaje = 'location';\nelse if (msg.voice) tipo_mensaje = 'voice';\nelse if (msg.text) tipo_mensaje = 'text';\n\nreturn {\n  raw_message: msg,\n  chat_id: msg.chat?.id || null,\n  telegram_chat_id: msg.chat?.id || null,\n  user_id: msg.from?.id || null,\n  user_name: [msg.from?.first_name, msg.from?.last_name].filter(Boolean).join(' ').trim(),\n  tipo_mensaje,\n  mensaje_usuario: msg.text || '',\n  mensaje_usuario_original: msg.text || '',\n  latitude: msg.location?.latitude || null,\n  longitude: msg.location?.longitude || null,\n  file_id: msg.voice?.file_id || null,\n  fecha_hora: new Date().toISOString(),\n  plataforma: 'telegram',\n  es_audio: tipo_mensaje === 'voice'\n};"
+      },
+      "id": "40e0f4f3-0134-4733-bc48-0fbf2da190a7",
+      "name": "Detectar Tipo Inicial",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1520,
+        -608
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const textoOriginal = String($json.mensaje_usuario_original || $json.mensaje_usuario || '').trim();\n\nconst textoNormalizado = textoOriginal\n  .normalize('NFD')\n  .replace(/[\\u0300-\\u036f]/g, '')\n  .toLowerCase()\n  .trim();\n\nreturn {\n  ...$json,\n  mensaje_usuario: textoNormalizado,\n  mensaje_usuario_original: textoOriginal,\n  es_audio: false\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1376,
+        -112
+      ],
+      "id": "0806d628-1c12-4c24-8a8a-2e63f3776427",
+      "name": "Normalizar Mensaje Directo"
+    },
+    {
+      "parameters": {
+        "jsCode": "const actual = $('Router Principal CRM').first().json;\nconst auth = $('Autenticar Odoo').first().json;\n\nconst uid = auth.result;\n\nif (!uid) {\n  throw new Error('No se obtuvo uid de Odoo en la autenticación');\n}\n\nreturn {\n  ...actual,\n  odoo: {\n    url: 'https://lsanchezgoshawk-crm.odoo.com/jsonrpc',\n    db: 'lsanchezgoshawk-crm-main-31347967',\n    username: 'admin',\n    password: 'admin',\n    uid\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -96,
         -608
       ],
-      "id": "4492e95c-5000-4e17-b3f7-4682b6f51bf7",
-      "name": "¿Es Entrada?"
+      "id": "3356bd3d-39e8-40a6-82d5-f1a4d8d270a3",
+      "name": "Unificar Contexto Odoo"
+    },
+    {
+      "parameters": {
+        "jsCode": "const texto = String($json.mensaje_usuario_original || $json.mensaje_usuario || '').trim();\n\nreturn {\n  ...$json,\n  opportunity_payload: {\n    name: 'Nueva oportunidad desde Telegram',\n    type: 'opportunity',\n    description: texto\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        656,
+        48
+      ],
+      "id": "ed63c270-2813-4c82-b26f-37ea9146c602",
+      "name": "Preparar Payload Nueva Oportunidad"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{\n{\n  jsonrpc: '2.0',\n  method: 'call',\n  params: {\n    service: 'object',\n    method: 'execute_kw',\n    args: [\n      $json.odoo.db,\n      $json.odoo.uid,\n      $json.odoo.password,\n      'crm.lead',\n      'create',\n      [\n        $json.opportunity_payload\n      ]\n    ]\n  }\n}\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        864,
+        48
+      ],
+      "id": "552366e5-22e0-496e-96ee-ffbae0151758",
+      "name": "Crear Oportunidad Odoo"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      $('Unificar Contexto Odoo').first().json.odoo.db,\n      $('Unificar Contexto Odoo').first().json.odoo.uid,\n      $('Unificar Contexto Odoo').first().json.odoo.password,\n      \"crm.lead\",\n      \"read\",\n      [\n        [ $('Crear Oportunidad Odoo').first().json.result ]\n      ],\n      {\n        fields: [\"id\", \"name\", \"description\"]\n      }\n    ]\n  }\n}) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1056,
+        48
+      ],
+      "id": "4bfd8bc8-4f5f-48a1-8c15-fae7b817c515",
+      "name": "Leer Lead Creado"
     },
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO crm_visitas_bot (\n  chat_id, estado, entrada_lat, entrada_lon, entrada_at, datos_pendientes, updated_at\n)\nVALUES (\n  $1, 'visita_abierta', $2, $3, NOW(), $4::jsonb, NOW()\n)\nON CONFLICT (chat_id)\nDO UPDATE SET\n  estado = 'visita_abierta',\n  entrada_lat = EXCLUDED.entrada_lat,\n  entrada_lon = EXCLUDED.entrada_lon,\n  entrada_at = EXCLUDED.entrada_at,\n  datos_pendientes = EXCLUDED.datos_pendientes,\n  updated_at = NOW();",
-        "options": {}
+        "query": "UPDATE crm_visitas_bot\nSET\n  lead_id = $2,\n  lead_name = $3,\n  estado = 'esperando_descripcion_visita',\n  ultimo_mensaje_bot = $4,\n  updated_at = NOW()\nWHERE chat_id = $1;",
+        "options": {
+          "queryReplacement": "={{\n[\n  $('Unificar Contexto Odoo').first().json.chat_id,\n  $json.result?.[0]?.id || $('Crear Oportunidad Odoo').first().json.result,\n  $json.result?.[0]?.name || 'Nueva oportunidad desde Telegram',\n  'Ahora cuéntame qué has ido a hacer en la visita. Puedes escribirlo o enviarlo por audio.'\n]\n}}"
+        }
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -32,
-        -704
+        1248,
+        48
       ],
-      "id": "72b5a193-f8ad-4474-ab27-6f570524c2ab",
-      "name": "Guardar Entrada",
+      "id": "2cf32d61-2b12-4db0-b963-38e33eb0e894",
+      "name": "Guardar Lead Creado",
       "credentials": {
         "postgres": {
-          "id": "4XLvezcpD5suZgk3",
-          "name": "Supabase chatbot web"
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
         }
       }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Unificar Contexto Odoo').first().json.chat_id }}",
+        "text": "=✅ Oportunidad creada correctamente.\n\nAhora cuéntame qué has ido a hacer en la visita. Puedes escribirlo o enviarlo por audio.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1424,
+        48
+      ],
+      "id": "087339b0-7df4-405c-8e97-b15b601f3edd",
+      "name": "Preguntar Qué Ha Ido a Hacer",
+      "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+      "credentials": {
+        "telegramApi": {
+          "id": "V5cPrt9IZsvJlgjs",
+          "name": "CrmBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const memoria = $json.memoria || {};\n\nconst resumenUsuario = String(\n  $json.mensaje_usuario_original || $json.mensaje_usuario || ''\n).trim();\n\nconst fechaBonita = new Date().toLocaleString('es-ES', {\n  day: '2-digit',\n  month: '2-digit',\n  year: 'numeric',\n  hour: '2-digit',\n  minute: '2-digit'\n});\n\n// 1) Texto para el chatter: dejarlo completo con ubicaciones y fechas\nconst note_body = `\nVisita comercial registrada desde Telegram\n\nFecha registro: ${fechaBonita}\nEntrada: ${memoria.entrada_at || '-'}\nSalida: ${memoria.salida_at || '-'}\nUbicación entrada: ${memoria.entrada_lat || '-'}, ${memoria.entrada_lon || '-'}\nUbicación salida: ${memoria.salida_lat || '-'}, ${memoria.salida_lon || '-'}\n\nResumen de la visita:\n${resumenUsuario}\n`.trim();\n\n// 2) Texto para Notas internas: histórico sencillo por fecha\nconst internal_note_entry = `\n[${fechaBonita}]\n${resumenUsuario}\n`.trim();\n\nreturn {\n  ...$json,\n  note_body,\n  internal_note_entry,\n  fecha_bonita: fechaBonita\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        656,
+        336
+      ],
+      "id": "35be3617-c7ec-4116-b936-6bb37c63d0af",
+      "name": "Construir Nota Visita"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      $json.odoo.db,\n      $json.odoo.uid,\n      $json.odoo.password,\n      \"crm.lead\",\n      \"message_post\",\n      [\n        [$json.memoria.lead_id]\n      ],\n      {\n        body: $json.note_body\n      }\n    ]\n  }\n}) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        832,
+        336
+      ],
+      "id": "022d4d97-7a68-4876-af66-916f82d44fc5",
+      "name": "Guardar Nota en Lead Odoo"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE crm_visitas_bot\nSET\n  estado = NULL,\n  ultimo_mensaje_bot = NULL,\n  datos_pendientes = NULL,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id;",
+        "options": {
+          "queryReplacement": "={{ [$json.chat_id] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1408,
+        336
+      ],
+      "id": "8439beb3-9754-49ba-a641-afd2eaabab92",
+      "name": "Cerrar Visita",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Construir Nota Visita').first().json.telegram_chat_id || $('Construir Nota Visita').first().json.chat_id }}",
+        "text": "={{ `✅ Visita registrada correctamente.\\n\\n🏢 Oportunidad: ${$('Construir Nota Visita').first().json.memoria?.lead_name || 'Sin nombre'}\\n📝 Resumen añadido al CRM de Odoo.` }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1600,
+        336
+      ],
+      "id": "67d6e700-6077-43ef-9d3d-b24a9dd66836",
+      "name": "Confirmación Final",
+      "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+      "credentials": {
+        "telegramApi": {
+          "id": "V5cPrt9IZsvJlgjs",
+          "name": "CrmBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE crm_visitas_bot\nSET\n  estado = NULL,\n  ultimo_mensaje_bot = NULL,\n  datos_pendientes = NULL,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id;",
+        "options": {
+          "queryReplacement": "={{ [$json.chat_id] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        704,
+        624
+      ],
+      "id": "c551bf3e-daf0-4c4c-90bb-b945fb96d40c",
+      "name": "Cancelar Flujo",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chat_id }}",
+        "text": "=✅ Operación cancelada.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        896,
+        624
+      ],
+      "id": "9b68d348-f4ba-40b8-af6b-1759676b8119",
+      "name": "Mensaje Cancelación",
+      "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+      "credentials": {
+        "telegramApi": {
+          "id": "V5cPrt9IZsvJlgjs",
+          "name": "CrmBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chat_id }}",
+        "text": "={{ $json.respuesta_usuario }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        640,
+        848
+      ],
+      "id": "9f8fced3-f049-48f9-b908-7e727dae1422",
+      "name": "Enviar Ayuda",
+      "webhookId": "81870251-e5cc-4b36-8e10-1263fbce611d",
+      "credentials": {
+        "telegramApi": {
+          "id": "V5cPrt9IZsvJlgjs",
+          "name": "CrmBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chat_id }}",
+        "text": "=✅ Operación cancelada.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1264,
+        -336
+      ],
+      "id": "dbda28ec-b0de-4d1e-81a0-21de8eb0a268",
+      "name": "Mensaje Cancelación1",
+      "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+      "credentials": {
+        "telegramApi": {
+          "id": "V5cPrt9IZsvJlgjs",
+          "name": "CrmBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE crm_visitas_bot\nSET\n  estado = NULL,\n  ultimo_mensaje_bot = NULL,\n  datos_pendientes = NULL,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id;",
+        "options": {
+          "queryReplacement": "={{ [$json.chat_id] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1072,
+        -336
+      ],
+      "id": "3c4693ca-b7f6-497c-9c4c-d6926309a003",
+      "name": "Cancelar Operación",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chat_id }}",
+        "text": "={{ `No he entendido tu respuesta.\\n\\nResponde con el número de la oportunidad, escribe \"crear oportunidad\" o \"cancelar\".` }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1072,
+        -112
+      ],
+      "id": "7765849b-32a8-4ced-b6d5-8f863ee2652b",
+      "name": "Lead No Entendido",
+      "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
+      "credentials": {
+        "telegramApi": {
+          "id": "V5cPrt9IZsvJlgjs",
+          "name": "CrmBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let entrada = null;\n\n// Intentar coger la entrada desde la rama texto\ntry {\n  entrada = $('Normalizar Mensaje Directo').first().json;\n} catch (e) {}\n\n// Si no existe, intentar desde la rama audio\nif (!entrada) {\n  try {\n    entrada = $('Actualizar Datos Transcripción').first().json;\n  } catch (e) {}\n}\n\nif (!entrada) {\n  throw new Error('No se pudo recuperar la entrada original del usuario');\n}\n\nconst memoria = $json || {};\n\nlet datosPendientes = memoria.datos_pendientes || {};\nif (typeof datosPendientes === 'string') {\n  try {\n    datosPendientes = JSON.parse(datosPendientes);\n  } catch {\n    datosPendientes = {};\n  }\n}\n\nreturn {\n  ...entrada,\n  memoria: {\n    ...memoria,\n    datos_pendientes: datosPendientes\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -768,
+        -608
+      ],
+      "id": "b6cb4542-7846-475b-9f86-24dc4957f565",
+      "name": "Combinar Entrada + Memoria"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      $('Unificar Contexto Odoo').first().json.odoo.db,\n      $('Unificar Contexto Odoo').first().json.odoo.uid,\n      $('Unificar Contexto Odoo').first().json.odoo.password,\n      \"crm.lead\",\n      \"read\",\n      [\n        [ $('Construir Nota Visita').first().json.memoria.lead_id ]\n      ],\n      {\n        fields: [\"id\", \"description\"]\n      }\n    ]\n  }\n}) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1024,
+        336
+      ],
+      "id": "fcfca674-c4f1-4c20-a0cf-cbb032c98d49",
+      "name": "Leer Descripción Actual Lead"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      $('Construir Nota Visita').first().json.odoo.db,\n      $('Construir Nota Visita').first().json.odoo.uid,\n      $('Construir Nota Visita').first().json.odoo.password,\n      \"crm.lead\",\n      \"write\",\n      [\n        [ $('Construir Nota Visita').first().json.memoria.lead_id ],\n        {\n          description: (() => {\n            const actual = $('Leer Descripción Actual Lead').first().json.result?.[0]?.description || '';\n            const nueva = $('Construir Nota Visita').first().json.internal_note_entry || '';\n            return actual && actual.trim() ? `${actual}\\n\\n${nueva}` : nueva;\n          })()\n        }\n      ]\n    ]\n  }\n}) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1216,
+        336
+      ],
+      "id": "e7eb58ab-4e97-4bf8-8208-a845989ac236",
+      "name": "Guardar Notas Internas Lead"
     }
   ],
   "pinData": {},
@@ -853,7 +4781,7 @@
   ],
   "staticData": null,
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2026-04-24T12:33:47.924Z",
-  "versionId": "981a8d7f-fe8d-430f-ae5f-cb766f0f8a0f"
+  "triggerCount": 1,
+  "updatedAt": "2026-04-28T15:19:13.273Z",
+  "versionId": "dd1258e2-7391-4a41-9a44-c0483beae126"
 }
