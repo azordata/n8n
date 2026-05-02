@@ -1,0 +1,48 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {},
+  "createdAt": "2026-04-30T11:00:18.363Z",
+  "id": "1fk9ZxInzT7abgMV",
+  "isArchived": false,
+  "meta": null,
+  "name": "Spoki Calendar",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "7a9145a5-71b1-4e4d-9070-13facdadaa94",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "148e7909-eb1d-410b-b3b5-f46ee6dbd348",
+      "name": "Webhook",
+      "webhookId": "7a9145a5-71b1-4e4d-9070-13facdadaa94"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-04-30T11:00:18.363Z",
+      "createdAt": "2026-04-30T11:00:18.363Z",
+      "role": "workflow:owner",
+      "workflowId": "1fk9ZxInzT7abgMV",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-04-30T11:01:34.149Z",
+  "versionId": "ee254b27-abee-4743-af7a-a5179f09b513"
+}
