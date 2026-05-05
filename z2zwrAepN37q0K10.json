@@ -1,422 +1,11 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-04-28T15:19:15.421Z",
-    "createdAt": "2026-04-28T15:19:13.275Z",
-    "versionId": "dd1258e2-7391-4a41-9a44-c0483beae126",
+    "updatedAt": "2026-05-05T15:09:19.423Z",
+    "createdAt": "2026-05-05T15:09:17.764Z",
+    "versionId": "4690317c-15c8-4c21-8aba-07c5b266c214",
     "workflowId": "z2zwrAepN37q0K10",
     "nodes": [
-      {
-        "parameters": {
-          "conditions": {
-            "boolean": [
-              {
-                "value1": "={{ $json.hasLocation }}",
-                "value2": true
-              }
-            ]
-          }
-        },
-        "id": "e9b1890f-4b35-49f3-8789-00e81129ad5a",
-        "name": "¿Es Ubicación?",
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 1,
-        "position": [
-          -2704,
-          2496
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://localhost:3000/odoo-api/get-user-visit-state",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({ userId: $('Detectar Tipo Inicial').first().json.userId }) }}",
-          "options": {}
-        },
-        "id": "2b7d8adf-5e1f-4cbc-8a55-48b94bc46527",
-        "name": "Obtener Estado Visita",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -2496,
-          2352
-        ]
-      },
-      {
-        "parameters": {
-          "conditions": {
-            "boolean": [
-              {
-                "value1": "={{ $json.hasEntryLocation }}"
-              }
-            ]
-          }
-        },
-        "id": "8a984628-6cc1-45a0-acd4-8898f4c3622a",
-        "name": "¿Es Entrada o Salida?",
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 1,
-        "position": [
-          -2304,
-          2352
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://localhost:3000/odoo-api/register-entry-location",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({ userId: $('Detectar Tipo Inicial').first().json.userId, latitude: $('Detectar Tipo Inicial').first().json.latitude, longitude: $('Detectar Tipo Inicial').first().json.longitude }) }}",
-          "options": {}
-        },
-        "id": "544290d2-4f50-4383-afc7-2c2211e7ac69",
-        "name": "Guardar Ubicación Entrada",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -2096,
-          2240
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://localhost:3000/telegram/send-message",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '✅ Ubicación de entrada registrada en:\\n📍 Lat: ' + $('Detectar Tipo Inicial').first().json.latitude + '\\n📍 Lon: ' + $('Detectar Tipo Inicial').first().json.longitude }) }}",
-          "options": {}
-        },
-        "id": "86f88635-71c6-4927-bde3-2eccc97f9921",
-        "name": "Responder Entrada",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -1888,
-          2240
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://localhost:3000/odoo-api/get-open-leads",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({ userId: $('Detectar Tipo Inicial').first().json.userId }) }}",
-          "options": {}
-        },
-        "id": "a1d7a5e3-c084-49bc-9457-9cb1bed4815d",
-        "name": "Obtener Leads Abiertos",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -2096,
-          2448
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://localhost:3000/odoo-api/register-exit-location",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({ userId: $('Detectar Tipo Inicial').first().json.userId, latitude: $('Detectar Tipo Inicial').first().json.latitude, longitude: $('Detectar Tipo Inicial').first().json.longitude }) }}",
-          "options": {}
-        },
-        "id": "6efb2190-fc95-491e-8fd5-190e89bd852c",
-        "name": "Guardar Ubicación Salida",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -2096,
-          2592
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://localhost:3000/telegram/send-leads-menu",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, leads: $('Obtener Leads Abiertos').first().json.leads }) }}",
-          "options": {}
-        },
-        "id": "48e8432f-61c5-473c-8dd7-6499643b6f14",
-        "name": "Mostrar Menú Leads",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -1888,
-          2544
-        ]
-      },
-      {
-        "parameters": {
-          "conditions": {
-            "string": [
-              {
-                "value1": "={{ $json.selectedLeadId }}",
-                "operation": "isNotEmpty"
-              }
-            ]
-          }
-        },
-        "id": "f42810ec-434b-4c60-83fd-daea1182ba1f",
-        "name": "¿Lead Seleccionado?",
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 1,
-        "position": [
-          -2704,
-          2800
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://localhost:3000/odoo-api/get-lead-details",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({ leadId: $('Detectar Tipo Inicial').first().json.selectedLeadId }) }}",
-          "options": {}
-        },
-        "id": "2e97de76-3d7a-4da3-bf8c-679e58155e26",
-        "name": "Obtener Detalles Lead",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -2496,
-          2800
-        ]
-      },
-      {
-        "parameters": {
-          "conditions": {
-            "number": [
-              {
-                "value1": "={{ $json.probability }}",
-                "operation": "equal",
-                "value2": 100
-              }
-            ]
-          }
-        },
-        "id": "17875132-9ac4-490b-b773-fd2bdd7718aa",
-        "name": "¿Lead es Won?",
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 1,
-        "position": [
-          -2304,
-          2800
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://localhost:3000/odoo-api/link-visit-to-lead",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, leadId: $('Detectar Tipo Inicial').first().json.selectedLeadId }) }}",
-          "options": {}
-        },
-        "id": "0d51eb87-8c0a-4770-ab6c-53e89779e962",
-        "name": "Vincular Visita a Lead (Won)",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -2096,
-          2704
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://localhost:3000/odoo-api/link-visit-to-lead",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, leadId: $('Detectar Tipo Inicial').first().json.selectedLeadId }) }}",
-          "options": {}
-        },
-        "id": "c91c41b3-1275-45e1-b007-2c99a4b880f2",
-        "name": "Vincular Visita a Lead (Abierto)",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -2096,
-          2896
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://localhost:3000/telegram/send-message",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '✅ Lead ganado (' + $('Obtener Detalles Lead').first().json.name + ')\\n👤 Se creará el contacto automáticamente\\n\\n¿Qué has ido a hacer? (Texto o 🎤 audio)' }) }}",
-          "options": {}
-        },
-        "id": "3f23a588-83d9-4a44-a333-47480ddceb39",
-        "name": "Mensaje: Lead Won",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -1888,
-          2704
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://localhost:3000/telegram/send-message",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '📊 Lead abierto (' + $('Obtener Detalles Lead').first().json.name + ')\\n✓ Visita registrada\\n❌ No se crea contacto (Lead abierto)\\n\\n¿Qué has ido a hacer? (Texto o 🎤 audio)' }) }}",
-          "options": {}
-        },
-        "id": "fc7929a0-e1d7-42cd-896f-c1f4cf6e5a48",
-        "name": "Mensaje: Lead Abierto",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -1888,
-          2896
-        ]
-      },
-      {
-        "parameters": {
-          "conditions": {
-            "boolean": [
-              {
-                "value1": "={{ $json.hasVoice }}",
-                "value2": true
-              }
-            ]
-          }
-        },
-        "id": "3f670169-c9ff-4ea2-b118-ed1d67f49b68",
-        "name": "¿Hay Audio?",
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 1,
-        "position": [
-          -2704,
-          3104
-        ]
-      },
-      {
-        "parameters": {
-          "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/getFile",
-          "sendQuery": true,
-          "queryParameters": {
-            "parameters": [
-              {
-                "name": "file_id",
-                "value": "={{ $('Detectar Tipo Inicial').first().json.fileId }}"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "id": "5814b5e5-464f-455b-b6e2-f969b24a9ba9",
-        "name": "Obtener Audio de Telegram",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -2496,
-          3040
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://localhost:3000/openai/transcribe",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({ audioUrl: 'https://api.telegram.org/file/bot' + $env.TELEGRAM_BOT_TOKEN + '/' + $('Obtener Audio de Telegram').first().json.result.file_path }) }}",
-          "options": {}
-        },
-        "id": "ee56dae1-1d46-43d2-930f-ec71ff0b17a8",
-        "name": "Transcribir Audio",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -2304,
-          3040
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://localhost:3000/odoo-api/save-visit-activity",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, summary: $('Transcribir Audio').first().json.transcription, notes: 'Actividad registrada desde Telegram (audio)', audio_transcription: $('Transcribir Audio').first().json.transcription }) }}",
-          "options": {}
-        },
-        "id": "4f308b43-ac64-45d1-a3db-cb86aa2e2e00",
-        "name": "Guardar Actividad con Audio",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -2096,
-          3040
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://localhost:3000/odoo-api/save-visit-activity",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, summary: $('Detectar Tipo Inicial').first().json.text, notes: 'Actividad registrada desde Telegram (texto)', audio_transcription: null }) }}",
-          "options": {}
-        },
-        "id": "5a83a111-d181-495b-ad0d-57d54f01dd08",
-        "name": "Guardar Actividad con Texto",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -2496,
-          3248
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://localhost:3000/telegram/send-message",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '✅ Visita guardada exitosamente\\n🎤 Transcripción: ' + $('Transcribir Audio').first().json.transcription + '\\n\\n👍 Todo registrado en el CRM' }) }}",
-          "options": {}
-        },
-        "id": "e1c81111-4a70-4985-9860-1ba6e071401c",
-        "name": "Confirmar Guardado (Audio)",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -1888,
-          3040
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "http://localhost:3000/telegram/send-message",
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '✅ Visita guardada exitosamente\\n📝 Resumen: ' + $('Detectar Tipo Inicial').first().json.text + '\\n\\n👍 Todo registrado en el CRM' }) }}",
-          "options": {}
-        },
-        "id": "6f01ab42-074e-457c-877e-842f2ddd1314",
-        "name": "Confirmar Guardado (Texto)",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4,
-        "position": [
-          -2304,
-          3248
-        ]
-      },
       {
         "parameters": {
           "updates": [
@@ -427,10 +16,10 @@
         "type": "n8n-nodes-base.telegramTrigger",
         "typeVersion": 1.2,
         "position": [
-          -1712,
-          -608
+          -16224,
+          -864
         ],
-        "id": "2b41dbcd-0340-4457-84d6-046796eeb60f",
+        "id": "9e4de43c-b8b7-46e0-aa6a-4c8045b6fb8f",
         "name": "Telegram Trigger",
         "webhookId": "10466960-1bb6-4e83-84f4-97818410efc4",
         "credentials": {
@@ -452,10 +41,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          800,
-          -1296
+          -12544,
+          -1504
         ],
-        "id": "1b90b557-c5d8-4223-b719-8d1e6395a88a",
+        "id": "477eadef-0d69-4bb2-936f-f785da49522c",
         "name": "Entrada Registrada",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -476,10 +65,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          -976,
-          -608
+          -14288,
+          -832
         ],
-        "id": "7187688d-9db3-4909-b9c6-73dae53b5e00",
+        "id": "ab927cba-40b4-41a2-8819-6deabc26783b",
         "name": "Consultar Memoria Visita",
         "credentials": {
           "postgres": {
@@ -495,10 +84,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -560,
-          -608
+          -13872,
+          -832
         ],
-        "id": "8fa0cfd7-1474-4abf-9393-9aa9bc2ab632",
+        "id": "f203f1ef-0b46-4849-ae27-fe109a554e42",
         "name": "Router Principal CRM"
       },
       {
@@ -686,10 +275,10 @@
         "type": "n8n-nodes-base.switch",
         "typeVersion": 3.4,
         "position": [
-          144,
-          -688
+          -13200,
+          -896
         ],
-        "id": "1d39b34c-90e0-4f41-8fc4-e7bca840e4c0",
+        "id": "3fd66af8-6ebe-493c-977d-5a77dfb3bb4c",
         "name": "Switch Acción"
       },
       {
@@ -703,10 +292,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          576,
-          -1296
+          -12768,
+          -1504
         ],
-        "id": "182887e7-6bfa-492d-aeb0-f72a802b3e32",
+        "id": "0a33ff18-c226-401d-b5b2-18d8f93b3a7b",
         "name": "Guardar Entrada",
         "credentials": {
           "postgres": {
@@ -726,10 +315,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          576,
-          -1056
+          -12768,
+          -1264
         ],
-        "id": "c2f04e0e-d36b-4024-a992-3543273ce2e7",
+        "id": "fecdffb3-5c6c-41c7-aff5-1a6e1d68e718",
         "name": "Guardar Salida",
         "credentials": {
           "postgres": {
@@ -759,10 +348,10 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.4,
         "position": [
-          800,
-          -1056
+          -12544,
+          -1264
         ],
-        "id": "1fe89e8c-8d7c-4175-8140-9e3d148a1140",
+        "id": "50273cd0-ccea-4baf-a8d2-07caa4a4deb7",
         "name": "Consultar Oportunidades Abiertas Odoo"
       },
       {
@@ -785,10 +374,10 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.2,
         "position": [
-          -304,
-          -608
+          -13616,
+          -832
         ],
-        "id": "22ed0f56-4cb8-4034-a0ea-d88bd4db5b14",
+        "id": "3b263e11-32f9-43b5-94ea-f41bef69bb87",
         "name": "Autenticar Odoo"
       },
       {
@@ -798,10 +387,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          1008,
-          -1056
+          -12336,
+          -1264
         ],
-        "id": "d79240f7-43d1-43d6-ac0d-58aecffce8d4",
+        "id": "355c528e-41e3-410b-8aed-81a4d6d4455a",
         "name": "Preparar Lista Oportunidades"
       },
       {
@@ -815,10 +404,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          1216,
-          -1056
+          -12128,
+          -1264
         ],
-        "id": "9de80e44-2683-46cf-8e03-facbdc2197a3",
+        "id": "fc133116-3377-4371-899b-6e7c5c60d565",
         "name": "Guardar Memoria Oportunidades",
         "credentials": {
           "postgres": {
@@ -839,10 +428,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          1408,
-          -1056
+          -11936,
+          -1264
         ],
-        "id": "78bc8d06-9773-4bc5-9cbe-554a5d3911af",
+        "id": "7cd7c544-ecd3-41d6-8f6e-cd30aea4f8ef",
         "name": "Enviar Lista Leads",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -859,10 +448,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          576,
-          -768
+          -12768,
+          -976
         ],
-        "id": "468ff440-5713-4b0e-b98e-8693947df512",
+        "id": "451c862b-d0ff-4e3f-b0c4-cc9ec1aa0273",
         "name": "Resolver Lead Elegido"
       },
       {
@@ -975,10 +564,10 @@
         "type": "n8n-nodes-base.switch",
         "typeVersion": 3.4,
         "position": [
-          768,
-          -800
+          -12576,
+          -1008
         ],
-        "id": "27aff82e-0243-4faa-956f-e6907413c29e",
+        "id": "d83a6339-f2a7-4f9a-be37-cc9938501294",
         "name": "Switch Resultado Lead"
       },
       {
@@ -992,10 +581,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          1056,
-          -816
+          -12288,
+          -1024
         ],
-        "id": "6769cb31-6449-4d13-aafd-66bfa6fdb5ed",
+        "id": "e6c2b24e-a373-4d1a-a446-28867bdfa22a",
         "name": "Guardar Lead Elegido",
         "credentials": {
           "postgres": {
@@ -1016,10 +605,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          1264,
-          -816
+          -12080,
+          -1024
         ],
-        "id": "c0791c5a-aa85-4e13-aa4f-7dda3a5ef3d8",
+        "id": "c88ef7c5-c703-4cb2-aeaf-778c73ba5fee",
         "name": "Preguntar Descripción Visita",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -1034,16 +623,16 @@
           "operation": "executeQuery",
           "query": "UPDATE crm_visitas_bot\nSET\n  estado = 'esperando_crear_oportunidad',\n  ultimo_mensaje_bot = $2,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id, estado;",
           "options": {
-            "queryReplacement": "={{\n[\n  $json.chat_id,\n  'Perfecto. Envíame los datos de la oportunidad por texto o audio: empresa, contacto, necesidad, presupuesto, urgencia, o lo que sepas.'\n]\n}}"
+            "queryReplacement": "={{\n[\n  $json.chat_id,\n  'Perfecto. Envíame los datos por texto o audio. Usa etiquetas si puedes: Contacto, Empresa, Dirección, Cliente. Buscamos el contacto en Odoo; si no existe como empresa, el nombre queda en Nombre del contacto y el resto en los campos de texto del lead.'\n]\n}}"
           }
         },
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          1056,
-          -608
+          -12288,
+          -816
         ],
-        "id": "bfe95355-0041-45cf-9b3d-4696df5387be",
+        "id": "56727d48-2e7f-4b98-9eba-a791630fde74",
         "name": "Guardar Estado Crear Oportunidad",
         "credentials": {
           "postgres": {
@@ -1055,7 +644,7 @@
       {
         "parameters": {
           "chatId": "={{ $json.telegram_chat_id || $json.chat_id }}",
-          "text": "=Perfecto. Envíame los datos de la oportunidad por texto o audio:\nempresa, contacto, necesidad, presupuesto, urgencia, o lo que sepas.",
+          "text": "=Perfecto. Envíame los datos por texto o audio.\n\nEjemplos: *Contacto: …*, *Empresa: …*, *Dirección: …*, *Cliente: …* (opcional).\nBuscamos la empresa en Odoo; si no hay coincidencia, el nombre va en **Nombre del contacto** y la empresa en el campo de texto del lead.",
           "additionalFields": {
             "appendAttribution": false,
             "parse_mode": "Markdown"
@@ -1064,10 +653,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          1264,
-          -608
+          -12080,
+          -816
         ],
-        "id": "4ac1831e-cccf-41c4-9548-6d6cde436cde",
+        "id": "1a833710-4d1c-49e0-b31a-500aebf24575",
         "name": "Pedir Datos Nueva Oportunidad",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -1105,10 +694,10 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.3,
         "position": [
-          -1504,
-          -256
+          -15824,
+          -864
         ],
-        "id": "240aac6e-4049-49b3-ab2b-c7ac399e7ef0",
+        "id": "54e6f09a-c941-4e35-9622-b8851fef187f",
         "name": "¿Es Audio?"
       },
       {
@@ -1118,10 +707,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -128,
-          -272
+          -14512,
+          -976
         ],
-        "id": "364f67af-1620-4d11-a18c-2ddb7fd85d64",
+        "id": "b89e9b05-16f4-4c80-a884-28275953e92f",
         "name": "Actualizar Datos Transcripción"
       },
       {
@@ -1131,10 +720,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -560,
-          -272
+          -14944,
+          -976
         ],
-        "id": "8b293b5c-b49e-4833-a6f7-45bb220e3825",
+        "id": "2a588e18-925d-4151-936e-a605f793d49b",
         "name": "Procesar Transcripción"
       },
       {
@@ -1144,10 +733,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -1184,
-          -272
+          -15568,
+          -976
         ],
-        "id": "e1008653-612a-4b86-9ac3-89c75b2fab1a",
+        "id": "575b5b65-fc32-4e0b-b30d-ac565a94d967",
         "name": "Preparar Descarga"
       },
       {
@@ -1162,10 +751,10 @@
         "type": "@n8n/n8n-nodes-langchain.openAi",
         "typeVersion": 1.8,
         "position": [
-          -736,
-          -272
+          -15120,
+          -976
         ],
-        "id": "ebbdf1a7-1878-4e3f-a969-f2a184f58855",
+        "id": "4fecd0ec-a64b-4430-9995-93ea49f9185a",
         "name": "Transcribe a recording",
         "credentials": {
           "openAiApi": {
@@ -1186,10 +775,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          -336,
-          -272
+          -14720,
+          -976
         ],
-        "id": "aa8cd7e6-a447-40ef-a86d-18c72a533b8b",
+        "id": "0958beb7-65be-4355-8c8b-a757a4731f97",
         "name": "Confirmar Transcripción T",
         "webhookId": "237a0319-b9b0-4c5f-8561-1aef1c7c9116",
         "credentials": {
@@ -1208,10 +797,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          -944,
-          -272
+          -15328,
+          -976
         ],
-        "id": "7bbd087a-f6ef-4501-b52c-9b262e0fb326",
+        "id": "c50aa4d5-9a0c-4e11-8afa-b9a70e9e8db1",
         "name": "Descargar Audio T",
         "webhookId": "1f9d320a-2e58-48ab-bf94-f02ee44a09d2",
         "credentials": {
@@ -1225,13 +814,13 @@
         "parameters": {
           "jsCode": "const msg = $json.message || {};\n\nlet tipo_mensaje = 'unknown';\nif (msg.location) tipo_mensaje = 'location';\nelse if (msg.voice) tipo_mensaje = 'voice';\nelse if (msg.text) tipo_mensaje = 'text';\n\nreturn {\n  raw_message: msg,\n  chat_id: msg.chat?.id || null,\n  telegram_chat_id: msg.chat?.id || null,\n  user_id: msg.from?.id || null,\n  user_name: [msg.from?.first_name, msg.from?.last_name].filter(Boolean).join(' ').trim(),\n  tipo_mensaje,\n  mensaje_usuario: msg.text || '',\n  mensaje_usuario_original: msg.text || '',\n  latitude: msg.location?.latitude || null,\n  longitude: msg.location?.longitude || null,\n  file_id: msg.voice?.file_id || null,\n  fecha_hora: new Date().toISOString(),\n  plataforma: 'telegram',\n  es_audio: tipo_mensaje === 'voice'\n};"
         },
-        "id": "40e0f4f3-0134-4733-bc48-0fbf2da190a7",
+        "id": "4138f215-ca15-434e-bada-d3897b57f727",
         "name": "Detectar Tipo Inicial",
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -1520,
-          -608
+          -16032,
+          -864
         ]
       },
       {
@@ -1241,10 +830,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -1376,
-          -112
+          -15584,
+          -720
         ],
-        "id": "0806d628-1c12-4c24-8a8a-2e63f3776427",
+        "id": "7f250636-7e11-45c0-baa6-e40c375323c2",
         "name": "Normalizar Mensaje Directo"
       },
       {
@@ -1254,24 +843,123 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -96,
-          -608
+          -13408,
+          -832
         ],
-        "id": "3356bd3d-39e8-40a6-82d5-f1a4d8d270a3",
+        "id": "da54bc45-1eb9-4c40-8d06-d3dba2e21763",
         "name": "Unificar Contexto Odoo"
       },
       {
         "parameters": {
-          "jsCode": "const texto = String($json.mensaje_usuario_original || $json.mensaje_usuario || '').trim();\n\nreturn {\n  ...$json,\n  opportunity_payload: {\n    name: 'Nueva oportunidad desde Telegram',\n    type: 'opportunity',\n    description: texto\n  }\n};"
+          "jsCode": "const texto = String($json.mensaje_usuario_original || $json.mensaje_usuario || '').trim();\n\nfunction trimVal(s) {\n  return String(s || '').replace(/^[\\s:\\-–—]+|[\\s:\\-–—]+$/g, '').trim();\n}\n\nfunction matchLabel(segment, regex) {\n  const m = segment.match(regex);\n  return m ? trimVal(m[1]) : '';\n}\n\nlet nombreCliente = '';\nlet contacto = '';\nlet empresa = '';\nlet street = '';\n\nconst segmentos = texto\n  .split(/[,;\\n]+/)\n  .map((s) => s.trim())\n  .filter(Boolean);\n\nfor (const p of segmentos) {\n  let v = matchLabel(p, /^(?:nombre\\s+del\\s+)?cliente\\s*[:\\-–—]?\\s*(.+)$/i);\n  if (v) {\n    nombreCliente = v;\n    continue;\n  }\n  v = matchLabel(p, /^el\\s+cliente\\s+(?:es|llama)\\s+(.+)$/i);\n  if (v) {\n    nombreCliente = v;\n    continue;\n  }\n  v = matchLabel(p, /^contacto(?:\\s+principal)?\\s*[:\\-–—]?\\s*(.+)$/i);\n  if (v) {\n    contacto = v;\n    continue;\n  }\n  v = matchLabel(p, /^persona\\s+de\\s+contacto\\s*[:\\-–—]?\\s*(.+)$/i);\n  if (v) {\n    contacto = v;\n    continue;\n  }\n  v = matchLabel(p, /^empresa\\s*[:\\-–—]?\\s*(.+)$/i);\n  if (v) {\n    empresa = v;\n    continue;\n  }\n  v = matchLabel(p, /^(?:compa[ñn]ia|compañía|raz[oó]n\\s+social)\\s*[:\\-–—]?\\s*(.+)$/i);\n  if (v) {\n    empresa = v;\n    continue;\n  }\n  v = matchLabel(p, /^(?:calle|direcci[oó]n|domicilio|street)\\s*[:\\-–—]?\\s*(.+)$/i);\n  if (v) {\n    street = v;\n    continue;\n  }\n}\n\nif (!nombreCliente) {\n  const mFull = texto.match(\n    /(?:^|[\\s,;])(?:nombre\\s+del\\s+)?cliente\\s*[:\\-–—]\\s*([^\\n,;]+?)(?=[\\n,;]|$)/i\n  );\n  if (mFull) nombreCliente = trimVal(mFull[1]);\n}\nif (!contacto) {\n  const m = texto.match(/(?:^|[\\s,;])contacto\\s*[:\\-–—]\\s*([^\\n,;]+?)(?=[\\n,;]|$)/i);\n  if (m) contacto = trimVal(m[1]);\n}\nif (!empresa) {\n  const m = texto.match(/(?:^|[\\s,;])empresa\\s*[:\\-–—]\\s*([^\\n,;]+?)(?=[\\n,;]|$)/i);\n  if (m) empresa = trimVal(m[1]);\n}\nif (!street) {\n  const m = texto.match(\n    /(?:^|[\\s,;])(?:calle|direcci[oó]n|domicilio)\\s*[:\\-–—]\\s*([^\\n,;]+?)(?=[\\n,;]|$)/i\n  );\n  if (m) street = trimVal(m[1]);\n}\n\nif (!nombreCliente && segmentos.length > 0) {\n  const primero = segmentos[0];\n  const low = primero.toLowerCase();\n  const esEtiqueta =\n    /^(?:cliente|contacto|empresa|calle|direcci|domicilio|necesidad|presupuesto|urgencia|nombre\\s+del)/i.test(\n      low\n    );\n  if (!esEtiqueta && primero.length <= 120) {\n    nombreCliente = trimVal(primero);\n  }\n}\n\nnombreCliente = trimVal(nombreCliente);\ncontacto = trimVal(contacto);\nempresa = trimVal(empresa);\nstreet = trimVal(street);\n\nif (\n  contacto &&\n  nombreCliente &&\n  contacto.toLowerCase() === nombreCliente.toLowerCase()\n) {\n  contacto = '';\n}\n\nconst tituloNombre =\n  nombreCliente || contacto || empresa || 'Telegram';\n\nconst tieneAlgunaPista =\n  Boolean(nombreCliente) ||\n  Boolean(contacto) ||\n  Boolean(empresa) ||\n  Boolean(street) ||\n  texto.replace(/\\s+/g, ' ').length > 6;\n\nconst puede_crear_oportunidad = tieneAlgunaPista;\n\nif (!puede_crear_oportunidad) {\n  return {\n    ...$json,\n    puede_crear_oportunidad: false,\n    opportunity_payload: null,\n    partner_busqueda: null,\n    mensaje_falta_cliente:\n      'No he podido extraer datos. Escribe al menos **contacto**, **empresa**, **cliente**, **dirección** o un resumen concreto (por ejemplo: *Contacto: …, Empresa: …*).'\n  };\n}\n\nconst partner_busqueda =\n  (empresa || nombreCliente || contacto || '').trim() || null;\n\nconst opportunity_payload = {\n  name: `Oportunidad ${tituloNombre}`,\n  type: 'opportunity',\n  description: texto\n};\n\nif (empresa) opportunity_payload.partner_name = empresa;\nif (street) opportunity_payload.street = street;\nif (contacto) opportunity_payload.contact_name = contacto;\nelse if (nombreCliente) opportunity_payload.contact_name = nombreCliente;\n\nreturn {\n  ...$json,\n  puede_crear_oportunidad: true,\n  partner_busqueda,\n  opportunity_payload,\n  opportunity_datos_parseados: {\n    nombre_cliente: nombreCliente || undefined,\n    contact_name: contacto || undefined,\n    partner_name: empresa || undefined,\n    street: street || undefined\n  }\n};\n"
         },
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          656,
-          48
+          -12688,
+          -160
         ],
-        "id": "ed63c270-2813-4c82-b26f-37ea9146c602",
+        "id": "22e22373-d6aa-440d-8e3d-fddb79145ee6",
         "name": "Preparar Payload Nueva Oportunidad"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "c7e8f901-2a3b-4c5d-8e9f-0a1b2c3d4e5f",
+                "leftValue": "={{ String($json.puede_crear_oportunidad) }}",
+                "rightValue": "true",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          -12592,
+          -160
+        ],
+        "id": "93fe7c8c-69c8-4848-9135-819c5ec1b1c7",
+        "name": "IF Nombre Cliente Oportunidad"
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $json.telegram_chat_id || $json.chat_id }}",
+          "text": "={{ $json.mensaje_falta_cliente }}",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "Markdown"
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          -12592,
+          32
+        ],
+        "id": "79a0a885-83e8-49cc-9b30-669ab890863b",
+        "name": "Aviso Falta Nombre Cliente",
+        "webhookId": "7c8d9e0f-1a2b-4c5d-8e9f-0a1b2c3d4e5f",
+        "credentials": {
+          "telegramApi": {
+            "id": "V5cPrt9IZsvJlgjs",
+            "name": "CrmBot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ (() => {\n  const prep = $('Preparar Payload Nueva Oportunidad').first().json;\n  const t = String(prep.partner_busqueda || '').trim();\n  const domain = t ? ['|', ['name', '=', t], ['name', 'ilike', t]] : [['id', '=', 0]];\n  return JSON.stringify({\n    jsonrpc: '2.0',\n    method: 'call',\n    params: {\n      service: 'object',\n      method: 'execute_kw',\n      args: [\n        prep.odoo.db,\n        prep.odoo.uid,\n        prep.odoo.password,\n        'res.partner',\n        'search_read',\n        [domain],\n        { fields: ['id', 'name'], limit: 5 }\n      ]\n    }\n  });\n})() }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          -12528,
+          -160
+        ],
+        "id": "a39b7246-23f0-4e44-9c27-b142b44eb66f",
+        "name": "Buscar Partner Odoo"
+      },
+      {
+        "parameters": {
+          "jsCode": "const prep = $('Preparar Payload Nueva Oportunidad').first().json;\nconst raw = $json;\n\nlet partners = [];\nif (raw && Array.isArray(raw.result)) {\n  partners = raw.result;\n}\n\nconst d = prep.opportunity_datos_parseados || {};\nconst nombreCliente = String(d.nombre_cliente || '').trim();\nconst contacto = String(d.contact_name || '').trim();\nconst empresa = String(d.partner_name || '').trim();\nconst street = String(d.street || '').trim();\n\n// Buscar el \"cliente\" en res.partner si el usuario lo ha indicado.\n// Si no viene, caemos al valor previo calculado en el paso de preparación.\nconst partner_busqueda = String(nombreCliente || prep.partner_busqueda || '').trim();\nlet partner_id = null;\n\nconst payload = { ...(prep.opportunity_payload || {}) };\n\nfunction norm(s) {\n  return String(s || '')\n    .normalize('NFD')\n    .replace(/[\\u0300-\\u036f]/g, '')\n    .toLowerCase()\n    .trim();\n}\n\n// Resolver partner_id: si hay varios resultados, usar coincidencia exacta por nombre.\nif (partner_busqueda) {\n  const target = norm(partner_busqueda);\n  const exact = partners.find((p) => norm(p && p.name) === target);\n  if (exact && exact.id) {\n    partner_id = exact.id;\n  } else if (partners.length === 1) {\n    partner_id = partners[0].id;\n  }\n}\n\nif (partner_id) {\n  payload.partner_id = partner_id;\n  if (contacto) payload.contact_name = contacto;\n  else if (nombreCliente) payload.contact_name = nombreCliente;\n  else if (partner_busqueda) payload.contact_name = partner_busqueda;\n  if (empresa) payload.partner_name = empresa;\n  if (street) payload.street = street;\n} else {\n  if (empresa) payload.partner_name = empresa;\n  if (street) payload.street = street;\n\n  // Si no encontramos el cliente en res.partner, el nombre debe ir a \"Nombre del contacto\".\n  // Evitamos que la empresa acabe como fallback en contact_name.\n  const busquedaSirveComoContacto =\n    partner_busqueda && norm(partner_busqueda) !== norm(empresa);\n\n  const cn =\n    contacto ||\n    nombreCliente ||\n    (busquedaSirveComoContacto ? partner_busqueda : '') ||\n    '';\n\n  if (cn) payload.contact_name = cn;\n}\n\nreturn {\n  ...prep,\n  odoo: prep.odoo,\n  opportunity_payload: payload,\n  res_partner_candidatos: partners,\n  partner_id_resuelto: partner_id\n};\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -12416,
+          -160
+        ],
+        "id": "22e98e45-f51b-428e-af16-1f2a6c48f18a",
+        "name": "Fusionar Partner Oportunidad"
       },
       {
         "parameters": {
@@ -1294,10 +982,10 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.4,
         "position": [
-          864,
-          48
+          -12288,
+          -160
         ],
-        "id": "552366e5-22e0-496e-96ee-ffbae0151758",
+        "id": "af3c0f44-0217-40c8-a570-0122eef31ecf",
         "name": "Crear Oportunidad Odoo"
       },
       {
@@ -1321,27 +1009,27 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.4,
         "position": [
-          1056,
-          48
+          -12288,
+          -160
         ],
-        "id": "4bfd8bc8-4f5f-48a1-8c15-fae7b817c515",
+        "id": "88ebf18b-5fb9-4cce-bfc7-40ee34e63c62",
         "name": "Leer Lead Creado"
       },
       {
         "parameters": {
           "operation": "executeQuery",
-          "query": "UPDATE crm_visitas_bot\nSET\n  lead_id = $2,\n  lead_name = $3,\n  estado = 'esperando_descripcion_visita',\n  ultimo_mensaje_bot = $4,\n  updated_at = NOW()\nWHERE chat_id = $1;",
+          "query": "UPDATE crm_visitas_bot\nSET\n  lead_id = $2,\n  lead_name = $3,\n  estado = 'esperando_descripcion_visita',\n  ultimo_mensaje_bot = $4,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id, lead_id, lead_name, estado;",
           "options": {
-            "queryReplacement": "={{\n[\n  $('Unificar Contexto Odoo').first().json.chat_id,\n  $json.result?.[0]?.id || $('Crear Oportunidad Odoo').first().json.result,\n  $json.result?.[0]?.name || 'Nueva oportunidad desde Telegram',\n  'Ahora cuéntame qué has ido a hacer en la visita. Puedes escribirlo o enviarlo por audio.'\n]\n}}"
+            "queryReplacement": "={{\n[\n  $('Unificar Contexto Odoo').first().json.chat_id,\n  $json.result?.[0]?.id || $('Crear Oportunidad Odoo').first().json.result,\n  $json.result?.[0]?.name || $('Fusionar Partner Oportunidad').first().json?.opportunity_payload?.name || 'Oportunidad',\n  'Ahora cuéntame qué has ido a hacer en la visita. Puedes escribirlo o enviarlo por audio.'\n]\n}}"
           }
         },
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          1248,
-          48
+          -12096,
+          -160
         ],
-        "id": "2cf32d61-2b12-4db0-b963-38e33eb0e894",
+        "id": "959b1592-f4e0-4c92-84ad-ec2bee401d7f",
         "name": "Guardar Lead Creado",
         "credentials": {
           "postgres": {
@@ -1362,10 +1050,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          1424,
-          48
+          -11920,
+          -160
         ],
-        "id": "087339b0-7df4-405c-8e97-b15b601f3edd",
+        "id": "900c05de-e914-408f-a0b5-41df71399ac8",
         "name": "Preguntar Qué Ha Ido a Hacer",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -1382,10 +1070,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          656,
-          336
+          -12688,
+          128
         ],
-        "id": "35be3617-c7ec-4116-b936-6bb37c63d0af",
+        "id": "10816217-3777-4802-94f0-8c0a61edfb10",
         "name": "Construir Nota Visita"
       },
       {
@@ -1409,10 +1097,10 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.4,
         "position": [
-          832,
-          336
+          -12512,
+          128
         ],
-        "id": "022d4d97-7a68-4876-af66-916f82d44fc5",
+        "id": "1841cb45-bb39-4563-8dfd-95e0c0280013",
         "name": "Guardar Nota en Lead Odoo"
       },
       {
@@ -1420,16 +1108,16 @@
           "operation": "executeQuery",
           "query": "UPDATE crm_visitas_bot\nSET\n  estado = NULL,\n  ultimo_mensaje_bot = NULL,\n  datos_pendientes = NULL,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id;",
           "options": {
-            "queryReplacement": "={{ [$json.chat_id] }}"
+            "queryReplacement": "={{ [$('Validar Crear Visita Odoo').first().json.chat_id] }}"
           }
         },
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          1408,
-          336
+          -11632,
+          128
         ],
-        "id": "8439beb3-9754-49ba-a641-afd2eaabab92",
+        "id": "e8d1c853-479b-449c-b76a-3b9df19a40eb",
         "name": "Cerrar Visita",
         "credentials": {
           "postgres": {
@@ -1450,10 +1138,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          1600,
-          336
+          -11552,
+          128
         ],
-        "id": "67d6e700-6077-43ef-9d3d-b24a9dd66836",
+        "id": "f9253bc3-0309-42c9-8e01-d6f3b66b5d30",
         "name": "Confirmación Final",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -1474,10 +1162,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          704,
-          624
+          -12640,
+          416
         ],
-        "id": "c551bf3e-daf0-4c4c-90bb-b945fb96d40c",
+        "id": "d5cbd988-ab17-40ce-8667-85e48e6422ac",
         "name": "Cancelar Flujo",
         "credentials": {
           "postgres": {
@@ -1498,10 +1186,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          896,
-          624
+          -12448,
+          416
         ],
-        "id": "9b68d348-f4ba-40b8-af6b-1759676b8119",
+        "id": "ebb59d28-6802-4a9f-abaa-9a46e78d12d8",
         "name": "Mensaje Cancelación",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -1523,10 +1211,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          640,
-          848
+          -12704,
+          640
         ],
-        "id": "9f8fced3-f049-48f9-b908-7e727dae1422",
+        "id": "07bf21ef-1a0c-49dd-b3ae-52b0f032282e",
         "name": "Enviar Ayuda",
         "webhookId": "81870251-e5cc-4b36-8e10-1263fbce611d",
         "credentials": {
@@ -1548,10 +1236,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          1264,
-          -336
+          -12080,
+          -544
         ],
-        "id": "dbda28ec-b0de-4d1e-81a0-21de8eb0a268",
+        "id": "49912d08-296e-4973-b572-68abce28fcce",
         "name": "Mensaje Cancelación1",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -1572,10 +1260,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          1072,
-          -336
+          -12272,
+          -544
         ],
-        "id": "3c4693ca-b7f6-497c-9c4c-d6926309a003",
+        "id": "5383d667-4095-4066-a2a1-4ef08c468a3b",
         "name": "Cancelar Operación",
         "credentials": {
           "postgres": {
@@ -1596,10 +1284,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          1072,
-          -112
+          -12272,
+          -320
         ],
-        "id": "7765849b-32a8-4ced-b6d5-8f863ee2652b",
+        "id": "108c0837-917b-41ad-bd2c-ad97f03a90c3",
         "name": "Lead No Entendido",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -1611,15 +1299,15 @@
       },
       {
         "parameters": {
-          "jsCode": "let entrada = null;\n\n// Intentar coger la entrada desde la rama texto\ntry {\n  entrada = $('Normalizar Mensaje Directo').first().json;\n} catch (e) {}\n\n// Si no existe, intentar desde la rama audio\nif (!entrada) {\n  try {\n    entrada = $('Actualizar Datos Transcripción').first().json;\n  } catch (e) {}\n}\n\nif (!entrada) {\n  throw new Error('No se pudo recuperar la entrada original del usuario');\n}\n\nconst memoria = $json || {};\n\nlet datosPendientes = memoria.datos_pendientes || {};\nif (typeof datosPendientes === 'string') {\n  try {\n    datosPendientes = JSON.parse(datosPendientes);\n  } catch {\n    datosPendientes = {};\n  }\n}\n\nreturn {\n  ...entrada,\n  memoria: {\n    ...memoria,\n    datos_pendientes: datosPendientes\n  }\n};"
+          "jsCode": "let entrada = null;\n\n// Intentar coger la entrada desde la rama texto\ntry {\n  entrada = $('Normalizar Mensaje Directo').first().json;\n} catch (e) {}\n\n// Si no existe, intentar desde la rama audio\nif (!entrada) {\n  try {\n    entrada = $('Actualizar Datos Transcripción').first().json;\n  } catch (e) {}\n}\n\nif (!entrada) {\n  throw new Error('No se pudo recuperar la entrada original del usuario');\n}\n\n// Postgres puede devolver 1 fila como objeto, como array de filas o como { rows: [...] }\nconst pg = $json;\nconst fila = Array.isArray(pg)\n  ? pg[0] || {}\n  : pg && Array.isArray(pg.rows)\n    ? pg.rows[0] || {}\n    : pg || {};\n\nlet datosPendientes = fila.datos_pendientes || {};\nif (typeof datosPendientes === 'string') {\n  try {\n    datosPendientes = JSON.parse(datosPendientes);\n  } catch {\n    datosPendientes = {};\n  }\n}\n\nreturn {\n  ...entrada,\n  memoria: {\n    ...fila,\n    datos_pendientes: datosPendientes\n  }\n};"
         },
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -768,
-          -608
+          -14080,
+          -832
         ],
-        "id": "b6cb4542-7846-475b-9f86-24dc4957f565",
+        "id": "f136a8da-291a-49b3-be48-237761eab915",
         "name": "Combinar Entrada + Memoria"
       },
       {
@@ -1643,10 +1331,10 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.4,
         "position": [
-          1024,
-          336
+          -12320,
+          128
         ],
-        "id": "fcfca674-c4f1-4c20-a0cf-cbb032c98d49",
+        "id": "281a5a74-04e7-405a-b12f-871d5dd92123",
         "name": "Leer Descripción Actual Lead"
       },
       {
@@ -1670,247 +1358,67 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.4,
         "position": [
-          1216,
-          336
+          -12128,
+          128
         ],
-        "id": "e7eb58ab-4e97-4bf8-8208-a845989ac236",
+        "id": "41a2ad9b-9b24-43fa-a103-efed50e33a03",
         "name": "Guardar Notas Internas Lead"
+      },
+      {
+        "parameters": {
+          "jsCode": "const c = $('Construir Nota Visita').first().json;\nconst mem = c.memoria || {};\nconst odoo = c.odoo || $('Unificar Contexto Odoo').first().json.odoo;\nconst msg = String(c.mensaje_usuario_original || c.mensaje_usuario || '').trim();\n\nfunction num(v) {\n  const n = parseFloat(v);\n  return Number.isFinite(n) ? n : null;\n}\n\nfunction toOdooDatetime(v) {\n  if (v == null || v === '') return undefined;\n  let s = String(v).trim();\n  if (!s) return undefined;\n  s = s.replace(/Z$/i, '').replace('T', ' ');\n  if (s.length >= 19) return s.substring(0, 19);\n  const d = new Date(v);\n  if (!Number.isNaN(d.getTime())) {\n    return d.toISOString().replace('T', ' ').substring(0, 19);\n  }\n  return undefined;\n}\n\nfunction resolveLeadId() {\n  const cand = [mem.lead_id, mem.leadId, c.lead_id];\n  for (const x of cand) {\n    const n = parseInt(x, 10);\n    if (Number.isFinite(n)) return n;\n  }\n  try {\n    const id = $('Leer Descripción Actual Lead').first().json?.result?.[0]?.id;\n    const n = parseInt(id, 10);\n    if (Number.isFinite(n)) return n;\n  } catch (e) {}\n  try {\n    const id = $('Crear Oportunidad Odoo').first().json?.result;\n    const n = parseInt(id, 10);\n    if (Number.isFinite(n)) return n;\n  } catch (e) {}\n  return null;\n}\n\nconst leadOdooId = resolveLeadId();\nif (leadOdooId == null) {\n  throw new Error(\n    'Falta lead_id para vincular la visita al CRM (memoria Postgres o lectura Odoo).'\n  );\n}\n\nconst refName = ('Visita — ' + (mem.lead_name || 'CRM') + ' — ' + (c.fecha_bonita || '')).slice(0, 200);\n\nconst vals = {\n  name: refName,\n  lead_id: leadOdooId,\n  mensaje_comercial: msg || '(Sin resumen)',\n  comercial_nombre: mem.user_name || '—'\n};\n\nif (mem.user_id != null && mem.user_id !== '') {\n  vals.telegram_user_id = String(mem.user_id);\n}\n\nconst ela = num(mem.entrada_lat);\nconst elo = num(mem.entrada_lon);\nif (ela != null) vals.entrada_lat = ela;\nif (elo != null) vals.entrada_lon = elo;\nconst ea = toOdooDatetime(mem.entrada_at);\nif (ea) vals.entrada_at = ea;\n\nconst sla = num(mem.salida_lat);\nconst slo = num(mem.salida_lon);\nif (sla != null) vals.salida_lat = sla;\nif (slo != null) vals.salida_lon = slo;\nconst sa = toOdooDatetime(mem.salida_at);\nif (sa) vals.salida_at = sa;\n\nreturn {\n  chat_id: c.chat_id,\n  telegram_chat_id: c.telegram_chat_id,\n  odoo,\n  visita_payload: vals\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -12032,
+          128
+        ],
+        "id": "8d568b3a-de51-40a6-abb2-7fcad1341a0d",
+        "name": "Preparar Registro Visita Odoo"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{\n{\n  jsonrpc: '2.0',\n  id: 1,\n  method: 'call',\n  params: {\n    service: 'object',\n    method: 'execute_kw',\n    args: [\n      $('Preparar Registro Visita Odoo').first().json.odoo.db,\n      $('Preparar Registro Visita Odoo').first().json.odoo.uid,\n      $('Preparar Registro Visita Odoo').first().json.odoo.password,\n      'azordata.crm.visit',\n      'create',\n      [\n        $('Preparar Registro Visita Odoo').first().json.visita_payload\n      ]\n    ]\n  }\n}\n}}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          -11872,
+          128
+        ],
+        "id": "f7482107-4da2-4aef-8549-2c0401fc5770",
+        "name": "Registrar Visita Odoo"
+      },
+      {
+        "parameters": {
+          "jsCode": "const prep = $('Preparar Registro Visita Odoo').first().json;\nlet res = $json;\nif (res.body && typeof res.body === 'object' && (res.body.result !== undefined || res.body.error)) {\n  res = res.body;\n}\nif (res.data && typeof res.data === 'object' && (res.data.result !== undefined || res.data.error)) {\n  res = res.data;\n}\n\nif (res.error) {\n  const det =\n    res.error.data?.message ||\n    res.error.data?.debug ||\n    res.error.message ||\n    JSON.stringify(res.error);\n  throw new Error('Odoo no creó la visita: ' + det);\n}\n\nif (res.result === undefined || res.result === false) {\n  throw new Error(\n    'Odoo no devolvió id de visita. Respuesta: ' + JSON.stringify(res).slice(0, 2000)\n  );\n}\n\nreturn {\n  ...prep,\n  chat_id: prep.chat_id,\n  visita_odoo_id: res.result\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -11792,
+          128
+        ],
+        "id": "b9dceb93-0dc9-4303-a968-486191da114f",
+        "name": "Validar Crear Visita Odoo"
       }
     ],
     "connections": {
-      "¿Es Ubicación?": {
-        "main": [
-          [
-            {
-              "node": "Obtener Estado Visita",
-              "type": "main",
-              "index": 0
-            }
-          ],
-          [
-            {
-              "node": "¿Lead Seleccionado?",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Obtener Estado Visita": {
-        "main": [
-          [
-            {
-              "node": "¿Es Entrada o Salida?",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "¿Es Entrada o Salida?": {
-        "main": [
-          [
-            {
-              "node": "Guardar Ubicación Entrada",
-              "type": "main",
-              "index": 0
-            }
-          ],
-          [
-            {
-              "node": "Obtener Leads Abiertos",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Guardar Ubicación Entrada": {
-        "main": [
-          [
-            {
-              "node": "Responder Entrada",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Obtener Leads Abiertos": {
-        "main": [
-          [
-            {
-              "node": "Guardar Ubicación Salida",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Guardar Ubicación Salida": {
-        "main": [
-          [
-            {
-              "node": "Mostrar Menú Leads",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "¿Lead Seleccionado?": {
-        "main": [
-          [
-            {
-              "node": "Obtener Detalles Lead",
-              "type": "main",
-              "index": 0
-            }
-          ],
-          [
-            {
-              "node": "¿Hay Audio?",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Obtener Detalles Lead": {
-        "main": [
-          [
-            {
-              "node": "¿Lead es Won?",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "¿Lead es Won?": {
-        "main": [
-          [
-            {
-              "node": "Vincular Visita a Lead (Won)",
-              "type": "main",
-              "index": 0
-            }
-          ],
-          [
-            {
-              "node": "Vincular Visita a Lead (Abierto)",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Vincular Visita a Lead (Won)": {
-        "main": [
-          [
-            {
-              "node": "Mensaje: Lead Won",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Vincular Visita a Lead (Abierto)": {
-        "main": [
-          [
-            {
-              "node": "Mensaje: Lead Abierto",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Mensaje: Lead Won": {
-        "main": [
-          [
-            {
-              "node": "¿Hay Audio?",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Mensaje: Lead Abierto": {
-        "main": [
-          [
-            {
-              "node": "¿Hay Audio?",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "¿Hay Audio?": {
-        "main": [
-          [
-            {
-              "node": "Obtener Audio de Telegram",
-              "type": "main",
-              "index": 0
-            }
-          ],
-          [
-            {
-              "node": "Guardar Actividad con Texto",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Obtener Audio de Telegram": {
-        "main": [
-          [
-            {
-              "node": "Transcribir Audio",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Transcribir Audio": {
-        "main": [
-          [
-            {
-              "node": "Guardar Actividad con Audio",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Guardar Actividad con Audio": {
-        "main": [
-          [
-            {
-              "node": "Confirmar Guardado (Audio)",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Guardar Actividad con Texto": {
-        "main": [
-          [
-            {
-              "node": "Confirmar Guardado (Texto)",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
       "Telegram Trigger": {
         "main": [
           [
@@ -2019,22 +1527,22 @@
           ]
         ]
       },
-      "Autenticar Odoo": {
+      "Consultar Oportunidades Abiertas Odoo": {
         "main": [
           [
             {
-              "node": "Unificar Contexto Odoo",
+              "node": "Preparar Lista Oportunidades",
               "type": "main",
               "index": 0
             }
           ]
         ]
       },
-      "Consultar Oportunidades Abiertas Odoo": {
+      "Autenticar Odoo": {
         "main": [
           [
             {
-              "node": "Preparar Lista Oportunidades",
+              "node": "Unificar Contexto Odoo",
               "type": "main",
               "index": 0
             }
@@ -2128,6 +1636,35 @@
           ]
         ]
       },
+      "¿Es Audio?": {
+        "main": [
+          [
+            {
+              "node": "Preparar Descarga",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Normalizar Mensaje Directo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Actualizar Datos Transcripción": {
+        "main": [
+          [
+            {
+              "node": "Consultar Memoria Visita",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
       "Procesar Transcripción": {
         "main": [
           [
@@ -2183,35 +1720,6 @@
           ]
         ]
       },
-      "¿Es Audio?": {
-        "main": [
-          [
-            {
-              "node": "Preparar Descarga",
-              "type": "main",
-              "index": 0
-            }
-          ],
-          [
-            {
-              "node": "Normalizar Mensaje Directo",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Actualizar Datos Transcripción": {
-        "main": [
-          [
-            {
-              "node": "Consultar Memoria Visita",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
       "Detectar Tipo Inicial": {
         "main": [
           [
@@ -2249,7 +1757,25 @@
         "main": [
           [
             {
-              "node": "Crear Oportunidad Odoo",
+              "node": "IF Nombre Cliente Oportunidad",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF Nombre Cliente Oportunidad": {
+        "main": [
+          [
+            {
+              "node": "Buscar Partner Odoo",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Aviso Falta Nombre Cliente",
               "type": "main",
               "index": 0
             }
@@ -2370,7 +1896,62 @@
         "main": [
           [
             {
+              "node": "Preparar Registro Visita Odoo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Preparar Registro Visita Odoo": {
+        "main": [
+          [
+            {
+              "node": "Registrar Visita Odoo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Registrar Visita Odoo": {
+        "main": [
+          [
+            {
+              "node": "Validar Crear Visita Odoo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Validar Crear Visita Odoo": {
+        "main": [
+          [
+            {
               "node": "Cerrar Visita",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Buscar Partner Odoo": {
+        "main": [
+          [
+            {
+              "node": "Fusionar Partner Oportunidad",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fusionar Partner Oportunidad": {
+        "main": [
+          [
+            {
+              "node": "Crear Oportunidad Odoo",
               "type": "main",
               "index": 0
             }
@@ -2379,245 +1960,12 @@
       }
     },
     "authors": "Jorge Huescar",
-    "name": "Version dd1258e2",
+    "name": "Version 4690317c",
     "description": "",
-    "autosaved": true
+    "autosaved": false
   },
-  "activeVersionId": "dd1258e2-7391-4a41-9a44-c0483beae126",
+  "activeVersionId": "4690317c-15c8-4c21-8aba-07c5b266c214",
   "connections": {
-    "¿Es Ubicación?": {
-      "main": [
-        [
-          {
-            "node": "Obtener Estado Visita",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "¿Lead Seleccionado?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Obtener Estado Visita": {
-      "main": [
-        [
-          {
-            "node": "¿Es Entrada o Salida?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "¿Es Entrada o Salida?": {
-      "main": [
-        [
-          {
-            "node": "Guardar Ubicación Entrada",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Obtener Leads Abiertos",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Guardar Ubicación Entrada": {
-      "main": [
-        [
-          {
-            "node": "Responder Entrada",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Obtener Leads Abiertos": {
-      "main": [
-        [
-          {
-            "node": "Guardar Ubicación Salida",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Guardar Ubicación Salida": {
-      "main": [
-        [
-          {
-            "node": "Mostrar Menú Leads",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "¿Lead Seleccionado?": {
-      "main": [
-        [
-          {
-            "node": "Obtener Detalles Lead",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "¿Hay Audio?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Obtener Detalles Lead": {
-      "main": [
-        [
-          {
-            "node": "¿Lead es Won?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "¿Lead es Won?": {
-      "main": [
-        [
-          {
-            "node": "Vincular Visita a Lead (Won)",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Vincular Visita a Lead (Abierto)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Vincular Visita a Lead (Won)": {
-      "main": [
-        [
-          {
-            "node": "Mensaje: Lead Won",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Vincular Visita a Lead (Abierto)": {
-      "main": [
-        [
-          {
-            "node": "Mensaje: Lead Abierto",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Mensaje: Lead Won": {
-      "main": [
-        [
-          {
-            "node": "¿Hay Audio?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Mensaje: Lead Abierto": {
-      "main": [
-        [
-          {
-            "node": "¿Hay Audio?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "¿Hay Audio?": {
-      "main": [
-        [
-          {
-            "node": "Obtener Audio de Telegram",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Guardar Actividad con Texto",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Obtener Audio de Telegram": {
-      "main": [
-        [
-          {
-            "node": "Transcribir Audio",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Transcribir Audio": {
-      "main": [
-        [
-          {
-            "node": "Guardar Actividad con Audio",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Guardar Actividad con Audio": {
-      "main": [
-        [
-          {
-            "node": "Confirmar Guardado (Audio)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Guardar Actividad con Texto": {
-      "main": [
-        [
-          {
-            "node": "Confirmar Guardado (Texto)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Telegram Trigger": {
       "main": [
         [
@@ -2726,22 +2074,22 @@
         ]
       ]
     },
-    "Autenticar Odoo": {
+    "Consultar Oportunidades Abiertas Odoo": {
       "main": [
         [
           {
-            "node": "Unificar Contexto Odoo",
+            "node": "Preparar Lista Oportunidades",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Consultar Oportunidades Abiertas Odoo": {
+    "Autenticar Odoo": {
       "main": [
         [
           {
-            "node": "Preparar Lista Oportunidades",
+            "node": "Unificar Contexto Odoo",
             "type": "main",
             "index": 0
           }
@@ -2835,6 +2183,35 @@
         ]
       ]
     },
+    "¿Es Audio?": {
+      "main": [
+        [
+          {
+            "node": "Preparar Descarga",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Normalizar Mensaje Directo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualizar Datos Transcripción": {
+      "main": [
+        [
+          {
+            "node": "Consultar Memoria Visita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Procesar Transcripción": {
       "main": [
         [
@@ -2890,35 +2267,6 @@
         ]
       ]
     },
-    "¿Es Audio?": {
-      "main": [
-        [
-          {
-            "node": "Preparar Descarga",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Normalizar Mensaje Directo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Actualizar Datos Transcripción": {
-      "main": [
-        [
-          {
-            "node": "Consultar Memoria Visita",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Detectar Tipo Inicial": {
       "main": [
         [
@@ -2956,7 +2304,25 @@
       "main": [
         [
           {
-            "node": "Crear Oportunidad Odoo",
+            "node": "IF Nombre Cliente Oportunidad",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Nombre Cliente Oportunidad": {
+      "main": [
+        [
+          {
+            "node": "Buscar Partner Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Aviso Falta Nombre Cliente",
             "type": "main",
             "index": 0
           }
@@ -3077,7 +2443,62 @@
       "main": [
         [
           {
+            "node": "Preparar Registro Visita Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Registro Visita Odoo": {
+      "main": [
+        [
+          {
+            "node": "Registrar Visita Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registrar Visita Odoo": {
+      "main": [
+        [
+          {
+            "node": "Validar Crear Visita Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar Crear Visita Odoo": {
+      "main": [
+        [
+          {
             "node": "Cerrar Visita",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Partner Odoo": {
+      "main": [
+        [
+          {
+            "node": "Fusionar Partner Oportunidad",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fusionar Partner Oportunidad": {
+      "main": [
+        [
+          {
+            "node": "Crear Oportunidad Odoo",
             "type": "main",
             "index": 0
           }
@@ -3095,417 +2516,6 @@
   "nodes": [
     {
       "parameters": {
-        "conditions": {
-          "boolean": [
-            {
-              "value1": "={{ $json.hasLocation }}",
-              "value2": true
-            }
-          ]
-        }
-      },
-      "id": "e9b1890f-4b35-49f3-8789-00e81129ad5a",
-      "name": "¿Es Ubicación?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        -2704,
-        2496
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://localhost:3000/odoo-api/get-user-visit-state",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ userId: $('Detectar Tipo Inicial').first().json.userId }) }}",
-        "options": {}
-      },
-      "id": "2b7d8adf-5e1f-4cbc-8a55-48b94bc46527",
-      "name": "Obtener Estado Visita",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -2496,
-        2352
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "boolean": [
-            {
-              "value1": "={{ $json.hasEntryLocation }}"
-            }
-          ]
-        }
-      },
-      "id": "8a984628-6cc1-45a0-acd4-8898f4c3622a",
-      "name": "¿Es Entrada o Salida?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        -2304,
-        2352
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://localhost:3000/odoo-api/register-entry-location",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ userId: $('Detectar Tipo Inicial').first().json.userId, latitude: $('Detectar Tipo Inicial').first().json.latitude, longitude: $('Detectar Tipo Inicial').first().json.longitude }) }}",
-        "options": {}
-      },
-      "id": "544290d2-4f50-4383-afc7-2c2211e7ac69",
-      "name": "Guardar Ubicación Entrada",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -2096,
-        2240
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://localhost:3000/telegram/send-message",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '✅ Ubicación de entrada registrada en:\\n📍 Lat: ' + $('Detectar Tipo Inicial').first().json.latitude + '\\n📍 Lon: ' + $('Detectar Tipo Inicial').first().json.longitude }) }}",
-        "options": {}
-      },
-      "id": "86f88635-71c6-4927-bde3-2eccc97f9921",
-      "name": "Responder Entrada",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -1888,
-        2240
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://localhost:3000/odoo-api/get-open-leads",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ userId: $('Detectar Tipo Inicial').first().json.userId }) }}",
-        "options": {}
-      },
-      "id": "a1d7a5e3-c084-49bc-9457-9cb1bed4815d",
-      "name": "Obtener Leads Abiertos",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -2096,
-        2448
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://localhost:3000/odoo-api/register-exit-location",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ userId: $('Detectar Tipo Inicial').first().json.userId, latitude: $('Detectar Tipo Inicial').first().json.latitude, longitude: $('Detectar Tipo Inicial').first().json.longitude }) }}",
-        "options": {}
-      },
-      "id": "6efb2190-fc95-491e-8fd5-190e89bd852c",
-      "name": "Guardar Ubicación Salida",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -2096,
-        2592
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://localhost:3000/telegram/send-leads-menu",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, leads: $('Obtener Leads Abiertos').first().json.leads }) }}",
-        "options": {}
-      },
-      "id": "48e8432f-61c5-473c-8dd7-6499643b6f14",
-      "name": "Mostrar Menú Leads",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -1888,
-        2544
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{ $json.selectedLeadId }}",
-              "operation": "isNotEmpty"
-            }
-          ]
-        }
-      },
-      "id": "f42810ec-434b-4c60-83fd-daea1182ba1f",
-      "name": "¿Lead Seleccionado?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        -2704,
-        2800
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://localhost:3000/odoo-api/get-lead-details",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ leadId: $('Detectar Tipo Inicial').first().json.selectedLeadId }) }}",
-        "options": {}
-      },
-      "id": "2e97de76-3d7a-4da3-bf8c-679e58155e26",
-      "name": "Obtener Detalles Lead",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -2496,
-        2800
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "number": [
-            {
-              "value1": "={{ $json.probability }}",
-              "operation": "equal",
-              "value2": 100
-            }
-          ]
-        }
-      },
-      "id": "17875132-9ac4-490b-b773-fd2bdd7718aa",
-      "name": "¿Lead es Won?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        -2304,
-        2800
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://localhost:3000/odoo-api/link-visit-to-lead",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, leadId: $('Detectar Tipo Inicial').first().json.selectedLeadId }) }}",
-        "options": {}
-      },
-      "id": "0d51eb87-8c0a-4770-ab6c-53e89779e962",
-      "name": "Vincular Visita a Lead (Won)",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -2096,
-        2704
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://localhost:3000/odoo-api/link-visit-to-lead",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, leadId: $('Detectar Tipo Inicial').first().json.selectedLeadId }) }}",
-        "options": {}
-      },
-      "id": "c91c41b3-1275-45e1-b007-2c99a4b880f2",
-      "name": "Vincular Visita a Lead (Abierto)",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -2096,
-        2896
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://localhost:3000/telegram/send-message",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '✅ Lead ganado (' + $('Obtener Detalles Lead').first().json.name + ')\\n👤 Se creará el contacto automáticamente\\n\\n¿Qué has ido a hacer? (Texto o 🎤 audio)' }) }}",
-        "options": {}
-      },
-      "id": "3f23a588-83d9-4a44-a333-47480ddceb39",
-      "name": "Mensaje: Lead Won",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -1888,
-        2704
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://localhost:3000/telegram/send-message",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '📊 Lead abierto (' + $('Obtener Detalles Lead').first().json.name + ')\\n✓ Visita registrada\\n❌ No se crea contacto (Lead abierto)\\n\\n¿Qué has ido a hacer? (Texto o 🎤 audio)' }) }}",
-        "options": {}
-      },
-      "id": "fc7929a0-e1d7-42cd-896f-c1f4cf6e5a48",
-      "name": "Mensaje: Lead Abierto",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -1888,
-        2896
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "boolean": [
-            {
-              "value1": "={{ $json.hasVoice }}",
-              "value2": true
-            }
-          ]
-        }
-      },
-      "id": "3f670169-c9ff-4ea2-b118-ed1d67f49b68",
-      "name": "¿Hay Audio?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        -2704,
-        3104
-      ]
-    },
-    {
-      "parameters": {
-        "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/getFile",
-        "sendQuery": true,
-        "queryParameters": {
-          "parameters": [
-            {
-              "name": "file_id",
-              "value": "={{ $('Detectar Tipo Inicial').first().json.fileId }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "5814b5e5-464f-455b-b6e2-f969b24a9ba9",
-      "name": "Obtener Audio de Telegram",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -2496,
-        3040
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://localhost:3000/openai/transcribe",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ audioUrl: 'https://api.telegram.org/file/bot' + $env.TELEGRAM_BOT_TOKEN + '/' + $('Obtener Audio de Telegram').first().json.result.file_path }) }}",
-        "options": {}
-      },
-      "id": "ee56dae1-1d46-43d2-930f-ec71ff0b17a8",
-      "name": "Transcribir Audio",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -2304,
-        3040
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://localhost:3000/odoo-api/save-visit-activity",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, summary: $('Transcribir Audio').first().json.transcription, notes: 'Actividad registrada desde Telegram (audio)', audio_transcription: $('Transcribir Audio').first().json.transcription }) }}",
-        "options": {}
-      },
-      "id": "4f308b43-ac64-45d1-a3db-cb86aa2e2e00",
-      "name": "Guardar Actividad con Audio",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -2096,
-        3040
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://localhost:3000/odoo-api/save-visit-activity",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ visitId: $('Obtener Estado Visita').first().json.visitId, summary: $('Detectar Tipo Inicial').first().json.text, notes: 'Actividad registrada desde Telegram (texto)', audio_transcription: null }) }}",
-        "options": {}
-      },
-      "id": "5a83a111-d181-495b-ad0d-57d54f01dd08",
-      "name": "Guardar Actividad con Texto",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -2496,
-        3248
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://localhost:3000/telegram/send-message",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '✅ Visita guardada exitosamente\\n🎤 Transcripción: ' + $('Transcribir Audio').first().json.transcription + '\\n\\n👍 Todo registrado en el CRM' }) }}",
-        "options": {}
-      },
-      "id": "e1c81111-4a70-4985-9860-1ba6e071401c",
-      "name": "Confirmar Guardado (Audio)",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -1888,
-        3040
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://localhost:3000/telegram/send-message",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ chatId: $('Detectar Tipo Inicial').first().json.chatId, text: '✅ Visita guardada exitosamente\\n📝 Resumen: ' + $('Detectar Tipo Inicial').first().json.text + '\\n\\n👍 Todo registrado en el CRM' }) }}",
-        "options": {}
-      },
-      "id": "6f01ab42-074e-457c-877e-842f2ddd1314",
-      "name": "Confirmar Guardado (Texto)",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4,
-      "position": [
-        -2304,
-        3248
-      ]
-    },
-    {
-      "parameters": {
         "updates": [
           "message"
         ],
@@ -3514,10 +2524,10 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -1712,
-        -608
+        -16256,
+        -848
       ],
-      "id": "2b41dbcd-0340-4457-84d6-046796eeb60f",
+      "id": "9e4de43c-b8b7-46e0-aa6a-4c8045b6fb8f",
       "name": "Telegram Trigger",
       "webhookId": "10466960-1bb6-4e83-84f4-97818410efc4",
       "credentials": {
@@ -3539,10 +2549,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        800,
-        -1296
+        -12576,
+        -1488
       ],
-      "id": "1b90b557-c5d8-4223-b719-8d1e6395a88a",
+      "id": "477eadef-0d69-4bb2-936f-f785da49522c",
       "name": "Entrada Registrada",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -3563,10 +2573,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -976,
-        -608
+        -14320,
+        -816
       ],
-      "id": "7187688d-9db3-4909-b9c6-73dae53b5e00",
+      "id": "ab927cba-40b4-41a2-8819-6deabc26783b",
       "name": "Consultar Memoria Visita",
       "credentials": {
         "postgres": {
@@ -3582,10 +2592,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -560,
-        -608
+        -13904,
+        -816
       ],
-      "id": "8fa0cfd7-1474-4abf-9393-9aa9bc2ab632",
+      "id": "f203f1ef-0b46-4849-ae27-fe109a554e42",
       "name": "Router Principal CRM"
     },
     {
@@ -3773,10 +2783,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        144,
-        -688
+        -13232,
+        -880
       ],
-      "id": "1d39b34c-90e0-4f41-8fc4-e7bca840e4c0",
+      "id": "3fd66af8-6ebe-493c-977d-5a77dfb3bb4c",
       "name": "Switch Acción"
     },
     {
@@ -3790,10 +2800,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        576,
-        -1296
+        -12800,
+        -1488
       ],
-      "id": "182887e7-6bfa-492d-aeb0-f72a802b3e32",
+      "id": "0a33ff18-c226-401d-b5b2-18d8f93b3a7b",
       "name": "Guardar Entrada",
       "credentials": {
         "postgres": {
@@ -3813,10 +2823,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        576,
-        -1056
+        -12800,
+        -1248
       ],
-      "id": "c2f04e0e-d36b-4024-a992-3543273ce2e7",
+      "id": "fecdffb3-5c6c-41c7-aff5-1a6e1d68e718",
       "name": "Guardar Salida",
       "credentials": {
         "postgres": {
@@ -3846,10 +2856,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        800,
-        -1056
+        -12576,
+        -1248
       ],
-      "id": "1fe89e8c-8d7c-4175-8140-9e3d148a1140",
+      "id": "50273cd0-ccea-4baf-a8d2-07caa4a4deb7",
       "name": "Consultar Oportunidades Abiertas Odoo"
     },
     {
@@ -3872,10 +2882,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -304,
-        -608
+        -13648,
+        -816
       ],
-      "id": "22ed0f56-4cb8-4034-a0ea-d88bd4db5b14",
+      "id": "3b263e11-32f9-43b5-94ea-f41bef69bb87",
       "name": "Autenticar Odoo"
     },
     {
@@ -3885,10 +2895,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1008,
-        -1056
+        -12368,
+        -1248
       ],
-      "id": "d79240f7-43d1-43d6-ac0d-58aecffce8d4",
+      "id": "355c528e-41e3-410b-8aed-81a4d6d4455a",
       "name": "Preparar Lista Oportunidades"
     },
     {
@@ -3902,10 +2912,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1216,
-        -1056
+        -12160,
+        -1248
       ],
-      "id": "9de80e44-2683-46cf-8e03-facbdc2197a3",
+      "id": "fc133116-3377-4371-899b-6e7c5c60d565",
       "name": "Guardar Memoria Oportunidades",
       "credentials": {
         "postgres": {
@@ -3926,10 +2936,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1408,
-        -1056
+        -11968,
+        -1248
       ],
-      "id": "78bc8d06-9773-4bc5-9cbe-554a5d3911af",
+      "id": "7cd7c544-ecd3-41d6-8f6e-cd30aea4f8ef",
       "name": "Enviar Lista Leads",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -3946,10 +2956,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        576,
-        -768
+        -12800,
+        -960
       ],
-      "id": "468ff440-5713-4b0e-b98e-8693947df512",
+      "id": "451c862b-d0ff-4e3f-b0c4-cc9ec1aa0273",
       "name": "Resolver Lead Elegido"
     },
     {
@@ -4062,10 +3072,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        768,
-        -800
+        -12608,
+        -992
       ],
-      "id": "27aff82e-0243-4faa-956f-e6907413c29e",
+      "id": "d83a6339-f2a7-4f9a-be37-cc9938501294",
       "name": "Switch Resultado Lead"
     },
     {
@@ -4079,10 +3089,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1056,
-        -816
+        -12320,
+        -1008
       ],
-      "id": "6769cb31-6449-4d13-aafd-66bfa6fdb5ed",
+      "id": "e6c2b24e-a373-4d1a-a446-28867bdfa22a",
       "name": "Guardar Lead Elegido",
       "credentials": {
         "postgres": {
@@ -4103,10 +3113,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1264,
-        -816
+        -12112,
+        -1008
       ],
-      "id": "c0791c5a-aa85-4e13-aa4f-7dda3a5ef3d8",
+      "id": "c88ef7c5-c703-4cb2-aeaf-778c73ba5fee",
       "name": "Preguntar Descripción Visita",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -4121,16 +3131,16 @@
         "operation": "executeQuery",
         "query": "UPDATE crm_visitas_bot\nSET\n  estado = 'esperando_crear_oportunidad',\n  ultimo_mensaje_bot = $2,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id, estado;",
         "options": {
-          "queryReplacement": "={{\n[\n  $json.chat_id,\n  'Perfecto. Envíame los datos de la oportunidad por texto o audio: empresa, contacto, necesidad, presupuesto, urgencia, o lo que sepas.'\n]\n}}"
+          "queryReplacement": "={{\n[\n  $json.chat_id,\n  'Perfecto. Envíame los datos por texto o audio. Usa etiquetas si puedes: Contacto, Empresa, Dirección, Cliente. Buscamos el contacto en Odoo; si no existe como empresa, el nombre queda en Nombre del contacto y el resto en los campos de texto del lead.'\n]\n}}"
         }
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1056,
-        -608
+        -12320,
+        -800
       ],
-      "id": "bfe95355-0041-45cf-9b3d-4696df5387be",
+      "id": "56727d48-2e7f-4b98-9eba-a791630fde74",
       "name": "Guardar Estado Crear Oportunidad",
       "credentials": {
         "postgres": {
@@ -4142,7 +3152,7 @@
     {
       "parameters": {
         "chatId": "={{ $json.telegram_chat_id || $json.chat_id }}",
-        "text": "=Perfecto. Envíame los datos de la oportunidad por texto o audio:\nempresa, contacto, necesidad, presupuesto, urgencia, o lo que sepas.",
+        "text": "=Perfecto. Envíame los datos por texto o audio.\n\nEjemplos: *Contacto: …*, *Empresa: …*, *Dirección: …*, *Cliente: …* (opcional).\nBuscamos la empresa en Odoo; si no hay coincidencia, el nombre va en **Nombre del contacto** y la empresa en el campo de texto del lead.",
         "additionalFields": {
           "appendAttribution": false,
           "parse_mode": "Markdown"
@@ -4151,10 +3161,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1264,
-        -608
+        -12112,
+        -800
       ],
-      "id": "4ac1831e-cccf-41c4-9548-6d6cde436cde",
+      "id": "1a833710-4d1c-49e0-b31a-500aebf24575",
       "name": "Pedir Datos Nueva Oportunidad",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -4192,10 +3202,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -1504,
-        -256
+        -15856,
+        -848
       ],
-      "id": "240aac6e-4049-49b3-ab2b-c7ac399e7ef0",
+      "id": "54e6f09a-c941-4e35-9622-b8851fef187f",
       "name": "¿Es Audio?"
     },
     {
@@ -4205,10 +3215,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -128,
-        -272
+        -14544,
+        -960
       ],
-      "id": "364f67af-1620-4d11-a18c-2ddb7fd85d64",
+      "id": "b89e9b05-16f4-4c80-a884-28275953e92f",
       "name": "Actualizar Datos Transcripción"
     },
     {
@@ -4218,10 +3228,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -560,
-        -272
+        -14976,
+        -960
       ],
-      "id": "8b293b5c-b49e-4833-a6f7-45bb220e3825",
+      "id": "2a588e18-925d-4151-936e-a605f793d49b",
       "name": "Procesar Transcripción"
     },
     {
@@ -4231,10 +3241,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1184,
-        -272
+        -15600,
+        -960
       ],
-      "id": "e1008653-612a-4b86-9ac3-89c75b2fab1a",
+      "id": "575b5b65-fc32-4e0b-b30d-ac565a94d967",
       "name": "Preparar Descarga"
     },
     {
@@ -4249,10 +3259,10 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        -736,
-        -272
+        -15152,
+        -960
       ],
-      "id": "ebbdf1a7-1878-4e3f-a969-f2a184f58855",
+      "id": "4fecd0ec-a64b-4430-9995-93ea49f9185a",
       "name": "Transcribe a recording",
       "credentials": {
         "openAiApi": {
@@ -4273,10 +3283,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -336,
-        -272
+        -14752,
+        -960
       ],
-      "id": "aa8cd7e6-a447-40ef-a86d-18c72a533b8b",
+      "id": "0958beb7-65be-4355-8c8b-a757a4731f97",
       "name": "Confirmar Transcripción T",
       "webhookId": "237a0319-b9b0-4c5f-8561-1aef1c7c9116",
       "credentials": {
@@ -4295,10 +3305,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -944,
-        -272
+        -15360,
+        -960
       ],
-      "id": "7bbd087a-f6ef-4501-b52c-9b262e0fb326",
+      "id": "c50aa4d5-9a0c-4e11-8afa-b9a70e9e8db1",
       "name": "Descargar Audio T",
       "webhookId": "1f9d320a-2e58-48ab-bf94-f02ee44a09d2",
       "credentials": {
@@ -4312,13 +3322,13 @@
       "parameters": {
         "jsCode": "const msg = $json.message || {};\n\nlet tipo_mensaje = 'unknown';\nif (msg.location) tipo_mensaje = 'location';\nelse if (msg.voice) tipo_mensaje = 'voice';\nelse if (msg.text) tipo_mensaje = 'text';\n\nreturn {\n  raw_message: msg,\n  chat_id: msg.chat?.id || null,\n  telegram_chat_id: msg.chat?.id || null,\n  user_id: msg.from?.id || null,\n  user_name: [msg.from?.first_name, msg.from?.last_name].filter(Boolean).join(' ').trim(),\n  tipo_mensaje,\n  mensaje_usuario: msg.text || '',\n  mensaje_usuario_original: msg.text || '',\n  latitude: msg.location?.latitude || null,\n  longitude: msg.location?.longitude || null,\n  file_id: msg.voice?.file_id || null,\n  fecha_hora: new Date().toISOString(),\n  plataforma: 'telegram',\n  es_audio: tipo_mensaje === 'voice'\n};"
       },
-      "id": "40e0f4f3-0134-4733-bc48-0fbf2da190a7",
+      "id": "4138f215-ca15-434e-bada-d3897b57f727",
       "name": "Detectar Tipo Inicial",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1520,
-        -608
+        -16064,
+        -848
       ]
     },
     {
@@ -4328,10 +3338,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1376,
-        -112
+        -15616,
+        -704
       ],
-      "id": "0806d628-1c12-4c24-8a8a-2e63f3776427",
+      "id": "7f250636-7e11-45c0-baa6-e40c375323c2",
       "name": "Normalizar Mensaje Directo"
     },
     {
@@ -4341,24 +3351,123 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -96,
-        -608
+        -13440,
+        -816
       ],
-      "id": "3356bd3d-39e8-40a6-82d5-f1a4d8d270a3",
+      "id": "da54bc45-1eb9-4c40-8d06-d3dba2e21763",
       "name": "Unificar Contexto Odoo"
     },
     {
       "parameters": {
-        "jsCode": "const texto = String($json.mensaje_usuario_original || $json.mensaje_usuario || '').trim();\n\nreturn {\n  ...$json,\n  opportunity_payload: {\n    name: 'Nueva oportunidad desde Telegram',\n    type: 'opportunity',\n    description: texto\n  }\n};"
+        "jsCode": "const texto = String($json.mensaje_usuario_original || $json.mensaje_usuario || '').trim();\n\nfunction trimVal(s) {\n  return String(s || '').replace(/^[\\s:\\-–—]+|[\\s:\\-–—]+$/g, '').trim();\n}\n\nfunction matchLabel(segment, regex) {\n  const m = segment.match(regex);\n  return m ? trimVal(m[1]) : '';\n}\n\nlet nombreCliente = '';\nlet contacto = '';\nlet empresa = '';\nlet street = '';\n\nconst segmentos = texto\n  .split(/[,;\\n]+/)\n  .map((s) => s.trim())\n  .filter(Boolean);\n\nfor (const p of segmentos) {\n  let v = matchLabel(p, /^(?:nombre\\s+del\\s+)?cliente\\s*[:\\-–—]?\\s*(.+)$/i);\n  if (v) {\n    nombreCliente = v;\n    continue;\n  }\n  v = matchLabel(p, /^el\\s+cliente\\s+(?:es|llama)\\s+(.+)$/i);\n  if (v) {\n    nombreCliente = v;\n    continue;\n  }\n  v = matchLabel(p, /^contacto(?:\\s+principal)?\\s*[:\\-–—]?\\s*(.+)$/i);\n  if (v) {\n    contacto = v;\n    continue;\n  }\n  v = matchLabel(p, /^persona\\s+de\\s+contacto\\s*[:\\-–—]?\\s*(.+)$/i);\n  if (v) {\n    contacto = v;\n    continue;\n  }\n  v = matchLabel(p, /^empresa\\s*[:\\-–—]?\\s*(.+)$/i);\n  if (v) {\n    empresa = v;\n    continue;\n  }\n  v = matchLabel(p, /^(?:compa[ñn]ia|compañía|raz[oó]n\\s+social)\\s*[:\\-–—]?\\s*(.+)$/i);\n  if (v) {\n    empresa = v;\n    continue;\n  }\n  v = matchLabel(p, /^(?:calle|direcci[oó]n|domicilio|street)\\s*[:\\-–—]?\\s*(.+)$/i);\n  if (v) {\n    street = v;\n    continue;\n  }\n}\n\nif (!nombreCliente) {\n  const mFull = texto.match(\n    /(?:^|[\\s,;])(?:nombre\\s+del\\s+)?cliente\\s*[:\\-–—]\\s*([^\\n,;]+?)(?=[\\n,;]|$)/i\n  );\n  if (mFull) nombreCliente = trimVal(mFull[1]);\n}\nif (!contacto) {\n  const m = texto.match(/(?:^|[\\s,;])contacto\\s*[:\\-–—]\\s*([^\\n,;]+?)(?=[\\n,;]|$)/i);\n  if (m) contacto = trimVal(m[1]);\n}\nif (!empresa) {\n  const m = texto.match(/(?:^|[\\s,;])empresa\\s*[:\\-–—]\\s*([^\\n,;]+?)(?=[\\n,;]|$)/i);\n  if (m) empresa = trimVal(m[1]);\n}\nif (!street) {\n  const m = texto.match(\n    /(?:^|[\\s,;])(?:calle|direcci[oó]n|domicilio)\\s*[:\\-–—]\\s*([^\\n,;]+?)(?=[\\n,;]|$)/i\n  );\n  if (m) street = trimVal(m[1]);\n}\n\nif (!nombreCliente && segmentos.length > 0) {\n  const primero = segmentos[0];\n  const low = primero.toLowerCase();\n  const esEtiqueta =\n    /^(?:cliente|contacto|empresa|calle|direcci|domicilio|necesidad|presupuesto|urgencia|nombre\\s+del)/i.test(\n      low\n    );\n  if (!esEtiqueta && primero.length <= 120) {\n    nombreCliente = trimVal(primero);\n  }\n}\n\nnombreCliente = trimVal(nombreCliente);\ncontacto = trimVal(contacto);\nempresa = trimVal(empresa);\nstreet = trimVal(street);\n\nif (\n  contacto &&\n  nombreCliente &&\n  contacto.toLowerCase() === nombreCliente.toLowerCase()\n) {\n  contacto = '';\n}\n\nconst tituloNombre =\n  nombreCliente || contacto || empresa || 'Telegram';\n\nconst tieneAlgunaPista =\n  Boolean(nombreCliente) ||\n  Boolean(contacto) ||\n  Boolean(empresa) ||\n  Boolean(street) ||\n  texto.replace(/\\s+/g, ' ').length > 6;\n\nconst puede_crear_oportunidad = tieneAlgunaPista;\n\nif (!puede_crear_oportunidad) {\n  return {\n    ...$json,\n    puede_crear_oportunidad: false,\n    opportunity_payload: null,\n    partner_busqueda: null,\n    mensaje_falta_cliente:\n      'No he podido extraer datos. Escribe al menos **contacto**, **empresa**, **cliente**, **dirección** o un resumen concreto (por ejemplo: *Contacto: …, Empresa: …*).'\n  };\n}\n\nconst partner_busqueda =\n  (empresa || nombreCliente || contacto || '').trim() || null;\n\nconst opportunity_payload = {\n  name: `Oportunidad ${tituloNombre}`,\n  type: 'opportunity',\n  description: texto\n};\n\nif (empresa) opportunity_payload.partner_name = empresa;\nif (street) opportunity_payload.street = street;\nif (contacto) opportunity_payload.contact_name = contacto;\nelse if (nombreCliente) opportunity_payload.contact_name = nombreCliente;\n\nreturn {\n  ...$json,\n  puede_crear_oportunidad: true,\n  partner_busqueda,\n  opportunity_payload,\n  opportunity_datos_parseados: {\n    nombre_cliente: nombreCliente || undefined,\n    contact_name: contacto || undefined,\n    partner_name: empresa || undefined,\n    street: street || undefined\n  }\n};\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        656,
+        -12720,
+        -144
+      ],
+      "id": "22e22373-d6aa-440d-8e3d-fddb79145ee6",
+      "name": "Preparar Payload Nueva Oportunidad"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c7e8f901-2a3b-4c5d-8e9f-0a1b2c3d4e5f",
+              "leftValue": "={{ String($json.puede_crear_oportunidad) }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -12624,
+        -144
+      ],
+      "id": "93fe7c8c-69c8-4848-9135-819c5ec1b1c7",
+      "name": "IF Nombre Cliente Oportunidad"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.telegram_chat_id || $json.chat_id }}",
+        "text": "={{ $json.mensaje_falta_cliente }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -12624,
         48
       ],
-      "id": "ed63c270-2813-4c82-b26f-37ea9146c602",
-      "name": "Preparar Payload Nueva Oportunidad"
+      "id": "79a0a885-83e8-49cc-9b30-669ab890863b",
+      "name": "Aviso Falta Nombre Cliente",
+      "webhookId": "7c8d9e0f-1a2b-4c5d-8e9f-0a1b2c3d4e5f",
+      "credentials": {
+        "telegramApi": {
+          "id": "V5cPrt9IZsvJlgjs",
+          "name": "CrmBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ (() => {\n  const prep = $('Preparar Payload Nueva Oportunidad').first().json;\n  const t = String(prep.partner_busqueda || '').trim();\n  const domain = t ? ['|', ['name', '=', t], ['name', 'ilike', t]] : [['id', '=', 0]];\n  return JSON.stringify({\n    jsonrpc: '2.0',\n    method: 'call',\n    params: {\n      service: 'object',\n      method: 'execute_kw',\n      args: [\n        prep.odoo.db,\n        prep.odoo.uid,\n        prep.odoo.password,\n        'res.partner',\n        'search_read',\n        [domain],\n        { fields: ['id', 'name'], limit: 5 }\n      ]\n    }\n  });\n})() }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -12560,
+        -144
+      ],
+      "id": "a39b7246-23f0-4e44-9c27-b142b44eb66f",
+      "name": "Buscar Partner Odoo"
+    },
+    {
+      "parameters": {
+        "jsCode": "const prep = $('Preparar Payload Nueva Oportunidad').first().json;\nconst raw = $json;\n\nlet partners = [];\nif (raw && Array.isArray(raw.result)) {\n  partners = raw.result;\n}\n\nconst d = prep.opportunity_datos_parseados || {};\nconst nombreCliente = String(d.nombre_cliente || '').trim();\nconst contacto = String(d.contact_name || '').trim();\nconst empresa = String(d.partner_name || '').trim();\nconst street = String(d.street || '').trim();\n\n// Buscar el \"cliente\" en res.partner si el usuario lo ha indicado.\n// Si no viene, caemos al valor previo calculado en el paso de preparación.\nconst partner_busqueda = String(nombreCliente || prep.partner_busqueda || '').trim();\nlet partner_id = null;\n\nconst payload = { ...(prep.opportunity_payload || {}) };\n\nfunction norm(s) {\n  return String(s || '')\n    .normalize('NFD')\n    .replace(/[\\u0300-\\u036f]/g, '')\n    .toLowerCase()\n    .trim();\n}\n\n// Resolver partner_id: si hay varios resultados, usar coincidencia exacta por nombre.\nif (partner_busqueda) {\n  const target = norm(partner_busqueda);\n  const exact = partners.find((p) => norm(p && p.name) === target);\n  if (exact && exact.id) {\n    partner_id = exact.id;\n  } else if (partners.length === 1) {\n    partner_id = partners[0].id;\n  }\n}\n\nif (partner_id) {\n  payload.partner_id = partner_id;\n  if (contacto) payload.contact_name = contacto;\n  else if (nombreCliente) payload.contact_name = nombreCliente;\n  else if (partner_busqueda) payload.contact_name = partner_busqueda;\n  if (empresa) payload.partner_name = empresa;\n  if (street) payload.street = street;\n} else {\n  if (empresa) payload.partner_name = empresa;\n  if (street) payload.street = street;\n\n  // Si no encontramos el cliente en res.partner, el nombre debe ir a \"Nombre del contacto\".\n  // Evitamos que la empresa acabe como fallback en contact_name.\n  const busquedaSirveComoContacto =\n    partner_busqueda && norm(partner_busqueda) !== norm(empresa);\n\n  const cn =\n    contacto ||\n    nombreCliente ||\n    (busquedaSirveComoContacto ? partner_busqueda : '') ||\n    '';\n\n  if (cn) payload.contact_name = cn;\n}\n\nreturn {\n  ...prep,\n  odoo: prep.odoo,\n  opportunity_payload: payload,\n  res_partner_candidatos: partners,\n  partner_id_resuelto: partner_id\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -12448,
+        -144
+      ],
+      "id": "22e98e45-f51b-428e-af16-1f2a6c48f18a",
+      "name": "Fusionar Partner Oportunidad"
     },
     {
       "parameters": {
@@ -4381,10 +3490,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        864,
-        48
+        -12320,
+        -144
       ],
-      "id": "552366e5-22e0-496e-96ee-ffbae0151758",
+      "id": "af3c0f44-0217-40c8-a570-0122eef31ecf",
       "name": "Crear Oportunidad Odoo"
     },
     {
@@ -4408,27 +3517,27 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1056,
-        48
+        -12320,
+        -144
       ],
-      "id": "4bfd8bc8-4f5f-48a1-8c15-fae7b817c515",
+      "id": "88ebf18b-5fb9-4cce-bfc7-40ee34e63c62",
       "name": "Leer Lead Creado"
     },
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "UPDATE crm_visitas_bot\nSET\n  lead_id = $2,\n  lead_name = $3,\n  estado = 'esperando_descripcion_visita',\n  ultimo_mensaje_bot = $4,\n  updated_at = NOW()\nWHERE chat_id = $1;",
+        "query": "UPDATE crm_visitas_bot\nSET\n  lead_id = $2,\n  lead_name = $3,\n  estado = 'esperando_descripcion_visita',\n  ultimo_mensaje_bot = $4,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id, lead_id, lead_name, estado;",
         "options": {
-          "queryReplacement": "={{\n[\n  $('Unificar Contexto Odoo').first().json.chat_id,\n  $json.result?.[0]?.id || $('Crear Oportunidad Odoo').first().json.result,\n  $json.result?.[0]?.name || 'Nueva oportunidad desde Telegram',\n  'Ahora cuéntame qué has ido a hacer en la visita. Puedes escribirlo o enviarlo por audio.'\n]\n}}"
+          "queryReplacement": "={{\n[\n  $('Unificar Contexto Odoo').first().json.chat_id,\n  $json.result?.[0]?.id || $('Crear Oportunidad Odoo').first().json.result,\n  $json.result?.[0]?.name || $('Fusionar Partner Oportunidad').first().json?.opportunity_payload?.name || 'Oportunidad',\n  'Ahora cuéntame qué has ido a hacer en la visita. Puedes escribirlo o enviarlo por audio.'\n]\n}}"
         }
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1248,
-        48
+        -12128,
+        -144
       ],
-      "id": "2cf32d61-2b12-4db0-b963-38e33eb0e894",
+      "id": "959b1592-f4e0-4c92-84ad-ec2bee401d7f",
       "name": "Guardar Lead Creado",
       "credentials": {
         "postgres": {
@@ -4449,10 +3558,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1424,
-        48
+        -11952,
+        -144
       ],
-      "id": "087339b0-7df4-405c-8e97-b15b601f3edd",
+      "id": "900c05de-e914-408f-a0b5-41df71399ac8",
       "name": "Preguntar Qué Ha Ido a Hacer",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -4469,10 +3578,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        656,
-        336
+        -12720,
+        144
       ],
-      "id": "35be3617-c7ec-4116-b936-6bb37c63d0af",
+      "id": "10816217-3777-4802-94f0-8c0a61edfb10",
       "name": "Construir Nota Visita"
     },
     {
@@ -4496,10 +3605,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        832,
-        336
+        -12544,
+        144
       ],
-      "id": "022d4d97-7a68-4876-af66-916f82d44fc5",
+      "id": "1841cb45-bb39-4563-8dfd-95e0c0280013",
       "name": "Guardar Nota en Lead Odoo"
     },
     {
@@ -4507,16 +3616,16 @@
         "operation": "executeQuery",
         "query": "UPDATE crm_visitas_bot\nSET\n  estado = NULL,\n  ultimo_mensaje_bot = NULL,\n  datos_pendientes = NULL,\n  updated_at = NOW()\nWHERE chat_id = $1\nRETURNING chat_id;",
         "options": {
-          "queryReplacement": "={{ [$json.chat_id] }}"
+          "queryReplacement": "={{ [$('Validar Crear Visita Odoo').first().json.chat_id] }}"
         }
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1408,
-        336
+        -11664,
+        144
       ],
-      "id": "8439beb3-9754-49ba-a641-afd2eaabab92",
+      "id": "e8d1c853-479b-449c-b76a-3b9df19a40eb",
       "name": "Cerrar Visita",
       "credentials": {
         "postgres": {
@@ -4537,10 +3646,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1600,
-        336
+        -11584,
+        144
       ],
-      "id": "67d6e700-6077-43ef-9d3d-b24a9dd66836",
+      "id": "f9253bc3-0309-42c9-8e01-d6f3b66b5d30",
       "name": "Confirmación Final",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -4561,10 +3670,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        704,
-        624
+        -12672,
+        432
       ],
-      "id": "c551bf3e-daf0-4c4c-90bb-b945fb96d40c",
+      "id": "d5cbd988-ab17-40ce-8667-85e48e6422ac",
       "name": "Cancelar Flujo",
       "credentials": {
         "postgres": {
@@ -4585,10 +3694,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        896,
-        624
+        -12480,
+        432
       ],
-      "id": "9b68d348-f4ba-40b8-af6b-1759676b8119",
+      "id": "ebb59d28-6802-4a9f-abaa-9a46e78d12d8",
       "name": "Mensaje Cancelación",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -4610,10 +3719,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        640,
-        848
+        -12736,
+        656
       ],
-      "id": "9f8fced3-f049-48f9-b908-7e727dae1422",
+      "id": "07bf21ef-1a0c-49dd-b3ae-52b0f032282e",
       "name": "Enviar Ayuda",
       "webhookId": "81870251-e5cc-4b36-8e10-1263fbce611d",
       "credentials": {
@@ -4635,10 +3744,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1264,
-        -336
+        -12112,
+        -528
       ],
-      "id": "dbda28ec-b0de-4d1e-81a0-21de8eb0a268",
+      "id": "49912d08-296e-4973-b572-68abce28fcce",
       "name": "Mensaje Cancelación1",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -4659,10 +3768,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1072,
-        -336
+        -12304,
+        -528
       ],
-      "id": "3c4693ca-b7f6-497c-9c4c-d6926309a003",
+      "id": "5383d667-4095-4066-a2a1-4ef08c468a3b",
       "name": "Cancelar Operación",
       "credentials": {
         "postgres": {
@@ -4683,10 +3792,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1072,
-        -112
+        -12304,
+        -304
       ],
-      "id": "7765849b-32a8-4ced-b6d5-8f863ee2652b",
+      "id": "108c0837-917b-41ad-bd2c-ad97f03a90c3",
       "name": "Lead No Entendido",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -4698,15 +3807,15 @@
     },
     {
       "parameters": {
-        "jsCode": "let entrada = null;\n\n// Intentar coger la entrada desde la rama texto\ntry {\n  entrada = $('Normalizar Mensaje Directo').first().json;\n} catch (e) {}\n\n// Si no existe, intentar desde la rama audio\nif (!entrada) {\n  try {\n    entrada = $('Actualizar Datos Transcripción').first().json;\n  } catch (e) {}\n}\n\nif (!entrada) {\n  throw new Error('No se pudo recuperar la entrada original del usuario');\n}\n\nconst memoria = $json || {};\n\nlet datosPendientes = memoria.datos_pendientes || {};\nif (typeof datosPendientes === 'string') {\n  try {\n    datosPendientes = JSON.parse(datosPendientes);\n  } catch {\n    datosPendientes = {};\n  }\n}\n\nreturn {\n  ...entrada,\n  memoria: {\n    ...memoria,\n    datos_pendientes: datosPendientes\n  }\n};"
+        "jsCode": "let entrada = null;\n\n// Intentar coger la entrada desde la rama texto\ntry {\n  entrada = $('Normalizar Mensaje Directo').first().json;\n} catch (e) {}\n\n// Si no existe, intentar desde la rama audio\nif (!entrada) {\n  try {\n    entrada = $('Actualizar Datos Transcripción').first().json;\n  } catch (e) {}\n}\n\nif (!entrada) {\n  throw new Error('No se pudo recuperar la entrada original del usuario');\n}\n\n// Postgres puede devolver 1 fila como objeto, como array de filas o como { rows: [...] }\nconst pg = $json;\nconst fila = Array.isArray(pg)\n  ? pg[0] || {}\n  : pg && Array.isArray(pg.rows)\n    ? pg.rows[0] || {}\n    : pg || {};\n\nlet datosPendientes = fila.datos_pendientes || {};\nif (typeof datosPendientes === 'string') {\n  try {\n    datosPendientes = JSON.parse(datosPendientes);\n  } catch {\n    datosPendientes = {};\n  }\n}\n\nreturn {\n  ...entrada,\n  memoria: {\n    ...fila,\n    datos_pendientes: datosPendientes\n  }\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -768,
-        -608
+        -14112,
+        -816
       ],
-      "id": "b6cb4542-7846-475b-9f86-24dc4957f565",
+      "id": "f136a8da-291a-49b3-be48-237761eab915",
       "name": "Combinar Entrada + Memoria"
     },
     {
@@ -4730,10 +3839,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1024,
-        336
+        -12352,
+        144
       ],
-      "id": "fcfca674-c4f1-4c20-a0cf-cbb032c98d49",
+      "id": "281a5a74-04e7-405a-b12f-871d5dd92123",
       "name": "Leer Descripción Actual Lead"
     },
     {
@@ -4757,11 +3866,64 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1216,
-        336
+        -12160,
+        144
       ],
-      "id": "e7eb58ab-4e97-4bf8-8208-a845989ac236",
+      "id": "41a2ad9b-9b24-43fa-a103-efed50e33a03",
       "name": "Guardar Notas Internas Lead"
+    },
+    {
+      "parameters": {
+        "jsCode": "const c = $('Construir Nota Visita').first().json;\nconst mem = c.memoria || {};\nconst odoo = c.odoo || $('Unificar Contexto Odoo').first().json.odoo;\nconst msg = String(c.mensaje_usuario_original || c.mensaje_usuario || '').trim();\n\nfunction num(v) {\n  const n = parseFloat(v);\n  return Number.isFinite(n) ? n : null;\n}\n\nfunction toOdooDatetime(v) {\n  if (v == null || v === '') return undefined;\n  let s = String(v).trim();\n  if (!s) return undefined;\n  s = s.replace(/Z$/i, '').replace('T', ' ');\n  if (s.length >= 19) return s.substring(0, 19);\n  const d = new Date(v);\n  if (!Number.isNaN(d.getTime())) {\n    return d.toISOString().replace('T', ' ').substring(0, 19);\n  }\n  return undefined;\n}\n\nfunction resolveLeadId() {\n  const cand = [mem.lead_id, mem.leadId, c.lead_id];\n  for (const x of cand) {\n    const n = parseInt(x, 10);\n    if (Number.isFinite(n)) return n;\n  }\n  try {\n    const id = $('Leer Descripción Actual Lead').first().json?.result?.[0]?.id;\n    const n = parseInt(id, 10);\n    if (Number.isFinite(n)) return n;\n  } catch (e) {}\n  try {\n    const id = $('Crear Oportunidad Odoo').first().json?.result;\n    const n = parseInt(id, 10);\n    if (Number.isFinite(n)) return n;\n  } catch (e) {}\n  return null;\n}\n\nconst leadOdooId = resolveLeadId();\nif (leadOdooId == null) {\n  throw new Error(\n    'Falta lead_id para vincular la visita al CRM (memoria Postgres o lectura Odoo).'\n  );\n}\n\nconst refName = ('Visita — ' + (mem.lead_name || 'CRM') + ' — ' + (c.fecha_bonita || '')).slice(0, 200);\n\nconst vals = {\n  name: refName,\n  lead_id: leadOdooId,\n  mensaje_comercial: msg || '(Sin resumen)',\n  comercial_nombre: mem.user_name || '—'\n};\n\nif (mem.user_id != null && mem.user_id !== '') {\n  vals.telegram_user_id = String(mem.user_id);\n}\n\nconst ela = num(mem.entrada_lat);\nconst elo = num(mem.entrada_lon);\nif (ela != null) vals.entrada_lat = ela;\nif (elo != null) vals.entrada_lon = elo;\nconst ea = toOdooDatetime(mem.entrada_at);\nif (ea) vals.entrada_at = ea;\n\nconst sla = num(mem.salida_lat);\nconst slo = num(mem.salida_lon);\nif (sla != null) vals.salida_lat = sla;\nif (slo != null) vals.salida_lon = slo;\nconst sa = toOdooDatetime(mem.salida_at);\nif (sa) vals.salida_at = sa;\n\nreturn {\n  chat_id: c.chat_id,\n  telegram_chat_id: c.telegram_chat_id,\n  odoo,\n  visita_payload: vals\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -12064,
+        144
+      ],
+      "id": "8d568b3a-de51-40a6-abb2-7fcad1341a0d",
+      "name": "Preparar Registro Visita Odoo"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://lsanchezgoshawk-crm.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{\n{\n  jsonrpc: '2.0',\n  id: 1,\n  method: 'call',\n  params: {\n    service: 'object',\n    method: 'execute_kw',\n    args: [\n      $('Preparar Registro Visita Odoo').first().json.odoo.db,\n      $('Preparar Registro Visita Odoo').first().json.odoo.uid,\n      $('Preparar Registro Visita Odoo').first().json.odoo.password,\n      'azordata.crm.visit',\n      'create',\n      [\n        $('Preparar Registro Visita Odoo').first().json.visita_payload\n      ]\n    ]\n  }\n}\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -11904,
+        144
+      ],
+      "id": "f7482107-4da2-4aef-8549-2c0401fc5770",
+      "name": "Registrar Visita Odoo"
+    },
+    {
+      "parameters": {
+        "jsCode": "const prep = $('Preparar Registro Visita Odoo').first().json;\nlet res = $json;\nif (res.body && typeof res.body === 'object' && (res.body.result !== undefined || res.body.error)) {\n  res = res.body;\n}\nif (res.data && typeof res.data === 'object' && (res.data.result !== undefined || res.data.error)) {\n  res = res.data;\n}\n\nif (res.error) {\n  const det =\n    res.error.data?.message ||\n    res.error.data?.debug ||\n    res.error.message ||\n    JSON.stringify(res.error);\n  throw new Error('Odoo no creó la visita: ' + det);\n}\n\nif (res.result === undefined || res.result === false) {\n  throw new Error(\n    'Odoo no devolvió id de visita. Respuesta: ' + JSON.stringify(res).slice(0, 2000)\n  );\n}\n\nreturn {\n  ...prep,\n  chat_id: prep.chat_id,\n  visita_odoo_id: res.result\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -11824,
+        144
+      ],
+      "id": "b9dceb93-0dc9-4303-a968-486191da114f",
+      "name": "Validar Crear Visita Odoo"
     }
   ],
   "pinData": {},
@@ -4782,6 +3944,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-04-28T15:19:13.273Z",
-  "versionId": "dd1258e2-7391-4a41-9a44-c0483beae126"
+  "updatedAt": "2026-05-05T15:10:34.661Z",
+  "versionId": "885af477-c2c0-4924-9c93-36a655e8381e"
 }
