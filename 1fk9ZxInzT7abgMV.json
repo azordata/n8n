@@ -5,7 +5,7 @@
   "connections": {},
   "createdAt": "2026-04-30T11:00:18.363Z",
   "id": "1fk9ZxInzT7abgMV",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "Spoki Calendar",
   "nodes": [
@@ -43,6 +43,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-04-30T11:01:34.149Z",
-  "versionId": "ee254b27-abee-4743-af7a-a5179f09b513"
+  "updatedAt": "2026-05-04T10:47:42.338Z",
+  "versionId": "1ae3addc-2db2-4050-8824-1b6fe3f1bb30"
 }
