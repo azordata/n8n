@@ -1,0 +1,302 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-25T11:11:57.397Z",
+    "createdAt": "2026-03-25T11:02:05.660Z",
+    "versionId": "2183297b-41e8-491d-948b-7eb5d8b6d795",
+    "workflowId": "L2uOxVPqN9dZ95Hd",
+    "nodes": [
+      {
+        "parameters": {
+          "updates": [
+            "edited_message"
+          ],
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.telegramTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -224,
+          -240
+        ],
+        "id": "ccf10ca8-7252-4f15-a277-09c5023fa4b3",
+        "name": "Telegram Trigger",
+        "webhookId": "24e4c036-387e-4827-83df-f4de29515173",
+        "retryOnFail": false,
+        "executeOnce": false,
+        "alwaysOutputData": false,
+        "credentials": {
+          "telegramApi": {
+            "id": "iXV7hYAnCqCvwakW",
+            "name": "Busca Versiones"
+          }
+        },
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Solo prepara datos de ubicación. El throttle real va en Postgres (multi-worker).\n// Telegram seguirá creando 1 ejecución por webhook; eso no se puede desactivar.\n// Tras \"Throttle DB\": 0 filas = dentro del minuto (no conectes nada más o usa IF).\n\nconst root = $json;\nconst msg = root.message || root.edited_message;\nif (!msg) {\n  return [];\n}\nif (!msg.location || msg.location.latitude === undefined || msg.location.longitude === undefined) {\n  return [];\n}\n\nreturn [{\n  json: {\n    chat_id: msg.chat.id,\n    user_id: msg.from.id,\n    user_name: String(msg.from.first_name || 'Usuario'),\n    latitude: msg.location.latitude,\n    longitude: msg.location.longitude,\n    horizontal_accuracy: msg.location.horizontal_accuracy ?? null,\n    live_period: msg.location.live_period ?? null,\n    message_id: msg.message_id,\n    message_date_unix: msg.date ?? null,\n    es_edited_message: !!root.edited_message\n  }\n}];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -16,
+          -240
+        ],
+        "id": "8c78500b-a273-479a-b4ec-20ed74a3bce3",
+        "name": "Preparar ubicación"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "INSERT INTO telegram_ubicacion_throttle (chat_id, last_allowed_at)\nVALUES ($1::bigint, NOW())\nON CONFLICT (chat_id) DO UPDATE\nSET last_allowed_at = EXCLUDED.last_allowed_at\nWHERE telegram_ubicacion_throttle.last_allowed_at <= NOW() - INTERVAL '1 minute'\nRETURNING chat_id,\n  $2::double precision AS latitude,\n  $3::double precision AS longitude,\n  $4::bigint AS user_id,\n  $5::text AS user_name,\n  $6::double precision AS horizontal_accuracy,\n  $7::int AS live_period,\n  $8::int AS message_id,\n  $9::bigint AS message_date_unix,\n  $10::boolean AS es_edited_message;",
+          "options": {
+            "queryReplacement": "={{ [ $json.chat_id, $json.latitude, $json.longitude, $json.user_id, $json.user_name, $json.horizontal_accuracy, $json.live_period, $json.message_id, $json.message_date_unix, $json.es_edited_message ] }}"
+          }
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          176,
+          -240
+        ],
+        "id": "94455fe3-29c0-4660-8f3a-b70d16a7ee40",
+        "name": "Throttle DB (1 min)",
+        "credentials": {
+          "postgres": {
+            "id": "T3QBOxYypSNBQAxx",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $json.chat_id }}",
+          "text": "={{ '<b>📍 Ubicación registrada</b> (throttle OK)\\n\\n• Lat: <code>' + $json.latitude + '</code>\\n• Lon: <code>' + $json.longitude + '</code>' + ($json.user_name ? '\\n• Usuario: ' + $json.user_name : '') + ($json.es_edited_message ? '\\n\\n<i>Actualización en vivo</i>' : '') }}",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "HTML"
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          400,
+          -240
+        ],
+        "id": "89f29cae-ee2d-4b9e-bdd5-4cb71e93906d",
+        "name": "Responder ubicación en Telegram",
+        "webhookId": "a1b2c3d4-e5f6-7890-abcd-ef0123456789",
+        "credentials": {
+          "telegramApi": {
+            "id": "iXV7hYAnCqCvwakW",
+            "name": "Busca Versiones"
+          }
+        },
+        "onError": "continueRegularOutput"
+      }
+    ],
+    "connections": {
+      "Telegram Trigger": {
+        "main": [
+          [
+            {
+              "node": "Preparar ubicación",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Preparar ubicación": {
+        "main": [
+          [
+            {
+              "node": "Throttle DB (1 min)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Throttle DB (1 min)": {
+        "main": [
+          [
+            {
+              "node": "Responder ubicación en Telegram",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jorge Huescar",
+    "name": "Version 2183297b",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "2183297b-41e8-491d-948b-7eb5d8b6d795",
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Preparar ubicación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar ubicación": {
+      "main": [
+        [
+          {
+            "node": "Throttle DB (1 min)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Throttle DB (1 min)": {
+      "main": [
+        [
+          {
+            "node": "Responder ubicación en Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-25T10:24:19.054Z",
+  "id": "L2uOxVPqN9dZ95Hd",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "ubicacion cada min",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "edited_message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -224,
+        -240
+      ],
+      "id": "ccf10ca8-7252-4f15-a277-09c5023fa4b3",
+      "name": "Telegram Trigger",
+      "webhookId": "24e4c036-387e-4827-83df-f4de29515173",
+      "retryOnFail": false,
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "telegramApi": {
+          "id": "iXV7hYAnCqCvwakW",
+          "name": "Busca Versiones"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Solo prepara datos de ubicación. El throttle real va en Postgres (multi-worker).\n// Telegram seguirá creando 1 ejecución por webhook; eso no se puede desactivar.\n// Tras \"Throttle DB\": 0 filas = dentro del minuto (no conectes nada más o usa IF).\n\nconst root = $json;\nconst msg = root.message || root.edited_message;\nif (!msg) {\n  return [];\n}\nif (!msg.location || msg.location.latitude === undefined || msg.location.longitude === undefined) {\n  return [];\n}\n\nreturn [{\n  json: {\n    chat_id: msg.chat.id,\n    user_id: msg.from.id,\n    user_name: String(msg.from.first_name || 'Usuario'),\n    latitude: msg.location.latitude,\n    longitude: msg.location.longitude,\n    horizontal_accuracy: msg.location.horizontal_accuracy ?? null,\n    live_period: msg.location.live_period ?? null,\n    message_id: msg.message_id,\n    message_date_unix: msg.date ?? null,\n    es_edited_message: !!root.edited_message\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16,
+        -240
+      ],
+      "id": "8c78500b-a273-479a-b4ec-20ed74a3bce3",
+      "name": "Preparar ubicación"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO telegram_ubicacion_throttle (chat_id, last_allowed_at)\nVALUES ($1::bigint, NOW())\nON CONFLICT (chat_id) DO UPDATE\nSET last_allowed_at = EXCLUDED.last_allowed_at\nWHERE telegram_ubicacion_throttle.last_allowed_at <= NOW() - INTERVAL '1 minute'\nRETURNING chat_id,\n  $2::double precision AS latitude,\n  $3::double precision AS longitude,\n  $4::bigint AS user_id,\n  $5::text AS user_name,\n  $6::double precision AS horizontal_accuracy,\n  $7::int AS live_period,\n  $8::int AS message_id,\n  $9::bigint AS message_date_unix,\n  $10::boolean AS es_edited_message;",
+        "options": {
+          "queryReplacement": "={{ [ $json.chat_id, $json.latitude, $json.longitude, $json.user_id, $json.user_name, $json.horizontal_accuracy, $json.live_period, $json.message_id, $json.message_date_unix, $json.es_edited_message ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        176,
+        -240
+      ],
+      "id": "94455fe3-29c0-4660-8f3a-b70d16a7ee40",
+      "name": "Throttle DB (1 min)",
+      "credentials": {
+        "postgres": {
+          "id": "T3QBOxYypSNBQAxx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chat_id }}",
+        "text": "={{ '<b>📍 Ubicación registrada</b> (throttle OK)\\n\\n• Lat: <code>' + $json.latitude + '</code>\\n• Lon: <code>' + $json.longitude + '</code>' + ($json.user_name ? '\\n• Usuario: ' + $json.user_name : '') + ($json.es_edited_message ? '\\n\\n<i>Actualización en vivo</i>' : '') }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        -240
+      ],
+      "id": "89f29cae-ee2d-4b9e-bdd5-4cb71e93906d",
+      "name": "Responder ubicación en Telegram",
+      "webhookId": "a1b2c3d4-e5f6-7890-abcd-ef0123456789",
+      "credentials": {
+        "telegramApi": {
+          "id": "iXV7hYAnCqCvwakW",
+          "name": "Busca Versiones"
+        }
+      },
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "saveDataSuccessExecution": "none",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-25T10:24:19.054Z",
+      "createdAt": "2026-03-25T10:24:19.054Z",
+      "role": "workflow:owner",
+      "workflowId": "L2uOxVPqN9dZ95Hd",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": {
+    "global": {
+      "ultimaUbicacionPorChat": {
+        "848110254": 1774435758281
+      }
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-03-31T09:29:13.089Z",
+  "versionId": "09e7c189-7334-41ee-9be2-18c639f466f5"
+}
