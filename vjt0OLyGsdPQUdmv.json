@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-02-18T08:48:41.618Z",
-    "createdAt": "2026-02-18T08:48:30.842Z",
-    "versionId": "236e53ca-33e0-492e-8ef2-aaa529c5b62b",
+    "updatedAt": "2026-05-06T07:55:27.241Z",
+    "createdAt": "2026-05-06T07:55:24.965Z",
+    "versionId": "8fd2b060-3231-4e3b-813a-23f3ceda08e4",
     "workflowId": "vjt0OLyGsdPQUdmv",
     "nodes": [
       {
@@ -428,7 +428,8 @@
           1568,
           384
         ],
-        "typeVersion": 1.2
+        "typeVersion": 1.2,
+        "onError": "continueRegularOutput"
       }
     ],
     "connections": {
@@ -659,11 +660,11 @@
       }
     },
     "authors": "Jorge Huescar",
-    "name": "Version 236e53ca",
+    "name": "Version 8fd2b060",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "236e53ca-33e0-492e-8ef2-aaa529c5b62b",
+  "activeVersionId": "8fd2b060-3231-4e3b-813a-23f3ceda08e4",
   "connections": {
     "n8n": {
       "main": [
@@ -1321,7 +1322,8 @@
         1568,
         384
       ],
-      "typeVersion": 1.2
+      "typeVersion": 1.2,
+      "onError": "continueRegularOutput"
     }
   ],
   "pinData": {},
@@ -1348,6 +1350,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-02-18T08:48:30.840Z",
-  "versionId": "236e53ca-33e0-492e-8ef2-aaa529c5b62b"
+  "updatedAt": "2026-05-06T07:55:24.964Z",
+  "versionId": "8fd2b060-3231-4e3b-813a-23f3ceda08e4"
 }
