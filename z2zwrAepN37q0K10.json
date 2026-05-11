@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-05-06T09:47:30.419Z",
-    "createdAt": "2026-05-06T09:47:28.516Z",
-    "versionId": "36fefbef-384d-409d-92d9-3456d5311754",
+    "updatedAt": "2026-05-11T10:39:23.373Z",
+    "createdAt": "2026-05-11T10:39:21.323Z",
+    "versionId": "248e7a44-add6-4294-9619-9cfdab11f7a1",
     "workflowId": "z2zwrAepN37q0K10",
     "nodes": [
       {
@@ -16,10 +16,10 @@
         "type": "n8n-nodes-base.telegramTrigger",
         "typeVersion": 1.2,
         "position": [
-          -3216,
-          448
+          -4864,
+          1904
         ],
-        "id": "f10f2941-6789-4e74-a101-6bd372be8fb9",
+        "id": "0ce84353-4155-4cdd-ae00-81970f059759",
         "name": "Telegram Trigger",
         "webhookId": "10466960-1bb6-4e83-84f4-97818410efc4",
         "credentials": {
@@ -41,10 +41,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          464,
-          -192
+          -1184,
+          1264
         ],
-        "id": "424828a4-d28b-45e6-b06e-1ce113f4d19e",
+        "id": "6e3aa98f-a898-4023-9102-fcdd32127593",
         "name": "Entrada Registrada",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -65,10 +65,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          -1280,
-          480
+          -2928,
+          1936
         ],
-        "id": "ee33f4b2-434d-44fa-abeb-48a291d9bdad",
+        "id": "ebc2c6e1-c96f-432f-89dd-38df32cd9df9",
         "name": "Consultar Memoria Visita",
         "credentials": {
           "postgres": {
@@ -84,10 +84,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -864,
-          480
+          -2512,
+          1936
         ],
-        "id": "72b64791-527c-4fb3-8919-74e1414de43a",
+        "id": "fe5ddc8a-6166-43bb-bfc4-f53e2dcddd26",
         "name": "Router Principal CRM"
       },
       {
@@ -275,10 +275,10 @@
         "type": "n8n-nodes-base.switch",
         "typeVersion": 3.4,
         "position": [
-          -192,
-          416
+          -1840,
+          1872
         ],
-        "id": "b758bb79-a1cf-43e4-be72-156f9b11788d",
+        "id": "0e6e378b-9029-43b0-bda5-7e0bffac8f18",
         "name": "Switch Acción"
       },
       {
@@ -292,10 +292,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          240,
-          -192
+          -1408,
+          1264
         ],
-        "id": "d16be9d4-6f9e-425c-a0fd-7370f3ac3e17",
+        "id": "177cc98a-2917-41d8-826f-f1f904cba885",
         "name": "Guardar Entrada",
         "credentials": {
           "postgres": {
@@ -315,10 +315,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          240,
-          48
+          -1408,
+          1504
         ],
-        "id": "570cd06a-6588-48b6-826e-bb007c462f07",
+        "id": "36923f46-fa91-406f-9fb7-d003c940c245",
         "name": "Guardar Salida",
         "credentials": {
           "postgres": {
@@ -342,16 +342,16 @@
           },
           "sendBody": true,
           "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      $('Unificar Contexto Odoo').first().json.odoo.db,\n      $('Unificar Contexto Odoo').first().json.odoo.uid,\n      $('Unificar Contexto Odoo').first().json.odoo.password,\n      \"crm.lead\",\n      \"search_read\",\n      [\n        [\n          [\"type\", \"=\", \"opportunity\"],\n          [\"probability\", \"<\", 100],\n          [\"active\", \"=\", true]\n        ]\n      ],\n      {\n        fields: [\"id\", \"name\", \"partner_name\", \"contact_name\", \"stage_id\"],\n        limit: 20,\n        order: \"write_date desc\"\n      }\n    ]\n  }\n}) }}",
+          "jsonBody": "={{ JSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      $('Unificar Contexto Odoo').first().json.odoo.db,\n      $('Unificar Contexto Odoo').first().json.odoo.uid,\n      $('Unificar Contexto Odoo').first().json.odoo.password,\n      \"crm.lead\",\n      \"search_read\",\n      [\n        [\n          [\"type\", \"=\", \"opportunity\"],\n          [\"probability\", \"<\", 100],\n          [\"active\", \"=\", true],\n          [\"user_id\", \"=\", $('Unificar Contexto Odoo').first().json.odoo.uid]\n        ]\n      ],\n      {\n        fields: [\"id\", \"name\", \"partner_name\", \"contact_name\", \"stage_id\"],\n        limit: 20,\n        order: \"write_date desc\"\n      }\n    ]\n  }\n}) }}",
           "options": {}
         },
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.4,
         "position": [
-          464,
-          48
+          -1184,
+          1504
         ],
-        "id": "afecc45e-b939-4f71-9d2c-e51343054d40",
+        "id": "c44f49c6-6d88-49ab-805a-700be9d49af4",
         "name": "Consultar Oportunidades Abiertas Odoo"
       },
       {
@@ -374,23 +374,23 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.2,
         "position": [
-          -608,
-          480
+          -2256,
+          1936
         ],
-        "id": "ba0b1cbb-dad9-4424-9c73-2c257085873a",
+        "id": "06e3d624-d2fb-4d99-ab0a-1fe356f4264c",
         "name": "Autenticar Odoo"
       },
       {
         "parameters": {
-          "jsCode": "const actual = $('Unificar Contexto Odoo').first().json;\nconst oportunidades = $json.result || [];\n\nconst textoLista = oportunidades.length\n  ? oportunidades.map((o, i) => `${i + 1}. ${o.name}`).join('\\n')\n  : 'No he encontrado oportunidades abiertas.';\n\nreturn {\n  ...actual,\n  oportunidades,\n  textoLista,\n  mensaje_bot:\n`✅ Salida registrada.\n\n¿A qué lead u oportunidad has ido a visitar?\n\n${textoLista}\n\nResponde con el número, escribe \"crear oportunidad\" o \"cancelar\".`\n};"
+          "jsCode": "const actual = $('Unificar Contexto Odoo').first().json;\nconst oportunidades = $json.result || [];\n\nconst textoLista = oportunidades.length\n  ? oportunidades.map((o, i) => `${i + 1}. ${o.name}`).join('\\n')\n  : 'No tienes oportunidades abiertas asignadas a tu usuario en Odoo.';\n\nreturn {\n  ...actual,\n  oportunidades,\n  textoLista,\n  mensaje_bot:\n`✅ Salida registrada.\n\n¿A qué lead u oportunidad has ido a visitar?\n\n${textoLista}\n\nResponde con el número, escribe \"crear oportunidad\" o \"cancelar\".`\n};"
         },
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          672,
-          48
+          -976,
+          1504
         ],
-        "id": "5b91e456-6e63-44e5-8bd7-1db636976739",
+        "id": "55f540f9-f663-4ba0-9d1e-95504b728159",
         "name": "Preparar Lista Oportunidades"
       },
       {
@@ -404,10 +404,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          880,
-          48
+          -768,
+          1504
         ],
-        "id": "89741eb3-7c51-4359-8fd9-24037b75203f",
+        "id": "c6e77d12-8c7b-4164-9f45-0d63c0c7e7d2",
         "name": "Guardar Memoria Oportunidades",
         "credentials": {
           "postgres": {
@@ -428,10 +428,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          1072,
-          48
+          -576,
+          1504
         ],
-        "id": "ba969a02-b563-430f-ba65-fe3364d1eee2",
+        "id": "876b7b6e-36bf-4547-9d0c-f1bd7c357659",
         "name": "Enviar Lista Leads",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -448,10 +448,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          240,
-          336
+          -1408,
+          1792
         ],
-        "id": "4297297f-aad5-4edb-ab10-8a5b855fe641",
+        "id": "b7bb1c17-3026-41e9-a4da-88644de18b60",
         "name": "Resolver Lead Elegido"
       },
       {
@@ -564,10 +564,10 @@
         "type": "n8n-nodes-base.switch",
         "typeVersion": 3.4,
         "position": [
-          432,
-          304
+          -1216,
+          1760
         ],
-        "id": "b04954e9-68b9-4f1d-8184-e9b3cbc25d3e",
+        "id": "b7a1fa6e-77ed-4cf9-b5df-e452af8261cf",
         "name": "Switch Resultado Lead"
       },
       {
@@ -581,10 +581,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          720,
-          288
+          -928,
+          1744
         ],
-        "id": "d9b4b081-2769-45ac-a3cc-733a0a8fa083",
+        "id": "b8988749-9013-4020-a5a3-10afd7abb15c",
         "name": "Guardar Lead Elegido",
         "credentials": {
           "postgres": {
@@ -605,10 +605,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          928,
-          288
+          -720,
+          1744
         ],
-        "id": "00c97321-7267-403e-a003-9bb2dc08a79b",
+        "id": "0d852da5-acc3-48e9-9fe8-ac82f0715ab6",
         "name": "Preguntar Descripción Visita",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -629,10 +629,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          720,
-          496
+          -928,
+          1952
         ],
-        "id": "3355a959-4dcc-4074-88b9-ce7450079cda",
+        "id": "c76082b7-a37b-40e5-99d1-f7f64bdd6ab1",
         "name": "Guardar Estado Crear Oportunidad",
         "credentials": {
           "postgres": {
@@ -653,10 +653,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          928,
-          496
+          -720,
+          1952
         ],
-        "id": "4794738c-efad-4da5-99b4-325d57dfa9a6",
+        "id": "82ca24de-4bf7-47dc-a565-d9fa3c95a7f5",
         "name": "Pedir Datos Nueva Oportunidad",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -694,10 +694,10 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.3,
         "position": [
-          -2816,
-          448
+          -4464,
+          1904
         ],
-        "id": "864414fb-65cc-4067-9e61-1914af151d09",
+        "id": "b120ec97-6cdd-4db8-9de2-b2bca396ff01",
         "name": "¿Es Audio?"
       },
       {
@@ -707,10 +707,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -1504,
-          336
+          -3152,
+          1792
         ],
-        "id": "f6d15084-1746-4025-8696-a818878c99ce",
+        "id": "52e4528d-a8d0-4083-9440-eeb23e0f8d8b",
         "name": "Actualizar Datos Transcripción"
       },
       {
@@ -720,10 +720,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -1936,
-          336
+          -3584,
+          1792
         ],
-        "id": "8c3ca8d5-3576-4550-970b-cc7ef7b8ceea",
+        "id": "ed651488-ba44-4316-a00c-f9fe49798ed1",
         "name": "Procesar Transcripción"
       },
       {
@@ -733,10 +733,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -2560,
-          336
+          -4208,
+          1792
         ],
-        "id": "1cb4f3fb-cac6-48fe-94dd-a6fa22f2536c",
+        "id": "c0653a2d-1fb2-4870-8ed6-f44707a04e1a",
         "name": "Preparar Descarga"
       },
       {
@@ -751,10 +751,10 @@
         "type": "@n8n/n8n-nodes-langchain.openAi",
         "typeVersion": 1.8,
         "position": [
-          -2112,
-          336
+          -3760,
+          1792
         ],
-        "id": "67b2e476-35bf-437a-90e2-f6b14c8be6d5",
+        "id": "e1d59a34-3505-41ce-8e55-3bb91f459a96",
         "name": "Transcribe a recording",
         "credentials": {
           "openAiApi": {
@@ -775,10 +775,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          -1712,
-          336
+          -3360,
+          1792
         ],
-        "id": "e7da48c4-84a5-4271-9f4f-51aa76b0c614",
+        "id": "4479dcc8-768b-481a-9491-33edfe30f658",
         "name": "Confirmar Transcripción T",
         "webhookId": "237a0319-b9b0-4c5f-8561-1aef1c7c9116",
         "credentials": {
@@ -797,10 +797,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          -2320,
-          336
+          -3968,
+          1792
         ],
-        "id": "7827c333-0519-4cba-957c-76b88a102892",
+        "id": "9e5a4d02-4494-49ac-b6fd-d2d57b3b509a",
         "name": "Descargar Audio T",
         "webhookId": "1f9d320a-2e58-48ab-bf94-f02ee44a09d2",
         "credentials": {
@@ -814,13 +814,13 @@
         "parameters": {
           "jsCode": "const msg = $json.message || {};\n\nlet tipo_mensaje = 'unknown';\nif (msg.location) tipo_mensaje = 'location';\nelse if (msg.voice) tipo_mensaje = 'voice';\nelse if (msg.text) tipo_mensaje = 'text';\n\nreturn {\n  raw_message: msg,\n  chat_id: msg.chat?.id || null,\n  telegram_chat_id: msg.chat?.id || null,\n  user_id: msg.from?.id || null,\n  user_name: [msg.from?.first_name, msg.from?.last_name].filter(Boolean).join(' ').trim(),\n  tipo_mensaje,\n  mensaje_usuario: msg.text || '',\n  mensaje_usuario_original: msg.text || '',\n  latitude: msg.location?.latitude || null,\n  longitude: msg.location?.longitude || null,\n  file_id: msg.voice?.file_id || null,\n  fecha_hora: new Date().toISOString(),\n  plataforma: 'telegram',\n  es_audio: tipo_mensaje === 'voice'\n};"
         },
-        "id": "0bee9a6a-a2c4-40e1-9ce0-d6fb0e526be8",
+        "id": "bcf51175-bf16-4de9-bd05-57c203d6f3b0",
         "name": "Detectar Tipo Inicial",
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -3024,
-          448
+          -4672,
+          1904
         ]
       },
       {
@@ -830,10 +830,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -2576,
-          592
+          -4224,
+          2048
         ],
-        "id": "a79523d6-5fd2-44a2-bd62-b0dda56c926e",
+        "id": "5e24c27c-cd32-489a-8940-09e0a49aaac5",
         "name": "Normalizar Mensaje Directo"
       },
       {
@@ -843,10 +843,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -400,
-          480
+          -2048,
+          1936
         ],
-        "id": "e60fd29a-4f5b-4dd7-ac53-ba7b536d0863",
+        "id": "43bea9d6-869d-4c2c-b17e-701c1b5c11a4",
         "name": "Unificar Contexto Odoo"
       },
       {
@@ -856,10 +856,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          320,
-          1152
+          -1328,
+          2608
         ],
-        "id": "15f78978-d1fa-4b03-a0f9-1544b38f106e",
+        "id": "84c6c7a0-4694-43b3-9779-8661a86f0f6d",
         "name": "Preparar Payload Nueva Oportunidad"
       },
       {
@@ -890,10 +890,10 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.3,
         "position": [
-          432,
-          1152
+          -1216,
+          2608
         ],
-        "id": "af25562d-9b37-4fd2-bf15-52678518fd0d",
+        "id": "6c0e26bf-a637-4dea-bb59-6b30dcf15ef8",
         "name": "IF Nombre Cliente Oportunidad"
       },
       {
@@ -908,10 +908,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          432,
-          1344
+          -1216,
+          2800
         ],
-        "id": "eba49337-c1c5-491a-bbb0-67f2734fcb1d",
+        "id": "6190ddca-6a53-4804-99b9-bc89c7f51096",
         "name": "Aviso Falta Nombre Cliente",
         "webhookId": "7c8d9e0f-1a2b-4c5d-8e9f-0a1b2c3d4e5f",
         "credentials": {
@@ -942,10 +942,10 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.4,
         "position": [
-          480,
-          1152
+          -1168,
+          2608
         ],
-        "id": "9cf7a9bb-b48f-4d32-b8b6-525904a7994e",
+        "id": "85c8a7e3-60c9-4da6-bbb5-bd8ade07476d",
         "name": "Buscar Partner Odoo"
       },
       {
@@ -955,10 +955,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          608,
-          1152
+          -1040,
+          2608
         ],
-        "id": "078eb2c9-d591-44fa-9eb4-04528419a7e0",
+        "id": "9f678c2c-5fc6-4c69-890e-d76ab9ce935c",
         "name": "Fusionar Partner Oportunidad"
       },
       {
@@ -982,10 +982,10 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.4,
         "position": [
-          720,
-          1152
+          -928,
+          2608
         ],
-        "id": "72ac4d87-66fc-496b-9e47-6665a35c582c",
+        "id": "a2603f6e-d65f-4413-9e6e-eb333348101f",
         "name": "Crear Oportunidad Odoo"
       },
       {
@@ -1009,10 +1009,10 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.4,
         "position": [
-          720,
-          1152
+          -928,
+          2608
         ],
-        "id": "1c1fd132-1826-4cec-b901-c05e12d5bf42",
+        "id": "4c6c498b-2d11-4a77-88ae-a5c64fa2a1d2",
         "name": "Leer Lead Creado"
       },
       {
@@ -1026,10 +1026,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          912,
-          1152
+          -736,
+          2608
         ],
-        "id": "1580f415-93e0-45ba-a6ee-54f63bee9428",
+        "id": "be06c283-3d28-46e9-8ad9-4a24c14c82ce",
         "name": "Guardar Lead Creado",
         "credentials": {
           "postgres": {
@@ -1050,10 +1050,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          1088,
-          1152
+          -560,
+          2608
         ],
-        "id": "81409497-6876-4990-8b73-6a34e6d64efe",
+        "id": "2f1712db-b402-43d5-aeca-7b57d0df918a",
         "name": "Preguntar Qué Ha Ido a Hacer",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -1070,10 +1070,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          320,
-          1440
+          -1328,
+          2896
         ],
-        "id": "0e3d7685-ff87-4971-95b6-9fa4c6267ea4",
+        "id": "bc29be22-9ac0-47a0-aceb-0258635195c4",
         "name": "Construir Nota Visita"
       },
       {
@@ -1097,10 +1097,10 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.4,
         "position": [
-          496,
-          1440
+          -1152,
+          2896
         ],
-        "id": "62d71434-d318-4cc1-ab08-abd862baf1e0",
+        "id": "5a263053-52f2-40eb-b388-780a8f75b393",
         "name": "Guardar Nota en Lead Odoo"
       },
       {
@@ -1114,10 +1114,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          1376,
-          1440
+          -272,
+          2896
         ],
-        "id": "c3cccadc-eab8-44d9-8de9-acb10050bf74",
+        "id": "a58f8c7a-f2ae-4ca2-906e-20b6cc05f645",
         "name": "Cerrar Visita",
         "credentials": {
           "postgres": {
@@ -1138,10 +1138,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          1456,
-          1440
+          -192,
+          2896
         ],
-        "id": "cf23cbcf-cfc8-429c-b8bd-821f9a8edade",
+        "id": "8fc88785-ecf6-4ae8-b2dc-994ec846e21d",
         "name": "Confirmación Final",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -1162,10 +1162,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          368,
-          1728
+          -1280,
+          3184
         ],
-        "id": "e334b744-a130-41e2-971b-b0b72387c8ab",
+        "id": "dfced77c-3a12-484f-a47b-ce18ff34a6d7",
         "name": "Cancelar Flujo",
         "credentials": {
           "postgres": {
@@ -1186,10 +1186,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          560,
-          1728
+          -1088,
+          3184
         ],
-        "id": "cf194c94-0be6-4335-a11f-a0e35a1b36ba",
+        "id": "44d350e0-4f5e-4d99-99ec-34c793a83ea0",
         "name": "Mensaje Cancelación",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -1211,10 +1211,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          304,
-          1952
+          -1344,
+          3408
         ],
-        "id": "15249b08-b69b-4e50-a723-b9483fe0674e",
+        "id": "5c28f8ac-58ab-4451-9c1b-dc321602eafe",
         "name": "Enviar Ayuda",
         "webhookId": "81870251-e5cc-4b36-8e10-1263fbce611d",
         "credentials": {
@@ -1236,10 +1236,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          928,
-          768
+          -720,
+          2224
         ],
-        "id": "b09329b6-ac1a-4fa2-abe5-7ce4a9b970cb",
+        "id": "33fe0a99-a5bf-464b-9298-2c9c22e32f11",
         "name": "Mensaje Cancelación1",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -1260,10 +1260,10 @@
         "type": "n8n-nodes-base.postgres",
         "typeVersion": 2.6,
         "position": [
-          736,
-          768
+          -912,
+          2224
         ],
-        "id": "8049860d-3b0a-4736-a780-b866b1514a66",
+        "id": "237b8ce5-2edf-4343-b4e0-11cef3fd3051",
         "name": "Cancelar Operación",
         "credentials": {
           "postgres": {
@@ -1284,10 +1284,10 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          736,
-          992
+          -912,
+          2448
         ],
-        "id": "9e8d6eeb-2ebf-450a-8914-bf33187798a6",
+        "id": "15cfac6f-cbe1-47f0-b381-c7858b2b104a",
         "name": "Lead No Entendido",
         "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
         "credentials": {
@@ -1304,10 +1304,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -1072,
-          480
+          -2720,
+          1936
         ],
-        "id": "fa2e7430-4721-46cc-8ae6-c36166aa6ac6",
+        "id": "51b52d68-dad2-46c5-b277-5a407073bd1d",
         "name": "Combinar Entrada + Memoria"
       },
       {
@@ -1331,10 +1331,10 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.4,
         "position": [
-          688,
-          1440
+          -960,
+          2896
         ],
-        "id": "6b551c78-2bce-45a3-941a-159cc985660d",
+        "id": "7d0e5377-8149-4ed1-b6b7-90fb05ad9276",
         "name": "Leer Descripción Actual Lead"
       },
       {
@@ -1358,10 +1358,10 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.4,
         "position": [
-          880,
-          1440
+          -768,
+          2896
         ],
-        "id": "71777c76-28f0-47fc-943e-38555f633826",
+        "id": "1813c9dd-5db3-43d8-a0fd-10c9dcff3bb4",
         "name": "Guardar Notas Internas Lead"
       },
       {
@@ -1371,10 +1371,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          976,
-          1440
+          -672,
+          2896
         ],
-        "id": "92f82d6e-fc2b-4d06-9bed-89b3bf2b2ba7",
+        "id": "1582c71a-e8f1-4d06-9abb-57b29a7b0f96",
         "name": "Preparar Registro Visita Odoo"
       },
       {
@@ -1398,10 +1398,10 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.4,
         "position": [
-          1136,
-          1440
+          -512,
+          2896
         ],
-        "id": "abbf4fde-c668-4a64-847f-80c66228ddaa",
+        "id": "df2196ff-9eb9-47c6-b446-8e6de7fae7f0",
         "name": "Registrar Visita Odoo"
       },
       {
@@ -1411,10 +1411,10 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          1216,
-          1440
+          -432,
+          2896
         ],
-        "id": "fb59d8fc-0365-4145-a7d4-424e93bf6ff3",
+        "id": "9d83d472-1d23-4b1f-b61d-3d7d5c98c1a4",
         "name": "Validar Crear Visita Odoo"
       }
     ],
@@ -1782,6 +1782,28 @@
           ]
         ]
       },
+      "Buscar Partner Odoo": {
+        "main": [
+          [
+            {
+              "node": "Fusionar Partner Oportunidad",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fusionar Partner Oportunidad": {
+        "main": [
+          [
+            {
+              "node": "Crear Oportunidad Odoo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
       "Crear Oportunidad Odoo": {
         "main": [
           [
@@ -1935,36 +1957,14 @@
             }
           ]
         ]
-      },
-      "Buscar Partner Odoo": {
-        "main": [
-          [
-            {
-              "node": "Fusionar Partner Oportunidad",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Fusionar Partner Oportunidad": {
-        "main": [
-          [
-            {
-              "node": "Crear Oportunidad Odoo",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
       }
     },
     "authors": "Jorge Huescar",
-    "name": "Version 36fefbef",
+    "name": "Version 248e7a44",
     "description": "",
-    "autosaved": false
+    "autosaved": true
   },
-  "activeVersionId": "36fefbef-384d-409d-92d9-3456d5311754",
+  "activeVersionId": "248e7a44-add6-4294-9619-9cfdab11f7a1",
   "connections": {
     "Telegram Trigger": {
       "main": [
@@ -2329,6 +2329,28 @@
         ]
       ]
     },
+    "Buscar Partner Odoo": {
+      "main": [
+        [
+          {
+            "node": "Fusionar Partner Oportunidad",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fusionar Partner Oportunidad": {
+      "main": [
+        [
+          {
+            "node": "Crear Oportunidad Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Crear Oportunidad Odoo": {
       "main": [
         [
@@ -2482,28 +2504,6 @@
           }
         ]
       ]
-    },
-    "Buscar Partner Odoo": {
-      "main": [
-        [
-          {
-            "node": "Fusionar Partner Oportunidad",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Fusionar Partner Oportunidad": {
-      "main": [
-        [
-          {
-            "node": "Crear Oportunidad Odoo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "createdAt": "2026-04-24T10:41:28.665Z",
@@ -2524,10 +2524,10 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -3216,
-        448
+        -4864,
+        1904
       ],
-      "id": "f10f2941-6789-4e74-a101-6bd372be8fb9",
+      "id": "0ce84353-4155-4cdd-ae00-81970f059759",
       "name": "Telegram Trigger",
       "webhookId": "10466960-1bb6-4e83-84f4-97818410efc4",
       "credentials": {
@@ -2549,10 +2549,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        464,
-        -192
+        -1184,
+        1264
       ],
-      "id": "424828a4-d28b-45e6-b06e-1ce113f4d19e",
+      "id": "6e3aa98f-a898-4023-9102-fcdd32127593",
       "name": "Entrada Registrada",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -2573,10 +2573,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -1280,
-        480
+        -2928,
+        1936
       ],
-      "id": "ee33f4b2-434d-44fa-abeb-48a291d9bdad",
+      "id": "ebc2c6e1-c96f-432f-89dd-38df32cd9df9",
       "name": "Consultar Memoria Visita",
       "credentials": {
         "postgres": {
@@ -2592,10 +2592,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -864,
-        480
+        -2512,
+        1936
       ],
-      "id": "72b64791-527c-4fb3-8919-74e1414de43a",
+      "id": "fe5ddc8a-6166-43bb-bfc4-f53e2dcddd26",
       "name": "Router Principal CRM"
     },
     {
@@ -2783,10 +2783,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        -192,
-        416
+        -1840,
+        1872
       ],
-      "id": "b758bb79-a1cf-43e4-be72-156f9b11788d",
+      "id": "0e6e378b-9029-43b0-bda5-7e0bffac8f18",
       "name": "Switch Acción"
     },
     {
@@ -2800,10 +2800,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        240,
-        -192
+        -1408,
+        1264
       ],
-      "id": "d16be9d4-6f9e-425c-a0fd-7370f3ac3e17",
+      "id": "177cc98a-2917-41d8-826f-f1f904cba885",
       "name": "Guardar Entrada",
       "credentials": {
         "postgres": {
@@ -2823,10 +2823,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        240,
-        48
+        -1408,
+        1504
       ],
-      "id": "570cd06a-6588-48b6-826e-bb007c462f07",
+      "id": "36923f46-fa91-406f-9fb7-d003c940c245",
       "name": "Guardar Salida",
       "credentials": {
         "postgres": {
@@ -2850,16 +2850,16 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      $('Unificar Contexto Odoo').first().json.odoo.db,\n      $('Unificar Contexto Odoo').first().json.odoo.uid,\n      $('Unificar Contexto Odoo').first().json.odoo.password,\n      \"crm.lead\",\n      \"search_read\",\n      [\n        [\n          [\"type\", \"=\", \"opportunity\"],\n          [\"probability\", \"<\", 100],\n          [\"active\", \"=\", true]\n        ]\n      ],\n      {\n        fields: [\"id\", \"name\", \"partner_name\", \"contact_name\", \"stage_id\"],\n        limit: 20,\n        order: \"write_date desc\"\n      }\n    ]\n  }\n}) }}",
+        "jsonBody": "={{ JSON.stringify({\n  jsonrpc: \"2.0\",\n  method: \"call\",\n  params: {\n    service: \"object\",\n    method: \"execute_kw\",\n    args: [\n      $('Unificar Contexto Odoo').first().json.odoo.db,\n      $('Unificar Contexto Odoo').first().json.odoo.uid,\n      $('Unificar Contexto Odoo').first().json.odoo.password,\n      \"crm.lead\",\n      \"search_read\",\n      [\n        [\n          [\"type\", \"=\", \"opportunity\"],\n          [\"probability\", \"<\", 100],\n          [\"active\", \"=\", true],\n          [\"user_id\", \"=\", $('Unificar Contexto Odoo').first().json.odoo.uid]\n        ]\n      ],\n      {\n        fields: [\"id\", \"name\", \"partner_name\", \"contact_name\", \"stage_id\"],\n        limit: 20,\n        order: \"write_date desc\"\n      }\n    ]\n  }\n}) }}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        464,
-        48
+        -1184,
+        1504
       ],
-      "id": "afecc45e-b939-4f71-9d2c-e51343054d40",
+      "id": "c44f49c6-6d88-49ab-805a-700be9d49af4",
       "name": "Consultar Oportunidades Abiertas Odoo"
     },
     {
@@ -2882,23 +2882,23 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -608,
-        480
+        -2256,
+        1936
       ],
-      "id": "ba0b1cbb-dad9-4424-9c73-2c257085873a",
+      "id": "06e3d624-d2fb-4d99-ab0a-1fe356f4264c",
       "name": "Autenticar Odoo"
     },
     {
       "parameters": {
-        "jsCode": "const actual = $('Unificar Contexto Odoo').first().json;\nconst oportunidades = $json.result || [];\n\nconst textoLista = oportunidades.length\n  ? oportunidades.map((o, i) => `${i + 1}. ${o.name}`).join('\\n')\n  : 'No he encontrado oportunidades abiertas.';\n\nreturn {\n  ...actual,\n  oportunidades,\n  textoLista,\n  mensaje_bot:\n`✅ Salida registrada.\n\n¿A qué lead u oportunidad has ido a visitar?\n\n${textoLista}\n\nResponde con el número, escribe \"crear oportunidad\" o \"cancelar\".`\n};"
+        "jsCode": "const actual = $('Unificar Contexto Odoo').first().json;\nconst oportunidades = $json.result || [];\n\nconst textoLista = oportunidades.length\n  ? oportunidades.map((o, i) => `${i + 1}. ${o.name}`).join('\\n')\n  : 'No tienes oportunidades abiertas asignadas a tu usuario en Odoo.';\n\nreturn {\n  ...actual,\n  oportunidades,\n  textoLista,\n  mensaje_bot:\n`✅ Salida registrada.\n\n¿A qué lead u oportunidad has ido a visitar?\n\n${textoLista}\n\nResponde con el número, escribe \"crear oportunidad\" o \"cancelar\".`\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        672,
-        48
+        -976,
+        1504
       ],
-      "id": "5b91e456-6e63-44e5-8bd7-1db636976739",
+      "id": "55f540f9-f663-4ba0-9d1e-95504b728159",
       "name": "Preparar Lista Oportunidades"
     },
     {
@@ -2912,10 +2912,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        880,
-        48
+        -768,
+        1504
       ],
-      "id": "89741eb3-7c51-4359-8fd9-24037b75203f",
+      "id": "c6e77d12-8c7b-4164-9f45-0d63c0c7e7d2",
       "name": "Guardar Memoria Oportunidades",
       "credentials": {
         "postgres": {
@@ -2936,10 +2936,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1072,
-        48
+        -576,
+        1504
       ],
-      "id": "ba969a02-b563-430f-ba65-fe3364d1eee2",
+      "id": "876b7b6e-36bf-4547-9d0c-f1bd7c357659",
       "name": "Enviar Lista Leads",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -2956,10 +2956,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        240,
-        336
+        -1408,
+        1792
       ],
-      "id": "4297297f-aad5-4edb-ab10-8a5b855fe641",
+      "id": "b7bb1c17-3026-41e9-a4da-88644de18b60",
       "name": "Resolver Lead Elegido"
     },
     {
@@ -3072,10 +3072,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        432,
-        304
+        -1216,
+        1760
       ],
-      "id": "b04954e9-68b9-4f1d-8184-e9b3cbc25d3e",
+      "id": "b7a1fa6e-77ed-4cf9-b5df-e452af8261cf",
       "name": "Switch Resultado Lead"
     },
     {
@@ -3089,10 +3089,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        720,
-        288
+        -928,
+        1744
       ],
-      "id": "d9b4b081-2769-45ac-a3cc-733a0a8fa083",
+      "id": "b8988749-9013-4020-a5a3-10afd7abb15c",
       "name": "Guardar Lead Elegido",
       "credentials": {
         "postgres": {
@@ -3113,10 +3113,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        928,
-        288
+        -720,
+        1744
       ],
-      "id": "00c97321-7267-403e-a003-9bb2dc08a79b",
+      "id": "0d852da5-acc3-48e9-9fe8-ac82f0715ab6",
       "name": "Preguntar Descripción Visita",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -3137,10 +3137,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        720,
-        496
+        -928,
+        1952
       ],
-      "id": "3355a959-4dcc-4074-88b9-ce7450079cda",
+      "id": "c76082b7-a37b-40e5-99d1-f7f64bdd6ab1",
       "name": "Guardar Estado Crear Oportunidad",
       "credentials": {
         "postgres": {
@@ -3161,10 +3161,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        928,
-        496
+        -720,
+        1952
       ],
-      "id": "4794738c-efad-4da5-99b4-325d57dfa9a6",
+      "id": "82ca24de-4bf7-47dc-a565-d9fa3c95a7f5",
       "name": "Pedir Datos Nueva Oportunidad",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -3202,10 +3202,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -2816,
-        448
+        -4464,
+        1904
       ],
-      "id": "864414fb-65cc-4067-9e61-1914af151d09",
+      "id": "b120ec97-6cdd-4db8-9de2-b2bca396ff01",
       "name": "¿Es Audio?"
     },
     {
@@ -3215,10 +3215,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1504,
-        336
+        -3152,
+        1792
       ],
-      "id": "f6d15084-1746-4025-8696-a818878c99ce",
+      "id": "52e4528d-a8d0-4083-9440-eeb23e0f8d8b",
       "name": "Actualizar Datos Transcripción"
     },
     {
@@ -3228,10 +3228,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1936,
-        336
+        -3584,
+        1792
       ],
-      "id": "8c3ca8d5-3576-4550-970b-cc7ef7b8ceea",
+      "id": "ed651488-ba44-4316-a00c-f9fe49798ed1",
       "name": "Procesar Transcripción"
     },
     {
@@ -3241,10 +3241,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2560,
-        336
+        -4208,
+        1792
       ],
-      "id": "1cb4f3fb-cac6-48fe-94dd-a6fa22f2536c",
+      "id": "c0653a2d-1fb2-4870-8ed6-f44707a04e1a",
       "name": "Preparar Descarga"
     },
     {
@@ -3259,10 +3259,10 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        -2112,
-        336
+        -3760,
+        1792
       ],
-      "id": "67b2e476-35bf-437a-90e2-f6b14c8be6d5",
+      "id": "e1d59a34-3505-41ce-8e55-3bb91f459a96",
       "name": "Transcribe a recording",
       "credentials": {
         "openAiApi": {
@@ -3283,10 +3283,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -1712,
-        336
+        -3360,
+        1792
       ],
-      "id": "e7da48c4-84a5-4271-9f4f-51aa76b0c614",
+      "id": "4479dcc8-768b-481a-9491-33edfe30f658",
       "name": "Confirmar Transcripción T",
       "webhookId": "237a0319-b9b0-4c5f-8561-1aef1c7c9116",
       "credentials": {
@@ -3305,10 +3305,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -2320,
-        336
+        -3968,
+        1792
       ],
-      "id": "7827c333-0519-4cba-957c-76b88a102892",
+      "id": "9e5a4d02-4494-49ac-b6fd-d2d57b3b509a",
       "name": "Descargar Audio T",
       "webhookId": "1f9d320a-2e58-48ab-bf94-f02ee44a09d2",
       "credentials": {
@@ -3322,13 +3322,13 @@
       "parameters": {
         "jsCode": "const msg = $json.message || {};\n\nlet tipo_mensaje = 'unknown';\nif (msg.location) tipo_mensaje = 'location';\nelse if (msg.voice) tipo_mensaje = 'voice';\nelse if (msg.text) tipo_mensaje = 'text';\n\nreturn {\n  raw_message: msg,\n  chat_id: msg.chat?.id || null,\n  telegram_chat_id: msg.chat?.id || null,\n  user_id: msg.from?.id || null,\n  user_name: [msg.from?.first_name, msg.from?.last_name].filter(Boolean).join(' ').trim(),\n  tipo_mensaje,\n  mensaje_usuario: msg.text || '',\n  mensaje_usuario_original: msg.text || '',\n  latitude: msg.location?.latitude || null,\n  longitude: msg.location?.longitude || null,\n  file_id: msg.voice?.file_id || null,\n  fecha_hora: new Date().toISOString(),\n  plataforma: 'telegram',\n  es_audio: tipo_mensaje === 'voice'\n};"
       },
-      "id": "0bee9a6a-a2c4-40e1-9ce0-d6fb0e526be8",
+      "id": "bcf51175-bf16-4de9-bd05-57c203d6f3b0",
       "name": "Detectar Tipo Inicial",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -3024,
-        448
+        -4672,
+        1904
       ]
     },
     {
@@ -3338,10 +3338,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2576,
-        592
+        -4224,
+        2048
       ],
-      "id": "a79523d6-5fd2-44a2-bd62-b0dda56c926e",
+      "id": "5e24c27c-cd32-489a-8940-09e0a49aaac5",
       "name": "Normalizar Mensaje Directo"
     },
     {
@@ -3351,10 +3351,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -400,
-        480
+        -2048,
+        1936
       ],
-      "id": "e60fd29a-4f5b-4dd7-ac53-ba7b536d0863",
+      "id": "43bea9d6-869d-4c2c-b17e-701c1b5c11a4",
       "name": "Unificar Contexto Odoo"
     },
     {
@@ -3364,10 +3364,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        320,
-        1152
+        -1328,
+        2608
       ],
-      "id": "15f78978-d1fa-4b03-a0f9-1544b38f106e",
+      "id": "84c6c7a0-4694-43b3-9779-8661a86f0f6d",
       "name": "Preparar Payload Nueva Oportunidad"
     },
     {
@@ -3398,10 +3398,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        432,
-        1152
+        -1216,
+        2608
       ],
-      "id": "af25562d-9b37-4fd2-bf15-52678518fd0d",
+      "id": "6c0e26bf-a637-4dea-bb59-6b30dcf15ef8",
       "name": "IF Nombre Cliente Oportunidad"
     },
     {
@@ -3416,10 +3416,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        432,
-        1344
+        -1216,
+        2800
       ],
-      "id": "eba49337-c1c5-491a-bbb0-67f2734fcb1d",
+      "id": "6190ddca-6a53-4804-99b9-bc89c7f51096",
       "name": "Aviso Falta Nombre Cliente",
       "webhookId": "7c8d9e0f-1a2b-4c5d-8e9f-0a1b2c3d4e5f",
       "credentials": {
@@ -3450,10 +3450,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        480,
-        1152
+        -1168,
+        2608
       ],
-      "id": "9cf7a9bb-b48f-4d32-b8b6-525904a7994e",
+      "id": "85c8a7e3-60c9-4da6-bbb5-bd8ade07476d",
       "name": "Buscar Partner Odoo"
     },
     {
@@ -3463,10 +3463,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        608,
-        1152
+        -1040,
+        2608
       ],
-      "id": "078eb2c9-d591-44fa-9eb4-04528419a7e0",
+      "id": "9f678c2c-5fc6-4c69-890e-d76ab9ce935c",
       "name": "Fusionar Partner Oportunidad"
     },
     {
@@ -3490,10 +3490,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        720,
-        1152
+        -928,
+        2608
       ],
-      "id": "72ac4d87-66fc-496b-9e47-6665a35c582c",
+      "id": "a2603f6e-d65f-4413-9e6e-eb333348101f",
       "name": "Crear Oportunidad Odoo"
     },
     {
@@ -3517,10 +3517,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        720,
-        1152
+        -928,
+        2608
       ],
-      "id": "1c1fd132-1826-4cec-b901-c05e12d5bf42",
+      "id": "4c6c498b-2d11-4a77-88ae-a5c64fa2a1d2",
       "name": "Leer Lead Creado"
     },
     {
@@ -3534,10 +3534,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        912,
-        1152
+        -736,
+        2608
       ],
-      "id": "1580f415-93e0-45ba-a6ee-54f63bee9428",
+      "id": "be06c283-3d28-46e9-8ad9-4a24c14c82ce",
       "name": "Guardar Lead Creado",
       "credentials": {
         "postgres": {
@@ -3558,10 +3558,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1088,
-        1152
+        -560,
+        2608
       ],
-      "id": "81409497-6876-4990-8b73-6a34e6d64efe",
+      "id": "2f1712db-b402-43d5-aeca-7b57d0df918a",
       "name": "Preguntar Qué Ha Ido a Hacer",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -3578,10 +3578,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        320,
-        1440
+        -1328,
+        2896
       ],
-      "id": "0e3d7685-ff87-4971-95b6-9fa4c6267ea4",
+      "id": "bc29be22-9ac0-47a0-aceb-0258635195c4",
       "name": "Construir Nota Visita"
     },
     {
@@ -3605,10 +3605,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        496,
-        1440
+        -1152,
+        2896
       ],
-      "id": "62d71434-d318-4cc1-ab08-abd862baf1e0",
+      "id": "5a263053-52f2-40eb-b388-780a8f75b393",
       "name": "Guardar Nota en Lead Odoo"
     },
     {
@@ -3622,10 +3622,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1376,
-        1440
+        -272,
+        2896
       ],
-      "id": "c3cccadc-eab8-44d9-8de9-acb10050bf74",
+      "id": "a58f8c7a-f2ae-4ca2-906e-20b6cc05f645",
       "name": "Cerrar Visita",
       "credentials": {
         "postgres": {
@@ -3646,10 +3646,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1456,
-        1440
+        -192,
+        2896
       ],
-      "id": "cf23cbcf-cfc8-429c-b8bd-821f9a8edade",
+      "id": "8fc88785-ecf6-4ae8-b2dc-994ec846e21d",
       "name": "Confirmación Final",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -3670,10 +3670,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        368,
-        1728
+        -1280,
+        3184
       ],
-      "id": "e334b744-a130-41e2-971b-b0b72387c8ab",
+      "id": "dfced77c-3a12-484f-a47b-ce18ff34a6d7",
       "name": "Cancelar Flujo",
       "credentials": {
         "postgres": {
@@ -3694,10 +3694,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        560,
-        1728
+        -1088,
+        3184
       ],
-      "id": "cf194c94-0be6-4335-a11f-a0e35a1b36ba",
+      "id": "44d350e0-4f5e-4d99-99ec-34c793a83ea0",
       "name": "Mensaje Cancelación",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -3719,10 +3719,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        304,
-        1952
+        -1344,
+        3408
       ],
-      "id": "15249b08-b69b-4e50-a723-b9483fe0674e",
+      "id": "5c28f8ac-58ab-4451-9c1b-dc321602eafe",
       "name": "Enviar Ayuda",
       "webhookId": "81870251-e5cc-4b36-8e10-1263fbce611d",
       "credentials": {
@@ -3744,10 +3744,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        928,
-        768
+        -720,
+        2224
       ],
-      "id": "b09329b6-ac1a-4fa2-abe5-7ce4a9b970cb",
+      "id": "33fe0a99-a5bf-464b-9298-2c9c22e32f11",
       "name": "Mensaje Cancelación1",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -3768,10 +3768,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        736,
-        768
+        -912,
+        2224
       ],
-      "id": "8049860d-3b0a-4736-a780-b866b1514a66",
+      "id": "237b8ce5-2edf-4343-b4e0-11cef3fd3051",
       "name": "Cancelar Operación",
       "credentials": {
         "postgres": {
@@ -3792,10 +3792,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        736,
-        992
+        -912,
+        2448
       ],
-      "id": "9e8d6eeb-2ebf-450a-8914-bf33187798a6",
+      "id": "15cfac6f-cbe1-47f0-b381-c7858b2b104a",
       "name": "Lead No Entendido",
       "webhookId": "1a3f5ed1-8e77-4296-8baf-40c5c1727744",
       "credentials": {
@@ -3812,10 +3812,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1072,
-        480
+        -2720,
+        1936
       ],
-      "id": "fa2e7430-4721-46cc-8ae6-c36166aa6ac6",
+      "id": "51b52d68-dad2-46c5-b277-5a407073bd1d",
       "name": "Combinar Entrada + Memoria"
     },
     {
@@ -3839,10 +3839,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        688,
-        1440
+        -960,
+        2896
       ],
-      "id": "6b551c78-2bce-45a3-941a-159cc985660d",
+      "id": "7d0e5377-8149-4ed1-b6b7-90fb05ad9276",
       "name": "Leer Descripción Actual Lead"
     },
     {
@@ -3866,10 +3866,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        880,
-        1440
+        -768,
+        2896
       ],
-      "id": "71777c76-28f0-47fc-943e-38555f633826",
+      "id": "1813c9dd-5db3-43d8-a0fd-10c9dcff3bb4",
       "name": "Guardar Notas Internas Lead"
     },
     {
@@ -3879,10 +3879,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        976,
-        1440
+        -672,
+        2896
       ],
-      "id": "92f82d6e-fc2b-4d06-9bed-89b3bf2b2ba7",
+      "id": "1582c71a-e8f1-4d06-9abb-57b29a7b0f96",
       "name": "Preparar Registro Visita Odoo"
     },
     {
@@ -3906,10 +3906,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1136,
-        1440
+        -512,
+        2896
       ],
-      "id": "abbf4fde-c668-4a64-847f-80c66228ddaa",
+      "id": "df2196ff-9eb9-47c6-b446-8e6de7fae7f0",
       "name": "Registrar Visita Odoo"
     },
     {
@@ -3919,10 +3919,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1216,
-        1440
+        -432,
+        2896
       ],
-      "id": "fb59d8fc-0365-4145-a7d4-424e93bf6ff3",
+      "id": "9d83d472-1d23-4b1f-b61d-3d7d5c98c1a4",
       "name": "Validar Crear Visita Odoo"
     }
   ],
@@ -3944,6 +3944,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-05-06T09:47:28.514Z",
-  "versionId": "36fefbef-384d-409d-92d9-3456d5311754"
+  "updatedAt": "2026-05-11T10:39:21.320Z",
+  "versionId": "248e7a44-add6-4294-9619-9cfdab11f7a1"
 }
