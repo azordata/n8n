@@ -125,12 +125,12 @@
           "sender": "gemini-notes@google.com"
         }
       },
-      "id": "676aa33b-2c03-48ad-893a-b9e2d19829b3",
+      "id": "0b4329c5-be38-4d05-9dc5-004ead6d7be4",
       "name": "Gmail - Escuchar Correos Gemini",
       "type": "n8n-nodes-base.gmailTrigger",
       "typeVersion": 1,
       "position": [
-        2496,
+        3680,
         1584
       ],
       "credentials": {
@@ -156,12 +156,12 @@
         },
         "options": {}
       },
-      "id": "561970c7-c97d-4dda-8bdc-198ad21ddf11",
+      "id": "fe42993b-9979-4062-9b15-02b6bf928dbb",
       "name": "Gmail API - Mensaje Completo",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        2736,
+        3920,
         1584
       ],
       "credentials": {
@@ -175,12 +175,12 @@
       "parameters": {
         "jsCode": "// Parsear el payload de Gmail API: cabeceras, cuerpo HTML y texto plano\nconst msg = $input.first().json;\n\nfunction decodeB64(str) {\n  try { return Buffer.from((str||'').replace(/-/g,'+').replace(/_/g,'/'), 'base64').toString('utf-8'); }\n  catch(e) { return ''; }\n}\nfunction htmlToText(html) {\n  return (html||'')\n    .replace(/<style[^>]*>[\\s\\S]*?<\\/style>/gi,'')\n    .replace(/<script[^>]*>[\\s\\S]*?<\\/script>/gi,'')\n    .replace(/<br\\s*\\/?>/gi,'\\n').replace(/<\\/p>/gi,'\\n\\n')\n    .replace(/<\\/div>/gi,'\\n').replace(/<[^>]+>/g,'')\n    .replace(/&nbsp;/g,' ').replace(/&amp;/g,'&')\n    .replace(/&lt;/g,'<').replace(/&gt;/g,'>')\n    .replace(/&quot;/g,'\"').replace(/&#39;/g,\"'\")\n    .replace(/[ \\t]{2,}/g,' ').replace(/\\n{3,}/g,'\\n\\n').trim();\n}\n\nconst headers = msg.payload?.headers || [];\nconst getH = name => (headers.find(h => h.name.toLowerCase() === name.toLowerCase()) || {}).value || '';\n\nconst subject = getH('Subject') || 'Reunión sin título';\nconst from    = getH('From');\nconst to      = getH('To');\nconst cc      = getH('Cc');\nconst dateStr = getH('Date');\n\nlet bodyHtml = '', bodyText = '';\nfunction walk(part) {\n  if (!part) return;\n  const mime = (part.mimeType || '').toLowerCase();\n  if (part.body?.data) {\n    const decoded = decodeB64(part.body.data);\n    if (mime === 'text/html'  && !bodyHtml) bodyHtml = decoded;\n    if (mime === 'text/plain' && !bodyText) bodyText = decoded;\n  }\n  (part.parts || []).forEach(walk);\n}\nwalk(msg.payload);\n\nconst bodyTextClean = bodyText || htmlToText(bodyHtml);\nlet meetingDate;\ntry { meetingDate = dateStr ? new Date(dateStr).toISOString() : new Date(Number(msg.internalDate)).toISOString(); }\ncatch(e) { meetingDate = new Date().toISOString(); }\n\nreturn [{ json: {\n  messageId: msg.id,\n  subject, from, to, cc, meetingDate,\n  bodyHtml,\n  bodyText: bodyTextClean\n}}];"
       },
-      "id": "e3304b2a-9053-42b6-bced-d2a10af1e1cb",
+      "id": "f9d6fc43-1af2-496a-bd4c-c503f34d860f",
       "name": "Parsear Payload del Correo",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2976,
+        4160,
         1584
       ]
     },
@@ -188,12 +188,12 @@
       "parameters": {
         "jsCode": "// Extraer el file ID del documento de Google Drive en INGLÉS\n// Estrategia principal: leer el texto del propio enlace <a href=...>TEXTO</a>\n// Los documentos Gemini se llaman 'Notas de Gemini (Inglés)' / '(Español)'\n\nconst data = $input.first().json;\nconst html = data.bodyHtml || '';\n\nfunction decodeEntities(str) {\n  return str\n    .replace(/&eacute;/gi,'é').replace(/&aacute;/gi,'á').replace(/&iacute;/gi,'í')\n    .replace(/&oacute;/gi,'ó').replace(/&uacute;/gi,'ú').replace(/&ntilde;/gi,'ñ')\n    .replace(/&#233;/g,'é').replace(/&#225;/g,'á').replace(/&#237;/g,'í')\n    .replace(/&#243;/g,'ó').replace(/&#250;/g,'ú').replace(/&#241;/g,'ñ')\n    .replace(/&#[0-9]+;/g, c => String.fromCharCode(parseInt(c.slice(2,-1))))\n    .replace(/&amp;/gi,'&').replace(/&nbsp;/gi,' ').replace(/&[a-z]+;/gi,'');\n}\n\n// ── Extraer <a href=\"drive/docs link\">texto del enlace</a> ──\nconst anchorPattern = /<a\\s[^>]*href=\"(https?:\\/\\/(?:docs|drive)\\.google\\.com\\/[^\"]*\\/d\\/([a-zA-Z0-9_-]+)[^\"]*)\"[^>]*>([\\s\\S]*?)<\\/a>/gi;\nconst docs = [];\nlet m;\nwhile ((m = anchorPattern.exec(html)) !== null) {\n  const fileId = m[2];\n  if (!fileId || docs.find(d => d.fileId === fileId)) continue;\n  const anchorRaw  = m[3] || '';\n  const anchorText = decodeEntities(anchorRaw.replace(/<[^>]+>/g, ' ')).toLowerCase().trim();\n  docs.push({ url: m[1], fileId, pos: m.index, anchorText, score: 0 });\n}\n\n// También capturar hrefs sin <a> completo (por si el correo usa structure distinta)\nif (docs.length === 0) {\n  const hrefPattern = /href=\"(https?:\\/\\/(?:docs|drive)\\.google\\.com\\/[^\"]*\\/d\\/([a-zA-Z0-9_-]+)[^\"]*)\"/gi;\n  while ((m = hrefPattern.exec(html)) !== null) {\n    const fileId = m[2];\n    if (fileId && !docs.find(d => d.fileId === fileId))\n      docs.push({ url: m[1], fileId, pos: m.index, anchorText: '', score: 0 });\n  }\n}\n\nconst enTerms = ['inglés', 'ingles', 'english', '(en)'];\nconst esTerms = ['español', 'espanol', 'spanish', '(es)'];\n\nfor (const doc of docs) {\n  // Prioridad 1: texto del propio enlace\n  const inAnchorEn = enTerms.some(t => doc.anchorText.includes(t));\n  const inAnchorEs = esTerms.some(t => doc.anchorText.includes(t));\n\n  if (inAnchorEn && !inAnchorEs)      { doc.score = 20; continue; }\n  if (inAnchorEs && !inAnchorEn)      { doc.score = -20; continue; }\n\n  // Prioridad 2: contexto de 400 chars alrededor del enlace (decodificado)\n  const htmlDec = decodeEntities(html).toLowerCase();\n  const ctxStart = Math.max(0, doc.pos - 400);\n  const ctxEnd   = Math.min(htmlDec.length, doc.pos + 400);\n  const ctx      = htmlDec.substring(ctxStart, ctxEnd);\n  const ctxEn = enTerms.some(t => ctx.includes(t));\n  const ctxEs = esTerms.some(t => ctx.includes(t));\n\n  if (ctxEn && !ctxEs)  doc.score = 10;\n  else if (ctxEs && !ctxEn) doc.score = -10;\n  else doc.score = 0;\n}\n\ndocs.sort((a, b) => b.score - a.score || a.pos - b.pos);\n\nconst targetDoc    = docs.find(d => d.score > 0) || docs.find(d => d.score === 0) || docs[0];\nconst targetFileId = targetDoc?.fileId || '';\n\nreturn [{ json: {\n  ...data,\n  driveFileId:   targetFileId,\n  allDriveLinks: docs.map(({ fileId, url, score, anchorText }) => ({ fileId, url, score, anchorText })),\n  hasDriveDoc:   targetFileId.length > 0\n}}];"
       },
-      "id": "83166186-2360-4918-b8fa-12d71a96a45f",
+      "id": "4dd7df12-44d4-4471-97bf-288422b3e7b6",
       "name": "Extraer URL Documento Inglés",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3216,
+        4400,
         1584
       ]
     },
@@ -219,12 +219,12 @@
           }
         }
       },
-      "id": "887daefd-7f18-41db-b9d9-c9ac2286aa54",
+      "id": "79e02502-ee49-4e5f-bcb6-b8debf17e6ff",
       "name": "Drive API - Exportar Documento",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        3456,
+        4640,
         1584
       ],
       "credentials": {
@@ -239,12 +239,12 @@
       "parameters": {
         "jsCode": "// Extraer sección Transcript del documento exportado por Drive API (text/plain)\n\nconst driveResult = $input.first().json;\nconst parseData   = $('Parsear Payload del Correo').first().json;\nconst urlData     = $('Extraer URL Documento Inglés').first().json;\n\nconst rawText = (driveResult?.data || driveResult?.body || '').trim();\n\nlet transcript = '';\nlet source = '';\n\nif (rawText.length > 100) {\n  const lines = rawText.split('\\n');\n\n  // ── Estrategia 1: buscar línea que sea exactamente el título de la pestaña Transcript ──\n  // Drive exporta las pestañas con su título como una línea sola\n  const tcKws = ['transcript', 'transcripción', 'transcripcion', 'recording'];\n  let tabLineIdx = -1;\n  for (let i = 0; i < lines.length; i++) {\n    const t = lines[i].trim().toLowerCase();\n    if (tcKws.includes(t)) { tabLineIdx = i; break; }\n  }\n  if (tabLineIdx >= 0) {\n    transcript = lines.slice(tabLineIdx + 1).join('\\n').trim();\n    source = `Drive export - pestaña \"${lines[tabLineIdx].trim()}\"`;\n  }\n\n  // ── Estrategia 2: primer timestamp H:MM o HH:MM:SS en el texto ──\n  // La sección de transcript tiene timestamps, la de notas no\n  if (!transcript) {\n    for (let i = 0; i < lines.length; i++) {\n      if (/^\\d{1,2}:\\d{2}(:\\d{2})?$/.test(lines[i].trim())) {\n        // Retroceder 1-2 líneas para incluir el nombre del ponente\n        const start = Math.max(0, i - 1);\n        transcript = lines.slice(start).join('\\n').trim();\n        source = 'Drive export - desde primer timestamp';\n        break;\n      }\n    }\n  }\n\n  // ── Estrategia 3: timestamp inline (0:00:05 dentro de una línea) ──\n  if (!transcript) {\n    const tsMatch = /\\d{1,2}:\\d{2}:\\d{2}/.exec(rawText);\n    if (tsMatch && tsMatch.index > 0) {\n      const before = rawText.substring(0, tsMatch.index);\n      const lineStart = before.lastIndexOf('\\n') + 1;\n      transcript = rawText.substring(lineStart).trim();\n      source = 'Drive export - timestamp inline';\n    }\n  }\n\n  // ── Estrategia 4: encabezado Transcript con líneas en blanco alrededor ──\n  if (!transcript) {\n    const m = rawText.match(/(?:^|\\n)\\s*(transcript|transcripci[oó]n)\\s*(?:\\n|$)/i);\n    if (m) {\n      transcript = rawText.substring(m.index + m[0].length).trim();\n      source = `Drive export - encabezado \"${m[1]}\"`;\n    }\n  }\n\n  // ── Estrategia 5: texto completo (último recurso) ──\n  if (!transcript) {\n    transcript = rawText;\n    source = 'Drive export - texto completo (sin sección transcript detectada)';\n  }\n}\n\n// Fallback: cuerpo del correo\nif (transcript.length < 100) {\n  transcript = parseData.bodyText || '';\n  source = 'cuerpo correo (fallback)';\n}\n\nif (!transcript) { transcript = 'No se pudo extraer la transcripción.'; source = 'vacío'; }\nif (transcript.length > 14000) transcript = transcript.substring(0, 14000) + '\\n\\n[... transcripción truncada ...]';\n\n// ── Participantes ──\nconst emailRe = /[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}/g;\nconst seen = new Set();\n(rawText.match(emailRe) || []).forEach(e => seen.add(e.toLowerCase()));\n[parseData.to, parseData.cc].forEach(src =>\n  (src||'').match(emailRe)?.forEach(e => seen.add(e.toLowerCase()))\n);\nconst participants = [...seen].filter(e =>\n  !e.includes('noreply') && !e.includes('no-reply') &&\n  !e.includes('@google.com') && !e.includes('@googlegroups.com') && e.length > 5\n);\n\nreturn [{ json: {\n  subject:            parseData.subject,\n  transcript,\n  participants,\n  participantsString: participants.join(', '),\n  meetingDate:        parseData.meetingDate,\n  _debug: {\n    source,\n    transcriptLength:  transcript.length,\n    rawTextLength:     rawText.length,\n    rawTextPreview:    rawText.substring(0, 600),\n    transcriptPreview: transcript.substring(0, 300),\n    driveFileId:       urlData.driveFileId,\n    driveLinksScores:  urlData.allDriveLinks,\n    participantsFound: participants,\n    bodyHtmlLength:    (parseData.bodyHtml || '').length\n  }\n}}];"
       },
-      "id": "59111311-6694-4a9b-aa1a-2337b3a73e01",
+      "id": "d8f8ef7c-d00f-401d-a68f-cc77e66b8c89",
       "name": "Ensamblar Transcripción",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3696,
+        4880,
         1584
       ]
     },
@@ -252,12 +252,12 @@
       "parameters": {
         "jsCode": "const d = $input.first().json;\n\nconst systemMsg = 'Eres un asistente experto en resumir transcripciones de reuniones de negocios. Creas resúmenes claros, estructurados y accionables. Respondes siempre en español y usas formato Markdown.';\n\nconst userMsg = [\n  'Analiza la siguiente transcripción de una reunión y crea un resumen estructurado y profesional.',\n  '',\n  `Reunión: ${d.subject}`,\n  `Fecha: ${d.meetingDate}`,\n  '',\n  'TRANSCRIPCIÓN COMPLETA:',\n  d.transcript,\n  '',\n  'Genera el resumen con exactamente estas secciones:',\n  '',\n  '## 1. Resumen Ejecutivo',\n  '(2-3 frases que expliquen de qué trató la reunión y cuál fue el resultado principal)',\n  '',\n  '## 2. Puntos Principales Tratados',\n  '(Lista de los temas y asuntos clave que se discutieron)',\n  '',\n  '## 3. Decisiones Tomadas',\n  '(Lista de todas las decisiones acordadas)',\n  '',\n  '## 4. Próximos Pasos y Tareas',\n  '(Lista de acciones a realizar, indicando responsable y plazo si se mencionaron)',\n  '',\n  '## 5. Puntos de Atención',\n  '(Riesgos, bloqueos, dudas pendientes o aspectos importantes a vigilar)',\n  '',\n  'Usa bullet points (- ) para las listas. Si una sección no tiene contenido, indica \"Sin elementos en esta categoría\".'\n].join('\\n');\n\nreturn [{ json: {\n  subject:            d.subject,\n  participants:       d.participants,\n  participantsString: d.participantsString,\n  meetingDate:        d.meetingDate,\n  openai_messages: [\n    { role: 'system', content: systemMsg },\n    { role: 'user',   content: userMsg   }\n  ]\n}}];"
       },
-      "id": "592783ad-b58c-462b-9c9c-2554f1574da5",
+      "id": "21bd9d8d-11cc-4716-be06-d3eda994dbb5",
       "name": "Construir Prompt IA",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3936,
+        5120,
         1584
       ]
     },
@@ -272,12 +272,12 @@
         "jsonBody": "={{ JSON.stringify({ model: 'gpt-4o-mini', max_tokens: 2000, temperature: 0.3, messages: $json.openai_messages }) }}",
         "options": {}
       },
-      "id": "58c7136a-6e01-466b-a5c8-700432104dc4",
+      "id": "3c870868-8797-4158-971e-48d9ef22f9ec",
       "name": "OpenAI - Generar Resumen",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
       "position": [
-        4176,
+        5360,
         1584
       ],
       "credentials": {
@@ -291,31 +291,31 @@
       "parameters": {
         "jsCode": "const aiOutput      = $input.first().json;\nconst extractedData = $('Construir Prompt IA').first().json;\n\nconst summaryMd = aiOutput.choices?.[0]?.message?.content || aiOutput.message?.content || 'No se pudo generar el resumen.';\n\nfunction mdToHtml(md) {\n  return md\n    .replace(/^## (.+)$/gm,'<h2 style=\"color:#1a73e8;margin-top:24px;margin-bottom:8px;font-size:16px;\">$1</h2>')\n    .replace(/^# (.+)$/gm,'<h1 style=\"color:#1a73e8;\">$1</h1>')\n    .replace(/\\*\\*(.+?)\\*\\*/g,'<strong>$1</strong>')\n    .replace(/\\*(.+?)\\*/g,'<em>$1</em>')\n    .replace(/^- (.+)$/gm,'<li style=\"margin-bottom:6px;line-height:1.6;\">$1</li>')\n    .replace(/(<li[^>]*>[\\s\\S]*?<\\/li>\\n?)+/g, m => `<ul style=\"padding-left:20px;margin:8px 0;\">${m}</ul>`)\n    .replace(/^---$/gm,'<hr style=\"border:none;border-top:1px solid #e0e0e0;margin:16px 0;\"/>')\n    .replace(/\\n\\n/g,'</p><p style=\"margin:8px 0;line-height:1.7;\">')\n    .replace(/\\n/g,'<br/>');\n}\n\nconst meetingDate = new Date(extractedData.meetingDate).toLocaleDateString('es-ES',{\n  weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit'\n});\n\nconst participantsList = extractedData.participants.length > 0\n  ? extractedData.participants.map(e =>\n      `<span style=\"display:inline-block;background:#e8f0fe;color:#1a73e8;padding:2px 8px;border-radius:12px;margin:2px;font-size:13px;\">${e}</span>`\n    ).join(' ')\n  : '<em>No se detectaron participantes automáticamente.</em>';\n\nconst body = `<p style=\"margin:8px 0;line-height:1.7;\">${mdToHtml(summaryMd)}</p>`;\n\nconst emailHTML = `<!DOCTYPE html><html lang=\"es\"><head><meta charset=\"UTF-8\"></head>\n<body style=\"margin:0;padding:0;background:#f5f5f5;font-family:Arial,sans-serif;\">\n<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background:#f5f5f5;padding:30px 0;\">\n<tr><td align=\"center\">\n<table width=\"680\" cellpadding=\"0\" cellspacing=\"0\" style=\"background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden;max-width:680px;\">\n  <tr><td style=\"background:linear-gradient(135deg,#1a73e8,#0d47a1);padding:30px 40px;text-align:center;\">\n    <h1 style=\"margin:0;color:#fff;font-size:22px;font-weight:700;\">📋 Resumen Automático de Reunión</h1>\n    <p style=\"margin:8px 0 0;color:#bbdefb;font-size:14px;\">Generado por IA a partir de las notas de Gemini</p>\n  </td></tr>\n  <tr><td style=\"background:#f8f9fa;border-bottom:1px solid #e0e0e0;padding:20px 40px;\">\n    <table width=\"100%\">\n      <tr><td style=\"padding:4px 0;\"><span style=\"color:#666;font-size:13px;\">📌 <strong>Reunión:</strong></span> <span style=\"color:#333;font-size:14px;\">${extractedData.subject}</span></td></tr>\n      <tr><td style=\"padding:4px 0;\"><span style=\"color:#666;font-size:13px;\">📅 <strong>Fecha:</strong></span> <span style=\"color:#333;font-size:14px;\">${meetingDate}</span></td></tr>\n      <tr><td style=\"padding:8px 0 4px;\"><span style=\"color:#666;font-size:13px;\">👥 <strong>Participantes:</strong></span><br/><div style=\"margin-top:6px;\">${participantsList}</div></td></tr>\n    </table>\n  </td></tr>\n  <tr><td style=\"padding:30px 40px;color:#333;font-size:14px;\">${body}</td></tr>\n  <tr><td style=\"background:#f8f9fa;border-top:1px solid #e0e0e0;padding:20px 40px;text-align:center;\">\n    <p style=\"margin:0;color:#999;font-size:12px;\">Resumen generado automáticamente por IA a partir de las notas de Google Gemini.</p>\n  </td></tr>\n</table>\n</td></tr></table>\n</body></html>`;\n\nreturn [{ json: {\n  subject: `📋 Resumen: ${extractedData.subject}`,\n  htmlBody: emailHTML,\n  toList:   extractedData.participantsString,\n  participants: extractedData.participants\n}}];"
       },
-      "id": "7ba13697-d041-47a8-984c-ef14e23f83e4",
+      "id": "5cba007b-5ae1-4958-8934-89d39a4b00ba",
       "name": "Preparar Email HTML",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4416,
+        5600,
         1584
       ]
     },
     {
       "parameters": {
-        "sendTo": "={{ $json.toList }}",
+        "sendTo": "victor.ces@azordata.com",
         "subject": "={{ $json.subject }}",
         "message": "={{ $json.htmlBody }}",
         "options": {}
       },
-      "id": "f17f344a-45f8-4b8b-9a71-c34c07e758c8",
+      "id": "8b0fdc07-e958-4eca-b3f2-c1e7d51d76d7",
       "name": "Gmail - Enviar Resumen",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2,
       "position": [
-        4656,
+        5840,
         1584
       ],
-      "webhookId": "c52cba04-1d51-429b-9656-db0d73e8cd1d",
+      "webhookId": "bf158b8b-1f12-4b78-908c-4e34464e204e",
       "credentials": {
         "gmailOAuth2": {
           "id": "GWu9W61CpoBR1qeq",
@@ -342,6 +342,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-05-18T11:41:22.304Z",
-  "versionId": "13ed2739-1b12-4d6c-b895-ab8220f68add"
+  "updatedAt": "2026-05-22T10:12:33.869Z",
+  "versionId": "be51a89e-37fb-46b5-9306-c24c2c92acb0"
 }
