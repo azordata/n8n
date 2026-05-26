@@ -1,0 +1,48 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {},
+  "createdAt": "2026-05-25T09:55:12.621Z",
+  "id": "gQTgI7fbgmFGPsUp",
+  "isArchived": false,
+  "meta": null,
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "659f2d49-761a-431a-ac54-b505d503abcc",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "40dd35b1-1ff9-4965-9d18-7118be599fc7",
+      "name": "Webhook",
+      "webhookId": "659f2d49-761a-431a-ac54-b505d503abcc"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-05-25T09:55:12.621Z",
+      "createdAt": "2026-05-25T09:55:12.621Z",
+      "role": "workflow:owner",
+      "workflowId": "gQTgI7fbgmFGPsUp",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-05-25T09:55:12.621Z",
+  "versionId": "68810f36-0650-46f1-945c-4a8612002ea6"
+}
