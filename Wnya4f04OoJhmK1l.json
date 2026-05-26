@@ -1,0 +1,127 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Inicio Manual": {
+      "main": [
+        [
+          {
+            "node": "Datos del Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Datos del Email": {
+      "main": [
+        [
+          {
+            "node": "Enviar Email Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-05-26T08:07:24.928Z",
+  "id": "Wnya4f04OoJhmK1l",
+  "isArchived": true,
+  "meta": null,
+  "name": "Envio de Mensajes Gmail",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger-1",
+      "name": "Inicio Manual",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "field-to",
+              "name": "destinatario",
+              "value": "ejemplo@gmail.com",
+              "type": "string"
+            },
+            {
+              "id": "field-subject",
+              "name": "asunto",
+              "value": "Mensaje de prueba desde n8n",
+              "type": "string"
+            },
+            {
+              "id": "field-body",
+              "name": "cuerpo",
+              "value": "Hola, este es un mensaje enviado automaticamente desde n8n.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-data-1",
+      "name": "Datos del Email",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "toList": "={{ $json.destinatario }}",
+        "subject": "={{ $json.asunto }}",
+        "emailType": "text",
+        "message": "={{ $json.cuerpo }}",
+        "options": {}
+      },
+      "id": "gmail-send-1",
+      "name": "Enviar Email Gmail",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        680,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "GWu9W61CpoBR1qeq",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-05-26T08:07:24.928Z",
+      "createdAt": "2026-05-26T08:07:24.928Z",
+      "role": "workflow:owner",
+      "workflowId": "Wnya4f04OoJhmK1l",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-05-26T15:24:45.914Z",
+  "versionId": "528995c3-9065-4c74-9dbe-9e9fb5e953c5"
+}
