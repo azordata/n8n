@@ -1,0 +1,108 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Manual trigger": {
+      "main": [
+        [
+          {
+            "node": "Autenticar en Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Autenticar en Odoo": {
+      "main": [
+        [
+          {
+            "node": "Verificar conexion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-05-26T08:02:42.209Z",
+  "id": "DCOKQfjr0ZMy4eNJ",
+  "isArchived": false,
+  "meta": null,
+  "name": "prueba marcos",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a1b2c3d4-0001-0001-0001-000000000001",
+      "name": "Manual trigger"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://goshawkn8n.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"call\",\n  \"params\": {\n    \"service\": \"common\",\n    \"method\": \"authenticate\",\n    \"args\": [\"aribeirogoshawk-testn8n-main-20685223\", \"admin\", \"admin\", {}]\n  },\n  \"id\": 1\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "a1b2c3d4-0002-0002-0002-000000000002",
+      "name": "Autenticar en Odoo"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const resultado = $input.first().json;\nif (resultado.result && typeof resultado.result === 'number') {\n  return [{ json: { estado: '? CONEXION OK', uid: resultado.result, mensaje: `Conexion establecida. UID: ${resultado.result}` } }];\n} else {\n  return [{ json: { estado: '? ERROR DE CONEXION', respuesta_odoo: resultado, mensaje: 'No se pudo autenticar. Revisa las credenciales.' } }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "a1b2c3d4-0003-0003-0003-000000000003",
+      "name": "Verificar conexion"
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-05-26T08:02:42.209Z",
+      "createdAt": "2026-05-26T08:02:42.209Z",
+      "role": "workflow:owner",
+      "workflowId": "DCOKQfjr0ZMy4eNJ",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-05-26T08:02:42.209Z",
+  "versionId": "f782a987-df2c-4abd-9630-de8a94f67762"
+}
