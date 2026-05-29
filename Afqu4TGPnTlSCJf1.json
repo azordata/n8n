@@ -7837,7 +7837,13 @@
       ],
       "id": "1c82c9d3-e09c-4bc2-8bca-0eb69509319a",
       "name": "Confirmar Horas Registradas",
-      "webhookId": "1dadcc74-c513-44a1-88b9-c7aa71c7ec47"
+      "webhookId": "1dadcc74-c513-44a1-88b9-c7aa71c7ec47",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -7897,7 +7903,13 @@
       ],
       "id": "4f90ad52-2c74-4010-bcf3-60956e941fa7",
       "name": "Preguntar Crear Tarea Solamente",
-      "webhookId": "1f3260aa-6777-49ea-8879-00370d53e7a4"
+      "webhookId": "1f3260aa-6777-49ea-8879-00370d53e7a4",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -7946,7 +7958,13 @@
       ],
       "id": "4e1ed9c5-e804-4232-847e-651451658530",
       "name": "Preguntar Crear Proyecto Completo",
-      "webhookId": "c0796c6c-0854-41cc-b48d-6a1fd2478d8a"
+      "webhookId": "c0796c6c-0854-41cc-b48d-6a1fd2478d8a",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -8140,7 +8158,13 @@
       ],
       "id": "2a5460ef-e999-438a-82c7-3f01a9f25360",
       "name": "Enviar Respuesta Contacto Creado",
-      "webhookId": "c58a3c3f-57f8-4ea4-b8cc-3bdb8241d51e"
+      "webhookId": "c58a3c3f-57f8-4ea4-b8cc-3bdb8241d51e",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -8213,7 +8237,13 @@
       ],
       "id": "dfa46624-e217-4d22-9de2-4395ffff961d",
       "name": "Confirmar Tarea Horas",
-      "webhookId": "ac533b77-6510-42d6-94e5-9a81692c2b67"
+      "webhookId": "ac533b77-6510-42d6-94e5-9a81692c2b67",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -8314,7 +8344,13 @@
       ],
       "id": "4e25e79a-0d24-41e2-96dd-e214f6e96be6",
       "name": "Confirmar Flujo Completo",
-      "webhookId": "e99a7f75-c964-40eb-be55-943594a16829"
+      "webhookId": "e99a7f75-c964-40eb-be55-943594a16829",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -8456,7 +8492,13 @@
       ],
       "id": "fd1c80c8-c3d8-41ce-908d-620fe2c9aac3",
       "name": "Telegram Confirmar Modificación",
-      "webhookId": "9d0f7fcd-0945-40bf-817f-c41319a7afc3"
+      "webhookId": "9d0f7fcd-0945-40bf-817f-c41319a7afc3",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -8529,7 +8571,13 @@
       ],
       "id": "e44db878-91cb-4e3f-9abc-3e54d5f99585",
       "name": "Telegram Pedir Nuevo Valor",
-      "webhookId": "736d2022-240d-4701-b65b-907dc6b0f0bf"
+      "webhookId": "736d2022-240d-4701-b65b-907dc6b0f0bf",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -8648,7 +8696,13 @@
       ],
       "id": "804e6a29-826e-486c-81be-790ce524dc1d",
       "name": "Confirmar Todo Completado",
-      "webhookId": "d1ff15b0-5a23-40c3-95bf-711b1f67073d"
+      "webhookId": "d1ff15b0-5a23-40c3-95bf-711b1f67073d",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -8754,7 +8808,13 @@
       ],
       "id": "a8a2c3e0-91d5-4bd9-a7ab-451aa5c3d3d8",
       "name": "Confirmar Tarea Creada",
-      "webhookId": "8a6fbafc-57d3-4340-a8f0-a64d64e9ca56"
+      "webhookId": "8a6fbafc-57d3-4340-a8f0-a64d64e9ca56",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -8814,7 +8874,13 @@
       ],
       "id": "20065b86-960d-49ef-b907-06623b9f74db",
       "name": "Proyecto No Existe para Tarea",
-      "webhookId": "d09c3a3d-dbfe-4fec-87a9-66e64819d377"
+      "webhookId": "d09c3a3d-dbfe-4fec-87a9-66e64819d377",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -8908,6 +8974,12 @@
       "id": "f2e1dde4-d849-4722-baf5-f3edb74cd7e3",
       "name": "Confirmar Todo Automático",
       "webhookId": "67757f99-6f2e-4c39-bdd8-8b287b4269ac",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      },
       "disabled": true
     },
     {
@@ -9009,7 +9081,13 @@
       ],
       "id": "5787296c-96c7-4658-89bc-1582cbffa801",
       "name": "Confirmar Proyecto Creado",
-      "webhookId": "1e1ee59b-a10f-4487-8b5e-79cf7902529d"
+      "webhookId": "1e1ee59b-a10f-4487-8b5e-79cf7902529d",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -9142,7 +9220,13 @@
       ],
       "id": "b5332b9c-924a-4f72-a9db-3fa0f822e96a",
       "name": "Enviar Respuesta Contacto",
-      "webhookId": "9bb15153-75f4-42bd-9c53-8482b364c460"
+      "webhookId": "9bb15153-75f4-42bd-9c53-8482b364c460",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -9214,7 +9298,13 @@
       ],
       "id": "3a74ed3c-3af0-413f-abfc-fe0008cd7744",
       "name": "Enviar Respuesta Ventas",
-      "webhookId": "0a08079b-ffc4-4a87-a55b-7a159cedb518"
+      "webhookId": "0a08079b-ffc4-4a87-a55b-7a159cedb518",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -9290,7 +9380,13 @@
       ],
       "id": "fdfcbbbf-a0e4-4b9a-a969-feeeac10103e",
       "name": "Enviar Gráfico Ventas",
-      "webhookId": "grafico-ventas-webhook-001"
+      "webhookId": "grafico-ventas-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -9482,7 +9578,13 @@
       ],
       "id": "14cb08f7-523b-4843-a8c7-5d6cb0ee9de8",
       "name": "Enviar Respuesta Producto",
-      "webhookId": "da26a341-de8d-4525-8b4d-ef0b159fc4cf"
+      "webhookId": "da26a341-de8d-4525-8b4d-ef0b159fc4cf",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -10780,7 +10882,13 @@
       ],
       "id": "de245c52-ea3a-4e60-89c6-b4547e375cdd",
       "name": "Enviar Respuesta Acción No Contemplada",
-      "webhookId": "4486ac15-ad73-48cf-8494-2a00f1ff07a8"
+      "webhookId": "4486ac15-ad73-48cf-8494-2a00f1ff07a8",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -10799,7 +10907,13 @@
       ],
       "id": "52d57399-6a61-4704-9eb0-e431558bdc52",
       "name": "Enviar Mensaje Bienvenida",
-      "webhookId": "bienvenida-webhook-12345"
+      "webhookId": "bienvenida-webhook-12345",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -10949,7 +11063,13 @@
       ],
       "id": "67c6f4c6-df34-4bf5-a313-b26ef909bef6",
       "name": "Enviar Respuesta con Líneas",
-      "webhookId": "respuesta-lineas-webhook-001"
+      "webhookId": "respuesta-lineas-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -10968,7 +11088,13 @@
       ],
       "id": "5ded2f93-d6de-429c-8aa6-bf0e508f49fc",
       "name": "Enviar Respuesta Ventas por Orden",
-      "webhookId": "ventas-por-orden-webhook-001"
+      "webhookId": "ventas-por-orden-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -11081,7 +11207,13 @@
       ],
       "id": "dae650f9-4c97-472f-bf9d-1002043bde49",
       "name": "Enviar Respuesta Compras",
-      "webhookId": "compras-webhook-001"
+      "webhookId": "compras-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -11154,7 +11286,13 @@
       ],
       "id": "d5d9c7a5-2a22-47ed-b7a9-82c69fa98935",
       "name": "Enviar Respuesta Facturas",
-      "webhookId": "facturas-webhook-001"
+      "webhookId": "facturas-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -11333,7 +11471,13 @@
       ],
       "id": "88295da2-8cd8-4005-98e8-f4f9646cbe7b",
       "name": "Enviar Respuesta Pagos Pendientes",
-      "webhookId": "pagos-pendientes-webhook-001"
+      "webhookId": "pagos-pendientes-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -11418,7 +11562,13 @@
       ],
       "id": "395ec4b0-5fb9-42d2-8626-cfe3c4270ac1",
       "name": "Enviar Respuesta Top Rankings",
-      "webhookId": "top-rankings-webhook-001"
+      "webhookId": "top-rankings-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -11504,7 +11654,13 @@
       ],
       "id": "c6216a70-4759-4bb4-a181-abfcd81c8de5",
       "name": "Enviar Análisis Ventas Perdidas",
-      "webhookId": "ventas-perdidas-webhook-001"
+      "webhookId": "ventas-perdidas-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -11580,7 +11736,13 @@
       ],
       "id": "44527424-e93b-4b60-b41c-30649f999451",
       "name": "Envio grafico",
-      "webhookId": "336efb20-4094-4b75-9f44-6c0770c69e6f"
+      "webhookId": "336efb20-4094-4b75-9f44-6c0770c69e6f",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -11666,7 +11828,13 @@
       ],
       "id": "55939a3c-5804-48ef-a5b5-98c236e0bebc",
       "name": "Enviar Respuesta Horas Proyecto",
-      "webhookId": "webhook-horas-proyecto-001"
+      "webhookId": "webhook-horas-proyecto-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -11726,7 +11894,13 @@
       ],
       "id": "e820a1f1-a97e-4a1e-8172-2f75a33c2b78",
       "name": "Enviar Respuesta Horas Tarea",
-      "webhookId": "webhook-horas-tarea-001"
+      "webhookId": "webhook-horas-tarea-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -11799,7 +11973,13 @@
       ],
       "id": "0c2ed462-4719-403f-b1f8-a8847694af38",
       "name": "Enviar Respuesta Actividad Usuario",
-      "webhookId": "webhook-actividad-usuario-001"
+      "webhookId": "webhook-actividad-usuario-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -12006,7 +12186,13 @@
       ],
       "id": "45a69f96-af54-42be-bb8b-e998aee45bd6",
       "name": "Enviar Respuesta Eventos",
-      "webhookId": "webhook-eventos-001"
+      "webhookId": "webhook-eventos-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -12309,7 +12495,13 @@
       ],
       "id": "41e225f7-78ad-4295-9071-6bdaf1ca7e19",
       "name": "Mensaje Usuario Registrado",
-      "webhookId": "2a404676-1111-4ebc-952a-b85a6cfe2f42"
+      "webhookId": "2a404676-1111-4ebc-952a-b85a6cfe2f42",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -12328,7 +12520,13 @@
       ],
       "id": "06700d2a-f506-4194-8aa0-0c313c58f531",
       "name": "Mensaje Usuario No Existe",
-      "webhookId": "3fd407f5-6b77-40b8-9332-7bc0470e6b2b"
+      "webhookId": "3fd407f5-6b77-40b8-9332-7bc0470e6b2b",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -12400,7 +12598,13 @@
       ],
       "id": "78ab7f9b-7fa0-4e55-8124-4368c1d0b1b8",
       "name": "Enviar Ranking Comerciales",
-      "webhookId": "ranking-comerciales-webhook-v40-001"
+      "webhookId": "ranking-comerciales-webhook-v40-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -12490,7 +12694,13 @@
       ],
       "id": "5c8a6afd-60f2-4c1d-83b8-7912a4fabc2f",
       "name": "Enviar Respuesta Visitantes Web",
-      "webhookId": "da26a341-de8d-4525-8b4d-ef0b159fc4cf"
+      "webhookId": "da26a341-de8d-4525-8b4d-ef0b159fc4cf",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -12522,7 +12732,13 @@
       ],
       "id": "144d2ade-ba50-4a89-95b7-bc52c631b4d0",
       "name": "Confirmar Gasto Creado",
-      "webhookId": "confirmar-gasto-creado-001"
+      "webhookId": "confirmar-gasto-creado-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -12596,7 +12812,13 @@
       ],
       "id": "9f7cb1cc-6f58-44b8-b152-ab79bd4a1654",
       "name": "Mensaje Sin Acceso Ventas",
-      "webhookId": "5cc7271b-bb4a-4907-8d2b-0cff3a2fafd1"
+      "webhookId": "5cc7271b-bb4a-4907-8d2b-0cff3a2fafd1",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -12758,7 +12980,13 @@
       ],
       "id": "6667e082-7f8e-4cfc-b43e-836bd8137165",
       "name": "Enviar Correcciones Pedido",
-      "webhookId": "86c2fc4b-a829-4c80-b1d6-ba10d9a7c9a4"
+      "webhookId": "86c2fc4b-a829-4c80-b1d6-ba10d9a7c9a4",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -12823,7 +13051,13 @@
       ],
       "id": "3af3be00-cae4-4c72-80ca-78bceaa15e87",
       "name": "Enviar Confirmación Pedido",
-      "webhookId": "c1a5e9bb-3f3a-4d2a-bc5e-1c2d3e4f5a6b"
+      "webhookId": "c1a5e9bb-3f3a-4d2a-bc5e-1c2d3e4f5a6b",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -12990,7 +13224,13 @@
       ],
       "id": "83355181-d3b0-4ebe-84d0-140d8dad2e69",
       "name": "Enviar Respuesta Evento",
-      "webhookId": "eb2e6fa9-35ee-409e-8f95-c9bf748ecad1"
+      "webhookId": "eb2e6fa9-35ee-409e-8f95-c9bf748ecad1",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -13009,7 +13249,13 @@
       ],
       "id": "0b74242e-2106-488f-bb0c-7e0a34c511cc",
       "name": "Enviar Mensaje Evento Incompleto",
-      "webhookId": "ee8fedb2-85c0-4f28-94e8-f4db2485d715"
+      "webhookId": "ee8fedb2-85c0-4f28-94e8-f4db2485d715",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -13135,7 +13381,13 @@
       ],
       "id": "fb32fb83-552a-46b1-95a1-b5d3cd81a65e",
       "name": "Mensaje Limitación Exitosa",
-      "webhookId": "430ca9ce-5e04-4b9c-9847-d52c26d3344e"
+      "webhookId": "430ca9ce-5e04-4b9c-9847-d52c26d3344e",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -13154,7 +13406,13 @@
       ],
       "id": "78f782ce-d1eb-47dc-a94d-ab8642cbe8ae",
       "name": "Mensaje Error No Admin",
-      "webhookId": "64a1a268-d209-4a2c-88b0-cca0a1790d4d"
+      "webhookId": "64a1a268-d209-4a2c-88b0-cca0a1790d4d",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -13173,7 +13431,13 @@
       ],
       "id": "b0fbb445-7655-4357-9348-e2942e2bf41b",
       "name": "Mensaje Usuario No Encontrado",
-      "webhookId": "4f876561-332e-4d4b-a2b8-c2c635d18735"
+      "webhookId": "4f876561-332e-4d4b-a2b8-c2c635d18735",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -13379,7 +13643,13 @@
       ],
       "id": "4d92ad40-944b-4ffe-aecc-03d511b8ceb8",
       "name": "Confirmar Ausencia Creada",
-      "webhookId": "confirmar-gasto-creado-001"
+      "webhookId": "confirmar-gasto-creado-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -13532,7 +13802,13 @@
       ],
       "id": "ea33c203-5cb6-4764-9608-d2d0ff595227",
       "name": "Enviar Respuesta Tickets",
-      "webhookId": "tickets-webhook-001"
+      "webhookId": "tickets-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -13630,7 +13906,13 @@
       ],
       "id": "6a74b9f0-788f-477e-af12-3816f2192864",
       "name": "Confirmar Mensaje Añadido",
-      "webhookId": "mensaje-ticket-webhook-001"
+      "webhookId": "mensaje-ticket-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -13649,7 +13931,13 @@
       ],
       "id": "fd96040d-b889-4e0c-8d8e-018c06cf6c4e",
       "name": "Error Ticket No Encontrado",
-      "webhookId": "error-ticket-webhook-001"
+      "webhookId": "error-ticket-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -13780,7 +14068,13 @@
       ],
       "id": "814bf93c-f354-4f0b-8b66-de5b85d9d18f",
       "name": "Telegram Fabricaciones",
-      "webhookId": "fabricaciones-webhook-001"
+      "webhookId": "fabricaciones-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -13935,7 +14229,13 @@
       ],
       "id": "236fb3cf-86c0-48ea-a46a-2af0e7be6138",
       "name": "Enviar Respuesta Pedido Compra",
-      "webhookId": "compra-ok-webhook-001"
+      "webhookId": "compra-ok-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -14106,7 +14406,13 @@
       ],
       "id": "e2fa5d48-bc3f-4536-93dd-31e75e8d91d1",
       "name": "Telegram Solicitar Datos Ausencias",
-      "webhookId": "solicitar-datos-ausencias-001"
+      "webhookId": "solicitar-datos-ausencias-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -14209,7 +14515,13 @@
       ],
       "id": "c77b7908-0d5e-43a0-9101-22799990b050",
       "name": "Enviar Respuesta Ausencias1",
-      "webhookId": "webhook-ausencias-001"
+      "webhookId": "webhook-ausencias-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -14684,7 +14996,13 @@
       ],
       "id": "663c25e3-7902-49b4-9f44-0b9c144c7647",
       "name": "FSM ▸ Confirmar Flujo",
-      "webhookId": "e99a7f75-c964-40eb-be55-943594a16829"
+      "webhookId": "e99a7f75-c964-40eb-be55-943594a16829",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -15224,7 +15542,13 @@
       ],
       "id": "4e77fabe-5614-48b5-a3d0-6f2d0d4f63df",
       "name": "Confirmar FSM1",
-      "webhookId": "bbd35f7a-560a-48ef-b8b4-c1103287982b"
+      "webhookId": "bbd35f7a-560a-48ef-b8b4-c1103287982b",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -15681,7 +16005,13 @@
       ],
       "id": "a594fea7-27b9-4067-bf16-f4840c1a0074",
       "name": "Sugerencia Productos Encontrados",
-      "webhookId": "bbd35f7a-560a-48ef-b8b4-c1103287982b"
+      "webhookId": "bbd35f7a-560a-48ef-b8b4-c1103287982b",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -15778,7 +16108,13 @@
       ],
       "id": "7cc9ddc6-6386-4e79-a35c-d6af5936a4a6",
       "name": "Preguntar Crear Tarea Solamente1",
-      "webhookId": "1f3260aa-6777-49ea-8879-00370d53e7a4"
+      "webhookId": "1f3260aa-6777-49ea-8879-00370d53e7a4",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -15797,7 +16133,13 @@
       ],
       "id": "c588c9c7-7cc1-4f39-8bdf-7bccc58fd598",
       "name": "Preguntar Crear Proyecto Completo1",
-      "webhookId": "c0796c6c-0854-41cc-b48d-6a1fd2478d8a"
+      "webhookId": "c0796c6c-0854-41cc-b48d-6a1fd2478d8a",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -15843,7 +16185,13 @@
       ],
       "id": "dc3b8205-8448-418d-897a-6cd7c99136bf",
       "name": "Confirmar Todo",
-      "webhookId": "1dadcc74-c513-44a1-88b9-c7aa71c7ec47"
+      "webhookId": "1dadcc74-c513-44a1-88b9-c7aa71c7ec47",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -16123,7 +16471,13 @@
       ],
       "id": "57d6e451-c050-4509-9d28-49922c4cca49",
       "name": "Preguntar Cliente",
-      "webhookId": "1f3260aa-6777-49ea-8879-00370d53e7a4"
+      "webhookId": "1f3260aa-6777-49ea-8879-00370d53e7a4",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -16276,7 +16630,13 @@
       ],
       "id": "a6497b37-8724-47fa-81be-99ca844cbb37",
       "name": "Telegram Pedir Corrección Productos FSM",
-      "webhookId": "0f5e6c39-253f-4ec9-9bfc-28489d714efd"
+      "webhookId": "0f5e6c39-253f-4ec9-9bfc-28489d714efd",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -16581,7 +16941,13 @@
       ],
       "id": "3e118c8e-02f7-4b90-bcef-2752eac19fb8",
       "name": "Confirmar Todo1",
-      "webhookId": "1dadcc74-c513-44a1-88b9-c7aa71c7ec47"
+      "webhookId": "1dadcc74-c513-44a1-88b9-c7aa71c7ec47",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -16993,7 +17359,13 @@
       ],
       "id": "732c07e9-f71d-4089-b2a4-3b3b5d6f2392",
       "name": "Telegram Preguntar Proyecto",
-      "webhookId": "1a111111-1111-4111-8111-111111111111"
+      "webhookId": "1a111111-1111-4111-8111-111111111111",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -17148,7 +17520,13 @@
       ],
       "id": "4bdc221c-de8b-4565-9984-ea3efa7fbba4",
       "name": "Telegram Enviar Estado Proyecto",
-      "webhookId": "2b222222-2222-4222-8222-222222222222"
+      "webhookId": "2b222222-2222-4222-8222-222222222222",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -17283,7 +17661,13 @@
       ],
       "id": "590a3a7a-4db7-4fad-966b-cf64350b4fe8",
       "name": "Enviar Lista Proyectos por Etapa",
-      "webhookId": "2b222222-2222-4222-8222-222222222222"
+      "webhookId": "2b222222-2222-4222-8222-222222222222",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -17656,7 +18040,13 @@
       ],
       "id": "3a032522-0e33-4e76-8bbd-c13adfa73430",
       "name": "Empleado No Encontrado Ausencia",
-      "webhookId": "a8428235-06a8-4d75-9a88-15d68acb0106"
+      "webhookId": "a8428235-06a8-4d75-9a88-15d68acb0106",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -17922,7 +18312,13 @@
       ],
       "id": "34224218-0912-48d8-bc5f-c305750125b7",
       "name": "Empleado No Encontrado",
-      "webhookId": "621a1ad0-bd5c-4899-aabf-3ac32ca741ef"
+      "webhookId": "621a1ad0-bd5c-4899-aabf-3ac32ca741ef",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -18022,7 +18418,13 @@
       ],
       "id": "f4bd5c46-8047-4970-876c-a9e07a7adc2a",
       "name": "Enviar respuesta al usuario",
-      "webhookId": "a02c0082-c638-405a-af95-4242f4ceb0cd"
+      "webhookId": "a02c0082-c638-405a-af95-4242f4ceb0cd",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -18517,7 +18919,13 @@
       ],
       "id": "57e92ecf-29c2-46ba-af1d-23dd2543d4f9",
       "name": "Pedir Dirección Para Pedido",
-      "webhookId": "5cc7271b-bb4a-4907-8d2b-0cff3a2fafd1"
+      "webhookId": "5cc7271b-bb4a-4907-8d2b-0cff3a2fafd1",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -18625,7 +19033,13 @@
       ],
       "id": "835325a5-b8a4-4f25-9bfe-2cbb2aad9d8b",
       "name": "Confirmar Transcripción",
-      "webhookId": "237a0319-b9b0-4c5f-8561-1aef1c7c9116"
+      "webhookId": "237a0319-b9b0-4c5f-8561-1aef1c7c9116",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -18654,7 +19068,13 @@
       ],
       "id": "dc094626-11f1-4332-a86f-d54c000c00f7",
       "name": "Descargar Audio",
-      "webhookId": "1f9d320a-2e58-48ab-bf94-f02ee44a09d2"
+      "webhookId": "1f9d320a-2e58-48ab-bf94-f02ee44a09d2",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -18683,7 +19103,13 @@
       ],
       "id": "86fae7e1-b5e3-4826-8875-f8aa4e00a209",
       "name": "Obtener Archivo de Voz",
-      "webhookId": "7f3270c4-aed6-4c93-8195-10f4a570cb3b"
+      "webhookId": "7f3270c4-aed6-4c93-8195-10f4a570cb3b",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -19160,7 +19586,13 @@
       ],
       "id": "d5c31dfd-5d1e-40e9-8608-648dafa646a2",
       "name": "Mensaje Sin Usuario Odoo",
-      "webhookId": "2f96c558-e814-43c3-99be-34048ccca5fa"
+      "webhookId": "2f96c558-e814-43c3-99be-34048ccca5fa",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -19436,7 +19868,13 @@
       ],
       "id": "3667b4f7-1f73-4dea-afa9-aeea7f42999b",
       "name": "Telegram Envío Individual",
-      "webhookId": "a059deb7-eb6b-491f-98ad-58d8100219de"
+      "webhookId": "a059deb7-eb6b-491f-98ad-58d8100219de",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -19627,7 +20065,13 @@
       ],
       "id": "b676d0ea-caee-447c-970d-f4f82483d03f",
       "name": "Confirmar Correo al Usuario",
-      "webhookId": "confirmar-correo-usuario-webhook-001"
+      "webhookId": "confirmar-correo-usuario-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -19646,7 +20090,13 @@
       ],
       "id": "f206957d-4727-4094-8164-4e54a5a81ee5",
       "name": "Notificar Admin Correo Recibido",
-      "webhookId": "notificar-admin-correo-webhook-001"
+      "webhookId": "notificar-admin-correo-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -19665,7 +20115,13 @@
       ],
       "id": "54f6342a-d3e8-40d8-94f6-5b9f95f5d9f0",
       "name": "Error Correo Inválido",
-      "webhookId": "error-correo-invalido-webhook-001"
+      "webhookId": "error-correo-invalido-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -19715,6 +20171,12 @@
       "id": "fadace84-bf35-408e-87de-ce430586ae86",
       "name": "Descargar Imagen Inmediatamente",
       "webhookId": "112bd982-9aa8-409c-88ac-1c3c956c0c09",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      },
       "continueOnFail": true
     },
     {
@@ -19762,7 +20224,13 @@
       ],
       "id": "7d39344a-c380-4a9c-af02-68c1e4569196",
       "name": "Mensaje nuevo registro sin user",
-      "webhookId": "a60338e6-2cca-4589-90ce-e811f19111be"
+      "webhookId": "a60338e6-2cca-4589-90ce-e811f19111be",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -20034,7 +20502,13 @@
       ],
       "id": "11f9a727-692e-4fba-b491-5dd1537f606f",
       "name": "Enviar Informe Semanal Telegram",
-      "webhookId": "f708491c-63bc-4dc9-a6c1-6494a91fb7c2"
+      "webhookId": "f708491c-63bc-4dc9-a6c1-6494a91fb7c2",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -20132,7 +20606,13 @@
       ],
       "id": "9dd6bb37-5c1e-4d14-ae38-8bd18071157f",
       "name": "Aviso Bloqueo",
-      "webhookId": "0b44b88f-28dc-4008-a15b-5a9af5d6d273"
+      "webhookId": "0b44b88f-28dc-4008-a15b-5a9af5d6d273",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -20179,7 +20659,13 @@
       ],
       "id": "f08bc69c-1cd1-449b-8be4-91488743d459",
       "name": "Avisar Admin Nuevo Usuario",
-      "webhookId": "bc709e5b-d58d-4af8-87fb-33732614c610"
+      "webhookId": "bc709e5b-d58d-4af8-87fb-33732614c610",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -20346,7 +20832,13 @@
       ],
       "id": "446c2378-daaf-4002-adef-ba051f29ef78",
       "name": "No autorizado",
-      "webhookId": "8639f06d-9611-4667-ad53-778547c73de0"
+      "webhookId": "8639f06d-9611-4667-ad53-778547c73de0",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -20398,7 +20890,13 @@
       ],
       "id": "f0a24e30-b373-4002-bb9a-2fac880bfb72",
       "name": "Error Validar Usuario",
-      "webhookId": "194a93f7-e0f3-4370-9277-126cb270ad2e"
+      "webhookId": "194a93f7-e0f3-4370-9277-126cb270ad2e",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -20463,7 +20961,13 @@
       ],
       "id": "7ff138a2-265d-4a9b-b6ea-ecc60e5f6a8f",
       "name": "Solicitar Mail Usuario",
-      "webhookId": "solicitar-mail-webhook-001"
+      "webhookId": "solicitar-mail-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -20482,7 +20986,13 @@
       ],
       "id": "69ae92d2-9efc-47e5-a463-fe2a8f9dcf98",
       "name": "Confirmar Solicitud Mail al Admin",
-      "webhookId": "confirmar-solicitud-mail-webhook-001"
+      "webhookId": "confirmar-solicitud-mail-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -20701,7 +21211,13 @@
       ],
       "id": "c43a2b98-d969-4165-a0b7-95ad9c767ffa",
       "name": "Notificar Usuario Ya Existe",
-      "webhookId": "usuario-ya-existe-webhook-001"
+      "webhookId": "usuario-ya-existe-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -20720,7 +21236,13 @@
       ],
       "id": "346e37a1-c9a6-4ece-a21c-21bae2b15134",
       "name": "Notificar Admin Usuario Existe",
-      "webhookId": "admin-usuario-existe-webhook-001"
+      "webhookId": "admin-usuario-existe-webhook-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -20883,7 +21405,13 @@
       ],
       "id": "5034d6c9-b280-4519-bb17-7a1c7098a4b8",
       "name": "Avisar Usuario Validado",
-      "webhookId": "c5da80f0-323b-4b98-940b-224cd076a242"
+      "webhookId": "c5da80f0-323b-4b98-940b-224cd076a242",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -20902,7 +21430,13 @@
       ],
       "id": "a6b24353-9212-4039-9018-3558fe6e12a9",
       "name": "Mensaje de Inicio",
-      "webhookId": "bienvenida-webhook-12345"
+      "webhookId": "bienvenida-webhook-12345",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -20921,7 +21455,13 @@
       ],
       "id": "6d5a2027-a55e-4949-b8cb-a9a31c9b2df4",
       "name": "Confirmar al Admin",
-      "webhookId": "5ceb27f3-034e-44b8-bf0e-3cb33700551f"
+      "webhookId": "5ceb27f3-034e-44b8-bf0e-3cb33700551f",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -21005,6 +21545,12 @@
       "id": "66ee9a04-d104-4309-85c3-9c90ba0f6ba0",
       "name": "Procesando Respuesta",
       "webhookId": "9b411b17-88a5-4ee8-8ab0-bf1401062624",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      },
       "onError": "continueRegularOutput"
     },
     {
@@ -21120,7 +21666,13 @@
       ],
       "id": "96790a8a-a08c-4016-a050-ab0032140cfa",
       "name": "Confirmar Dirección Guardada Pedido",
-      "webhookId": "8639f06d-9611-4667-ad53-778547c73de0"
+      "webhookId": "8639f06d-9611-4667-ad53-778547c73de0",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -21139,7 +21691,13 @@
       ],
       "id": "664f0f59-9046-4f6a-a83f-0c856ce58100",
       "name": "Mensaje Error Dirección",
-      "webhookId": "8639f06d-9611-4667-ad53-778547c73de0"
+      "webhookId": "8639f06d-9611-4667-ad53-778547c73de0",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -21356,7 +21914,13 @@
       ],
       "id": "3330356e-94be-432f-8a25-deb8ed6447c0",
       "name": "Telegram Trigger",
-      "webhookId": "01c2caac-571e-4e0b-9cb7-ecb94f9c5f27"
+      "webhookId": "01c2caac-571e-4e0b-9cb7-ecb94f9c5f27",
+      "credentials": {
+        "telegramApi": {
+          "id": "YBGlAZkw3keTH4U4",
+          "name": "Azerion18"
+        }
+      }
     },
     {
       "parameters": {
@@ -21457,7 +22021,13 @@
       ],
       "id": "6acb60ae-42b3-4b24-afb6-c7fd85bb3a7c",
       "name": "Enviar Respuesta Pedido",
-      "webhookId": "86c2fc4b-a829-4c80-b1d6-ba10d9a7c9a4"
+      "webhookId": "86c2fc4b-a829-4c80-b1d6-ba10d9a7c9a4",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -21504,7 +22074,13 @@
       ],
       "id": "bcc343b5-2b3f-4330-a67b-b2afa52e1ed6",
       "name": "Avisar Admin Nuevo Pedido",
-      "webhookId": "86c2fc4b-a829-4c80-b1d6-ba10d9a7c9a4"
+      "webhookId": "86c2fc4b-a829-4c80-b1d6-ba10d9a7c9a4",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -21658,7 +22234,13 @@
       ],
       "id": "8647a706-2433-4649-b363-a58c0e6c5246",
       "name": "Pedir Número de Pedido",
-      "webhookId": "49af8b2b-f694-4147-9384-433f42099c4e"
+      "webhookId": "49af8b2b-f694-4147-9384-433f42099c4e",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -21758,7 +22340,13 @@
       ],
       "id": "9c631e4c-2b2f-4a4b-b9c3-e9a558d4677c",
       "name": "Avisar Pedido No Encontrado",
-      "webhookId": "ee382849-437b-48c0-a4ca-20f2978309b4"
+      "webhookId": "ee382849-437b-48c0-a4ca-20f2978309b4",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -21790,7 +22378,13 @@
       ],
       "id": "d0e0a7e8-ccf4-4045-8d41-033ff4171645",
       "name": "Mostrar Pedido al Usuario",
-      "webhookId": "fd3713e8-0235-479b-a669-ec53543392e8"
+      "webhookId": "fd3713e8-0235-479b-a669-ec53543392e8",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -21885,7 +22479,13 @@
       ],
       "id": "68d0ec6f-2c37-42de-b7aa-e9c4a0edae81",
       "name": "Mensaje Aclaración Modificación",
-      "webhookId": "260136f8-bffe-4a9a-89a2-9fc4728b3773"
+      "webhookId": "260136f8-bffe-4a9a-89a2-9fc4728b3773",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -21952,6 +22552,12 @@
       "id": "4edb4449-4864-492c-9a69-95183dfd2d75",
       "name": "Mensaje Error Modificación",
       "webhookId": "06a3fc02-803a-473a-bc83-b330c2d68c71",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      },
       "disabled": true
     },
     {
@@ -22012,7 +22618,13 @@
       ],
       "id": "b823abf7-5ecb-42a1-94a5-c6b6e03d6bb2",
       "name": "Enviar Pedido Actualizado",
-      "webhookId": "06a3fc02-803a-473a-bc83-b330c2d68c71"
+      "webhookId": "06a3fc02-803a-473a-bc83-b330c2d68c71",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -22203,7 +22815,13 @@
       ],
       "id": "1b25b623-c6db-47a7-888c-7a80efbe0429",
       "name": "Mensaje Error Producto Nuevo",
-      "webhookId": "06a3fc02-803a-473a-bc83-b330c2d68c71"
+      "webhookId": "06a3fc02-803a-473a-bc83-b330c2d68c71",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -22263,7 +22881,13 @@
       ],
       "id": "e279eb7b-d6ac-4867-8f08-0f825a09608b",
       "name": "Enviar Pedido Actualizado1",
-      "webhookId": "06a3fc02-803a-473a-bc83-b330c2d68c71"
+      "webhookId": "06a3fc02-803a-473a-bc83-b330c2d68c71",
+      "credentials": {
+        "telegramApi": {
+          "id": "da58WVFzyaUS2btp",
+          "name": "test"
+        }
+      }
     },
     {
       "parameters": {
@@ -22443,6 +23067,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-02-18T07:44:24.100Z",
-  "versionId": "02dd299a-b746-4717-aede-1a2e0a6ab87c"
+  "updatedAt": "2026-05-28T07:10:47.132Z",
+  "versionId": "414a9fb8-3266-4bd4-acf2-f7d48ba2546a"
 }
