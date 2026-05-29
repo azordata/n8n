@@ -1,0 +1,705 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Preparar Mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Mensaje": {
+      "main": [
+        [
+          {
+            "node": "Interpretar Accion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Interpretar Accion": {
+      "main": [
+        [
+          {
+            "node": "Autenticar Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Autenticar Odoo": {
+      "main": [
+        [
+          {
+            "node": "Switch Acciones",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Acciones": {
+      "main": [
+        [
+          {
+            "node": "Build Ver Proyectos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Horas Proyecto",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Tareas",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Estado Tarea",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fallback IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Ver Proyectos": {
+      "main": [
+        [
+          {
+            "node": "HTTP Ver Proyectos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Ver Proyectos": {
+      "main": [
+        [
+          {
+            "node": "Formato Proyectos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formato Proyectos": {
+      "main": [
+        [
+          {
+            "node": "Responder Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Horas Proyecto": {
+      "main": [
+        [
+          {
+            "node": "HTTP Horas Proyecto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Horas Proyecto": {
+      "main": [
+        [
+          {
+            "node": "Formato Horas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formato Horas": {
+      "main": [
+        [
+          {
+            "node": "Responder Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Tareas": {
+      "main": [
+        [
+          {
+            "node": "HTTP Tareas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Tareas": {
+      "main": [
+        [
+          {
+            "node": "Formato Tareas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formato Tareas": {
+      "main": [
+        [
+          {
+            "node": "Responder Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Estado Tarea": {
+      "main": [
+        [
+          {
+            "node": "HTTP Estado Tarea",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Estado Tarea": {
+      "main": [
+        [
+          {
+            "node": "Formato Estado Tarea",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formato Estado Tarea": {
+      "main": [
+        [
+          {
+            "node": "Responder Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fallback IA": {
+      "main": [
+        [
+          {
+            "node": "Responder Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-05-28T07:52:12.930Z",
+  "id": "w4kMagHUJqrFLPn4",
+  "isArchived": false,
+  "meta": null,
+  "name": "Bot Consultas Odoo",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cc000001-0000-0000-0000-000000000001",
+      "name": "Telegram Trigger",
+      "webhookId": "dd888888-0000-0000-0000-000000000088",
+      "credentials": {
+        "telegramApi": {
+          "id": "YBGlAZkw3keTH4U4",
+          "name": "Azerion18"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const msg=$json.message;\nreturn{json:{chat_id:String(msg.chat.id),texto:(msg.text||'').trim(),nombre:msg.from?.first_name||'Usuario'}};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "cc000002-0000-0000-0000-000000000002",
+      "name": "Preparar Mensaje"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const t=($json.texto||'').toLowerCase();let accion='desconocido',parametro='';\nif(/\\bproyectos?\\b/.test(t)&&!/horas?|tareas?/.test(t)){accion='ver_proyectos';}\nelse if(/horas?/.test(t)){accion='horas_proyecto';const m=t.match(/(?:horas?|tiempo).*?(?:de|del?|en)\\s+(.+)/i);if(m)parametro=m[1].trim();}\nelse if(/\\btareas?\\b/.test(t)){accion='tareas_proyecto';const m=t.match(/tareas?.*?(?:de|del?|en)\\s+(.+)/i);if(m)parametro=m[1].trim();}\nelse if(/estado.*tarea|tarea.*estado/.test(t)){accion='estado_tarea';const m=t.match(/tarea\\s+(.+)/i);if(m)parametro=m[1].trim();}\nreturn{json:{accion,parametro,chat_id:$json.chat_id,texto_original:$json.texto,nombre:$json.nombre}};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "cc000003-0000-0000-0000-000000000003",
+      "name": "Interpretar Accion"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://lsanchezgoshawk-botpartesdetrabajo.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"jsonrpc\":\"2.0\",\n  \"method\":\"call\",\n  \"params\":{\"service\":\"common\",\"method\":\"authenticate\",\"args\":[\"lsanchezgoshawk-botpartesdetrabajo-main-32341811\",\"admin\",\"admin\",{}]},\n  \"id\":0\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        0
+      ],
+      "id": "cc000004-0000-0000-0000-000000000004",
+      "name": "Autenticar Odoo"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Interpretar Accion').item.json.accion }}",
+                    "rightValue": "ver_proyectos",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "sw-r1"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Interpretar Accion').item.json.accion }}",
+                    "rightValue": "horas_proyecto",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "sw-r2"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Interpretar Accion').item.json.accion }}",
+                    "rightValue": "tareas_proyecto",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "sw-r3"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Interpretar Accion').item.json.accion }}",
+                    "rightValue": "estado_tarea",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "sw-r4"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        880,
+        0
+      ],
+      "id": "cc000005-0000-0000-0000-000000000005",
+      "name": "Switch Acciones"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const uid=$('Autenticar Odoo').item.json.result;\nconst db='lsanchezgoshawk-botpartesdetrabajo-main-32341811';\nreturn{json:{payload:{jsonrpc:'2.0',method:'call',params:{service:'object',method:'execute_kw',args:[db,uid,'admin','project.project','search_read',[[['active','=',true]]],{fields:['name','last_update_status','task_count','date_start','date'],limit:20}]},id:10},chat_id:$('Interpretar Accion').item.json.chat_id}};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        -600
+      ],
+      "id": "cc000006-0000-0000-0000-000000000006",
+      "name": "Build Ver Proyectos"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://lsanchezgoshawk-botpartesdetrabajo.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.payload }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        -600
+      ],
+      "id": "cc000007-0000-0000-0000-000000000007",
+      "name": "HTTP Ver Proyectos"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const p=$json.result;\nconst chat_id=$('Build Ver Proyectos').item.json.chat_id;\nif(!Array.isArray(p)||p.length===0)return{json:{texto:'No hay proyectos activos.',chat_id}};\nconst lbl={on_track:'Activo',at_risk:'En riesgo',off_track:'Con problemas',done:'Terminado'};\nlet texto='Proyectos activos ('+p.length+'):\\n\\n';\np.forEach((x,i)=>{const e=lbl[x.last_update_status]||'Sin estado';texto+=(i+1)+'. '+x.name+'\\n   '+e+' | '+( x.task_count||0)+' tareas'+(x.date_start?' | '+x.date_start:'')+'\\n\\n';});\nreturn{json:{texto,chat_id}};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        -600
+      ],
+      "id": "cc000008-0000-0000-0000-000000000008",
+      "name": "Formato Proyectos"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const uid=$('Autenticar Odoo').item.json.result;\nconst db='lsanchezgoshawk-botpartesdetrabajo-main-32341811';\nconst inter=$('Interpretar Accion').item.json;\nreturn{json:{payload:{jsonrpc:'2.0',method:'call',params:{service:'object',method:'execute_kw',args:[db,uid,'admin','account.analytic.line','read_group',[inter.parametro?[['project_id.name','ilike',inter.parametro]]:[],['project_id','unit_amount'],['project_id']],{}]},id:20},chat_id:inter.chat_id,parametro:inter.parametro}};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        -200
+      ],
+      "id": "cc000009-0000-0000-0000-000000000009",
+      "name": "Build Horas Proyecto"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://lsanchezgoshawk-botpartesdetrabajo.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.payload }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        -200
+      ],
+      "id": "cc000010-0000-0000-0000-000000000010",
+      "name": "HTTP Horas Proyecto"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const datos=$json.result;\nconst chat_id=$('Build Horas Proyecto').item.json.chat_id;\nconst par=$('Build Horas Proyecto').item.json.parametro;\nif(!Array.isArray(datos)||datos.length===0)return{json:{texto:par?'No hay horas para '+par+'.':'No hay horas registradas.',chat_id}};\nlet texto=par?'Horas en \"'+par+'\":\\n\\n':'Horas por proyecto:\\n\\n';\ndatos.forEach((d,i)=>{const n=Array.isArray(d.project_id)?d.project_id[1]:(d.project_id||'Sin proyecto');texto+=(i+1)+'. '+n+'\\n   '+(d.unit_amount||0).toFixed(1)+'h registradas\\n\\n';});\nreturn{json:{texto,chat_id}};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        -200
+      ],
+      "id": "cc000011-0000-0000-0000-000000000011",
+      "name": "Formato Horas"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const uid=$('Autenticar Odoo').item.json.result;\nconst db='lsanchezgoshawk-botpartesdetrabajo-main-32341811';\nconst inter=$('Interpretar Accion').item.json;\nconst domain=inter.parametro?[['project_id.name','ilike',inter.parametro],['active','=',true]]:[['active','=',true]];\nreturn{json:{payload:{jsonrpc:'2.0',method:'call',params:{service:'object',method:'execute_kw',args:[db,uid,'admin','project.task','search_read',[domain],{fields:['name','project_id','stage_id','planned_hours','effective_hours'],limit:25}]},id:30},chat_id:inter.chat_id,parametro:inter.parametro}};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        200
+      ],
+      "id": "cc000012-0000-0000-0000-000000000012",
+      "name": "Build Tareas"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://lsanchezgoshawk-botpartesdetrabajo.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.payload }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        200
+      ],
+      "id": "cc000013-0000-0000-0000-000000000013",
+      "name": "HTTP Tareas"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const tareas=$json.result;\nconst chat_id=$('Build Tareas').item.json.chat_id;\nconst par=$('Build Tareas').item.json.parametro;\nif(!Array.isArray(tareas)||tareas.length===0)return{json:{texto:par?'No hay tareas en '+par+'.':'No hay tareas activas.',chat_id}};\nlet texto=par?'Tareas en \"'+par+'\" ('+tareas.length+'):\\n\\n':'Tareas activas ('+tareas.length+'):\\n\\n';\ntareas.forEach((t,i)=>{const p2=Array.isArray(t.project_id)?t.project_id[1]:(t.project_id||'Sin proyecto');const e=Array.isArray(t.stage_id)?t.stage_id[1]:(t.stage_id||'Sin etapa');texto+=(i+1)+'. '+t.name+'\\n   '+p2+' | '+e+'\\n   '+(t.effective_hours||0).toFixed(1)+'h / '+(t.planned_hours||0).toFixed(1)+'h\\n\\n';});\nreturn{json:{texto,chat_id}};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        200
+      ],
+      "id": "cc000014-0000-0000-0000-000000000014",
+      "name": "Formato Tareas"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const uid=$('Autenticar Odoo').item.json.result;\nconst db='lsanchezgoshawk-botpartesdetrabajo-main-32341811';\nconst inter=$('Interpretar Accion').item.json;\nreturn{json:{payload:{jsonrpc:'2.0',method:'call',params:{service:'object',method:'execute_kw',args:[db,uid,'admin','project.task','search_read',[inter.parametro?[['name','ilike',inter.parametro]]:[[]]]  ,{fields:['name','project_id','stage_id','planned_hours','effective_hours','date_deadline'],limit:5}]},id:40},chat_id:inter.chat_id,parametro:inter.parametro}};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        600
+      ],
+      "id": "cc000015-0000-0000-0000-000000000015",
+      "name": "Build Estado Tarea"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://lsanchezgoshawk-botpartesdetrabajo.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.payload }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        600
+      ],
+      "id": "cc000016-0000-0000-0000-000000000016",
+      "name": "HTTP Estado Tarea"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const tareas=$json.result;\nconst chat_id=$('Build Estado Tarea').item.json.chat_id;\nconst par=$('Build Estado Tarea').item.json.parametro;\nif(!Array.isArray(tareas)||tareas.length===0)return{json:{texto:'No se encontro la tarea '+(par||'indicada')+'.',chat_id}};\nlet texto='';\ntareas.forEach(t=>{const p2=Array.isArray(t.project_id)?t.project_id[1]:(t.project_id||'Sin proyecto');const e=Array.isArray(t.stage_id)?t.stage_id[1]:(t.stage_id||'Sin etapa');const r=(t.effective_hours||0).toFixed(1);const pl=(t.planned_hours||0).toFixed(1);const pct=t.planned_hours>0?Math.round(t.effective_hours/t.planned_hours*100):0;texto+=t.name+'\\nProyecto: '+p2+'\\nEtapa: '+e+'\\nHoras: '+r+'h / '+pl+'h ('+pct+'%)'+(t.date_deadline?'\\nDeadline: '+t.date_deadline:'')+'\\n\\n';});\nreturn{json:{texto,chat_id}};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        600
+      ],
+      "id": "cc000017-0000-0000-0000-000000000017",
+      "name": "Formato Estado Tarea"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const ayuda='No entendi tu consulta. Puedes preguntarme:\\n- proyectos\\n- horas de [proyecto]\\n- tareas de [proyecto]\\n- estado tarea [nombre]';\nreturn{json:{texto:ayuda,chat_id:$('Interpretar Accion').item.json.chat_id}};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        1000
+      ],
+      "id": "cc000018-0000-0000-0000-000000000018",
+      "name": "Fallback IA"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chat_id }}",
+        "text": "={{ $json.texto }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1760,
+        200
+      ],
+      "id": "cc000021-0000-0000-0000-000000000021",
+      "name": "Responder Telegram",
+      "credentials": {
+        "telegramApi": {
+          "id": "YBGlAZkw3keTH4U4",
+          "name": "Azerion18"
+        }
+      }
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-05-28T07:52:12.930Z",
+      "createdAt": "2026-05-28T07:52:12.930Z",
+      "role": "workflow:owner",
+      "workflowId": "w4kMagHUJqrFLPn4",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-05-28T07:52:12.930Z",
+  "versionId": "bb9d0cd4-739b-4ea0-8bfe-6c9cb0652d8c"
+}
