@@ -3,17 +3,6 @@
   "activeVersion": null,
   "activeVersionId": null,
   "connections": {
-    "Wait": {
-      "main": [
-        [
-          {
-            "node": "Get a file",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Convertir a CSV": {
       "main": [
         [
@@ -40,7 +29,47 @@
       "main": [
         [
           {
+            "node": "¿Es CSV?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Es CSV?": {
+      "main": [
+        [
+          {
+            "node": "Extraer CSV",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
             "node": "Extraer Texto PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraer CSV": {
+      "main": [
+        [
+          {
+            "node": "Parsear Modulos CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsear Modulos CSV": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
             "type": "main",
             "index": 0
           }
@@ -111,7 +140,7 @@
       "main": [
         [
           {
-            "node": "Wait",
+            "node": "Get a file",
             "type": "main",
             "index": 0
           }
@@ -342,29 +371,15 @@
   "nodes": [
     {
       "parameters": {
-        "amount": 10
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        160,
-        160
-      ],
-      "id": "c60ec8e0-95fd-4ddc-94d8-0c5d87e452d9",
-      "name": "Wait",
-      "webhookId": "d1d36ddf-3016-42fd-bf8b-743b844e19c2"
-    },
-    {
-      "parameters": {
         "jsCode": "// Generar combinaciones módulo × versión para comprobaciones posteriores.\n// Toma la salida del nodo de clasificación (IA) y construye items\n// { modulo, version, es_oca, origen, repo_inicial, ... }.\n\nconst versiones = ['12.0','13.0','14.0','15.0','16.0','17.0','18.0','19.0'];\n\nconst version_origen = $json.version_origen || '12.0';\nconst version_objetivo = $json.version_objetivo || '17.0';\n\nconst iOrigen = versiones.indexOf(version_origen);\nconst iObjetivo = versiones.indexOf(version_objetivo);\n\n// Preferimos $json.modulos (salida de la IA). Si no existe, usamos modulos_pre.\nconst base = Array.isArray($json.modulos)\n  ? $json.modulos\n  : (Array.isArray($json.modulos_pre) ? $json.modulos_pre : []);\n\nconst salida = [];\n\nfor (const m of base) {\n  const modulo = m.modulo || m.nombre_detectado || '';\n  if (!modulo) continue;\n\n  const es_oca = !!m.es_oca || m.origen === 'oca';\n  const origen = es_oca ? 'oca' : 'desconocido';\n  const repo_inicial = m.repo_inicial || '';\n  const index = m.index ?? 0;\n\n  for (let i = 0; i < versiones.length; i++) {\n    const v = versiones[i];\n\n    if (iOrigen !== -1 && iObjetivo !== -1) {\n      const min = Math.min(iOrigen, iObjetivo);\n      const max = Math.max(iOrigen, iObjetivo);\n      if (i < min || i > max) continue;\n    }\n\n    salida.push({\n      index,\n      modulo,\n      es_oca,\n      origen,\n      repo_inicial,\n      version: v,\n      version_origen,\n      version_objetivo,\n    });\n  }\n}\n\nreturn salida;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1120,
-        368
+        976,
+        1104
       ],
-      "id": "dc9e4de7-9d7b-4829-a669-79472d32e117",
+      "id": "8a1b3abd-7abe-4810-b2b7-59ac90313722",
       "name": "Preparar Modulo-Version"
     },
     {
@@ -378,10 +393,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1744,
-        32
+        1632,
+        784
       ],
-      "id": "49e5f7b1-6a1f-422b-ac21-fe7f41979c1d",
+      "id": "60bddab0-1b1f-4111-a25c-da8e872ee22f",
       "name": "Enviar CSV por Telegram",
       "webhookId": "d2180a5b-36b3-49a0-83d0-0719c5282304",
       "credentials": {
@@ -401,10 +416,10 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1,
       "position": [
-        1568,
-        32
+        1408,
+        784
       ],
-      "id": "5b09ae1a-31a3-4b5f-a964-ae200f042c3e",
+      "id": "8f18dee4-d529-49e1-af96-955af1131602",
       "name": "Convertir a CSV"
     },
     {
@@ -414,10 +429,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1392,
-        32
+        1200,
+        784
       ],
-      "id": "4c1a84d5-100b-49d0-9530-94a3e000e33c",
+      "id": "08b26b16-1eab-4a5f-b2d7-9c7b8f4a3c9b",
       "name": "Generar Filas CSV"
     },
     {
@@ -429,10 +444,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        320,
-        160
+        -272,
+        976
       ],
-      "id": "8784757f-85fc-4eb1-be59-c96bb5430c37",
+      "id": "75601fd5-7060-492a-8adc-0e5b4b25553f",
       "name": "Get a file",
       "webhookId": "7884e6b5-2d49-4e39-a771-cfe800c2692e",
       "credentials": {
@@ -444,15 +459,17 @@
     },
     {
       "parameters": {
-        "content": "tiene version inicial\ntiene version final\ntiene documento\n"
+        "content": "## Entrada Telegram\nCSV + caption: estoy en 13.0 quiero 17.0\nTambién acepta PDF",
+        "height": 200,
+        "width": 360
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -96,
-        0
+        -832,
+        672
       ],
       "typeVersion": 1,
-      "id": "6e887381-03f8-4dc5-ba94-2151e5a1efab",
+      "id": "4cca89d1-625c-47a6-a8be-b968d010ee91",
       "name": "Sticky Note"
     },
     {
@@ -462,10 +479,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        864,
-        368
+        720,
+        1200
       ],
-      "id": "d3c4acc7-ee14-4be5-bcef-5f5542a49b25",
+      "id": "330834ac-ca57-4816-b4c3-165d623bedf5",
       "name": "Google Gemini Chat Model",
       "credentials": {
         "googlePalmApi": {
@@ -481,23 +498,23 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1200,
-        32
+        976,
+        784
       ],
-      "id": "5a3cb276-4cdf-4ac3-aefc-62c7f703f899",
+      "id": "af05342d-5a83-480d-bc11-82e5657af9b6",
       "name": "Construir Matriz Versiones"
     },
     {
       "parameters": {
-        "jsCode": "// Detectar módulos de forma GENERAL a partir del texto del PDF.\n// Regla: cualquier token en snake_case (letras/números con '_')\n// se considera candidato a módulo.\n\n// 1) Construimos un texto bruto a partir de los campos más típicos\nlet bruto = '';\n\nif (typeof $json.text === 'string') {\n  bruto += $json.text;\n}\nif (typeof $json.texto_pdf === 'string') {\n  // Compatibilidad con versiones anteriores del flujo\n  bruto += '\\n' + $json.texto_pdf;\n}\n\n// Si no hay nada, devolvemos sin módulos\nif (!bruto) {\n  return {\n    version_origen: $json.version_origen,\n    version_objetivo: $json.version_objetivo,\n    modulos_pre: [],\n  };\n}\n\n// 2) Normalizar saltos de línea Windows\nbruto = bruto.replace(/\\r\\n/g, '\\n');\n\n// 3) Unir palabras partidas por guion + salto de línea\n//    (ej: \"account-\\nmove\" -> \"accountmove\")\nbruto = bruto.replace(/-\\s*\\n\\s*/g, '');\n\n// 4) Unir SOLO saltos de línea dentro de nombres en snake_case\n//    (ej: \"hr_timesheet_sheet_attend\\nance\" -> \"hr_timesheet_sheet_attendance\")\n//    Requiere que la parte izquierda tenga al menos un '_' para no unir\n//    palabras normales como \"Contabilidad\\ngst_solar_lot\".\nbruto = bruto.replace(/([a-z0-9]*_[a-z0-9]*)\\s*\\n\\s*([a-z0-9]+)/gi, '$1$2');\n\n// 5) Convertir el resto de saltos de línea y tabs en espacios\nlet texto = bruto.replace(/[\\n\\t]+/g, ' ');\n\n// 6) Colapsar espacios múltiples\ntexto = texto.replace(/\\s+/g, ' ').trim();\n\n// 7) Regex genérico para snake_case: al menos un '_', SOLO minúsculas y dígitos.\n//    Esto evita arrastrar colas como \"transferBankingaddonsAdd\".\nconst regex = /\\b[a-z0-9]+(?:_[a-z0-9]+)+\\b/g;\nconst encontrados = new Set();\nlet match;\n\nwhile ((match = regex.exec(texto)) !== null) {\n  encontrados.add(match[0]); // mantiene el caso tal como aparece\n}\n\n// 8) Convertimos a lista ordenada, con índice estable, y la envolvemos en objetos\nconst modulos_pre = Array.from(encontrados)\n  .sort((a, b) => a.localeCompare(b))\n  .map((nombre, index) => ({ index, modulo: nombre, origen: 'desconocido' }));\n\nreturn {\n  version_origen: $json.version_origen,\n  version_objetivo: $json.version_objetivo,\n  modulos_pre,\n};"
+        "jsCode": "// Detectar módulos de forma GENERAL a partir del texto del PDF.\n// Regla: cualquier token en snake_case (letras/números con '_')\n// se considera candidato a módulo.\n\n// 1) Construimos un texto bruto a partir de los campos más típicos\nlet bruto = '';\n\nif (typeof $json.text === 'string') {\n  bruto += $json.text;\n}\nif (typeof $json.texto_pdf === 'string') {\n  // Compatibilidad con versiones anteriores del flujo\n  bruto += '\\n' + $json.texto_pdf;\n}\n\n// Si no hay nada, devolvemos sin módulos\nif (!bruto) {\n  return {\n    version_origen: $json.version_origen,\n    version_objetivo: $json.version_objetivo,\n    modulos_pre: [],\n  };\n}\n\n// 2) Normalizar saltos de línea Windows\nbruto = bruto.replace(/\\r\\n/g, '\\n');\n\n// 3) Unir palabras partidas por guion + salto de línea\n//    (ej: \"account-\\nmove\" -> \"accountmove\")\nbruto = bruto.replace(/-\\s*\\n\\s*/g, '');\n\n// 4) Unir SOLO saltos de línea dentro de nombres en snake_case\n//    (ej: \"hr_timesheet_sheet_attend\\nance\" -> \"hr_timesheet_sheet_attendance\")\n//    Requiere que la parte izquierda tenga al menos un '_' para no unir\n//    palabras normales como \"Contabilidad\\ngst_solar_lot\".\nbruto = bruto.replace(/([a-z0-9]*_[a-z0-9]*)\\s*\\n\\s*([a-z0-9]+)/gi, '$1$2');\n\n// 5) Convertir el resto de saltos de línea y tabs en espacios\nlet texto = bruto.replace(/[\\n\\t]+/g, ' ');\n\n// 6) Colapsar espacios múltiples\ntexto = texto.replace(/\\s+/g, ' ').trim();\n\n// 7) Regex genérico para snake_case: al menos un '_', SOLO minúsculas y dígitos.\n//    Esto evita arrastrar colas como \"transferBankingaddonsAdd\".\nconst regex = /\\b[a-z0-9]+(?:_[a-z0-9]+)+\\b/g;\nconst encontrados = new Set();\nlet match;\n\nwhile ((match = regex.exec(texto)) !== null) {\n  encontrados.add(match[0]); // mantiene el caso tal como aparece\n}\n\n// 8) Convertimos a lista ordenada, con índice estable, y la envolvemos en objetos\nconst modulos_pre = Array.from(encontrados)\n  .sort((a, b) => a.localeCompare(b))\n  .map((nombre, index) => ({ index, modulo: nombre, origen: 'desconocido' }));\n\nconst parsed = $('Parsear Versiones').first().json;\n\nreturn {\n  version_origen: parsed.version_origen || '12.0',\n  version_objetivo: parsed.version_objetivo || '17.0',\n  modulos_pre,\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        704,
-        160
+        432,
+        1184
       ],
-      "id": "ba3fae95-c28f-48a4-a2c5-9b03388d9d58",
+      "id": "36f80d80-b2eb-4761-9ee4-e57cc65b3f6a",
       "name": "Detectar Candidatos Snake Case"
     },
     {
@@ -508,10 +525,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        496,
-        160
+        208,
+        1184
       ],
-      "id": "788b867a-3d1f-45c3-baf6-0e6104bb81c1",
+      "id": "5517ee96-6e8c-40be-a156-9943e76b7181",
       "name": "Extraer Texto PDF"
     },
     {
@@ -527,23 +544,23 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
-        864,
-        160
+        720,
+        976
       ],
-      "id": "17fb4a6c-1ad0-407b-8290-0b0d0d432576",
+      "id": "239215f5-e876-4ff8-b85c-532d8e6ba32a",
       "name": "AI Agent"
     },
     {
       "parameters": {
-        "jsCode": "// Parsear versiones de Odoo desde el mensaje de Telegram\n// Formatos soportados (ejemplos):\n// - \"origen 13.0 destino 17.0\"\n// - \"12.0 -> 17.0\"\n// - \"12.0 17.0\"\n// Si solo se detecta una versión, se toma como version_origen y se usa 17.0 como destino por defecto.\n\nconst mensaje = ($json.message && $json.message.text) || '';\n\n// Buscar patrones tipo 12.0, 13.0, 17.0, etc.\nconst versiones = Array.from(mensaje.matchAll(/\\b(1[0-9]|[0-9])\\.0\\b/g)).map(m => m[1] + '.0');\n\nlet version_origen = versiones[0] || '12.0';\nlet version_objetivo = versiones[1] || '17.0';\n\n// También soportar palabras clave explícitas\nconst lower = mensaje.toLowerCase();\nconst matchOrigen = lower.match(/origen\\s*(1[0-9]|[0-9])\\.0/);\nif (matchOrigen) {\n  version_origen = matchOrigen[1] + '.0';\n}\nconst matchDestino = lower.match(/(destino|objetivo)\\s*(1[0-9]|[0-9])\\.0/);\nif (matchDestino) {\n  version_objetivo = matchDestino[2] + '.0';\n}\n\nreturn {\n  ...$json,\n  version_origen,\n  version_objetivo,\n};"
+        "jsCode": "// Parsear versiones de Odoo desde texto o caption de Telegram.\n// Formatos soportados:\n// - \"estoy en 13.0 quiero 17.0\"\n// - \"origen 13.0 destino 17.0\"\n// - \"12.0 -> 17.0\" / \"12.0 17.0\"\n\nconst msg = $json.message || {};\nconst mensaje = msg.text || msg.caption || '';\n\nif (!msg.document) {\n  throw new Error('Adjunta un CSV (lista de módulos) o un PDF. En el caption indica versiones, ej: estoy en 13.0 quiero 17.0');\n}\n\nconst doc = msg.document;\nconst fileName = (doc.file_name || '').toLowerCase();\nconst mimeType = (doc.mime_type || '').toLowerCase();\nconst es_csv = fileName.endsWith('.csv') || mimeType.includes('csv') || mimeType === 'text/plain';\n\nconst versiones = Array.from(mensaje.matchAll(/\\b(1[0-9]|[0-9])\\.0\\b/g)).map(m => m[1] + '.0');\n\nlet version_origen = versiones[0] || '12.0';\nlet version_objetivo = versiones[1] || '17.0';\n\nconst lower = mensaje.toLowerCase();\n\nconst matchEstoyEn = lower.match(/estoy en\\s*(1[0-9]|[0-9])\\.0/);\nif (matchEstoyEn) version_origen = matchEstoyEn[1] + '.0';\n\nconst matchQuiero = lower.match(/quiero\\s*(1[0-9]|[0-9])\\.0/);\nif (matchQuiero) version_objetivo = matchQuiero[1] + '.0';\n\nconst matchOrigen = lower.match(/origen\\s*(1[0-9]|[0-9])\\.0/);\nif (matchOrigen) version_origen = matchOrigen[1] + '.0';\n\nconst matchDestino = lower.match(/(destino|objetivo)\\s*(1[0-9]|[0-9])\\.0/);\nif (matchDestino) version_objetivo = matchDestino[2] + '.0';\n\nreturn {\n  ...$json,\n  version_origen,\n  version_objetivo,\n  es_csv,\n  mensaje_parseado: mensaje,\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -16,
-        160
+        -496,
+        976
       ],
-      "id": "850ef650-44cf-4d55-bdb4-ffad13ce7a53",
+      "id": "4a8079ce-145c-4fa8-a917-8a18379925ff",
       "name": "Parsear Versiones"
     },
     {
@@ -556,10 +573,10 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -192,
-        160
+        -720,
+        976
       ],
-      "id": "a302d15b-8cc7-4542-9766-82187f12bb06",
+      "id": "81996d50-e70f-456e-8baa-daaa23d20426",
       "name": "Telegram Trigger",
       "webhookId": "fd5e8156-a7db-496e-b839-362562484168",
       "credentials": {
@@ -598,10 +615,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -64,
-        1232
+        -528,
+        1776
       ],
-      "id": "2cf4b6ae-b1d9-4837-a0e3-9c6f39453083",
+      "id": "795ca310-8e7d-467f-8794-88b76d25ac4f",
       "name": "Credenciales (editar)"
     },
     {
@@ -611,10 +628,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        192,
-        1232
+        -304,
+        1776
       ],
-      "id": "606ffae7-e07a-4763-b8cf-6ad02c30fe3d",
+      "id": "b0a760f5-d955-40c5-9298-4626a3217e5d",
       "name": "Bucle 1 - Listar Repos"
     },
     {
@@ -624,10 +641,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        800,
-        1328
+        144,
+        1968
       ],
-      "id": "8940d0d9-108c-40d4-8505-9a3cbee8e37e",
+      "id": "11ccfde8-084e-4902-9ccf-4ac223c4aaf3",
       "name": "Bucle 2 - Módulos por Repo"
     },
     {
@@ -637,10 +654,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        416,
-        1232
+        -80,
+        1776
       ],
-      "id": "d94a7cda-1dbc-47e3-baac-c768d8b9f8cc",
+      "id": "3e90fa05-914f-48be-af68-140a2cf14a22",
       "name": "Loop Over Items"
     },
     {
@@ -669,10 +686,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        1008,
-        1328
+        368,
+        1968
       ],
-      "id": "72c3e6ef-14c6-417b-9801-ce2d1b9b2a97",
+      "id": "d6495822-9f4c-4bc1-83de-d66c775351ec",
       "name": "¿Tiene módulos?"
     },
     {
@@ -778,10 +795,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1280,
-        1408
+        576,
+        2048
       ],
-      "id": "39c5f449-430e-448d-86b7-41afa0331f6b",
+      "id": "c8bcbf76-9fd5-4314-b1f0-059a2b324b23",
       "name": "Insert rows in a table",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -798,10 +815,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1,
       "position": [
-        1488,
-        1408
+        800,
+        2048
       ],
-      "id": "a7d1dd7d-2bfb-4412-924d-60ebdb25a024",
+      "id": "9adf5f6a-be7c-41f2-a36e-43ac34f52b04",
       "name": "Esperar 1.5s (rate limit)",
       "webhookId": "6809ceae-b25e-4ca4-b267-9a31c88c15da"
     },
@@ -810,10 +827,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3,
       "position": [
-        768,
-        992
+        144,
+        1648
       ],
-      "id": "0e35913c-e713-4b0e-99a6-0d3c65c7d8ce",
+      "id": "dd269e9b-d392-4640-aa5b-49703e725c17",
       "name": "Merge credenciales"
     },
     {
@@ -823,10 +840,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        928,
-        992
+        368,
+        1648
       ],
-      "id": "2a887b46-bdf3-411e-9cc6-126fdfe3aa0a",
+      "id": "bd603568-f1b9-4222-8af5-74ffde44a498",
       "name": "Solo 1 item (evitar 429)"
     },
     {
@@ -846,10 +863,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1088,
-        992
+        576,
+        1648
       ],
-      "id": "6b1ef997-07a6-4e56-a3db-675b7a17ff8f",
+      "id": "85ae9345-d0a7-4962-a5be-1de37e3e5922",
       "name": "Get Rows (oca_repo_mapping)",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -865,10 +882,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1200,
-        992
+        800,
+        1648
       ],
-      "id": "1c215a60-4a2b-43fd-9d9c-ded844a24a32",
+      "id": "4e96a397-6ad0-461b-9dc2-669d7ea661be",
       "name": "Filtrar pendientes (max 50)"
     },
     {
@@ -878,10 +895,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1392,
-        992
+        1024,
+        1648
       ],
-      "id": "57cfd037-c1f3-40ed-8bb1-3594aadfbbf5",
+      "id": "0253b927-cce9-44d1-9b41-861e4e8e2441",
       "name": "Añadir credenciales"
     },
     {
@@ -891,10 +908,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1616,
-        992
+        1248,
+        1648
       ],
-      "id": "e6b616ec-58d1-4dcb-b4c9-8485e911399e",
+      "id": "a73b9ac3-884b-46b4-8364-97afaae43e91",
       "name": "Loop Over Items 2"
     },
     {
@@ -904,10 +921,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1840,
-        992
+        1456,
+        1648
       ],
-      "id": "1d9a1a1f-f811-4359-a144-f3b650af632a",
+      "id": "70e11b59-4dc7-422c-9109-7a85293c7792",
       "name": "Bucle 4 - Versiones por Módulo"
     },
     {
@@ -938,10 +955,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        2064,
-        992
+        1680,
+        1648
       ],
-      "id": "96e4c129-be9a-48c5-8642-d3ac63367935",
+      "id": "b00d3f69-c97d-4813-81a4-a8c4681d7e0d",
       "name": "Update versiones",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -958,26 +975,26 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1,
       "position": [
-        2224,
-        992
+        1904,
+        1648
       ],
-      "id": "b13f3617-dbc9-4373-b6c7-2edcded00ece",
+      "id": "833c5c1a-7231-44f2-ac78-533edf9488e4",
       "name": "Esperar 1.5s (rate limit) 2",
       "webhookId": "0050da45-aebc-47cc-a630-3e3e0aae99da"
     },
     {
       "parameters": {
-        "content": "## Busca versiones",
-        "height": 832,
-        "width": 2736
+        "content": "## Sincronización OCA (cada 15 días)",
+        "height": 560,
+        "width": 2900
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -336,
-        800
+        -864,
+        1616
       ],
       "typeVersion": 1,
-      "id": "5abf6ac9-004e-4068-bd83-11ad6915e3d5",
+      "id": "9010b5dc-e8f1-4b74-a895-7e8aea152582",
       "name": "Sticky Note1"
     },
     {
@@ -993,11 +1010,71 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
       "position": [
-        -272,
-        1232
+        -752,
+        1776
       ],
-      "id": "7f85083f-8e90-44ff-b473-bf2652fde8eb",
+      "id": "291e80e7-65c1-44c1-9ba4-4dcb2dfc8040",
       "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "csv1",
+              "leftValue": "={{ $('Parsear Versiones').first().json.es_csv }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -48,
+        976
+      ],
+      "id": "7886081a-5015-4186-b18d-cbcfa522905b",
+      "name": "¿Es CSV?"
+    },
+    {
+      "parameters": {
+        "options": {
+          "headerRow": true
+        }
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        208,
+        784
+      ],
+      "id": "149b3c15-ff88-479f-bd75-7c5fe88ec6f3",
+      "name": "Extraer CSV"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Leer lista de módulos desde CSV enviado por Telegram.\n// Columna esperada: 'modulo' (también acepta module, nombre, name o 1ª columna).\n\nconst parsed = $('Parsear Versiones').first().json;\nconst version_origen = parsed.version_origen || '12.0';\nconst version_objetivo = parsed.version_objetivo || '17.0';\n\nconst MODULE_REGEX = /^[a-z0-9]+(_[a-z0-9]+)+$/;\nconst modulosSet = new Set();\n\nfor (const item of $input.all()) {\n  const row = item.json || {};\n  const candidatos = [\n    row.modulo,\n    row.module,\n    row.nombre,\n    row.name,\n    row.Modulo,\n    row.Module,\n  ];\n\n  const primeraCol = Object.values(row).find(v => typeof v === 'string' && v.trim());\n  if (primeraCol) candidatos.push(primeraCol);\n\n  for (const raw of candidatos) {\n    if (!raw) continue;\n    const nombre = String(raw).trim().toLowerCase().replace(/\\s+/g, '');\n    if (MODULE_REGEX.test(nombre)) modulosSet.add(nombre);\n  }\n}\n\nconst modulos_pre = Array.from(modulosSet)\n  .sort((a, b) => a.localeCompare(b))\n  .map((nombre, index) => ({ index, modulo: nombre, origen: 'desconocido' }));\n\nif (modulos_pre.length === 0) {\n  throw new Error('El CSV no tiene módulos válidos. Usa columna \"modulo\" con nombres técnicos en snake_case (ej: sale_order).');\n}\n\nreturn {\n  version_origen,\n  version_objetivo,\n  modulos_pre,\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        432,
+        784
+      ],
+      "id": "337e6392-d2eb-4d39-9464-fae8b2305eec",
+      "name": "Parsear Modulos CSV"
     }
   ],
   "pinData": {},
@@ -1018,6 +1095,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-05-06T07:54:53.171Z",
-  "versionId": "452f05fd-0eb2-4319-a1cd-dd9a0b893e4d"
+  "updatedAt": "2026-06-17T10:47:27.240Z",
+  "versionId": "cd9b298f-f17c-4d24-86d7-b51992059d0a"
 }
