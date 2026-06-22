@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-03-24T09:00:08.402Z",
-    "createdAt": "2026-03-24T09:00:06.769Z",
-    "versionId": "4980c4eb-a553-4282-9ad8-808b5ac4787a",
+    "updatedAt": "2026-06-22T07:33:10.780Z",
+    "createdAt": "2026-06-22T07:33:06.216Z",
+    "versionId": "22ba0a5e-4a71-40d8-9183-103b73ecbc17",
     "workflowId": "RrujNmOBaaE9kQGL",
     "nodes": [
       {
@@ -390,8 +390,8 @@
         "type": "n8n-nodes-base.telegram",
         "typeVersion": 1.2,
         "position": [
-          2432,
-          -416
+          2400,
+          -272
         ],
         "id": "f1777734-5889-4995-b000-a9625b607d83",
         "name": "Send a text message",
@@ -401,7 +401,8 @@
             "id": "GCy2TmVR3Ynwvy19",
             "name": "AzorErrorBot"
           }
-        }
+        },
+        "onError": "continueRegularOutput"
       },
       {
         "parameters": {
@@ -423,6 +424,63 @@
             "name": "Postgres account"
           }
         }
+      },
+      {
+        "parameters": {
+          "sendTo": "info@azordata.com",
+          "subject": "={{ $('When chat message received').first().json.subject || 'Nuevo lead desde el bot web' }}",
+          "message": "={{ (() => {\n  const w = $('When chat message received').first().json;\n\n  return w.bodyText || \n    'Nuevo contacto desde el bot Azor Data\\n\\n' +\n    'Sesión: ' + (w.sessionId || '') + '\\n\\n' +\n    'Mensaje / datos de contacto:\\n' +\n    (w.message || w.chatInput || '');\n})() }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.2,
+        "position": [
+          2496,
+          -672
+        ],
+        "id": "f805e7bd-e90e-4b09-b052-5aef95d97d27",
+        "name": "Send a message",
+        "webhookId": "32e89b9d-967f-4ef3-a75c-1cc434f34959",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "GWu9W61CpoBR1qeq",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "8efd6ddf-2a07-46fd-b702-60f518f0e256",
+                "leftValue": "={{ (() => {  const w = $('When chat message received').first().json;  const texto = String(    w.message ||    w.chatInput ||    w.bodyText ||    ''  ).trim();  const esContacto = w.tipo === 'notificacion_contacto_bot';  const tieneDatosUsuario =    /[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}/i.test(texto) ||    /(?:\\+34\\s?)?[67]\\d{8}/.test(texto) ||    /nombre|email|correo|tel[eé]fono|empresa|contacto/i.test(texto);  const esMensajeError =    /error|no se pudo|fall[oó]|timeout|abort|undefined|null|gracias por tu pregunta|te responderemos lo antes posible/i.test(texto);  return esContacto && tieneDatosUsuario && !esMensajeError;})() }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          2240,
+          -656
+        ],
+        "id": "17b66625-28f4-4c6d-9b46-efaf5681a39b",
+        "name": "If1"
       }
     ],
     "connections": {
@@ -614,6 +672,11 @@
               "node": "Obtener Admins",
               "type": "main",
               "index": 0
+            },
+            {
+              "node": "If1",
+              "type": "main",
+              "index": 0
             }
           ]
         ]
@@ -628,14 +691,30 @@
             }
           ]
         ]
+      },
+      "Send a text message": {
+        "main": [
+          []
+        ]
+      },
+      "If1": {
+        "main": [
+          [
+            {
+              "node": "Send a message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Jorge Huescar",
-    "name": "Version 4980c4eb",
+    "name": "Version 22ba0a5e",
     "description": "",
-    "autosaved": false
+    "autosaved": true
   },
-  "activeVersionId": "4980c4eb-a553-4282-9ad8-808b5ac4787a",
+  "activeVersionId": "22ba0a5e-4a71-40d8-9183-103b73ecbc17",
   "connections": {
     "When chat message received": {
       "main": [
@@ -825,6 +904,11 @@
             "node": "Obtener Admins",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -834,6 +918,22 @@
         [
           {
             "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        []
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
             "type": "main",
             "index": 0
           }
@@ -1233,8 +1333,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2432,
-        -416
+        2400,
+        -272
       ],
       "id": "f1777734-5889-4995-b000-a9625b607d83",
       "name": "Send a text message",
@@ -1244,7 +1344,8 @@
           "id": "GCy2TmVR3Ynwvy19",
           "name": "AzorErrorBot"
         }
-      }
+      },
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -1266,6 +1367,63 @@
           "name": "Postgres account"
         }
       }
+    },
+    {
+      "parameters": {
+        "sendTo": "info@azordata.com",
+        "subject": "={{ $('When chat message received').first().json.subject || 'Nuevo lead desde el bot web' }}",
+        "message": "={{ (() => {\n  const w = $('When chat message received').first().json;\n\n  return w.bodyText || \n    'Nuevo contacto desde el bot Azor Data\\n\\n' +\n    'Sesión: ' + (w.sessionId || '') + '\\n\\n' +\n    'Mensaje / datos de contacto:\\n' +\n    (w.message || w.chatInput || '');\n})() }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2496,
+        -672
+      ],
+      "id": "f805e7bd-e90e-4b09-b052-5aef95d97d27",
+      "name": "Send a message",
+      "webhookId": "32e89b9d-967f-4ef3-a75c-1cc434f34959",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "GWu9W61CpoBR1qeq",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8efd6ddf-2a07-46fd-b702-60f518f0e256",
+              "leftValue": "={{ (() => {  const w = $('When chat message received').first().json;  const texto = String(    w.message ||    w.chatInput ||    w.bodyText ||    ''  ).trim();  const esContacto = w.tipo === 'notificacion_contacto_bot';  const tieneDatosUsuario =    /[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}/i.test(texto) ||    /(?:\\+34\\s?)?[67]\\d{8}/.test(texto) ||    /nombre|email|correo|tel[eé]fono|empresa|contacto/i.test(texto);  const esMensajeError =    /error|no se pudo|fall[oó]|timeout|abort|undefined|null|gracias por tu pregunta|te responderemos lo antes posible/i.test(texto);  return esContacto && tieneDatosUsuario && !esMensajeError;})() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2240,
+        -656
+      ],
+      "id": "17b66625-28f4-4c6d-9b46-efaf5681a39b",
+      "name": "If1"
     }
   ],
   "pinData": {},
@@ -1289,6 +1447,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-24T09:00:06.768Z",
-  "versionId": "4980c4eb-a553-4282-9ad8-808b5ac4787a"
+  "updatedAt": "2026-06-22T07:33:06.215Z",
+  "versionId": "22ba0a5e-4a71-40d8-9183-103b73ecbc17"
 }
