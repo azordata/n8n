@@ -1,30 +1,325 @@
 {
-  "active": false,
-  "activeVersion": null,
-  "activeVersionId": null,
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-07-01T11:47:42.528Z",
+    "createdAt": "2026-07-01T11:47:37.057Z",
+    "versionId": "c50090a9-a301-429e-943e-df9740a68dd7",
+    "workflowId": "vI6yoOZJ0KjCasQi",
+    "nodes": [
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $json.chatInput || JSON.stringify($json.body || $json) }}",
+          "options": {
+            "systemMessage": "=Eres un agente que recibe mensajes o llamadas provenientes de Spoki y decide qué hacer.\n\nTienes dos capacidades:\n\n1) ACCIONES SOBRE SPOKI: usa las herramientas del MCP de Spoki directamente cuando la necesidad sea sobre Spoki (contactos de Spoki, listas, plantillas, enviar mensaje, automatizaciones, tickets de Spoki, reportes, etc). Herramientas disponibles: create_custom_field, create_list, create_ticket, delete_list, get_account_report, get_automation, get_automation_steps, get_contact, get_custom_field, get_list, list_accounts, list_automations, list_contact_lists, list_contacts, list_custom_fields, list_lists, list_reports, list_templates, list_tickets, remove_all_contacts_from_list, remove_contacts_from_list, send_message, start_automation, sync_contact, sync_contacts_to_list, update_list.\n\n2) ACCIONES SOBRE ODOO: cuando la necesidad sea registrar o consultar algo en Odoo, NO uses herramientas. En su lugar responde ÚNICAMENTE con un JSON válido (sin texto adicional, sin markdown) con esta forma:\n{\n  \"accion\": \"<nombre_accion>\",\n  \"campos\": { ... },\n  \"respuesta_usuario\": \"texto breve confirmando lo que se hará\"\n}\n\nACCIONES DE CREACIÓN/ACTUALIZACIÓN:\n- crear_contacto (res.partner): { \"nombre\": \"...\", \"email\": \"...\", \"telefono\": \"...\", \"movil\": \"...\" }\n- actualizar_contacto (res.partner): { \"id\": <id numérico de odoo>, \"nombre\": \"...\", \"email\": \"...\", \"telefono\": \"...\", \"movil\": \"...\" }\n- crear_lead (crm.lead): { \"titulo\": \"...\", \"nombre_contacto\": \"...\", \"telefono\": \"...\", \"email\": \"...\", \"descripcion\": \"...\" }\n- crear_ticket (helpdesk.ticket): { \"asunto\": \"...\", \"descripcion\": \"...\", \"email\": \"...\", \"telefono\": \"...\" }\n\nACCIONES DE CONSULTA (solo lectura):\n- consultar_producto (product.template): { \"producto\": \"nombre o código a buscar\" }\n- consultar_stock (product.product): { \"producto\": \"nombre o código a buscar\" }\n- consultar_cliente (res.partner): { \"nombre\": \"nombre del cliente a buscar\" }\n- consultar_tarea (project.task): { \"tarea\": \"nombre de la tarea a buscar\" }\n- consultar_orden_trabajo (mrp.workorder): { \"referencia\": \"referencia o nombre de la orden a buscar\" }\n\nUsa SIEMPRE datos reales extraídos del mensaje o llamada, nunca valores inventados. Si un dato no está, deja el campo vacío. Para cualquier cosa que no sea una acción de Odoo ni de Spoki, responde con JSON { \"accion\": \"conversar\", \"respuesta_usuario\": \"...\" }."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          1376,
+          864
+        ],
+        "id": "a571ff8b-ec08-487a-9b68-39e5daaff0fc",
+        "name": "AI Agent"
+      },
+      {
+        "parameters": {
+          "endpointUrl": "https://mcp.spoki.com/v2/mcp",
+          "authentication": "headerAuth",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+        "typeVersion": 1.2,
+        "position": [
+          1536,
+          1216
+        ],
+        "id": "b7b18222-96ab-43cc-9d12-87163341ff4c",
+        "name": "MCP Client",
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "yh8y6NrP1AHq6H1b",
+            "name": "spoki api"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-2.0-flash",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          1328,
+          1216
+        ],
+        "id": "ef96f3fc-f613-4881-b267-12edc9cafb61",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "Swwga5f6vKPJ1T0E",
+            "name": "gemini azor"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Parsear la respuesta del AI Agent y detectar si es una acción de Odoo\nconst texto = $json.output || $json.text || $json.response || $json.message || '';\n\nlet data;\ntry {\n  const m = texto.match(/```json\\s*([\\s\\S]*?)\\s*```/) || texto.match(/{[\\s\\S]*}/);\n  data = m ? JSON.parse(m[1] || m[0]) : JSON.parse(texto);\n} catch (e) {\n  data = { accion: 'conversar', respuesta_usuario: typeof texto === 'string' ? texto : JSON.stringify(texto) };\n}\n\nif (!data || typeof data !== 'object') {\n  data = { accion: 'conversar', respuesta_usuario: String(texto) };\n}\n\nconst accionesOdoo = [\n  'crear_contacto', 'actualizar_contacto', 'crear_lead', 'crear_ticket',\n  'consultar_producto', 'consultar_stock', 'consultar_cliente', 'consultar_tarea', 'consultar_orden_trabajo'\n];\ndata.es_odoo = accionesOdoo.includes(data.accion);\ndata.campos = data.campos || {};\n\nconsole.log('🔎 Acción detectada:', data.accion, '| es_odoo:', data.es_odoo);\nreturn [data];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1648,
+          864
+        ],
+        "id": "9203cee8-3c9a-4be8-bf3f-0118f4aad790",
+        "name": "Parsear Acción"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "b1c2d3e4-0000-4000-8000-000000000001",
+                "leftValue": "={{ $json.es_odoo }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1872,
+          864
+        ],
+        "id": "0ea97c48-6be4-46d2-b06f-40bc96e7c40f",
+        "name": "¿Es acción de Odoo?"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://lsanchezgoshawk-bot18.odoo.com/jsonrpc",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"call\",\n  \"params\": {\n    \"service\": \"common\",\n    \"method\": \"authenticate\",\n    \"args\": [\n      \"lsanchezgoshawk-bot18-main-34233791\",\n      \"admin\",\n      \"admin\",\n      {}\n    ]\n  },\n  \"id\": 1\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2096,
+          752
+        ],
+        "id": "453dba1e-e834-48d9-a02e-320200519970",
+        "name": "Autenticar Odoo"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Construir el payload JSON-RPC execute_kw según la acción decidida por el AI Agent\nconst uid = $json.result;\nif (!uid) {\n  throw new Error('No se pudo autenticar en Odoo (uid vacío). Revisa db/usuario/contraseña.');\n}\n\nconst a = $('Parsear Acción').first().json;\nconst c = a.campos || {};\n\nconst DB = 'lsanchezgoshawk-bot18-main-34233791';\nconst PASS = 'admin';\n\nlet model, method, valores;\n\nswitch (a.accion) {\n  // --- CREACIÓN / ACTUALIZACIÓN ---\n  case 'crear_contacto':\n    model = 'res.partner';\n    method = 'create';\n    valores = [{ name: c.nombre || c.name, email: c.email, phone: c.telefono || c.phone, mobile: c.movil || c.mobile }];\n    break;\n  case 'actualizar_contacto':\n    model = 'res.partner';\n    method = 'write';\n    valores = [[parseInt(c.id || c.contact_id, 10)], { name: c.nombre, email: c.email, phone: c.telefono, mobile: c.movil }];\n    break;\n  case 'crear_lead':\n    model = 'crm.lead';\n    method = 'create';\n    valores = [{ name: c.titulo || c.name, contact_name: c.nombre_contacto, phone: c.telefono, email_from: c.email, description: c.descripcion }];\n    break;\n  case 'crear_ticket':\n    model = 'helpdesk.ticket';\n    method = 'create';\n    valores = [{ name: c.asunto || c.name, description: c.descripcion, partner_email: c.email, partner_phone: c.telefono }];\n    break;\n  // --- CONSULTAS (search_read: [ dominio, campos, offset, limite ]) ---\n  case 'consultar_producto':\n    model = 'product.template';\n    method = 'search_read';\n    valores = [[['name', 'ilike', c.producto || c.nombre || '']], ['name', 'default_code', 'list_price', 'qty_available'], 0, 10];\n    break;\n  case 'consultar_stock':\n    model = 'product.product';\n    method = 'search_read';\n    valores = [[['name', 'ilike', c.producto || c.nombre || '']], ['name', 'default_code', 'qty_available', 'virtual_available'], 0, 10];\n    break;\n  case 'consultar_cliente':\n    model = 'res.partner';\n    method = 'search_read';\n    valores = [[['name', 'ilike', c.nombre || c.cliente || '']], ['name', 'email', 'phone', 'mobile', 'city'], 0, 10];\n    break;\n  case 'consultar_tarea':\n    model = 'project.task';\n    method = 'search_read';\n    valores = [[['name', 'ilike', c.tarea || c.nombre || '']], ['name', 'stage_id', 'project_id', 'user_ids'], 0, 10];\n    break;\n  case 'consultar_orden_trabajo':\n    model = 'mrp.workorder';\n    method = 'search_read';\n    valores = [[['name', 'ilike', c.referencia || c.nombre || '']], ['name', 'state', 'product_id', 'duration_expected'], 0, 10];\n    break;\n  default:\n    throw new Error('Acción de Odoo no reconocida: ' + a.accion);\n}\n\n// Eliminar campos vacíos/undefined de los diccionarios de valores (solo aplica a create/write)\nfunction limpiar(o) {\n  if (Array.isArray(o)) return o.map(limpiar);\n  if (o && typeof o === 'object') {\n    const r = {};\n    for (const k of Object.keys(o)) {\n      if (o[k] !== undefined && o[k] !== null && o[k] !== '') r[k] = o[k];\n    }\n    return r;\n  }\n  return o;\n}\n\nconst esConsulta = method === 'search_read';\n\nconst payload = {\n  jsonrpc: '2.0',\n  method: 'call',\n  params: {\n    service: 'object',\n    method: 'execute_kw',\n    args: [DB, uid, PASS, model, method, esConsulta ? valores : limpiar(valores)]\n  },\n  id: Math.floor(Math.random() * 1000000)\n};\n\nconsole.log('📦 Payload Odoo:', JSON.stringify(payload, null, 2));\nreturn [{ payload, accion: a.accion, model, respuesta_usuario: a.respuesta_usuario || '' }];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2320,
+          752
+        ],
+        "id": "ad044602-bcfa-4342-9e36-cec39a15f9f9",
+        "name": "Preparar Payload Odoo"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://lsanchezgoshawk-bot18.odoo.com/jsonrpc",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "raw",
+          "rawContentType": "application/json",
+          "body": "={{ JSON.stringify($json.payload) }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2528,
+          752
+        ],
+        "id": "8a536359-9dfb-4058-9d57-34273d540214",
+        "name": "Ejecutar en Odoo"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "c5dd4e76-70af-41cd-a5a3-282893a8ec2f",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          1152,
+          864
+        ],
+        "id": "bd77fd5e-5b91-47d0-ab51-84e6f43f032a",
+        "name": "Webhook",
+        "webhookId": "c5dd4e76-70af-41cd-a5a3-282893a8ec2f"
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "{\n  \"success\": true,\n  \"action\": \"={{ $json.action }}\",\n  \"reply\": \"={{ $json.reply }}\",\n  \"phone\": \"={{ $json.phone }}\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.5,
+        "position": [
+          2720,
+          752
+        ],
+        "id": "4f59e718-e330-4f23-adac-6a54bc6848df",
+        "name": "Respond to Webhook"
+      }
+    ],
+    "connections": {
+      "MCP Client": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent": {
+        "main": [
+          [
+            {
+              "node": "Parsear Acción",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Parsear Acción": {
+        "main": [
+          [
+            {
+              "node": "¿Es acción de Odoo?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "¿Es acción de Odoo?": {
+        "main": [
+          [
+            {
+              "node": "Autenticar Odoo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Autenticar Odoo": {
+        "main": [
+          [
+            {
+              "node": "Preparar Payload Odoo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Preparar Payload Odoo": {
+        "main": [
+          [
+            {
+              "node": "Ejecutar en Odoo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Ejecutar en Odoo": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jorge Huescar",
+    "name": "Version c50090a9",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "c50090a9-a301-429e-943e-df9740a68dd7",
   "connections": {
-    "When clicking ‘Execute workflow’": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "When chat message received": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "MCP Client": {
       "ai_tool": [
         [
@@ -46,6 +341,83 @@
           }
         ]
       ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Parsear Acción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsear Acción": {
+      "main": [
+        [
+          {
+            "node": "¿Es acción de Odoo?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Es acción de Odoo?": {
+      "main": [
+        [
+          {
+            "node": "Autenticar Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Autenticar Odoo": {
+      "main": [
+        [
+          {
+            "node": "Preparar Payload Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Payload Odoo": {
+      "main": [
+        [
+          {
+            "node": "Ejecutar en Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ejecutar en Odoo": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2026-03-31T09:29:18.734Z",
@@ -57,63 +429,35 @@
   "name": "spoki",
   "nodes": [
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        48,
-        -64
-      ],
-      "id": "5edcdc13-5d19-4248-94d5-4e168607cb82",
-      "name": "When clicking ‘Execute workflow’"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
-      "typeVersion": 1.4,
-      "position": [
-        32,
-        -208
-      ],
-      "id": "b7d6418f-428d-4bb6-9ccc-a44b7a0b6745",
-      "name": "When chat message received",
-      "webhookId": "c9d193f5-e6ea-494b-8d2d-788ab3a62c9a"
-    },
-    {
       "parameters": {
         "promptType": "define",
-        "text": "=haz la accion sobre el mcp que puede hacer lo siguiente \ncreate_custom_field: Create a new custom field\ncreate_list: Create a new list\ncreate_ticket: Create a new support ticket\ndelete_list: Delete a list\nget_account_report: Get current usage report for an account\nget_automation: Get details of a specific automation by ID\nget_automation_steps: Get steps of a specific automation by ID\nget_contact: Retrieve a specific contact by ID\nget_custom_field: Get details of a specific custom field by ID\nget_list: Get a list by ID\nlist_accounts: List all accounts accessible to the user\nlist_automations: List all automations for the configured Spoki account with optional filtering\nlist_contact_lists: List all contact lists\nlist_contacts: List and search contacts with comprehensive filtering options\nlist_custom_fields: List all custom fields for the account\nlist_lists: List all lists\nlist_reports: List all reports with optional filtering and sorting\nlist_templates: List all message templates\nlist_tickets: List support tickets with filtering options\nremove_all_contacts_from_list: Remove all contacts from a list\nremove_contacts_from_list: Remove contacts from a list\nsend_message: Send a message to a contact\nstart_automation: Start/trigger an automation for a specific contact with provided data\nsync_contact: Create or update a single contact\nsync_contacts_to_list: Sync contacts to a list\nupdate_list: Update a list\n\nBasandote en la necesidad del usuario{{ $json.chatInput }}",
-        "options": {}
+        "text": "={{ $json.chatInput || JSON.stringify($json.body || $json) }}",
+        "options": {
+          "systemMessage": "=Eres un agente que recibe mensajes o llamadas provenientes de Spoki y decide qué hacer.\n\nTienes dos capacidades:\n\n1) ACCIONES SOBRE SPOKI: usa las herramientas del MCP de Spoki directamente cuando la necesidad sea sobre Spoki (contactos de Spoki, listas, plantillas, enviar mensaje, automatizaciones, tickets de Spoki, reportes, etc). Herramientas disponibles: create_custom_field, create_list, create_ticket, delete_list, get_account_report, get_automation, get_automation_steps, get_contact, get_custom_field, get_list, list_accounts, list_automations, list_contact_lists, list_contacts, list_custom_fields, list_lists, list_reports, list_templates, list_tickets, remove_all_contacts_from_list, remove_contacts_from_list, send_message, start_automation, sync_contact, sync_contacts_to_list, update_list.\n\n2) ACCIONES SOBRE ODOO: cuando la necesidad sea registrar o consultar algo en Odoo, NO uses herramientas. En su lugar responde ÚNICAMENTE con un JSON válido (sin texto adicional, sin markdown) con esta forma:\n{\n  \"accion\": \"<nombre_accion>\",\n  \"campos\": { ... },\n  \"respuesta_usuario\": \"texto breve confirmando lo que se hará\"\n}\n\nACCIONES DE CREACIÓN/ACTUALIZACIÓN:\n- crear_contacto (res.partner): { \"nombre\": \"...\", \"email\": \"...\", \"telefono\": \"...\", \"movil\": \"...\" }\n- actualizar_contacto (res.partner): { \"id\": <id numérico de odoo>, \"nombre\": \"...\", \"email\": \"...\", \"telefono\": \"...\", \"movil\": \"...\" }\n- crear_lead (crm.lead): { \"titulo\": \"...\", \"nombre_contacto\": \"...\", \"telefono\": \"...\", \"email\": \"...\", \"descripcion\": \"...\" }\n- crear_ticket (helpdesk.ticket): { \"asunto\": \"...\", \"descripcion\": \"...\", \"email\": \"...\", \"telefono\": \"...\" }\n\nACCIONES DE CONSULTA (solo lectura):\n- consultar_producto (product.template): { \"producto\": \"nombre o código a buscar\" }\n- consultar_stock (product.product): { \"producto\": \"nombre o código a buscar\" }\n- consultar_cliente (res.partner): { \"nombre\": \"nombre del cliente a buscar\" }\n- consultar_tarea (project.task): { \"tarea\": \"nombre de la tarea a buscar\" }\n- consultar_orden_trabajo (mrp.workorder): { \"referencia\": \"referencia o nombre de la orden a buscar\" }\n\nUsa SIEMPRE datos reales extraídos del mensaje o llamada, nunca valores inventados. Si un dato no está, deja el campo vacío. Para cualquier cosa que no sea una acción de Odoo ni de Spoki, responde con JSON { \"accion\": \"conversar\", \"respuesta_usuario\": \"...\" }."
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        336,
-        -64
+        1376,
+        864
       ],
-      "id": "72d43231-2b93-47b5-9533-7ccebe9e509c",
+      "id": "a571ff8b-ec08-487a-9b68-39e5daaff0fc",
       "name": "AI Agent"
     },
     {
       "parameters": {
-        "endpointUrl": "https://mcp.spoki.com/mcp",
-        "serverTransport": "sse",
+        "endpointUrl": "https://mcp.spoki.com/v2/mcp",
         "authentication": "headerAuth",
-        "include": "selected",
-        "includeTools": [
-          "list_lists"
-        ],
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
       "typeVersion": 1.2,
       "position": [
-        528,
-        128
+        1536,
+        1216
       ],
-      "id": "5c7cb8fe-b946-4746-adc3-1cba152144de",
+      "id": "b7b18222-96ab-43cc-9d12-87163341ff4c",
       "name": "MCP Client",
       "credentials": {
         "httpHeaderAuth": {
@@ -130,10 +474,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        336,
-        144
+        1328,
+        1216
       ],
-      "id": "605e5db7-e077-4829-bc9e-59a3452b8f6f",
+      "id": "ef96f3fc-f613-4881-b267-12edc9cafb61",
       "name": "Google Gemini Chat Model",
       "credentials": {
         "googlePalmApi": {
@@ -141,13 +485,162 @@
           "name": "gemini azor"
         }
       }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parsear la respuesta del AI Agent y detectar si es una acción de Odoo\nconst texto = $json.output || $json.text || $json.response || $json.message || '';\n\nlet data;\ntry {\n  const m = texto.match(/```json\\s*([\\s\\S]*?)\\s*```/) || texto.match(/{[\\s\\S]*}/);\n  data = m ? JSON.parse(m[1] || m[0]) : JSON.parse(texto);\n} catch (e) {\n  data = { accion: 'conversar', respuesta_usuario: typeof texto === 'string' ? texto : JSON.stringify(texto) };\n}\n\nif (!data || typeof data !== 'object') {\n  data = { accion: 'conversar', respuesta_usuario: String(texto) };\n}\n\nconst accionesOdoo = [\n  'crear_contacto', 'actualizar_contacto', 'crear_lead', 'crear_ticket',\n  'consultar_producto', 'consultar_stock', 'consultar_cliente', 'consultar_tarea', 'consultar_orden_trabajo'\n];\ndata.es_odoo = accionesOdoo.includes(data.accion);\ndata.campos = data.campos || {};\n\nconsole.log('🔎 Acción detectada:', data.accion, '| es_odoo:', data.es_odoo);\nreturn [data];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1648,
+        864
+      ],
+      "id": "9203cee8-3c9a-4be8-bf3f-0118f4aad790",
+      "name": "Parsear Acción"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b1c2d3e4-0000-4000-8000-000000000001",
+              "leftValue": "={{ $json.es_odoo }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1872,
+        864
+      ],
+      "id": "0ea97c48-6be4-46d2-b06f-40bc96e7c40f",
+      "name": "¿Es acción de Odoo?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://lsanchezgoshawk-bot18.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"call\",\n  \"params\": {\n    \"service\": \"common\",\n    \"method\": \"authenticate\",\n    \"args\": [\n      \"lsanchezgoshawk-bot18-main-34233791\",\n      \"admin\",\n      \"admin\",\n      {}\n    ]\n  },\n  \"id\": 1\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2096,
+        752
+      ],
+      "id": "453dba1e-e834-48d9-a02e-320200519970",
+      "name": "Autenticar Odoo"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Construir el payload JSON-RPC execute_kw según la acción decidida por el AI Agent\nconst uid = $json.result;\nif (!uid) {\n  throw new Error('No se pudo autenticar en Odoo (uid vacío). Revisa db/usuario/contraseña.');\n}\n\nconst a = $('Parsear Acción').first().json;\nconst c = a.campos || {};\n\nconst DB = 'lsanchezgoshawk-bot18-main-34233791';\nconst PASS = 'admin';\n\nlet model, method, valores;\n\nswitch (a.accion) {\n  // --- CREACIÓN / ACTUALIZACIÓN ---\n  case 'crear_contacto':\n    model = 'res.partner';\n    method = 'create';\n    valores = [{ name: c.nombre || c.name, email: c.email, phone: c.telefono || c.phone, mobile: c.movil || c.mobile }];\n    break;\n  case 'actualizar_contacto':\n    model = 'res.partner';\n    method = 'write';\n    valores = [[parseInt(c.id || c.contact_id, 10)], { name: c.nombre, email: c.email, phone: c.telefono, mobile: c.movil }];\n    break;\n  case 'crear_lead':\n    model = 'crm.lead';\n    method = 'create';\n    valores = [{ name: c.titulo || c.name, contact_name: c.nombre_contacto, phone: c.telefono, email_from: c.email, description: c.descripcion }];\n    break;\n  case 'crear_ticket':\n    model = 'helpdesk.ticket';\n    method = 'create';\n    valores = [{ name: c.asunto || c.name, description: c.descripcion, partner_email: c.email, partner_phone: c.telefono }];\n    break;\n  // --- CONSULTAS (search_read: [ dominio, campos, offset, limite ]) ---\n  case 'consultar_producto':\n    model = 'product.template';\n    method = 'search_read';\n    valores = [[['name', 'ilike', c.producto || c.nombre || '']], ['name', 'default_code', 'list_price', 'qty_available'], 0, 10];\n    break;\n  case 'consultar_stock':\n    model = 'product.product';\n    method = 'search_read';\n    valores = [[['name', 'ilike', c.producto || c.nombre || '']], ['name', 'default_code', 'qty_available', 'virtual_available'], 0, 10];\n    break;\n  case 'consultar_cliente':\n    model = 'res.partner';\n    method = 'search_read';\n    valores = [[['name', 'ilike', c.nombre || c.cliente || '']], ['name', 'email', 'phone', 'mobile', 'city'], 0, 10];\n    break;\n  case 'consultar_tarea':\n    model = 'project.task';\n    method = 'search_read';\n    valores = [[['name', 'ilike', c.tarea || c.nombre || '']], ['name', 'stage_id', 'project_id', 'user_ids'], 0, 10];\n    break;\n  case 'consultar_orden_trabajo':\n    model = 'mrp.workorder';\n    method = 'search_read';\n    valores = [[['name', 'ilike', c.referencia || c.nombre || '']], ['name', 'state', 'product_id', 'duration_expected'], 0, 10];\n    break;\n  default:\n    throw new Error('Acción de Odoo no reconocida: ' + a.accion);\n}\n\n// Eliminar campos vacíos/undefined de los diccionarios de valores (solo aplica a create/write)\nfunction limpiar(o) {\n  if (Array.isArray(o)) return o.map(limpiar);\n  if (o && typeof o === 'object') {\n    const r = {};\n    for (const k of Object.keys(o)) {\n      if (o[k] !== undefined && o[k] !== null && o[k] !== '') r[k] = o[k];\n    }\n    return r;\n  }\n  return o;\n}\n\nconst esConsulta = method === 'search_read';\n\nconst payload = {\n  jsonrpc: '2.0',\n  method: 'call',\n  params: {\n    service: 'object',\n    method: 'execute_kw',\n    args: [DB, uid, PASS, model, method, esConsulta ? valores : limpiar(valores)]\n  },\n  id: Math.floor(Math.random() * 1000000)\n};\n\nconsole.log('📦 Payload Odoo:', JSON.stringify(payload, null, 2));\nreturn [{ payload, accion: a.accion, model, respuesta_usuario: a.respuesta_usuario || '' }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2320,
+        752
+      ],
+      "id": "ad044602-bcfa-4342-9e36-cec39a15f9f9",
+      "name": "Preparar Payload Odoo"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://lsanchezgoshawk-bot18.odoo.com/jsonrpc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify($json.payload) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2528,
+        752
+      ],
+      "id": "8a536359-9dfb-4058-9d57-34273d540214",
+      "name": "Ejecutar en Odoo"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "c5dd4e76-70af-41cd-a5a3-282893a8ec2f",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1152,
+        864
+      ],
+      "id": "bd77fd5e-5b91-47d0-ab51-84e6f43f032a",
+      "name": "Webhook",
+      "webhookId": "c5dd4e76-70af-41cd-a5a3-282893a8ec2f"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"success\": true,\n  \"action\": \"={{ $json.action }}\",\n  \"reply\": \"={{ $json.reply }}\",\n  \"phone\": \"={{ $json.phone }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        2720,
+        752
+      ],
+      "id": "4f59e718-e330-4f23-adac-6a54bc6848df",
+      "name": "Respond to Webhook"
     }
   ],
   "pinData": {},
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
   },
   "shared": [
     {
@@ -160,7 +653,7 @@
   ],
   "staticData": null,
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2026-03-31T12:03:19.079Z",
-  "versionId": "5e43beaa-e681-43d2-ac68-91a8cf86ffc4"
+  "triggerCount": 1,
+  "updatedAt": "2026-07-01T11:47:37.056Z",
+  "versionId": "c50090a9-a301-429e-943e-df9740a68dd7"
 }
