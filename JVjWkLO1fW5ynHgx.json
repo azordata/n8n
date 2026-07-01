@@ -1,0 +1,34 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {},
+  "createdAt": "2026-06-29T13:20:19.451Z",
+  "id": "JVjWkLO1fW5ynHgx",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Demo Aprolis",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-06-29T13:20:19.451Z",
+      "createdAt": "2026-06-29T13:20:19.451Z",
+      "role": "workflow:owner",
+      "workflowId": "JVjWkLO1fW5ynHgx",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 2,
+  "updatedAt": "2026-06-30T06:30:59.691Z",
+  "versionId": "4c54b006-b98e-4555-9431-a763c455b07a"
+}
