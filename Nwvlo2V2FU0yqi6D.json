@@ -1,0 +1,101 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-07-01T09:03:40.541Z",
+  "id": "Nwvlo2V2FU0yqi6D",
+  "isArchived": false,
+  "meta": null,
+  "name": "Spoki Bot",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "const body = $json.body ?? $json;\n\nconst phone =\n  body.phone ||\n  body.telefono ||\n  body.contact_phone ||\n  null;\n\nconst name =\n  body.name ||\n  body.nombre ||\n  \"Usuario\";\n\nconst message =\n  body.message ||\n  body.text ||\n  body.last_user_message ||\n  body.mensaje ||\n  \"\";\n\nconst text = String(message).trim().toLowerCase();\n\nlet action = \"generic_reply\";\nlet reply = \"\";\n\nif (!text) {\n  action = \"empty_message\";\n  reply = `Hola ${name}, no he recibido ningún mensaje. ¿Puedes escribirlo de nuevo?`;\n} else if (text.includes(\"demo\")) {\n  action = \"book_demo\";\n  reply = `Perfecto ${name}. ¿Qué área te interesa más para la demo: CRM, ventas, inventario, fabricación o servicio técnico?`;\n} else if (text.includes(\"precio\") || text.includes(\"coste\") || text.includes(\"costo\")) {\n  action = \"pricing_question\";\n  reply = `Para darte una orientación realista, necesito saber cuántos usuarios seríais y qué módulos necesitáis.`;\n} else if (text.includes(\"humano\") || text.includes(\"persona\") || text.includes(\"comercial\")) {\n  action = \"transfer_to_human\";\n  reply = `Perfecto, voy a derivar tu consulta a un especialista de Azordata.`;\n} else if (text.includes(\"stock\") || text.includes(\"inventario\")) {\n  action = \"inventory_interest\";\n  reply = `Odoo puede centralizar inventario, compras, almacenes y reposición. ¿Tenéis uno o varios almacenes?`;\n} else {\n  action = \"discovery\";\n  reply = `Encantado de ayudarte, ${name}. Cuéntame qué proceso quieres mejorar en tu empresa y te orientaré sobre cómo hacerlo con Odoo.`;\n}\n\nreturn [\n  {\n    json: {\n      success: true,\n      action,\n      phone,\n      name,\n      original_message: message,\n      reply,\n      source: \"spoki\",\n      received_at: new Date().toISOString()\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        128,
+        48
+      ],
+      "id": "669294d0-98de-4fcf-93e0-2fb621fefa7b",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"success\": true,\n  \"action\": \"={{ $json.action }}\",\n  \"reply\": \"={{ $json.reply }}\",\n  \"phone\": \"={{ $json.phone }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        336,
+        48
+      ],
+      "id": "a7104379-6ccd-4f82-8c74-8f7996ed794d",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "c5dd4e76-70af-41cd-a5a3-282893a8ec2f",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -64,
+        48
+      ],
+      "id": "2098b2ea-2adf-475a-8307-168147f41c00",
+      "name": "Webhook",
+      "webhookId": "c5dd4e76-70af-41cd-a5a3-282893a8ec2f"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-07-01T09:03:40.541Z",
+      "createdAt": "2026-07-01T09:03:40.541Z",
+      "role": "workflow:owner",
+      "workflowId": "Nwvlo2V2FU0yqi6D",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-07-01T11:34:23.095Z",
+  "versionId": "f4e6492c-1100-4ff9-983a-3a1660a17ca8"
+}
