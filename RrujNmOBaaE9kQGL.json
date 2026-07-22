@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-06-22T07:33:10.780Z",
-    "createdAt": "2026-06-22T07:33:06.216Z",
-    "versionId": "22ba0a5e-4a71-40d8-9183-103b73ecbc17",
+    "updatedAt": "2026-07-20T10:20:55.276Z",
+    "createdAt": "2026-07-20T10:20:41.766Z",
+    "versionId": "e54f98e6-695b-44a7-af77-8947cf13abd1",
     "workflowId": "RrujNmOBaaE9kQGL",
     "nodes": [
       {
@@ -460,7 +460,7 @@
             "conditions": [
               {
                 "id": "8efd6ddf-2a07-46fd-b702-60f518f0e256",
-                "leftValue": "={{ (() => {  const w = $('When chat message received').first().json;  const texto = String(    w.message ||    w.chatInput ||    w.bodyText ||    ''  ).trim();  const esContacto = w.tipo === 'notificacion_contacto_bot';  const tieneDatosUsuario =    /[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}/i.test(texto) ||    /(?:\\+34\\s?)?[67]\\d{8}/.test(texto) ||    /nombre|email|correo|tel[eé]fono|empresa|contacto/i.test(texto);  const esMensajeError =    /error|no se pudo|fall[oó]|timeout|abort|undefined|null|gracias por tu pregunta|te responderemos lo antes posible/i.test(texto);  return esContacto && tieneDatosUsuario && !esMensajeError;})() }}",
+                "leftValue": "={{ (() => {\n  const w = $('When chat message received').first().json;\n  const texto = String(w.message || w.chatInput || w.bodyText || '').trim();\n  const esContacto = w.tipo === 'notificacion_contacto_bot';\n  const esMensajeError = /error|no se pudo|fall[oó]|timeout|abort|undefined|null|gracias por tu pregunta|te responderemos lo antes posible/i.test(texto);\n  return esContacto && texto.length > 0 && !esMensajeError;\n})() }}",
                 "rightValue": "",
                 "operator": {
                   "type": "boolean",
@@ -710,11 +710,11 @@
       }
     },
     "authors": "Jorge Huescar",
-    "name": "Version 22ba0a5e",
+    "name": "Version e54f98e6",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "22ba0a5e-4a71-40d8-9183-103b73ecbc17",
+  "activeVersionId": "e54f98e6-695b-44a7-af77-8947cf13abd1",
   "connections": {
     "When chat message received": {
       "main": [
@@ -1403,7 +1403,7 @@
           "conditions": [
             {
               "id": "8efd6ddf-2a07-46fd-b702-60f518f0e256",
-              "leftValue": "={{ (() => {  const w = $('When chat message received').first().json;  const texto = String(    w.message ||    w.chatInput ||    w.bodyText ||    ''  ).trim();  const esContacto = w.tipo === 'notificacion_contacto_bot';  const tieneDatosUsuario =    /[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}/i.test(texto) ||    /(?:\\+34\\s?)?[67]\\d{8}/.test(texto) ||    /nombre|email|correo|tel[eé]fono|empresa|contacto/i.test(texto);  const esMensajeError =    /error|no se pudo|fall[oó]|timeout|abort|undefined|null|gracias por tu pregunta|te responderemos lo antes posible/i.test(texto);  return esContacto && tieneDatosUsuario && !esMensajeError;})() }}",
+              "leftValue": "={{ (() => {\n  const w = $('When chat message received').first().json;\n  const texto = String(w.message || w.chatInput || w.bodyText || '').trim();\n  const esContacto = w.tipo === 'notificacion_contacto_bot';\n  const esMensajeError = /error|no se pudo|fall[oó]|timeout|abort|undefined|null|gracias por tu pregunta|te responderemos lo antes posible/i.test(texto);\n  return esContacto && texto.length > 0 && !esMensajeError;\n})() }}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
@@ -1447,6 +1447,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-06-22T07:33:06.215Z",
-  "versionId": "22ba0a5e-4a71-40d8-9183-103b73ecbc17"
+  "updatedAt": "2026-07-20T10:20:41.765Z",
+  "versionId": "e54f98e6-695b-44a7-af77-8947cf13abd1"
 }
