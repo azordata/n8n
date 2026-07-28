@@ -1745,10 +1745,10 @@
   "staticData": null,
   "tags": [
     {
-      "updatedAt": "2026-02-18T07:51:58.811Z",
-      "createdAt": "2026-02-18T07:51:58.811Z",
-      "id": "OjAFHc7K3coRr5r2",
-      "name": "AI"
+      "updatedAt": "2026-02-18T07:51:58.857Z",
+      "createdAt": "2026-02-18T07:51:58.857Z",
+      "id": "nVN1JkldPm15tiB7",
+      "name": "Odoo"
     },
     {
       "updatedAt": "2026-02-18T07:51:58.847Z",
@@ -1757,10 +1757,10 @@
       "name": "Telegram"
     },
     {
-      "updatedAt": "2026-02-18T07:51:58.857Z",
-      "createdAt": "2026-02-18T07:51:58.857Z",
-      "id": "nVN1JkldPm15tiB7",
-      "name": "Odoo"
+      "updatedAt": "2026-02-18T07:51:58.811Z",
+      "createdAt": "2026-02-18T07:51:58.811Z",
+      "id": "OjAFHc7K3coRr5r2",
+      "name": "AI"
     }
   ],
   "triggerCount": 0,
