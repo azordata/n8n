@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-09-08T12:17:28.971Z",
-    "createdAt": "2026-09-08T12:17:13.723Z",
-    "versionId": "c2d593d8-046a-441f-a766-b5dab06fcada",
+    "updatedAt": "2026-09-21T10:34:45.963Z",
+    "createdAt": "2026-09-21T10:34:24.429Z",
+    "versionId": "9d969f85-97b5-487e-907c-ea179a5a0919",
     "workflowId": "oVkVDlKCeCfF8zPt",
     "nodes": [
       {
@@ -23249,11 +23249,11 @@
       }
     },
     "authors": "Jorge Huescar",
-    "name": "Version c2d593d8",
+    "name": "Version 9d969f85",
     "description": "",
-    "autosaved": true
+    "autosaved": false
   },
-  "activeVersionId": "c2d593d8-046a-441f-a766-b5dab06fcada",
+  "activeVersionId": "9d969f85-97b5-487e-907c-ea179a5a0919",
   "connections": {
     "¿Es Telegram? (Solicitar Horas)": {
       "main": [
@@ -46540,6 +46540,6 @@
   },
   "tags": [],
   "triggerCount": 5,
-  "updatedAt": "2026-09-08T12:17:13.710Z",
-  "versionId": "c2d593d8-046a-441f-a766-b5dab06fcada"
+  "updatedAt": "2026-09-21T10:34:24.412Z",
+  "versionId": "9d969f85-97b5-487e-907c-ea179a5a0919"
 }
