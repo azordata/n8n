@@ -1,0 +1,799 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-10-08T09:43:18.218Z",
+    "createdAt": "2026-10-08T09:43:16.771Z",
+    "versionId": "7986bb15-4994-4182-9cb7-8b8d8fadf59b",
+    "workflowId": "sUWS0vC88vvVtn2D",
+    "nodes": [
+      {
+        "parameters": {
+          "updates": [
+            "message"
+          ],
+          "additionalFields": {}
+        },
+        "id": "33677736-10ec-476b-b497-0531bd92b4e0",
+        "name": "Telegram Trigger",
+        "type": "n8n-nodes-base.telegramTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -1536,
+          -128
+        ],
+        "webhookId": "d8f4a244-9c13-4164-afb4-7e29038feb29",
+        "credentials": {
+          "telegramApi": {
+            "id": "2vSbTTtYHSGiySNf",
+            "name": "DemosODOO"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "odoo",
+                "name": "odooBaseUrl",
+                "value": "https://mchecaazor-demooscarparens.odoo.com",
+                "type": "string"
+              },
+              {
+                "id": "api",
+                "name": "apiToken",
+                "value": "8842704257:AAEhYLf1ed5lAxCahI_EuZihvhy17OiwQSE",
+                "type": "string"
+              },
+              {
+                "id": "bot",
+                "name": "telegramBotToken",
+                "value": "8842704257:AAEhYLf1ed5lAxCahI_EuZihvhy17OiwQSE",
+                "type": "string"
+              }
+            ]
+          },
+          "includeOtherFields": true,
+          "options": {}
+        },
+        "id": "4160be7c-569a-4bc9-a69b-df336266413d",
+        "name": "Config",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -1248,
+          -128
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "photo",
+                "leftValue": "={{ !!($json.message && $json.message.photo && $json.message.photo.length) }}",
+                "rightValue": true,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "bd8244ca-96c0-44ac-a145-ef1ef55f6e23",
+        "name": "Es foto",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -976,
+          -128
+        ]
+      },
+      {
+        "parameters": {
+          "url": "=https://api.telegram.org/bot{{ $json.telegramBotToken }}/getFile",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "file_id",
+                "value": "={{ $json.message.photo[$json.message.photo.length - 1].file_id }}"
+              }
+            ]
+          },
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "json"
+              }
+            }
+          }
+        },
+        "id": "f3d203b0-4d6e-4ec8-ad9b-ae951d08bcd9",
+        "name": "Telegram getFile",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -688,
+          -320
+        ]
+      },
+      {
+        "parameters": {
+          "url": "=https://api.telegram.org/file/bot{{ $('Config').first().json.telegramBotToken }}/{{ $json.result.file_path }}",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "file"
+              }
+            }
+          }
+        },
+        "id": "356ff6f6-a053-4636-8156-e29685292156",
+        "name": "Descargar foto",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -432,
+          -320
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const buffer = await this.helpers.getBinaryDataBuffer(0, 'data');\nconst config = $('Config').first().json;\nconst message = config.message || {};\nconst photos = message.photo || [];\nconst fileId = photos.length ? String(photos[photos.length - 1].file_id) : '';\nreturn [{\n  json: {\n    update_id: config.update_id,\n    telegram_user_id: String((message.from && message.from.id) || ''),\n    chat_id: String((message.chat && message.chat.id) || ''),\n    text: '',\n    photo_caption: message.caption || '',\n    photo_file_id: fileId,\n    photo_base64: buffer.toString('base64'),\n    photo_name: 'telegram.jpg'\n  }\n}];"
+        },
+        "id": "3c58e92d-2d72-4535-b05e-cfcd245dbb5d",
+        "name": "Preparar foto",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -176,
+          -320
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Config').first().json.odooBaseUrl.replace(/\\/$/, '') + '/vehicle_appraisal/api/v1/telegram' }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "X-Appraisal-Token",
+                "value": "={{ String($('Config').first().json.apiToken || '').trim() }}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ { update_id: $json.update_id, telegram_user_id: $json.telegram_user_id, chat_id: $json.chat_id, text: '', photo_caption: $json.photo_caption, photo_file_id: $json.photo_file_id, photo_base64: $json.photo_base64, photo_name: $json.photo_name, api_token: String($('Config').first().json.apiToken || '').trim() } }}",
+          "options": {
+            "response": {
+              "response": {
+                "fullResponse": true,
+                "neverError": true,
+                "responseFormat": "text"
+              }
+            },
+            "timeout": 60000
+          }
+        },
+        "id": "e558fad8-b15f-4f6f-b5fe-02c00580afb3",
+        "name": "Odoo foto",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          96,
+          -320
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Config').first().json.odooBaseUrl.replace(/\\/$/, '') + '/vehicle_appraisal/api/v1/telegram' }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "X-Appraisal-Token",
+                "value": "={{ String($('Config').first().json.apiToken || '').trim() }}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ { update_id: $json.update_id, telegram_user_id: String($json.message.from.id), chat_id: String($json.message.chat.id), text: $json.message.text || '', api_token: String($('Config').first().json.apiToken || '').trim() } }}",
+          "options": {
+            "response": {
+              "response": {
+                "fullResponse": true,
+                "neverError": true,
+                "responseFormat": "text"
+              }
+            },
+            "timeout": 60000
+          }
+        },
+        "id": "73bf3a2c-a3d7-4b49-aaf9-4c9977203001",
+        "name": "Odoo texto",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -688,
+          48
+        ]
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $('Config').first().json.message.chat.id }}",
+          "text": "={{ $json.reply || 'No he podido completar la operacion.' }}",
+          "additionalFields": {}
+        },
+        "id": "e6e742ee-85aa-4193-bc22-d58195d31c13",
+        "name": "Responder",
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          624,
+          -128
+        ],
+        "webhookId": "4d7c3784-855a-47bf-bb1d-670632d1aac8",
+        "credentials": {
+          "telegramApi": {
+            "id": "2vSbTTtYHSGiySNf",
+            "name": "DemosODOO"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const item = $input.first().json;\nconst status = item.statusCode || item.status || 0;\nconst token = String(($('Config').first().json.apiToken) || '').trim();\nlet raw = item.body;\nif (raw === undefined || raw === null) raw = item.data;\nif (typeof raw !== 'string') {\n  try { raw = JSON.stringify(raw || ''); } catch (error) { raw = String(raw || ''); }\n}\nlet reply = 'No he podido completar la operacion.';\nif (!token || token === 'PEGAR_TOKEN_DE_ODOO' || token === 'PEGAR_TOKEN_DEL_BOT' || token === 'PEGAR_TOKEN_DE_BOTFATHER') {\n  reply = 'En el nodo Config, apiToken y telegramBotToken tienen que ser el token de BotFather, el mismo que pegaste en Odoo, Peritaje, Ajustes.';\n} else {\n  try {\n    const parsed = JSON.parse(raw);\n    reply = (parsed && (parsed.reply || parsed.error)) || reply;\n  } catch (error) {\n    const snippet = String(raw || '').replace(/<[^>]+>/g, ' ').replace(/\\s+/g, ' ').trim().slice(0, 180);\n    if (!String(raw || '').trim()) {\n      reply = 'Odoo no ha respondido. En el nodo Config, odooBaseUrl tiene que ser la URL del build, sin barra final.';\n    } else if (/<html|<!doctype/i.test(raw)) {\n      reply = 'Odoo ha devuelto una pagina web, no el bot. Revisa odooBaseUrl y que el modulo Peritaje este actualizado.';\n    } else {\n      reply = 'Respuesta no valida de Odoo' + (status ? ' (' + status + ')' : '') + (snippet ? ': ' + snippet : '');\n    }\n  }\n  if (status === 401 && !/token/i.test(reply)) {\n    reply = 'Odoo ha rechazado el token (' + token.length + ' caracteres). Tiene que ser el campo Token de la API, no el token del bot.';\n  }\n}\nreturn [{ json: { reply, status } }];"
+        },
+        "id": "4de45c11-0cd1-447b-a9dd-ab9dc8802162",
+        "name": "Leer respuesta",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          384,
+          -128
+        ]
+      }
+    ],
+    "connections": {
+      "Telegram Trigger": {
+        "main": [
+          [
+            {
+              "node": "Config",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Config": {
+        "main": [
+          [
+            {
+              "node": "Es foto",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Es foto": {
+        "main": [
+          [
+            {
+              "node": "Telegram getFile",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Odoo texto",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Telegram getFile": {
+        "main": [
+          [
+            {
+              "node": "Descargar foto",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Descargar foto": {
+        "main": [
+          [
+            {
+              "node": "Preparar foto",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Preparar foto": {
+        "main": [
+          [
+            {
+              "node": "Odoo foto",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Odoo foto": {
+        "main": [
+          [
+            {
+              "node": "Leer respuesta",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Odoo texto": {
+        "main": [
+          [
+            {
+              "node": "Leer respuesta",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Leer respuesta": {
+        "main": [
+          [
+            {
+              "node": "Responder",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jorge Huescar",
+    "name": "Version 7986bb15",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "7986bb15-4994-4182-9cb7-8b8d8fadf59b",
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Es foto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Es foto": {
+      "main": [
+        [
+          {
+            "node": "Telegram getFile",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Odoo texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram getFile": {
+      "main": [
+        [
+          {
+            "node": "Descargar foto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Descargar foto": {
+      "main": [
+        [
+          {
+            "node": "Preparar foto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar foto": {
+      "main": [
+        [
+          {
+            "node": "Odoo foto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo foto": {
+      "main": [
+        [
+          {
+            "node": "Leer respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Odoo texto": {
+      "main": [
+        [
+          {
+            "node": "Leer respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer respuesta": {
+      "main": [
+        [
+          {
+            "node": "Responder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-10-08T08:11:33.360Z",
+  "id": "sUWS0vC88vvVtn2D",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Peritaje de vehiculos - Telegram",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "33677736-10ec-476b-b497-0531bd92b4e0",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1536,
+        -128
+      ],
+      "webhookId": "d8f4a244-9c13-4164-afb4-7e29038feb29",
+      "credentials": {
+        "telegramApi": {
+          "id": "2vSbTTtYHSGiySNf",
+          "name": "DemosODOO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "odoo",
+              "name": "odooBaseUrl",
+              "value": "https://mchecaazor-demooscarparens.odoo.com",
+              "type": "string"
+            },
+            {
+              "id": "api",
+              "name": "apiToken",
+              "value": "8842704257:AAEhYLf1ed5lAxCahI_EuZihvhy17OiwQSE",
+              "type": "string"
+            },
+            {
+              "id": "bot",
+              "name": "telegramBotToken",
+              "value": "8842704257:AAEhYLf1ed5lAxCahI_EuZihvhy17OiwQSE",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "4160be7c-569a-4bc9-a69b-df336266413d",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1248,
+        -128
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "photo",
+              "leftValue": "={{ !!($json.message && $json.message.photo && $json.message.photo.length) }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "bd8244ca-96c0-44ac-a145-ef1ef55f6e23",
+      "name": "Es foto",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -976,
+        -128
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.telegram.org/bot{{ $json.telegramBotToken }}/getFile",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "file_id",
+              "value": "={{ $json.message.photo[$json.message.photo.length - 1].file_id }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "f3d203b0-4d6e-4ec8-ad9b-ae951d08bcd9",
+      "name": "Telegram getFile",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -688,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.telegram.org/file/bot{{ $('Config').first().json.telegramBotToken }}/{{ $json.result.file_path }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "356ff6f6-a053-4636-8156-e29685292156",
+      "name": "Descargar foto",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -432,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const buffer = await this.helpers.getBinaryDataBuffer(0, 'data');\nconst config = $('Config').first().json;\nconst message = config.message || {};\nconst photos = message.photo || [];\nconst fileId = photos.length ? String(photos[photos.length - 1].file_id) : '';\nreturn [{\n  json: {\n    update_id: config.update_id,\n    telegram_user_id: String((message.from && message.from.id) || ''),\n    chat_id: String((message.chat && message.chat.id) || ''),\n    text: '',\n    photo_caption: message.caption || '',\n    photo_file_id: fileId,\n    photo_base64: buffer.toString('base64'),\n    photo_name: 'telegram.jpg'\n  }\n}];"
+      },
+      "id": "3c58e92d-2d72-4535-b05e-cfcd245dbb5d",
+      "name": "Preparar foto",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -176,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.odooBaseUrl.replace(/\\/$/, '') + '/vehicle_appraisal/api/v1/telegram' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Appraisal-Token",
+              "value": "={{ String($('Config').first().json.apiToken || '').trim() }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { update_id: $json.update_id, telegram_user_id: $json.telegram_user_id, chat_id: $json.chat_id, text: '', photo_caption: $json.photo_caption, photo_file_id: $json.photo_file_id, photo_base64: $json.photo_base64, photo_name: $json.photo_name, api_token: String($('Config').first().json.apiToken || '').trim() } }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "text"
+            }
+          },
+          "timeout": 60000
+        }
+      },
+      "id": "e558fad8-b15f-4f6f-b5fe-02c00580afb3",
+      "name": "Odoo foto",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        96,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.odooBaseUrl.replace(/\\/$/, '') + '/vehicle_appraisal/api/v1/telegram' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Appraisal-Token",
+              "value": "={{ String($('Config').first().json.apiToken || '').trim() }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { update_id: $json.update_id, telegram_user_id: String($json.message.from.id), chat_id: String($json.message.chat.id), text: $json.message.text || '', api_token: String($('Config').first().json.apiToken || '').trim() } }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "text"
+            }
+          },
+          "timeout": 60000
+        }
+      },
+      "id": "73bf3a2c-a3d7-4b49-aaf9-4c9977203001",
+      "name": "Odoo texto",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -688,
+        48
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Config').first().json.message.chat.id }}",
+        "text": "={{ $json.reply || 'No he podido completar la operacion.' }}",
+        "additionalFields": {}
+      },
+      "id": "e6e742ee-85aa-4193-bc22-d58195d31c13",
+      "name": "Responder",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        624,
+        -128
+      ],
+      "webhookId": "4d7c3784-855a-47bf-bb1d-670632d1aac8",
+      "credentials": {
+        "telegramApi": {
+          "id": "2vSbTTtYHSGiySNf",
+          "name": "DemosODOO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first().json;\nconst status = item.statusCode || item.status || 0;\nconst token = String(($('Config').first().json.apiToken) || '').trim();\nlet raw = item.body;\nif (raw === undefined || raw === null) raw = item.data;\nif (typeof raw !== 'string') {\n  try { raw = JSON.stringify(raw || ''); } catch (error) { raw = String(raw || ''); }\n}\nlet reply = 'No he podido completar la operacion.';\nif (!token || token === 'PEGAR_TOKEN_DE_ODOO' || token === 'PEGAR_TOKEN_DEL_BOT' || token === 'PEGAR_TOKEN_DE_BOTFATHER') {\n  reply = 'En el nodo Config, apiToken y telegramBotToken tienen que ser el token de BotFather, el mismo que pegaste en Odoo, Peritaje, Ajustes.';\n} else {\n  try {\n    const parsed = JSON.parse(raw);\n    reply = (parsed && (parsed.reply || parsed.error)) || reply;\n  } catch (error) {\n    const snippet = String(raw || '').replace(/<[^>]+>/g, ' ').replace(/\\s+/g, ' ').trim().slice(0, 180);\n    if (!String(raw || '').trim()) {\n      reply = 'Odoo no ha respondido. En el nodo Config, odooBaseUrl tiene que ser la URL del build, sin barra final.';\n    } else if (/<html|<!doctype/i.test(raw)) {\n      reply = 'Odoo ha devuelto una pagina web, no el bot. Revisa odooBaseUrl y que el modulo Peritaje este actualizado.';\n    } else {\n      reply = 'Respuesta no valida de Odoo' + (status ? ' (' + status + ')' : '') + (snippet ? ': ' + snippet : '');\n    }\n  }\n  if (status === 401 && !/token/i.test(reply)) {\n    reply = 'Odoo ha rechazado el token (' + token.length + ' caracteres). Tiene que ser el campo Token de la API, no el token del bot.';\n  }\n}\nreturn [{ json: { reply, status } }];"
+      },
+      "id": "4de45c11-0cd1-447b-a9dd-ab9dc8802162",
+      "name": "Leer respuesta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        -128
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-10-08T08:11:33.360Z",
+      "createdAt": "2026-10-08T08:11:33.360Z",
+      "role": "workflow:owner",
+      "workflowId": "sUWS0vC88vvVtn2D",
+      "projectId": "s4WYDaCaT1Iwz31l"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-10-08T09:43:16.770Z",
+  "versionId": "7986bb15-4994-4182-9cb7-8b8d8fadf59b"
+}
